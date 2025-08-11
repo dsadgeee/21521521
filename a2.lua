@@ -1,14 +1,16 @@
 script_key="BDhKQzjQqINOabkQaYwZFqtuLOOJJfKM";
 setfpscap(2)
+setfpscap(2)
 getgenv().gagConfig = {
+    SCRIPT_KEY = script_key,
     CRAFT_EVENT = { "Anti Bee Egg"},
     BUY_EVENT_SHOP = { "Zen Egg" },
     BUY_TRAVELING_MERCHANT = { "Bee Egg", "Loquat", "Feijoa", "Pitcher Plant" },
-    MAX_EVENT_RESTOCK_SHECKLES = 20000000000,
+    MAX_EVENT_RESTOCK_SHECKLES = 200000000,
     CLAIM_FOOD_CONNOISSEUR_REWARD = { "Culinarian Chest", "Gorilla Chef", "Gourmet Egg", "Sunny-Side Chicken", "Pet Shard Aromatic", "Cooking Cauldron", "Gourmet Seed Pack", "Bitter Melon Seed", "Pricklefruit Seed", "Butternut Squash Seed", "Spring Onion Seed", "Kitchen Crate", "Kitchen Flooring", "Kitchen Cart", "Smoothie Fountain" },
 
     
-    AUTO_UPDATE_RESTART = false,
+    AUTO_UPDATE_RESTART = true,
     REDEEM_CODES = {},
     EXTRA_PET_SLOTS = 5,
     EXTRA_EGG_SLOTS = 5,
@@ -36,7 +38,7 @@ getgenv().gagConfig = {
     KEEP_PETS_WEIGHT = 10,
 
     -- EQUIP_PETS Priority (Left -> Right)
-    EQUIP_PETS = { ["Capybara"] = 1, ["Starfish"] = 2, ["Gorilla Chef"] = 2, ["Sunny-Side Chicken"] = 3 },
+    EQUIP_PETS = { ["Capybara"] = 1, ["Starfish"] = 2, ["Sunny-Side Chicken"] = 4 },
     USE_PETS_FOR_UPGRADE_SLOT = { "Starfish", "Capybara" },
 
     BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler" },
