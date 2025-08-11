@@ -1,6 +1,5 @@
 script_key="BDhKQzjQqINOabkQaYwZFqtuLOOJJfKM";
 setfpscap(2)
-setfpscap(2)
 getgenv().gagConfig = {
     SCRIPT_KEY = script_key,
     CRAFT_EVENT = { "Anti Bee Egg"},
