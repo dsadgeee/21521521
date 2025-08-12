@@ -167,7 +167,7 @@ getgenv().ConfigsKaitun = {
 			["Sushi Bear"] = 2,
 			"Lobster Thermidor",
             ["Gorilla Chef"] = 10,
-        	["Sunny-Side Chicken"] = 18,
+        	"Sunny-Side Chicken",
             ["Hotdog Daschund"] = 1,
             ["Bacon Pig"] = 1,
             ["Junkbot"] = 4,
