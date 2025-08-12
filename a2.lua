@@ -20,6 +20,7 @@ getgenv().gagConfig = {
     MAX_PLANTS = 200,
     DESTROY_UNTIL_MIN_PLANTS = 150,
     DELETE_PLANTS_AFTER_MAX = { "Carrot", "Strawberry", "Blueberry", "Tomato", "Cauliflower", "Apple", "Coconut" },
+    PLACE_COSMETIC = { "Cooking Cauldron" },
 
     KEEP_SEEDS_AFTER_MAX_PLANTS = { "Carrot", "Strawberry", "Blueberry", "Orange Tulip", "Tomato" },
     
