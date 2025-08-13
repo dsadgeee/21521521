@@ -76,7 +76,7 @@ getgenv().ConfigsKaitun = {
 	Events = {
 		["Cook Event"] = {
 			Minimum_Money = 30_000_000, -- minimum money to start play this event
-			Rewards_Item = { "Culinarian Chest", "Gourmet Egg", "Sunny-Side Chicken", "Gorilla Chef", "Cooking Cauldron", "Pet Shard Aromatic", "Gourmet Seed Pack", "Bitter Melon Seed", "Pricklefruit Seed", "Butternut Squash Seed", "Spring Onion Seed", "Kitchen Crate", "Kitchen Flooring", "Kitchen Cart", "Smoothie Fountain" }
+			Rewards_Item = { "Culinarian Chest", "Gourmet Egg", "Cooking Cauldron", "Pet Shard Aromatic", "Sunny-Side Chicken", "Gorilla Chef", "Gourmet Seed Pack", "Bitter Melon Seed", "Pricklefruit Seed", "Butternut Squash Seed", "Spring Onion Seed", "Kitchen Crate", "Kitchen Flooring", "Kitchen Cart", "Smoothie Fountain" }
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
