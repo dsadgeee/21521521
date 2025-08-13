@@ -16,7 +16,7 @@ getgenv().ConfigsKaitun = {
 	["Rejoin When Update"] = false,
 	["Limit Tree"] = {
 		["Limit"] = 200,
-		["Destroy Untill"] = 150,
+		["Destroy Untill"] = 200,
 
 		["Safe Tree"] = {
 			"Tranquil Bloom",
@@ -165,7 +165,7 @@ getgenv().ConfigsKaitun = {
 			["Sushi Bear"] = 5,
 			"Lobster Thermidor",
             ["Gorilla Chef"] = 8,
-        	["Sunny-Side Chicken"] = 20,
+        	"Sunny-Side Chicken",
             ["Hotdog Daschund"] = 1,
             ["Junkbot"] = 4,
             "French Fry Ferret",
