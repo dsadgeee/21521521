@@ -146,7 +146,7 @@ getgenv().ConfigsKaitun = {
 	},
 
     Pets = {
-        ["Start Delete Pet At"] = 85,
+        ["Start Delete Pet At"] = 45,
         ["Upgrade Slot"] = {
             ["Pet"] = {
                 ["Starfish"] = { 4, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
@@ -174,8 +174,8 @@ getgenv().ConfigsKaitun = {
             "Kodama",
             "Corrupted Kitsune",
             ["Starfish"] = 10,
-            "Capybara",
-            "Tanchozuru",
+            ["Capybara"] = 2,
+            ["Tanchozuru"] = 2,
             ["Seal"] = 1,
             "Kitsune",
             "Blood Kiwi",
