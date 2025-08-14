@@ -187,7 +187,7 @@ getgenv().ConfigsKaitun = {
             "Mimic Octopus",
             "Red Fox",
         },
-        LockPet_Weight = 5, -- if Weight >= 10 they will locked
+        LockPet_Weight = 6, -- if Weight >= 10 they will locked
     },
 
     Webhook = {
