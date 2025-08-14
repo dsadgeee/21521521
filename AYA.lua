@@ -146,15 +146,15 @@ getgenv().ConfigsKaitun = {
 	},
 
     Pets = {
-        ["Start Delete Pet At"] = 50,
+        ["Start Delete Pet At"] = 45,
         ["Upgrade Slot"] = {
             ["Pet"] = {
                 ["Starfish"] = { 4, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
             },
             ["Limit Upgrade"] = 5,-- max is 5 (more than or lower than 1 will do nothing)
             ["Equip When Done"] = {
-                ["Gorilla Chef"] = { 8, 100, 1},
-				["Sunny-Side Chicken"] = { 2, 100, 2},
+                ["Gorilla Chef"] = { 7, 100, 1 },
+				["Sushi Bear"] = { 1, 100, 2},
                 ["Capybara"] = { 1, 100 },
                 ["Starfish"] = { 8, 100 },
             },
