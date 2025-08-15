@@ -161,9 +161,9 @@ getgenv().ConfigsKaitun = {
         Favorite_LockedPet = true,
         Locked_Pet_Age = 76, -- pet that age > 60 will lock
         Locked = {
-			["Sushi Bear"] = 3,
+			["Sushi Bear"] = 2,
 			"Lobster Thermidor",
-            ["Gorilla Chef"] = 5,
+            ["Gorilla Chef"] = 2,
         	["Sunny-Side Chicken"] = 35,
             ["Hotdog Daschund"] = 1,
             ["Junkbot"] = 4,
@@ -172,7 +172,7 @@ getgenv().ConfigsKaitun = {
             ["Mochi Mouse"] = 2,
             "Kodama",
             "Corrupted Kitsune",
-            ["Starfish"] = 5,
+            ["Starfish"] = 2,
             ["Capybara"] = 2,
             ["Tanchozuru"] = 2,
             ["Seal"] = 1,
