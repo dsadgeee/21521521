@@ -116,6 +116,7 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
+	        "Gourmet Egg",
 			"Zen Egg",
 			"Primal Egg",
 			"Dinosaur Egg",
@@ -152,10 +153,11 @@ getgenv().ConfigsKaitun = {
             },
             ["Limit Upgrade"] = 5,-- max is 5 (more than or lower than 1 will do nothing)
             ["Equip When Done"] = {
-                ["Gorilla Chef"] = { 7, 100, 1 },
-				["Sushi Bear"] = { 1, 100, 2 },
-                ["Capybara"] = { 1, 100, 3 },
-                ["Starfish"] = { 8, 100, 4 },
+                ["Gorilla Chef"] = { 7, 100, 2 },
+				["Sushi Bear"] = { 1, 100, 3 },
+                ["Capybara"] = { 1, 100, 4 },
+                ["Starfish"] = { 8, 100, 5 },
+				["Sunny-Side Chicken"] = { 8, 100, 1 },
             },
         },
         Favorite_LockedPet = true,
