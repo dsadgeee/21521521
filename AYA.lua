@@ -152,7 +152,7 @@ getgenv().ConfigsKaitun = {
             },
             ["Limit Upgrade"] = 5,-- max is 5 (more than or lower than 1 will do nothing)
             ["Equip When Done"] = {
-                ["Gorilla Chef"] = { 8, 100, 1 },
+                ["Gorilla Chef"] = { 7, 100, 1 },
 				["Sushi Bear"] = { 1, 100, 2 },
                 ["Capybara"] = { 1, 100, 3 },
                 ["Starfish"] = { 8, 100, 4 },
