@@ -152,7 +152,7 @@ getgenv().ConfigsKaitun = {
             },
             ["Limit Upgrade"] = 5,-- max is 5 (more than or lower than 1 will do nothing)
             ["Equip When Done"] = {
-                ["Gorilla Chef"] = { 7, 100, 1 },
+                ["Gorilla Chef"] = { 8, 100, 1 },
 				["Sushi Bear"] = { 1, 100, 2},
                 ["Capybara"] = { 1, 100 },
                 ["Starfish"] = { 8, 100 },
@@ -163,7 +163,7 @@ getgenv().ConfigsKaitun = {
         Locked = {
 			["Sushi Bear"] = 5,
 			"Lobster Thermidor",
-            ["Gorilla Chef"] = 8,
+            ["Gorilla Chef"] = 5,
         	["Sunny-Side Chicken"] = 35,
             ["Hotdog Daschund"] = 1,
             ["Junkbot"] = 4,
@@ -172,7 +172,7 @@ getgenv().ConfigsKaitun = {
             ["Mochi Mouse"] = 2,
             "Kodama",
             "Corrupted Kitsune",
-            ["Starfish"] = 10,
+            ["Starfish"] = 5,
             ["Capybara"] = 2,
             ["Tanchozuru"] = 2,
             ["Seal"] = 1,
