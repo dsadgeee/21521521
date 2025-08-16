@@ -87,6 +87,7 @@ getgenv().ConfigsKaitun = {
 		Shop = {
 			"Zen Egg",
 			"Koi",
+			"Sprout Egg",
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
@@ -116,6 +117,7 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
+			"Sprout Egg",
 	        "Gourmet Egg",
 			"Zen Egg",
 			"Primal Egg",
@@ -163,6 +165,7 @@ getgenv().ConfigsKaitun = {
         Favorite_LockedPet = true,
         Locked_Pet_Age = 76, -- pet that age > 60 will lock
         Locked = {
+			"Golden Goose",
 			["Sushi Bear"] = 2,
 			"Lobster Thermidor",
             ["Gorilla Chef"] = 2,
