@@ -1,53 +1,32 @@
-wait(5)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
 	NoDeletePlayer = false,
 
 	["Block Pet Gift"] = true,
- 
+
 	Collect_Cooldown = 60, -- cooldown to collect fruit
 	JustFuckingCollectAll = false, -- Collect all (fruit not wait mutation)
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 	["Limit Tree"] = {
 		["Limit"] = 200,
-		["Destroy Untill"] = 150,
+		["Destroy Until"] = 180,
 
 		["Safe Tree"] = {
-			"Tranquil Bloom",
-			"Maple Apple",
-			"Moon Mango",
-			"Bone Blossom",
+			"Moon Blossom",
 			"Fossilight",
-      		"Serenity",
-
 		}
 	},
 
 	Seed = {
 		Buy = {
-			Mode = "Custom", -- Custom , Auto
-			Custom = {
-				"Tomato",
-				"Strawberry",
-				"Bell Pepper",
-				"Blood Banana",
-				"Onion",
-				"Pear",
-				"Grape",
-				"Mushroom",
-				"Pepper",
-				"Cacao",
-				"Beanstalk",
-				"Ember Lily",
-				"Sugar Apple",
-				"Burning Bud",
-				"Giant Pinecone",
-				"Elder Strawberry",
+			Mode = "Auto", -- Custom , Auto
+			Custom = { -- any fruit u need to place
+				"Carrot",
 			}
 		},
 		Place = {
@@ -56,11 +35,14 @@ getgenv().ConfigsKaitun = {
 				"Carrot"
 			},
 			Lock = {
+				"Maple Apple",
 				"Sunflower",
 				"Dragon Pepper",
 				"Elephant Ears",
 				"Moon Melon",
+				"Easter Egg",
 				"Moon Mango",
+				"Bone Blossom",
 				"Fossilight",
 			}
 		}
@@ -79,10 +61,10 @@ getgenv().ConfigsKaitun = {
 		Shop = { -- delete -- to buy
 			"Sprout Seed Pack",
 			"Sprout Egg",
-			--"Mandrake",
+			-- "Mandrake",
 			"Silver Fertilizer",
-			"Canary Melon",
-			"Amberheart",
+			-- "Canary Melon",
+			-- "Amberheart",
 			"Spriggan",
 		},
 		["Traveling Shop"] = {
@@ -91,36 +73,26 @@ getgenv().ConfigsKaitun = {
 		Craft = {
 			"Anti Bee Egg",
 		},
-		Shop = {
-			"Zen Egg",
-			"Koi",
-			"Sprout Egg",
-		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
 
 	Gear = {
 		Buy = { 
 			"Master Sprinkler",
-			"Grandmaster Sprinkler",
 			"Godly Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
-			"Levelup Lollipop",
+			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
-			"Trading Ticket",
 		},
 		Lock = {
 			"Master Sprinkler",
-			"Grandmaster Sprinkler",
 			"Godly Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
-			"Levelup Lollipop",
-			"Trading Ticket",
 		},
 	},
 
@@ -129,7 +101,6 @@ getgenv().ConfigsKaitun = {
 			"Sprout Egg",
 			"Gourmet Egg",
 			"Zen Egg",
-			"Sprout Egg",
 			"Primal Egg",
 			"Dinosaur Egg",
 			"Oasis Egg",
@@ -139,54 +110,52 @@ getgenv().ConfigsKaitun = {
 			"Paradise Egg",
 			"Bee Egg",
 			"Mythical Egg",
-			"Rare Summer Egg",
-			"Common Summer Egg",
-			"Common Egg",
 		},
 		Buy = {
+			"Sprout Egg",
+			"Gourmet Egg",
 			"Bee Egg",
 			"Oasis Egg",
-			"Sprout Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
 			"Night Egg",
-			["Rare Summer Egg"] = 20,
 			"Bug Egg",
 			"Mythical Egg",
-			"Common Summer Egg",
 		}
 	},
 
-    Pets = {
-        ["Start Delete Pet At"] = 45,
+	Pets = {
+		["Start Delete Pet At"] = 45,
         ["Upgrade Slot"] = {
             ["Pet"] = {
-                ["Starfish"] = { 2, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+                ["Starfish"] = { 4, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
             },
             ["Limit Upgrade"] = 5,-- max is 5 (more than or lower than 1 will do nothing)
             ["Equip When Done"] = {
-				["Sunny-Side Chicken"] = { 1, 100, 1},
-				["Hotdog Daschund"] = { 1, 100, 2 },
-                ["Starfish"] = { 8, 76, 3 },
+                ["Sunny-Side Chicken"] = { 5, 100, 1},
+                ["Starfish"] = { 8, 100, 2 },
+                ["Capybara"] = { 1, 100, 3 },
             },
         },
-        Favorite_LockedPet = true,
-        Locked_Pet_Age = 76, -- pet that age > 60 will lock
+		Unfavorite_AllPet = false,
+		Favorite_LockedPet = true,
+		 Locked_Pet_Age = 76, -- pet that age > 60 will lock
         Locked = {
+			["Sushi Bear"] = 5,
 			"Golden Goose",
-			["Golem"] = 2,
-			["Sushi Bear"] = 2,
+			["Golem"] = 5,
+			["Sapling"] = 5,
+			["Jackalope"] = 5,
 			"Lobster Thermidor",
-            ["Gorilla Chef"] = 5,
+            ["Gorilla Chef"] = 8,
         	["Sunny-Side Chicken"] = 35,
-            ["Hotdog Daschund"] = 1,
-            ["Bacon Pig"] = 1,
             ["Junkbot"] = 4,
             "French Fry Ferret",
             ["Spaghetti Sloth"] = 1,
-            ["Mochi Mouse"] = 2,
-            ["Kodama"] = 1,
+            "Kodama",
+            "Spriggan",
             "Corrupted Kitsune",
+            "Nihonzaru",
             ["Starfish"] = 8,
             ["Capybara"] = 1,
             ["Tanchozuru"] = 1,
@@ -204,30 +173,38 @@ getgenv().ConfigsKaitun = {
         LockPet_Weight = 5, -- if Weight >= 10 they will locked
     },
 
-    Webhook = {
-		UrlPet = "https://discord.com/api/webhooks/1386629644140417145/rXZ-L2AWqC2p-dzbGULNBLoKmQiJ7tvUrPIhsFT5DcysdOvid77952-1jVKi4hOiq0qs",
-		UrlSeed = "XXX",
-		PcName = "LUCKY-AYAYA",
+	Webhook = {
+		UrlPet = "https://discord.com/api/webhooks/1288486290794217565/GtYWtRVhHU_Eq6XXyF0szbG3Ox3YRjUx2u6q4Ow9gvv083CwWUMT6zOY7SUbStQorr0v",
+		UrlSeed = "",
+		PcName = "PVT",
+
+		Mention = "", -- discord id
 
 		Noti = {
 			Seeds = {
+				"Sunflower",
+				"Dragon Pepper",
+				"Elephant Ears",
 			},
 			SeedPack = {
 				"Idk"
 			},
 			Pets = {
+				"Lobster Thermidor",
 				"Golden Goose",
 				"French Fry Ferret",
-                "Lobster Thermidor",
+				"Corrupted Kitsune",
+				"Kitsune",
+				"Spinosaurus",
+				"T-Rex",
 				"Disco Bee",
-		        "Corrupted Kitsune",
 				"Butterfly",
 				"Mimic Octopus",
 				"Queen Bee",
-				"Dragonfly",
-				"Kitsune",
-				"Raccoon",
 				"Fennec Fox",
+				"Dragonfly",
+				"Raccoon",
+				"Red Fox",
 			},
 			Pet_Weight_Noti = true,
 		}
@@ -235,8 +212,3 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
-
-
-
-
-
