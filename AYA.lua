@@ -43,12 +43,12 @@ getgenv().gagConfig = {
     BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Trading Ticket" },
     USE_SPRINKLER = { "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Grandmaster Sprinkler" },
 
-    PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1246353354930651207/OIsCx9I2sXKRokSTvcAWbM121LUdAH13mOE8J5Erh8q-RQUzECGSS2Oixoi8x7Egl8Ky",
-    SEED_WEBHOOK_URL = "https://discord.com/api/webhooks/1403463805492527175/eDY8nzArfGnPZmiUqdaFVkw1rm0NkJCId9lGjf2kOgMslB5g2b4HDqesarnm7CXAWJ1H",
-    NOTIFY_PETS = { "Starfish", "Golden Goose", "Lobster Thermidor", "French Fry Ferret", "Corrupted Kitsune", "Kitsune", "Fennec Fox", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "T-Rex", "Red Fox", "Spinosaurus" },
+    PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1401748636291039303/mrWcwfJUa15zymUYhAXo51iPJmSxJqjruvotDtv3NDoRzmHv65cIt86yUCIiLBUEdFMH",
+    SEED_WEBHOOK_URL = "",
+    NOTIFY_PETS = {"Golden Goose", "Lobster Thermidor", "French Fry Ferret", "Corrupted Kitsune", "Kitsune", "Fennec Fox", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "T-Rex", "Red Fox", "Spinosaurus" },
     NOTIFY_PETS_WEIGHT = 5,
-    DISCORD_ID = "473755357274046464",
-    WEBHOOK_NOTE = "Dew",
+    DISCORD_ID = "",
+    WEBHOOK_NOTE = "",
     SHOW_WEBHOOK_USERNAME = false,
 }
 
