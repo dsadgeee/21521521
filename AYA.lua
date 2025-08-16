@@ -94,6 +94,7 @@ getgenv().ConfigsKaitun = {
 		Shop = {
 			"Zen Egg",
 			"Koi",
+			"Sprout Egg",
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
@@ -125,6 +126,7 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
+			"Sprout Egg",
 			"Gourmet Egg",
 			"Zen Egg",
 			"Sprout Egg",
