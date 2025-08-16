@@ -37,7 +37,7 @@ getgenv().gagConfig = {
     KEEP_PETS_AGE = 75,
 
     -- EQUIP_PETS Priority (Left -> Right)
-    EQUIP_PETS = { ["Sunny-Side Chicken"] = 3, ["Hotdog Daschund"] = 1, ["Capybara"] = 1, "Starfish" },
+    EQUIP_PETS = { ["Sunny-Side Chicken"] = 5, ["Starfish"] = 3 },
     USE_PETS_FOR_UPGRADE_SLOT = { "Starfish" },
 
     BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Trading Ticket" },
