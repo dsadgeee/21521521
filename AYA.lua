@@ -1,5 +1,4 @@
 wait(5)
-setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -16,7 +15,7 @@ getgenv().ConfigsKaitun = {
 	["Rejoin When Update"] = false,
 	["Limit Tree"] = {
 		["Limit"] = 200,
-		["Destroy Untill"] = 200,
+		["Destroy Untill"] = 150,
 
 		["Safe Tree"] = {
 			"Tranquil Bloom",
@@ -24,7 +23,7 @@ getgenv().ConfigsKaitun = {
 			"Moon Mango",
 			"Bone Blossom",
 			"Fossilight",
-      	    "Serenity",
+      		"Serenity",
 
 		}
 	},
@@ -74,9 +73,17 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Events = {
-		["Cook Event"] = {
-			Minimum_Money = 30_000_000, -- minimum money to start play this event
-			Rewards_Item = { "Culinarian Chest", "Gourmet Egg", "Gorilla Chef", "Sunny-Side Chicken", "Cooking Cauldron", "Pet Shard Aromatic", "Gourmet Seed Pack", "Bitter Melon Seed", "Pricklefruit Seed", "Butternut Squash Seed", "Spring Onion Seed", "Kitchen Crate", "Kitchen Flooring", "Kitchen Cart", "Smoothie Fountain" }
+		["Bean Event"] = {
+			Minimum_Money = 10_000_000, -- minimum money to start play this event
+		},
+		Shop = { -- delete -- to buy
+			"Sprout Seed Pack",
+			"Sprout Egg",
+			--"Mandrake",
+			"Silver Fertilizer",
+			"Canary Melon",
+			"Amberheart",
+			"Spriggan",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
@@ -87,7 +94,6 @@ getgenv().ConfigsKaitun = {
 		Shop = {
 			"Zen Egg",
 			"Koi",
-			"Sprout Egg",
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
@@ -95,6 +101,7 @@ getgenv().ConfigsKaitun = {
 	Gear = {
 		Buy = { 
 			"Master Sprinkler",
+			"Grandmaster Sprinkler",
 			"Godly Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
@@ -106,6 +113,7 @@ getgenv().ConfigsKaitun = {
 		},
 		Lock = {
 			"Master Sprinkler",
+			"Grandmaster Sprinkler",
 			"Godly Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
@@ -117,9 +125,9 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Sprout Egg",
-	        "Gourmet Egg",
+			"Gourmet Egg",
 			"Zen Egg",
+			"Sprout Egg",
 			"Primal Egg",
 			"Dinosaur Egg",
 			"Oasis Egg",
@@ -136,14 +144,14 @@ getgenv().ConfigsKaitun = {
 		Buy = {
 			"Bee Egg",
 			"Oasis Egg",
+			"Sprout Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
 			"Night Egg",
 			["Rare Summer Egg"] = 20,
 			"Bug Egg",
 			"Mythical Egg",
-			["Common Summer Egg"] = 20,
-			["Common Egg"] = 40,
+			"Common Summer Egg",
 		}
 	},
 
@@ -151,36 +159,35 @@ getgenv().ConfigsKaitun = {
         ["Start Delete Pet At"] = 45,
         ["Upgrade Slot"] = {
             ["Pet"] = {
-                ["Starfish"] = { 4, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+                ["Starfish"] = { 2, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
             },
             ["Limit Upgrade"] = 5,-- max is 5 (more than or lower than 1 will do nothing)
             ["Equip When Done"] = {
-				["Sunny-Side Chicken"] = { 6, 100, 1 },
-                ["Capybara"] = { 1, 100, 2 },
-                ["Starfish"] = { 8, 100, 3 },
+				["Sunny-Side Chicken"] = { 1, 100, 1},
+				["Hotdog Daschund"] = { 1, 100, 2 },
+                ["Starfish"] = { 8, 76, 3 },
             },
         },
         Favorite_LockedPet = true,
         Locked_Pet_Age = 76, -- pet that age > 60 will lock
         Locked = {
 			"Golden Goose",
+			["Golem"] = 2,
 			["Sushi Bear"] = 2,
-			["Golem"] = 3,
-			["Sapling"] = 3,
-			["Jackalope"] = 3,
 			"Lobster Thermidor",
-            ["Gorilla Chef"] = 2,
+            ["Gorilla Chef"] = 5,
         	["Sunny-Side Chicken"] = 35,
             ["Hotdog Daschund"] = 1,
+            ["Bacon Pig"] = 1,
             ["Junkbot"] = 4,
             "French Fry Ferret",
-            ["Spaghetti Sloth"] = 2,
+            ["Spaghetti Sloth"] = 1,
             ["Mochi Mouse"] = 2,
-            "Kodama",
+            ["Kodama"] = 1,
             "Corrupted Kitsune",
-            ["Starfish"] = 2,
-            ["Capybara"] = 2,
-            ["Tanchozuru"] = 2,
+            ["Starfish"] = 8,
+            ["Capybara"] = 1,
+            ["Tanchozuru"] = 1,
             ["Seal"] = 1,
             "Kitsune",
             "Blood Kiwi",
@@ -192,13 +199,13 @@ getgenv().ConfigsKaitun = {
             "Mimic Octopus",
             "Red Fox",
         },
-        LockPet_Weight = 6, -- if Weight >= 10 they will locked
+        LockPet_Weight = 5, -- if Weight >= 10 they will locked
     },
 
     Webhook = {
-		UrlPet = "https://discord.com/api/webhooks/1401748636291039303/mrWcwfJUa15zymUYhAXo51iPJmSxJqjruvotDtv3NDoRzmHv65cIt86yUCIiLBUEdFMH",
+		UrlPet = "https://discord.com/api/webhooks/1386629644140417145/rXZ-L2AWqC2p-dzbGULNBLoKmQiJ7tvUrPIhsFT5DcysdOvid77952-1jVKi4hOiq0qs",
 		UrlSeed = "XXX",
-		PcName = "Dream",
+		PcName = "LUCKY-AYAYA",
 
 		Noti = {
 			Seeds = {
@@ -207,6 +214,7 @@ getgenv().ConfigsKaitun = {
 				"Idk"
 			},
 			Pets = {
+				"Golden Goose",
 				"French Fry Ferret",
                 "Lobster Thermidor",
 				"Disco Bee",
@@ -225,3 +233,8 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
+
+
+
+
+
