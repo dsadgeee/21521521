@@ -167,6 +167,7 @@ getgenv().ConfigsKaitun = {
         Locked = {
 			"Golden Goose",
 			["Sushi Bear"] = 2,
+			["Golem"] = 5,
 			"Lobster Thermidor",
             ["Gorilla Chef"] = 2,
         	["Sunny-Side Chicken"] = 35,
