@@ -10,6 +10,7 @@ getgenv().gagConfig = {
     BUY_TRAVELING_MERCHANT = { "Bee Egg", "Loquat", "Feijoa", "Pitcher Plant" },
     MAX_EVENT_RESTOCK_SHECKLES = 100_000_000_000,  -- Restock stop at 48m
     BUY_EVENT_SHOP = { "Sprout Egg", "Spriggan", "Amberheart"},
+    PLANT_EVENT_TREES = true,
     
     -- General:
     AUTO_UPDATE_RESTART = false,
