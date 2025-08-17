@@ -1,6 +1,6 @@
 --!native
 --50/50 this breaks but it's a beta for a reason!
-
+--loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/abc.lua"))()
 if getgenv().SimpleSpyExecuted and type(getgenv().SimpleSpyShutdown) == "function" then
     getgenv().SimpleSpyShutdown()
 end
