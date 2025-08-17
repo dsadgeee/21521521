@@ -6,7 +6,7 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
  
-	Collect_Cooldown = 3, -- cooldown to collect fruit
+	Collect_Cooldown = 30, -- cooldown to collect fruit
 	JustFuckingCollectAll = false, -- Collect all (fruit not wait mutation)
 
 	["Low Cpu"] = true,
@@ -136,7 +136,7 @@ getgenv().ConfigsKaitun = {
 		["Bean Event"] = {
 			Minimum_Money = 10_000_000, -- minimum money to start play this event
 		},
-		MaxMoney_Restocks = 5_000_000_000,
+		MaxMoney_Restocks = 100_000_000_000,
 		Shop = { -- delete -- to buy
 			"Sprout Seed Pack",
 			"Sprout Egg",
@@ -181,8 +181,8 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Gourmet Egg",
 			"Sprout Egg",
+			"Gourmet Egg",
 			"Zen Egg",
 			"Primal Egg",
 			"Dinosaur Egg",
@@ -193,47 +193,51 @@ getgenv().ConfigsKaitun = {
 			"Paradise Egg",
 			"Bee Egg",
 			"Mythical Egg",
-			"Rare Summer Egg",
 			"Common Summer Egg",
 		},
 		Buy = {
-			"Bee Egg",
 			"Sprout Egg",
+			"Gourmet Egg",
+			"Bee Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
 			"Night Egg",
-			["Rare Summer Egg"] = 20,
 			"Bug Egg",
 			"Mythical Egg",
 			"Common Summer Egg",
-			["Common Egg"] = 40,
-			"Zen Egg",
 		}
 	},
 
-    Pets = {
-        ["Start Delete Pet At"] = 45,
+	Pets = {
+		["Start Delete Pet At"] = 45,
         ["Upgrade Slot"] = {
             ["Pet"] = {
                 ["Starfish"] = { 4, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
             },
             ["Limit Upgrade"] = 5,-- max is 5 (more than or lower than 1 will do nothing)
             ["Equip When Done"] = {
-				["Dairy Cow"] = { 8, 100, 2},
-                ["Capybara"] = { 1, 100 },
-                ["Sunny-Side Chicken"] = { 4, 100 },
+                ["Sunny-Side Chicken"] = { 5, 100, 1},
+                ["Starfish"] = { 3, 100, 2 },
             },
         },
-        Favorite_LockedPet = true,
-        Locked_Pet_Age = 76, -- pet that age > 60 will lock
+		Unfavorite_AllPet = false,
+		Favorite_LockedPet = true,
+		 Locked_Pet_Age = 76, -- pet that age > 60 will lock
         Locked = {
-			"Lobster Thermidor",
+			["Sushi Bear"] = 5,
 			"Golden Goose",
-        	["Sunny-Side Chicken"] = 20,
+			["Golem"] = 5,
+			["Sapling"] = 5,
+			["Jackalope"] = 5,
+			"Lobster Thermidor",
+            ["Gorilla Chef"] = 8,
+        	["Sunny-Side Chicken"] = 35,
+            ["Junkbot"] = 4,
             "French Fry Ferret",
+            ["Spaghetti Sloth"] = 1,
             "Kodama",
-            ["Dairy Cow"] = 8,
+            "Spriggan",
             "Corrupted Kitsune",
             "Nihonzaru",
             ["Starfish"] = 8,
@@ -253,34 +257,42 @@ getgenv().ConfigsKaitun = {
         LockPet_Weight = 5, -- if Weight >= 10 they will locked
     },
 
-    Webhook = {
-		UrlPet = "https://discord.com/api/webhooks/1394039615949639822/ru1nhLaHQ0YheuaUN238iKf337NATfBXg224aTMSInFTWhNg24i7aPpFSIy6NAUAfr3r",
-		UrlSeed = "XXX",
-		PcName = "DOICONCAK",
+	Webhook = {
+		UrlPet = "https://discord.com/api/webhooks/1401748636291039303/mrWcwfJUa15zymUYhAXo51iPJmSxJqjruvotDtv3NDoRzmHv65cIt86yUCIiLBUEdFMH",
+		UrlSeed = "",
+		PcName = "PVT",
+
+		Mention = "", -- discord id
 
 		Noti = {
 			Seeds = {
+				"Sunflower",
+				"Dragon Pepper",
+				"Elephant Ears",
 			},
 			SeedPack = {
 				"Idk"
 			},
 			Pets = {
+				"Lobster Thermidor",
+				"Golden Goose",
 				"French Fry Ferret",
-                "Lobster Thermidor",
-                "Golden Goose",
+				"Corrupted Kitsune",
+				"Kitsune",
+				"Spinosaurus",
+				"T-Rex",
 				"Disco Bee",
-		        "Corrupted Kitsune",
 				"Butterfly",
 				"Mimic Octopus",
 				"Queen Bee",
-				"Dragonfly",
-				"Kitsune",
-				"Raccoon",
 				"Fennec Fox",
+				"Dragonfly",
+				"Raccoon",
+				"Red Fox",
 			},
 			Pet_Weight_Noti = true,
 		}
 	},
 }
-License = "dY8f40dvdVToW40xyQj7gqt8faG4IoFO"
+License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
