@@ -6,9 +6,10 @@ getgenv().gagConfig = {
 -- Event:
     -- Event:
     CRAFT_EVENT = { "Anti Bee Egg" },
+    BUY_EVENT_SHOP = { "Zen Egg" },
     BUY_TRAVELING_MERCHANT = { "Bee Egg", "Loquat", "Feijoa", "Pitcher Plant" },
     MAX_EVENT_RESTOCK_SHECKLES = 100_000_000_000,  -- Restock stop at 48m
-    BUY_EVENT_SHOP = { "Sprout Egg", "Spriggan", "Amberheart", "Zen Egg"},
+    BUY_EVENT_SHOP = { "Sprout Egg", "Spriggan", "Amberheart"},
     
     -- General:
     AUTO_UPDATE_RESTART = false,
@@ -41,7 +42,6 @@ getgenv().gagConfig = {
 
     -- EQUIP_PETS Priority (Left -> Right)
     EQUIP_PETS = { ["Sunny-Side Chicken"] = 8, ["Spriggan"] = 2, ["Starfish"] = 8},
-    USE_PETS_FOR_UPGRADE_SLOT = { "Starfish" },
     USE_PETS_FOR_UPGRADE_SLOT = { "Starfish", "Capybara"},
 
     BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler" },
