@@ -1,20 +1,21 @@
+wait(5)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
 	NoDeletePlayer = false,
 
 	["Block Pet Gift"] = true,
-
-	Collect_Cooldown = 20, -- cooldown to collect fruit
+ 
+	Collect_Cooldown = 30, -- cooldown to collect fruit
 	JustFuckingCollectAll = false, -- Collect all (fruit not wait mutation)
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = true,
+	["Rejoin When Update"] = false,
 	["Limit Tree"] = {
-		["Limit"] = 200,
-		["Destroy Until"] = 180,
+		["Limit"] = 250,
+		["Destroy Untill"] = 225,
 
 		["Safe Tree"] = {
 			"Tranquil Bloom",
@@ -54,14 +55,30 @@ getgenv().ConfigsKaitun = {
 			"Strawberry",
 			"Blueberry",
 			"Tomato",
+
 		}
 	},
 
 	Seed = {
 		Buy = {
-			Mode = "Auto", -- Custom , Auto
-			Custom = { -- any fruit u need to place
-				"Carrot",
+			Mode = "Custom", -- Custom , Auto
+			Custom = {
+				"Tomato",
+				"Strawberry",
+				"Bell Pepper",
+				"Blood Banana",
+				"Onion",
+				"Pear",
+				"Grape",
+				"Mushroom",
+				"Pepper",
+				"Cacao",
+				"Beanstalk",
+				"Ember Lily",
+				"Sugar Apple",
+				"Burning Bud",
+				"Giant Pinecone",
+				"Elder Strawberry",
 			}
 		},
 		Place = {
@@ -104,6 +121,7 @@ getgenv().ConfigsKaitun = {
 				"Strawberry",
 				"Blueberry",
 				"Tomato",
+
 			}
 		}
 	},
@@ -126,7 +144,7 @@ getgenv().ConfigsKaitun = {
 			"Silver Fertilizer",
 			-- "Canary Melon",
 			-- "Amberheart",
-			"Spriggan",
+			-- "Spriggan",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
@@ -147,16 +165,17 @@ getgenv().ConfigsKaitun = {
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
-			"Level Up Lollipop",
+			"Levelup Lollipop",
 			"Medium Treat",
 			"Medium Toy",
+			"Trading Ticket",
 		},
 		Lock = {
 			"Master Sprinkler",
 			"Godly Sprinkler",
-			"Advanced Sprinkler",
-			"Basic Sprinkler",
 			"Lightning Rod",
+			"Levelup Lollipop",
+			"Trading Ticket",
 		},
 	},
 
