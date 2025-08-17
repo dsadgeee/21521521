@@ -1,4 +1,3 @@
-wait(15)
 script_key="BDhKQzjQqINOabkQaYwZFqtuLOOJJfKM";
 setfpscap(2)
 
