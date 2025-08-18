@@ -15,6 +15,7 @@ getgenv().gagConfig = {
     REDEEM_CODES = {},
     EXTRA_PET_SLOTS = 5,
     EXTRA_EGG_SLOTS = 5,
+    EXTRA_PET_INVENTORY_SLOTS = 10,
     OPEN_ALL_SEED_PACK = true,
     ADD_FRIEND = true,
     FAST_LEVEL_PET = true,
