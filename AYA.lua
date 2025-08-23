@@ -2,7 +2,6 @@ script_key="pakBKJVzXIBWhOgSMvlXWoCJFfeCuBKX";
 setfpscap(2)
 
 getgenv().gagConfig = {
--- Event:
     -- Event:
     CRAFT_EVENT = { "Anti Bee Egg", "Skyroot Chest", "Sprout Egg" },
     BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg" },
@@ -16,23 +15,16 @@ getgenv().gagConfig = {
     EXTRA_EGG_SLOTS = 5,
     ADD_FRIEND = true,
     OPEN_ALL_SEED_PACK = false,
-    FAST_LEVEL_PET = true,
-
-    MAX_PLANTS = 200,
-    DESTROY_UNTIL_MIN_PLANTS = 200,
-    DELETE_PLANTS_AFTER_MAX = { "Carrot", "Strawberry", "Blueberry", "Tomato", "Cauliflower", "Apple", "Coconut" },
-
-    KEEP_SEEDS_AFTER_MAX_PLANTS = { "Carrot", "Strawberry", "Blueberry", "Orange Tulip", "Tomato" },
     
-    BUY_EGGS = {"Mythical Egg", "Bug Egg", "Bee Egg", "Paradise Egg", "Rare Egg" , "Uncommon Egg", ["Common Summer Egg"] = 20, ["Rare Summer Egg"] = 20 ,},
-    PLANT_EGGS = {"Gourmet Egg", "Common Summer Egg", "Rare Egg",  "Rare Summer Egg", "Corrupted Zen Egg", "Zen Egg", "Dinosaur Egg", "Primal Egg", "Anti Bee Egg", "Bee Egg", "Night Egg", "Bug Egg", "Paradise Egg", "Mythical Egg" },
+    BUY_EGGS = {"Mythical Egg", "Bug Egg", "Bee Egg", "Paradise Egg", ["Common Summer Egg"] = 20, ["Rare Summer Egg"] = 20, "Uncommon Egg", ["Rare Egg"] = 99},
+    PLANT_EGGS = { "Gourmet Egg", "Zen Egg", "Anti Bee Egg", "Primal Egg", "Bug Egg", "Paradise Egg", "Mythical Egg", "Common Summer Egg", "Rare Summer Egg" },
     
     -- BUY_SEED_SHOP Priority (Left -> Right)
     BUY_SEED_SHOP = { "Romanesco", "Giant Pinecone", "Burning Bud", "Sugar Apple", "Ember Lily", "Beanstalk", "Cacao", "Pepper", "Mushroom", "Grape", "Mango", "Dragon Fruit", "Cactus", "Coconut", "Bamboo", "Apple", "Pumpkin", "Watermelon", "Daffodil", "Tomato", "Orange Tulip", "Blueberry", "Strawberry", "Carrot" },
     KEEP_SEEDS = { "Grand Tomato", "King Cabbage", "Bone Blossom" },
     
-    FAVOURITE_FRUIT_MUTATIONS = {},  -- Stop Autosell
-    SKIP_HARVEST_MUTATIONS = {},  -- Stop Harvest
+    FAVOURITE_FRUIT_MUTATIONS = {},
+    SKIP_HARVEST_MUTATIONS = {},
 
     KEEP_PETS = {"Chicken", ["Mandrake"] = 2, "Griffin", "Chicken Zombie", "Peach Wasp", "Lemon Lion", "Apple Gazelle", "Green Bean", ["Golem"] = 1, "Golden Goose", ["Spriggan"] = 4, "Lobster Thermidor", ["Gorilla Chef"] = 1, ["Sunny-Side Chicken"] = 35, ["Hotdog Daschund"] = 1, ["Bacon Pig"] = 1, ["Junkbot"] = 3, "French Fry Ferret", ["Spaghetti Sloth"] = 1, ["Mochi Mouse"] = 1, ["Kodama"] = 1, "Corrupted Kitsune", ["Starfish"] = 8, ["Capybara"] = 1, ["Tanchozuru"] = 1, ["Seal"] = 1, "Dilophosaurus", "Brontosaurus", "Ankylosaurus", "Spinosaurus", "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox" },
     KEEP_PETS_WEIGHT = 6,
