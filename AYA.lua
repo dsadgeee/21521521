@@ -2,13 +2,11 @@ script_key="BDhKQzjQqINOabkQaYwZFqtuLOOJJfKM";
 setfpscap(2)
 
 getgenv().gagConfig = {
--- Event:
     -- Event:
-    CRAFT_EVENT = { "Anti Bee Egg" },
-    BUY_EVENT_SHOP = { "Zen Egg" },
-    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Loquat", "Feijoa", "Pitcher Plant" },
-    MAX_EVENT_RESTOCK_SHECKLES = 10_000_000_000_000,  -- Restock stop at 48m
-    BUY_EVENT_SHOP = { "Sprout Egg", "Spriggan", "Amberheart"},
+    CRAFT_EVENT = { "Anti Bee Egg", "Skyroot Chest" },
+    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Primal Egg", "Loquat", "Feijoa", "Pitcher Plant" },
+    MAX_EVENT_RESTOCK_SHECKLES = 10_000_000_000_000, -- Restock stop at 48m
+    BUY_EVENT_SHOP = { "Sprout Egg", "Spriggan" },
     
     -- General:
     AUTO_UPDATE_RESTART = false,
