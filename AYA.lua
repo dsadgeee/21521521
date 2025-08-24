@@ -14,6 +14,7 @@ getgenv().gagConfig = {
     EXTRA_PET_SLOTS = 5,
     EXTRA_EGG_SLOTS = 5,
     ADD_FRIEND = true,
+    PLANT_EVENT_TREES = true,
     OPEN_ALL_SEED_PACK = false,
 
     MAX_PLANTS = 300,
