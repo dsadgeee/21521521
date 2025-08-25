@@ -1,293 +1,52 @@
-getgenv().ConfigsKaitun = {
-	Beta_Fix_Data_Sync = true,
+script_key="pakBKJVzXIBWhOgSMvlXWoCJFfeCuBKX";
+setfpscap(2)
 
-	NoDeletePlayer = false,
+getgenv().gagConfig = {
+    -- Event:
+    CRAFT_EVENT = { "Anti Bee Egg", "Skyroot Chest", "Sprout Egg" },
+    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg" },
+    MAX_EVENT_RESTOCK_SHECKLES = 50_000_000_000_000,  -- Restock stop at..
+    BUY_EVENT_SHOP = { "Sprout Egg", "Spriggan", "Skyroot Chest", "Sprout Seed Pack" },
 
-	["Block Pet Gift"] = true,
+    -- General:
+    AUTO_UPDATE_RESTART = false,
+    REDEEM_CODES = {},
+    EXTRA_PET_SLOTS = 5,
+    EXTRA_EGG_SLOTS = 5,
+    ADD_FRIEND = true,
+    PLANT_EVENT_TREES = true,
+    OPEN_ALL_SEED_PACK = false,
 
-	Collect_Cooldown = 60, -- cooldown to collect fruit
+    MAX_PLANTS = 300,
+    DESTROY_UNTIL_MIN_PLANTS = 200,
+    DELETE_PLANTS_AFTER_MAX = { "Carrot", "Strawberry", "Blueberry", "Tomato", "Cauliflower", "Apple", "Coconut" },
+    
+    BUY_EGGS = {"Mythical Egg", "Bug Egg", "Bee Egg", "Paradise Egg", ["Common Summer Egg"] = 20, ["Rare Summer Egg"] = 20, "Uncommon Egg", "Rare Egg","Common Egg" , "Legendary Egg"},
+    PLANT_EGGS = { ["Sprout Egg"] = 1, "Gourmet Egg", "Zen Egg", "Anti Bee Egg", "Primal Egg", "Bug Egg", "Paradise Egg", "Legendary Egg", "Uncommon Egg", "Rare Egg", "Mythical Egg", "Common Summer Egg", "Rare Summer Egg", "Common Egg" },
+    
+    -- BUY_SEED_SHOP Priority (Left -> Right)
+    BUY_SEED_SHOP = { "Romanesco", "Giant Pinecone", "Burning Bud", "Sugar Apple", "Ember Lily", "Beanstalk", "Cacao", "Pepper", "Mushroom", "Grape", "Mango", "Dragon Fruit", "Cactus", "Coconut", "Bamboo", "Apple", "Pumpkin", "Watermelon", "Daffodil", "Tomato", "Orange Tulip", "Blueberry", "Strawberry", "Carrot" },
+    KEEP_SEEDS = { "Grand Tomato", "King Cabbage", "Bone Blossom" },
+    
+    FAVOURITE_FRUIT_MUTATIONS = {},
+    SKIP_HARVEST_MUTATIONS = {},
 
-	["Low Cpu"] = true,
-	["Auto Rejoin"] = false,
+    KEEP_PETS = {["Rooster"] = 16 , ["Chicken"] = 5, ["Mandrake"] = 2, "Griffin", "Chicken Zombie", "Peach Wasp", "Lemon Lion", "Apple Gazelle", "Green Bean", ["Golem"] = 1,"Golden Goose", ["Spriggan"] = 4, "Lobster Thermidor", ["Gorilla Chef"] = 1, ["Sunny-Side Chicken"] = 35, ["Hotdog Daschund"] = 1, ["Bacon Pig"] = 1, ["Junkbot"] = 3, "French Fry Ferret", ["Spaghetti Sloth"] = 1, ["Mochi Mouse"] = 1, ["Kodama"] = 1, "Corrupted Kitsune", ["Starfish"] = 8, ["Capybara"] = 1, ["Tanchozuru"] = 1, ["Seal"] = 1, "Dilophosaurus", "Brontosaurus", "Ankylosaurus", "Spinosaurus", "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox" },
+    KEEP_PETS_WEIGHT = 6,
 
-	["Rejoin When Update"] = false,
-	["Limit Tree"] = {
-		["Limit"] = 250,
-		["Destroy Until"] = 200,
+    -- EQUIP_PETS Priority (Left -> Right)
+    EQUIP_PETS = {["Starfish"] = 5, ["Seal"] = 3 , ["Lemon Lion"] = 1, ["Grey Mous"] = 2, ["Brown Mouse"] = 2,"Squirrel" , ["Orange Tabby"] = 2, ["Rooster"] = 5 , ["Chicken"] = 5, ["Sunny-Side Chicken"] = 4},
+    USE_PETS_FOR_UPGRADE_SLOT = { "Starfish" , "Seal" , "Brown Mouse" },
 
-		["Safe Tree"] = {
-            "Moon Blossom",
-            "Bone Blossom",
-            "Moon Melon",
-            "Maple Apple",
-            "Moon Mango",
-            "Dragon Pepper",
-            "Elephant Ears",
-            "Fossilight",
-            "Princess Thorn",
-			"Pineapple",
-			"Spike Mango",
-			"Starfruit",
-			"Horned Dinoshroom",
-			"Celestiberry",
-			"Mango",
-			"Watermelon",
-			"Grape",
-			"Mapple Apple",
-			"Moon Blossom",
-			"Sugar Apple",
-			"Beanstalk",
-			"Cacao",
-			"Apple",
-			"Conocut",
-			"Dragon Fruit",
-			"Grand Tomato",
-			"Pricklefruit",
-			"Mandrake",
-			"Mangosteen",
-			"Princess Thorn",
-			"Ember Lily",
-			"Burning Bud",
-			"Pepper",
-			"Mushroom",
-			-- for the event
-            ["Blueberry"] = 15,
-            ["Strawberry"] = 15,
-            ["Apple"] = 15,
-            ["Coconut"] = 15,
-            ["Dragon Fruit"] = 15,
-            ["Mango"] = 15,
-            ["Tomato"] = 20,
-            ["Cactus"] = 15,
-            ["Beanstalk"] = 20,
-		}
-	},
+    BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler" },
+    USE_SPRINKLER = { "Grandmaster Sprinkler", "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler" },
 
-	Seed = {
-		Buy = {
-			Mode = "Auto", -- Custom , Auto
-			Custom = { -- any fruit u need to place
-				"Carrot",
-			}
-		},
-		Place = {
-			Mode = "Lock", -- Select , Lock
-			Select = {
-				"Carrot"
-			},
-			Lock = {
-				"Maple Apple",
-				"Sunflower",
-				"Dragon Pepper",
-				"Elephant Ears",
-				"Moon Melon",
-				"Easter Egg",
-				"Moon Mango",
-				"Bone Blossom",
-				"Fossilight",
-			}
-		}
-	},
-
-	["Seed Pack"] = {
-		Locked = {
-"Sprout Seed Pack",
-		}
-	},
-
-	Events = {
-		["Bean Event"] = {
-			Minimum_Money = 10_000_000, -- minimum money to start play this event
-		},
-		MaxMoney_Restocks = 50_000_000_000_000,
-		Shop = { -- un comment to buy
-			"Sprout Seed Pack",
-			"Sprout Egg",
-			-- "Mandrake",
-			-- "Silver Fertilizer",
-			-- "Canary Melon",
-			-- "Amberheart",
-			-- ["Spriggan"] = 8,
-			-- Friend Shop
-			"Skyroot Chest",
-			"Pet Shard GiantBean",
-			"Gnome",
-		},
-		["Traveling Shop"] = {
-			"Bee Egg",
-			"Paradise Egg",
-		},
-		Craft = {
-			"Anti Bee Egg",
-			"Skyroot Chest",
-			"Sprout Egg",
-		},
-		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
-	},
-
-	Gear = {
-		Buy = { 
-			"Master Sprinkler",
-			"Godly Sprinkler",
-			"Advanced Sprinkler",
-			"Basic Sprinkler",
-			"Lightning Rod",
-			"Level Up Lollipop",
-			"Medium Treat",
-			"Medium Toy",
-		},
-		Lock = {
-			"Master Sprinkler",
-			"Godly Sprinkler",
-			"Advanced Sprinkler",
-			"Basic Sprinkler",
-			"Lightning Rod",
-		},
-	},
-
-	Eggs = {
-		Place = {
-			"Gourmet Egg",
-			"Sprout Egg",
-			"Zen Egg",
-			"Primal Egg",
-			"Dinosaur Egg",
-			"Oasis Egg",
-			"Anti Bee Egg",
-			"Night Egg",
-			"Bug Egg",
-			"Paradise Egg",
-			"Bee Egg",
-			"Rare Summer Egg",
-			"Mythical Egg",
-			"Legendary Egg",
-			"Rare Egg",
-		},
-		Buy = {
-			"Bee Egg",
-			"Oasis Egg",
-			"Paradise Egg",
-			"Anti Bee Egg",
-			"Night Egg",
-			"Rare Summer Egg",
-			"Bug Egg",
-			"Mythical Egg",
-			"Uncommon Egg",
-			"Common Egg",
-			"Legendary Egg",
-			"Rare Egg",
-			"Common Summer Egg",
-			"Rare Summer Egg",
-		}
-	},
-
-	Pets = {
-		["Auto Feed"] = true,
-
-		["Start Delete Pet At"] = 45,
-		["Upgrade Slot"] = {
-			["Pet"] = {
-				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
-			},
-			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
-			["Equip When Done"] = {
-				["Starfish"] = 5,
-				["Seal"] = 3,
-				["Lemon Lion"] = 1,
-				["Grey Mous"] = 2,
-				["Brown Mouse"] = 2,
-				"Squirrel",
-				["Orange Tabby"] = 2,
-				["Rooster"] = 5,
-				["Chicken"] = 5,
-				["Sunny-Side Chicken"] = 4,
-			},
-		},
-		Unfavorite_AllPet = true,
-		Favorite_LockedPet = true,
-		Locked_Pet_Age = 60, -- pet that age > 60 will lock
-		Locked = {
-				["Rooster"] = 16,
-				["Chicken"] = 5,
-				["Mandrake"] = 2,
-				"Griffin",
-				"Chicken Zombie",
-				"Peach Wasp",
-				"Lemon Lion",
-				"Apple Gazelle",
-				"Green Bean",
-				["Golem"] = 1,
-				"Gorilla Chef",
-				"Golden Goose",
-				["Spriggan"] = 4,
-				"Lobster Thermidor",
-				["Gorilla Chef"] = 1,
-				["Sunny-Side Chicken"] = 35,
-				["Hotdog Daschund"] = 1,
-				["Bacon Pig"] = 1,
-				["Junkbot"] = 3,
-				"French Fry Ferret",
-				["Spaghetti Sloth"] = 1,
-				["Mochi Mouse"] = 1,
-				["Kodama"] = 1,
-				"Corrupted Kitsune",
-				["Starfish"] = 8,
-				["Capybara"] = 1,
-				["Tanchozuru"] = 1,
-				["Seal"] = 1,
-				"Dilophosaurus",
-				"Brontosaurus",
-				"Ankylosaurus",
-				"Spinosaurus",
-				"Kitsune",
-				"Blood Kiwi",
-				"Disco Bee",
-				"Raccoon",
-				"Queen Bee",
-				"Dragonfly",
-				"Butterfly",
-				"Mimic Octopus",
-				"Red Fox",
-		},
-		LockPet_Weight = 5, -- if Weight >= 10 they will locked
-	},
-
-	Webhook = {
-		UrlPet = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
-		UrlSeed = "xxx",
-		PcName = "xxx",
-
-		Mention = "698853568291143821", -- discord id
-
-		Noti = {
-			Seeds = {
-				"Sunflower",
-				"Dragon Pepper",
-				"Elephant Ears",
-			},
-			SeedPack = {
-				"Idk"
-			},
-			Pets = {
-				"Golden Goose",
-				"Griffin",
-				"French Fry Ferret",
-				"Corrupted Kitsune",
-				"Kitsune",
-				"Spinosaurus",
-				"T-Rex",
-				"Disco Bee",
-				"Butterfly",
-				"Mimic Octopus",
-				"Queen Bee",
-				"Fennec Fox",
-				"Dragonfly",
-				"Raccoon",
-				"Red Fox",
-			},
-			Pet_Weight_Noti = true,
-		}
-	},
+    PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
+    SEED_WEBHOOK_URL = "", 
+    NOTIFY_PETS = { "Griffin", "Golden Goose", "Lobster Thermidor", "French Fry Ferret", "Corrupted Kitsune", "Kitsune", "Fennec Fox", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "T-Rex", "Red Fox", "Spinosaurus"},
+    NOTIFY_PETS_WEIGHT = 6,
+    DISCORD_ID = "698853568291143821",
+    WEBHOOK_NOTE = "Dream",
+    SHOW_WEBHOOK_USERNAME = true,
 }
-License = "hLv5vGDrHC1cR2eyIaPkonhV0CmU0L12"
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/c916e5b90dc37c71ecf1ec00dfce3d5d.lua"))()
