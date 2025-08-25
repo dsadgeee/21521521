@@ -257,7 +257,7 @@ getgenv().ConfigsKaitun = {
 		UrlSeed = "xxx",
 		PcName = "xxx",
 
-		Mention = "", -- discord id
+		Mention = "698853568291143821", -- discord id
 
 		Noti = {
 			Seeds = {
