@@ -15,6 +15,8 @@ getgenv().gagConfig = {
     EXTRA_EGG_SLOTS = 5,
     ADD_FRIEND = true,
     OPEN_ALL_SEED_PACK = false,
+    PLANT_EVENT_TREES = true,  -- This config will replace most plant related config
+    PLACE_COSMETIC = { "Cooking Kit" },
 
     MAX_PLANTS = 300,
     DESTROY_UNTIL_MIN_PLANTS = 200,
