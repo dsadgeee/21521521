@@ -1,52 +1,138 @@
-script_key="pakBKJVzXIBWhOgSMvlXWoCJFfeCuBKX";
-setfpscap(2)
+getgenv().ConfigsKaitun = {
+	Beta_Fix_Data_Sync = true,
 
-getgenv().gagConfig = {
-    -- Event:
-    CRAFT_EVENT = { "Anti Bee Egg", "Skyroot Chest", "Sprout Egg" },
-    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg" },
-    MAX_EVENT_RESTOCK_SHECKLES = 50_000_000_000_000,  -- Restock stop at..
-    BUY_EVENT_SHOP = { "Sprout Egg", "Spriggan", "Skyroot Chest", "Sprout Seed Pack" },
+	NoDeletePlayer = false,
 
-    -- General:
-    AUTO_UPDATE_RESTART = false,
-    REDEEM_CODES = {},
-    EXTRA_PET_SLOTS = 5,
-    EXTRA_EGG_SLOTS = 5,
-    ADD_FRIEND = true,
-    PLANT_EVENT_TREES = true,
-    OPEN_ALL_SEED_PACK = false,
+	["Block Pet Gift"] = true,
 
-    MAX_PLANTS = 300,
-    DESTROY_UNTIL_MIN_PLANTS = 200,
-    DELETE_PLANTS_AFTER_MAX = { "Carrot", "Strawberry", "Blueberry", "Tomato", "Cauliflower", "Apple", "Coconut" },
-    
-    BUY_EGGS = {"Mythical Egg", "Bug Egg", "Bee Egg", "Paradise Egg", ["Common Summer Egg"] = 20, ["Rare Summer Egg"] = 20, "Uncommon Egg", "Rare Egg","Common Egg" , "Legendary Egg"},
-    PLANT_EGGS = { ["Sprout Egg"] = 1, "Gourmet Egg", "Zen Egg", "Anti Bee Egg", "Primal Egg", "Bug Egg", "Paradise Egg", "Legendary Egg", "Uncommon Egg", "Rare Egg", "Mythical Egg", "Common Summer Egg", "Rare Summer Egg", "Common Egg" },
-    
-    -- BUY_SEED_SHOP Priority (Left -> Right)
-    BUY_SEED_SHOP = { "Romanesco", "Giant Pinecone", "Burning Bud", "Sugar Apple", "Ember Lily", "Beanstalk", "Cacao", "Pepper", "Mushroom", "Grape", "Mango", "Dragon Fruit", "Cactus", "Coconut", "Bamboo", "Apple", "Pumpkin", "Watermelon", "Daffodil", "Tomato", "Orange Tulip", "Blueberry", "Strawberry", "Carrot" },
-    KEEP_SEEDS = { "Grand Tomato", "King Cabbage", "Bone Blossom" },
-    
-    FAVOURITE_FRUIT_MUTATIONS = {},
-    SKIP_HARVEST_MUTATIONS = {},
+	Collect_Cooldown = 60, -- cooldown to collect fruit
 
-    KEEP_PETS = {["Rooster"] = 16 , ["Chicken"] = 5, ["Mandrake"] = 2, "Griffin", "Chicken Zombie", "Peach Wasp", "Lemon Lion", "Apple Gazelle", "Green Bean", ["Golem"] = 1, "Gorilla Chef", "Golden Goose", ["Spriggan"] = 4, "Lobster Thermidor", ["Gorilla Chef"] = 1, ["Sunny-Side Chicken"] = 35, ["Hotdog Daschund"] = 1, ["Bacon Pig"] = 1, ["Junkbot"] = 3, "French Fry Ferret", ["Spaghetti Sloth"] = 1, ["Mochi Mouse"] = 1, ["Kodama"] = 1, "Corrupted Kitsune", ["Starfish"] = 8, ["Capybara"] = 1, ["Tanchozuru"] = 1, ["Seal"] = 1, "Dilophosaurus", "Brontosaurus", "Ankylosaurus", "Spinosaurus", "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox" },
-    KEEP_PETS_WEIGHT = 6,
+	["Low Cpu"] = true,
+	["Auto Rejoin"] = true,
 
-    -- EQUIP_PETS Priority (Left -> Right)
-    EQUIP_PETS = {["Starfish"] = 5, ["Seal"] = 3 , ["Lemon Lion"] = 1, ["Grey Mous"] = 2, ["Brown Mouse"] = 2,"Squirrel" , ["Orange Tabby"] = 2, ["Rooster"] = 5 , ["Chicken"] = 5, ["Sunny-Side Chicken"] = 4},
-    USE_PETS_FOR_UPGRADE_SLOT = { "Starfish" , "Seal" , "Brown Mouse" },
+	["Rejoin When Update"] = false,
+	["Limit Tree"] = {
+		["Limit"] = 300,
+		["Destroy Until"] = 250,
 
-    BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler" },
-    USE_SPRINKLER = { "Grandmaster Sprinkler", "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler" },
+		["Safe Tree"] = {
+            "Moon Blossom",
+            "Bone Blossom",
+            "Moon Melon",
+            "Maple Apple",
+            "Moon Mango",
+            "Dragon Pepper",
+            "Elephant Ears",
+            "Fossilight",
+            "Princess Thorn",
+			"Pineapple",
+			"Spike Mango",
+			"Starfruit",
+			"Horned Dinoshroom",
+			"Celestiberry",
+			"Mango",
+			"Watermelon",
+			"Grape",
+			"Mapple Apple",
+			"Moon Blossom",
+			"Sugar Apple",
+			"Beanstalk",
+			"Cacao",
+			"Apple",
+			"Conocut",
+			"Dragon Fruit",
+			"Grand Tomato",
+			"Pricklefruit",
+			"Mandrake",
+			"Mangosteen",
+			"Princess Thorn",
+			"Ember Lily",
+			"Burning Bud",
+			"Pepper",
+			"Mushrotrue",
+		Favorite_LockedPet = true,
+		Locked_Pet_Age = 60, -- pet that age > 60 will lock
+		Locked = {
+                ["Rooster"] = 16,
+                ["Chicken"] = 5,
+                ["Mandrake"] = 2,
+                "Griffin",
+                "Chicken Zombie",
+                "Peach Wasp",
+                "Lemon Lion",
+                "Apple Gazelle",
+                "Green Bean",
+                ["Golem"] = 1,
+                "Gorilla Chef",
+                "Golden Goose",
+                ["Spriggan"] = 4,
+                "Lobster Thermidor",
+                ["Sunny-Side Chicken"] = 35,
+                ["Hotdog Daschund"] = 1,
+                ["Bacon Pig"] = 1,
+                ["Junkbot"] = 3,
+                "French Fry Ferret",
+                ["Spaghetti Sloth"] = 1,
+                ["Mochi Mouse"] = 1,
+                ["Kodama"] = 1,
+                "Corrupted Kitsune",
+                ["Starfish"] = 8,
+                ["Capybara"] = 1,
+                ["Tanchozuru"] = 1,
+                ["Seal"] = 1,
+                "Dilophosaurus",
+                "Brontosaurus",
+                "Ankylosaurus",
+                "Spinosaurus",
+                "Kitsune",
+                "Blood Kiwi",
+                "Disco Bee",
+                "Raccoon",
+                "Queen Bee",
+                "Dragonfly",
+                "Butterfly",
+                "Mimic Octopus",
+                "Red Fox",
+		},
+		LockPet_Weight = 5, -- if Weight >= 10 they will locked
+	},
 
-    PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
-    SEED_WEBHOOK_URL = "", 
-    NOTIFY_PETS = { "Griffin", "Golden Goose", "Lobster Thermidor", "French Fry Ferret", "Corrupted Kitsune", "Kitsune", "Fennec Fox", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "T-Rex", "Red Fox", "Spinosaurus"},
-    NOTIFY_PETS_WEIGHT = 6,
-    DISCORD_ID = "698853568291143821",
-    WEBHOOK_NOTE = "Dream",
-    SHOW_WEBHOOK_USERNAME = true,
+	Webhook = {
+		UrlPet = "https://discord.com/api/webhooks/1394039615949639822/ru1nhLaHQ0YheuaUN238iKf337NATfBXg224aTMSInFTWhNg24i7aPpFSIy6NAUAfr3r",
+		UrlSeed = "xxx",
+		PcName = "xxx",
+
+		Mention = "", -- discord id
+
+		Noti = {
+			Seeds = {
+				"Sunflower",
+				"Dragon Pepper",
+				"Elephant Ears",
+			},
+			SeedPack = {
+				"Idk"
+			},
+			Pets = {
+				"Golden Goose",
+				"Griffin",
+				"French Fry Ferret",
+				"Corrupted Kitsune",
+				"Kitsune",
+				"Spinosaurus",
+				"T-Rex",
+				"Disco Bee",
+				"Butterfly",
+				"Mimic Octopus",
+				"Queen Bee",
+				"Fennec Fox",
+				"Dragonfly",
+				"Raccoon",
+				"Red Fox",
+			},
+			Pet_Weight_Noti = true,
+		}
+	},
 }
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/c916e5b90dc37c71ecf1ec00dfce3d5d.lua"))()
+License = "hLv5vGDrHC1cR2eyIaPkonhV0CmU0L12"
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
