@@ -8,12 +8,12 @@ getgenv().ConfigsKaitun = {
 	Collect_Cooldown = 60, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = true,
+	["Auto Rejoin"] = false,
 
 	["Rejoin When Update"] = false,
 	["Limit Tree"] = {
-		["Limit"] = 400,
-		["Destroy Until"] = 375,
+		["Limit"] = 300,
+		["Destroy Until"] = 250,
 
 		["Safe Tree"] = {
             "Moon Blossom",
@@ -203,7 +203,7 @@ getgenv().ConfigsKaitun = {
 				["Sunny-Side Chicken"] = 4,
 			},
 		},
-		Unfavorite_AllPet = false,
+		Unfavorite_AllPet = true,
 		Favorite_LockedPet = true,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
