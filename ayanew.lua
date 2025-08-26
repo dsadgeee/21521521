@@ -6,15 +6,16 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 30, -- cooldown to collect fruit
+	Collect_Cooldown = 120, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 	["Limit Tree"] = {
 		["Limit"] = 200,
-		["Destroy Until"] = 200,
+		["Destroy Until"] = 150,
+
 		["Safe Tree"] = {
             "Moon Blossom",
             "Bone Blossom",
@@ -91,7 +92,7 @@ getgenv().ConfigsKaitun = {
 
 	["Seed Pack"] = {
 		Locked = {
-				"Sprout Seed Pack",
+"Sprout Seed Pack",
 		}
 	},
 
@@ -99,7 +100,7 @@ getgenv().ConfigsKaitun = {
 		["Bean Event"] = {
 			Minimum_Money = 10_000_000, -- minimum money to start play this event
 		},
-		MaxMoney_Restocks = 500_000_000_000,
+		MaxMoney_Restocks = 100_000_000_000,
 		Shop = { -- un comment to buy
 			"Sprout Seed Pack",
 			"Sprout Egg",
@@ -120,6 +121,7 @@ getgenv().ConfigsKaitun = {
 		Craft = {
 			"Anti Bee Egg",
 			"Skyroot Chest",
+			"Sprout Egg",
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
@@ -157,10 +159,7 @@ getgenv().ConfigsKaitun = {
 			"Bug Egg",
 			"Paradise Egg",
 			"Bee Egg",
-			"Rare Summer Egg",
 			"Mythical Egg",
-			"Legendary Egg",
-			"Rare Egg",
 		},
 		Buy = {
 			"Bee Egg",
@@ -172,8 +171,6 @@ getgenv().ConfigsKaitun = {
 			"Bug Egg",
 			"Mythical Egg",
 			"Uncommon Egg",
-			"Common Egg",
-			"Legendary Egg",
 			"Rare Egg",
 		}
 	},
@@ -188,16 +185,14 @@ getgenv().ConfigsKaitun = {
 			},
 			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Capybara"] = { 1, 100 },
-				["Rooster"] = { 5, 100 },
-				["Sunny-Side Chicken"] = { 5, 100 },
-                ["Starfish"] = { 2, 100 },
-                ["Grey Mouse"] = 2,
-				["Brown Mouse"] = 2,
+				["Sunny-Side Chicken"] = { 4, 100, 1 }, -- 5 on the first mean equip only 5 | pet , 100 mean equip only level pet lower than 100 | the one on the last is priority it will ues first if possible 
+				["Hotdog Daschund"] = { 4, 100, 2 },
+				["Blood Kiwi"] = { 8, 100, 3 },
+				["Rooster"] = { 8, 100, 5 },
 			},
 		},
 		Unfavorite_AllPet = false,
-		Favorite_LockedPet = true,
+		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
 			    ["Rooster"] = 16,
