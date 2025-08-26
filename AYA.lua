@@ -191,6 +191,8 @@ getgenv().ConfigsKaitun = {
 				["Rooster"] = { 5, 100 },
 				["Sunny-Side Chicken"] = { 5, 100 },
                 ["Starfish"] = { 2, 100 },
+                ["Grey Mouse"] = 2,
+				["Brown Mouse"] = 2,
 			},
 		},
 		Unfavorite_AllPet = false,
