@@ -2,7 +2,7 @@ local HttpService = game:GetService("HttpService")
 local Players = game:GetService("Players")
 
 local versionURL = "https://raw.githubusercontent.com/dsadgeee/21521521/main/AYA.lua"
-local currentVersion = "1.0.0"
+local currentVersion = "1.0.1"
 
 local function checkVersion()
     local success, response = pcall(function()
