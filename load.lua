@@ -1,5 +1,6 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"))()
 -- Auto load script từ GitHub mỗi 2 giây
+wait(2)
 local url = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/tnihieu.lua"
 
 while true do
