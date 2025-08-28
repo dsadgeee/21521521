@@ -1,32 +1,42 @@
 --[[ 
-📌 HƯỚNG DẪN DÙNG:
-1. Trong GitHub repo (hoặc Pastebin, v.v.) bạn tạo file signal.txt
-   - Ban đầu trong file ghi: no
-   - Khi bạn muốn tất cả client văng thì đổi nội dung thành: kick
+📌 HƯỚNG DẪN:
+1. Trong GitHub repo tạo file "tnihieu.txt"
+   - Ban đầu ghi: no
+   - Khi muốn tất cả client bị văng khỏi game → đổi thành: kick
 
-2. Script này khi chạy sẽ 10 giây kiểm tra 1 lần:
-   - Nếu file = "kick" → client bị Kick khỏi game
-   - Nếu file = "no"   → client tiếp tục chơi bình thường
+2. Script này sẽ:
+   - Load script chính từ AYA.lua
+   - Liên tục kiểm tra file tnihieu.txt
+   - Nếu phát hiện "kick" → văng khỏi game
+   - Khi người chơi vào lại game, loader tự chạy lại AYA.lua
 ]]
 
--- 🔗 Link file tín hiệu (sửa lại cho đúng repo của bạn)
-local signalURL = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/signal.txt"
+-- 🔗 Link tới script chính
+local mainScriptURL = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"
 
--- Hàm kiểm tra tín hiệu liên tục
+-- 🔗 Link tới file tín hiệu
+local signalURL     = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/tnihieu.txt"
+
+-- Hàm chạy script chính
+local function runMainScript()
+    loadstring(game:HttpGet(mainScriptURL))()
+end
+
+-- Chạy script chính lúc bắt đầu
+runMainScript()
+
+-- Kiểm tra tín hiệu liên tục
 task.spawn(function()
-    while task.wait(10) do -- ⏰ check mỗi 10 giây (có thể chỉnh ngắn hơn hoặc dài hơn)
+    while task.wait(30) do -- ⏰ check mỗi 10 giây
         local ok, signal = pcall(function()
             return game:HttpGet(signalURL)
         end)
 
         if ok and signal then
-            signal = signal:lower():gsub("%s+", "") -- chuẩn hoá (xóa khoảng trắng, xuống dòng)
-            
+            signal = signal:lower():gsub("%s+", "")
             if signal == "kick" then
-                game.Players.LocalPlayer:Kick("Dev đã gửi tín hiệu shutdown.")
-                break -- sau khi kick thì dừng loop
-            elseif signal == "no" then
-                -- Không làm gì, tiếp tục chơi
+                game.Players.LocalPlayer:Kick("Dev đã gửi tín hiệu reload script.")
+                break -- sau khi kick thì thoát vòng lặp
             end
         end
     end
