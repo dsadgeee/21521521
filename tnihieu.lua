@@ -3,7 +3,7 @@ local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
 -- Cấu hình: Bật hoặc tắt kick
-local autoKick = false -- đổi thành true nếu muốn kick ngay khi chạy
+local autoKick = true -- đổi thành true nếu muốn kick ngay khi chạy
 
 if autoKick then
     player:Kick("Update Script")
