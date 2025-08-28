@@ -18,7 +18,7 @@ task.spawn(function()
         if not success then
             warn("Lỗi khi load script: " .. tostring(err))
         end
-        task.wait(2)
+        task.wait(30)
     end
 end)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"))()
