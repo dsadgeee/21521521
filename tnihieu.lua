@@ -4,7 +4,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/ref
 local Players = game:GetService("Players")
 
 -- Bật/tắt auto kick
-local autoKick = false -- true = bật, false = tắt
+local autoKick = true -- true = bật, false = tắt
 
 -- Hàm auto kick
 local function doKick()
