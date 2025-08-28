@@ -1,43 +1,27 @@
---[[ 
-📌 HƯỚNG DẪN:
-1. Trong GitHub repo tạo file "tnihieu.txt"
-   - Ban đầu ghi: no
-   - Khi muốn tất cả client bị văng khỏi game → đổi thành: kick
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
 
-2. Script này sẽ:
-   - Load script chính từ AYA.lua
-   - Liên tục kiểm tra file tnihieu.txt
-   - Nếu phát hiện "kick" → văng khỏi game
-   - Khi người chơi vào lại game, loader tự chạy lại AYA.lua
-]]
+-- URL raw đến file version.txt trên GitHub
+local versionURL = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"
 
--- 🔗 Link tới script chính
-local mainScriptURL = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"
+-- Version hiện tại của script
+local currentVersion = "1.0.0"
 
--- 🔗 Link tới file tín hiệu
-local signalURL     = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/tnihieu.lua"
+-- Hàm check version
+local function checkVersion()
+    local success, response = pcall(function()
+        return HttpService:GetAsync(versionURL)
+    end)
 
--- Hàm chạy script chính
-local function runMainScript()
-    loadstring(game:HttpGet(mainScriptURL))()
+    if success then
+        local latestVersion = string.gsub(response, "%s+", "") -- xóa khoảng trắng
+        if latestVersion ~= currentVersion then
+            Players.LocalPlayer:Kick("Script đã lỗi thời! Vui lòng update script mới.")
+        end
+    else
+        warn("Không thể check version từ GitHub:", response)
+    end
 end
 
--- Chạy script chính lúc bắt đầu
-runMainScript()
-
--- Kiểm tra tín hiệu liên tục
-task.spawn(function()
-    while task.wait(10) do -- ⏰ check mỗi 10 giây
-        local ok, signal = pcall(function()
-            return game:HttpGet(signalURL)
-        end)
-
-        if ok and signal then
-            signal = signal:lower():gsub("%s+", "")
-            if signal == "kick" then
-                game.Players.LocalPlayer:Kick("Dev đã gửi tín hiệu reload script.")
-                break -- sau khi kick thì thoát vòng lặp
-            end
-        end
-    end
-end)
+-- Chạy khi bắt đầu
+checkVersion()
