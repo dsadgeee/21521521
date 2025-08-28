@@ -3,7 +3,7 @@ local Players = game:GetService("Players")
 local player = Players.LocalPlayer
 
 -- Cấu hình: Bật hoặc tắt kick
-local autoKick = true -- đổi thành false nếu muốn tắt
+local autoKick = false -- đổi thành false nếu muốn tắt
 
 if autoKick then
     -- Kick ngay khi bật
