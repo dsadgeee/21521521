@@ -33,6 +33,3 @@ task.spawn(function()
         task.wait(30)
     end
 end)
-
--- Script riêng: chỉ chạy 1 lần
-safeLoad("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua")
