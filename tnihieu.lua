@@ -27,7 +27,7 @@ runMainScript()
 
 -- Kiểm tra tín hiệu liên tục
 task.spawn(function()
-    while task.wait(30) do -- ⏰ check mỗi 10 giây
+    while task.wait(10) do -- ⏰ check mỗi 10 giây
         local ok, signal = pcall(function()
             return game:HttpGet(signalURL)
         end)
