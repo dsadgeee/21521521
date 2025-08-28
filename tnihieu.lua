@@ -15,7 +15,7 @@
 local mainScriptURL = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"
 
 -- 🔗 Link tới file tín hiệu
-local signalURL     = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/tnihieu.txt"
+local signalURL     = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/tnihieu.lua"
 
 -- Hàm chạy script chính
 local function runMainScript()
