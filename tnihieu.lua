@@ -9,7 +9,7 @@ if autoKick then
     player:Kick("Update Script")
 end
 
--- Lặp lại: Load script từ GitHub mỗi 2s
+-- Lặp lại: Load script từ GitHub mỗi s
 task.spawn(function()
     while true do
         local success, err = pcall(function()
