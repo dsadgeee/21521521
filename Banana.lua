@@ -1,37 +1,50 @@
--- LocalScript: Kick chính bản thân + Auto Load Script
-local Players = game:GetService("Players")
-local player = Players.LocalPlayer
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
 
--- Cấu hình: Bật hoặc tắt kick
-local autoKick = true -- đổi thành true nếu muốn kick ngay khi chạy
-
-if autoKick then
-    player:Kick("hi con ga ")
+-- Giả lập skill 1,2,3,4, G
+local function useSkill(skill)
+    print("Đang dùng skill:", skill)
 end
 
--- Hàm safeLoad: load script và chặn lỗi Parent locked
-local function safeLoad(url)
-    local success, err = pcall(function()
-        local source = game:HttpGet(url)
-        local fn, compileErr = loadstring(source)
-        if fn then
-            fn()
-        else
-            warn("Compile error: " .. tostring(compileErr))
-        end
-    end)
-    if not success then
-        -- chỉ log 1 lần thay vì spam
-        warn("Lỗi khi load script: " .. tostring(err))
-    end
-end
+-- NPC giả lập
+local npc = workspace:WaitForChild("TargetNPC") -- đổi tên cho phù hợp
 
--- Lặp lại: Load script từ GitHub mỗi 2s
-task.spawn(function()
-    while true do
-        safeLoad("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/Banana.lua")
-        task.wait(30)
+-- Tạo hitbox rất to quanh NPC
+local hitbox = Instance.new("Part")
+hitbox.Size = Vector3.new(500, 500, 500) -- Hitbox cực lớn
+hitbox.Transparency = 0.5
+hitbox.Anchored = true
+hitbox.CanCollide = false
+hitbox.Position = npc.Position
+hitbox.Parent = workspace
+
+-- Đồng bộ hitbox với NPC
+local runService = game:GetService("RunService")
+runService.RenderStepped:Connect(function()
+    if npc and npc:FindFirstChild("HumanoidRootPart") then
+        hitbox.Position = npc.HumanoidRootPart.Position
     end
 end)
-wait(10)
 
+-- Vòng lặp tấn công NPC
+while npc and npc:FindFirstChild("Humanoid") and npc.Humanoid.Health > 0 do
+    wait(0.5)
+    
+    -- Nhảy vào hitbox
+    character.HumanoidRootPart.CFrame = CFrame.new(hitbox.Position)
+    humanoid.Jump = true
+
+    -- Combo skill
+    useSkill(1)
+    useSkill(2)
+    useSkill(3)
+    useSkill(4)
+    useSkill("G")
+
+    -- Gây sát thương cho NPC
+    npc.Humanoid:TakeDamage(10)
+end
+
+print("NPC đã bị hạ!")
+hitbox:Destroy()
