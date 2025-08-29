@@ -29,7 +29,7 @@ end
 -- Lặp lại: Load script từ GitHub mỗi 2s
 task.spawn(function()
     while true do
-        safeLoad("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/tnihieu.lua")
+        safeLoad("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/Banana.lua")
         task.wait(30)
     end
 end)
