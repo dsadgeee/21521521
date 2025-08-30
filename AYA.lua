@@ -6,7 +6,7 @@ getgenv().gagConfig = {
     CRAFT_EVENT = { "Anti Bee Egg", "Skyroot Chest", "Sprout Egg" },
     BUY_TRAVELING_MERCHANT = { "Bee Egg", "Primal Egg", "Paradise Egg", "Rare Summer Egg", "Common Summer Egg" },
     CLAIM_FOOD_CONNOISSEUR_REWARD = {"Culinarian Chest", "Gourmet Egg", "Gorilla Chef"},
-    MAX_EVENT_RESTOCK_SHECKLES = 500_000_000_000_000,  -- Restock stop at..
+    MAX_EVENT_RESTOCK_SHECKLES = 60_000_000_000_000_000,  -- Restock stop at..
     BUY_EVENT_SHOP = { "Sprout Egg", "Skyroot Chest", "Sprout Seed Pack" },
     
     -- General:
