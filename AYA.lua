@@ -33,11 +33,11 @@ getgenv().gagConfig = {
     FAVOURITE_FRUIT_MUTATIONS = {},
     SKIP_HARVEST_MUTATIONS = {},
 
-    KEEP_PETS = { "Cockatrice", ["Imp"] = 2,  ["Glimmering Sprite"] = 8, "Griffin", "Chicken Zombie", "Peach Wasp", "Lemon Lion", "Green Bean", "Golden Goose", ["Golem"] = 2 , ["Rooster"] = 10, ["Sapling"] = 5, "Lobster Thermidor", ["Sunny-Side Chicken"] = 30, "French Fry Ferret", "Kodama", "Corrupted Kitsune", "Nihonzaru", ["Starfish"] = 6, ["Capybara"] = 1, ["Seal"] = 3, "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox" },
-    KEEP_PETS_WEIGHT = 5,
+    KEEP_PETS = { "Cockatrice", ["Imp"] = 2,  ["Glimmering Sprite"] = 8, "Griffin", "Chicken Zombie", "Peach Wasp", "Lemon Lion", "Green Bean", "Golden Goose", ["Golem"] = 2 , ["Rooster"] = 10, ["Sapling"] = 5, "Lobster Thermidor", ["Sunny-Side Chicken"] = 35, "French Fry Ferret", "Kodama", "Corrupted Kitsune", "Nihonzaru", ["Starfish"] = 6, ["Capybara"] = 1, ["Seal"] = 3, "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox" },
+    KEEP_PETS_WEIGHT = 6,
 
     -- EQUIP_PETS Priority (Left -> Right)
-    EQUIP_PETS = {["Starfish"] = 8, ["Sunny-Side Chicken"] = 5, "Rooster", "Chicken"},
+    EQUIP_PETS = { "Sunny-Side Chicken", "Rooster", "Glimmering Sprite"},
     USE_PETS_FOR_UPGRADE_SLOT = { "Starfish","Brown Mouse", "Grey Mouse"},
 
     BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler" },
@@ -45,7 +45,7 @@ getgenv().gagConfig = {
 
     PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
     SEED_WEBHOOK_URL = "", 
-    NOTIFY_PETS = { "Griffin", "Golden Goose", "Lobster Thermidor", "French Fry Ferret", "Corrupted Kitsune", "Kitsune", "Fennec Fox", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "T-Rex", "Red Fox", "Spinosaurus"},
+    NOTIFY_PETS = { "Cockatrice", "Griffin", "Golden Goose", "Lobster Thermidor", "French Fry Ferret", "Corrupted Kitsune", "Kitsune", "Fennec Fox", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "T-Rex", "Red Fox", "Spinosaurus"},
     NOTIFY_PETS_WEIGHT = 6,
     DISCORD_ID = "698853568291143821",
     WEBHOOK_NOTE = "2",
@@ -53,5 +53,3 @@ getgenv().gagConfig = {
 }
 
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/a2234a9cfbe480dfed9eaf6c00a012ca.lua"))()
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/Configasfwwqf/refs/heads/main/cfogpige.lua"))()
