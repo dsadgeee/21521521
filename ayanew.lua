@@ -1,4 +1,4 @@
-script_key="pakBKJVzXIBWhOgSMvlXWoCJFfeCuBKX";
+    script_key="pakBKJVzXIBWhOgSMvlXWoCJFfeCuBKX";
 setfpscap(2)
 
 getgenv().gagConfig = {
@@ -26,9 +26,8 @@ getgenv().gagConfig = {
     PLANT_EGGS = { "Enchanted Egg","Sprout Egg","Gourmet Egg", "Corrupted Zen Egg", "Rare Egg", "Zen Egg", "Dinosaur Egg", "Primal Egg", "Anti Bee Egg", "Bee Egg", "Night Egg", "Bug Egg", "Paradise Egg", "Mythical Egg", "Common Egg" },
  
     -- BUY_SEED_SHOP Priority (Left -> Right)
-    BUY_SEED_SHOP = { "Romanesco", "Elder Strawberry", "Giant Pinecone", "Burning Bud", "Sugar Apple", "Ember Lily", "Beanstalk", "Cacao", "Pepper", "Mushroom", "Grape", "Mango", "Dragon Fruit", "Cactus", ["Coconut"] = 50, ["Bamboo"] = 50, ["Apple"] = 50, ["Pumpkin"] = 50, ["Watermelon"] = 50, ["Daffodil"] = 50, ["Tomato"] = 50, ["Orange Tulip"] = 50, ["Blueberry"] = 50, ["Strawberry"] = 50, ["Carrot"] = 50 },
+    BUY_SEED_SHOP = { "Glimmering Sprite", "Romanesco", "Giant Pinecone", "Burning Bud", "Sugar Apple", "Ember Lily", "Beanstalk", "Cacao", "Pepper", "Mushroom", "Grape", "Mango", "Dragon Fruit", "Cactus", "Coconut", "Bamboo", "Apple", "Pumpkin", "Watermelon", "Daffodil", "Tomato", "Orange Tulip", "Blueberry", "Strawberry", "Carrot" },
     KEEP_SEEDS = { "Grand Tomato", "King Cabbage", "Bone Blossom" },
-    KEEP_SEEDS_AFTER_MAX_PLANTS = { "Carrot" },
     
     FAVOURITE_FRUIT_MUTATIONS = {},
     SKIP_HARVEST_MUTATIONS = {},
