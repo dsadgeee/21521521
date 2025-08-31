@@ -21,26 +21,23 @@ getgenv().gagConfig = {
     DESTROY_UNTIL_MIN_PLANTS = 200,
     DELETE_PLANTS_AFTER_MAX = { "Carrot", "Strawberry", "Blueberry", "Tomato", "Cauliflower", "Apple", "Coconut" },
     
-    BUY_EGGS = {"Mythical Egg", "Bug Egg", "Bee Egg", "Paradise Egg", "Uncommon Egg", "Common Summer Egg", "Rare Egg" },
-    PLANT_EGGS = { "Enchanted Egg", "Rare Egg", "Sprout Egg", "Gourmet Egg","Common Summer Egg", "Corrupted Zen Egg", "Zen Egg", "Dinosaur Egg", "Primal Egg", "Anti Bee Egg", "Bee Egg", "Night Egg", "Bug Egg", "Paradise Egg", "Mythical Egg" },
- 
-    -- BUY_SEED_SHOP Priority (Left -> Right)
+    BUY_EGGS = { "Bug Egg", "Bee Egg", "Paradise Egg", "Mythical Egg", "Rare Summer Egg", "Common Summer Egg", "Rare Egg", "Uncommon Egg" },
+    PLANT_EGGS = { "Enchanted Egg", "Sprout Egg", "Gourmet Egg", "Corrupted Zen Egg", "Zen Egg", "Dinosaur Egg", "Primal Egg", "Anti Bee Egg", "Bee Egg", "Night Egg", "Bug Egg", "Paradise Egg", "Mythical Egg", "Common Summer Egg", "Rare Egg", "Uncommon Egg" },
+    
     BUY_SEED_SHOP = { "Romanesco", "Elder Strawberry", "Giant Pinecone", "Burning Bud", "Sugar Apple", "Ember Lily", "Beanstalk", "Cacao", "Pepper", "Mushroom", "Grape", "Mango", "Dragon Fruit", "Cactus", ["Coconut"] = 50, ["Bamboo"] = 50, ["Apple"] = 50, ["Pumpkin"] = 50, ["Watermelon"] = 50, ["Daffodil"] = 50, ["Tomato"] = 50, ["Orange Tulip"] = 50, ["Blueberry"] = 50, ["Strawberry"] = 50, ["Carrot"] = 50 },
-    KEEP_SEEDS = { "Grand Tomato", "King Cabbage", "Bone Blossom" },
-    KEEP_SEEDS_AFTER_MAX_PLANTS = { "Carrot" },
-
-    FAVOURITE_FRUIT_MUTATIONS = {},  -- Stop Autosell
-    SKIP_HARVEST_MUTATIONS = {},  -- Stop Harvest
+    KEEP_SEEDS = {},
+    KEEP_SEEDS_AFTER_MAX_PLANTS = {},
+    
+    FAVOURITE_FRUIT_MUTATIONS = {},
+    SKIP_HARVEST_MUTATIONS = {},
 
     KEEP_PETS = { "Cockatrice", ["Imp"] = 2,  ["Glimmering Sprite"] = 8, "Griffin", "Chicken Zombie", "Peach Wasp", "Lemon Lion", "Green Bean", "Golden Goose", ["Golem"] = 2 , ["Rooster"] = 10, ["Sapling"] = 5, "Lobster Thermidor", ["Sunny-Side Chicken"] = 35, "French Fry Ferret", "Kodama", "Corrupted Kitsune", "Nihonzaru", ["Starfish"] = 6, ["Capybara"] = 1, ["Seal"] = 3, "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox" },
     KEEP_PETS_WEIGHT = 6,
 
-    -- EQUIP_PETS Priority (Left -> Right)
-    EQUIP_PETS = {["Starfish"] = 2, ["Glimmering Sprite"] = 4, ["Sunny-Side Chicken"] = 4,"Rooster" },
-    USE_PETS_FOR_UPGRADE_SLOT = {"Starfish"},
+    EQUIP_PETS = { ["Glimmering Sprite"] = 8 },
 
-    BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler" },
-    USE_SPRINKLER = {  "Fairy Targeter", "Grandmaster Sprinkler", "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler" },
+    BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Trading Ticket" },
+    USE_SPRINKLER = { "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Grandmaster Sprinkler" },
 
     PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
     SEED_WEBHOOK_URL = "", 
