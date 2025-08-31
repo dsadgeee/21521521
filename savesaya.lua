@@ -5,61 +5,67 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 60, -- cooldown to collect fruit
+	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = false,
+	["Auto Rejoin"] = true,
 
 	["Rejoin When Update"] = false,
+
+	["Auto Trade Pet"] = { -- not done yet bro dont use
+		["Enabled"] = false, 
+		["Target"] =  { -- multi users
+			"username1",
+			"username2",
+		},
+		["Pet To Send"] = {
+			
+		}
+	},
+
 	["Limit Tree"] = {
 		["Limit"] = 300,
 		["Destroy Until"] = 250,
 
 		["Safe Tree"] = {
-            "Moon Blossom",
-            "Bone Blossom",
-            "Moon Melon",
-            "Maple Apple",
-            "Moon Mango",
-            "Dragon Pepper",
-            "Elephant Ears",
-            "Fossilight",
-            "Princess Thorn",
-			"Pineapple",
-			"Spike Mango",
-			"Starfruit",
-			"Horned Dinoshroom",
-			"Celestiberry",
-			"Mango",
-			"Watermelon",
-			"Grape",
-			"Mapple Apple",
 			"Moon Blossom",
-			"Sugar Apple",
-			"Beanstalk",
-			"Cacao",
-			"Apple",
-			"Conocut",
-			"Dragon Fruit",
-			"Grand Tomato",
-			"Pricklefruit",
-			"Mandrake",
-			"Mangosteen",
+			"Bone Blossom",
+			"Moon Melon",
+			"Maple Apple",
+			"Moon Mango",
+			"Dragon Pepper",
+			"Elephant Ears",
+			"Fossilight",
 			"Princess Thorn",
-			"Ember Lily",
-			"Burning Bud",
-			"Pepper",
-			"Mushroom",
 			-- for the event
-            ["Blueberry"] = 15,
-            ["Strawberry"] = 15,
-            ["Apple"] = 15,
-            ["Coconut"] = 15,
-            ["Dragon Fruit"] = 15,
-            ["Mango"] = 15,
-            ["Tomato"] = 20,
-            ["Cactus"] = 15,
-            ["Beanstalk"] = 20,
+			["Bamboo"] = 10,
+			["Coconut"] = 5,
+			["Mushroom"] = 5,
+			["Glowthorn"] = 5,
+			["Tomato"] = 5,
+			["Pumpkin"] = 5,
+			["Pepper"] = 5,
+			["Cacao"] = 5,
+			["Apple"] = 5,
+			["Romanesco"] = 10,
+			["Elder Strawberry"] = 10,
+			["Burning Bud"] = 10,
+			["Giant Pinecone"] = 5,
+			["Corn"] = 5,
+			["Sugar Apple"] = 5,
+			["Ember Lily"] = 5,
+			["Dragon Fruit"] = 5,
+			["Sunbulb"] = 5,
+			["Orange Tulip"] = 10,
+			["Blueberry"] = 5,
+			["Watermelon"] = 5,
+			["Mango"] = 5,
+			["Cactus"] = 5,
+			["Strawberry"] = 5,
+			["Beanstalk"] = 10,
+			["Lightshoot"] = 5,
+			["Grape"] = 5,
+			["Daffodil"] = 5,
 		}
 	},
 
@@ -91,15 +97,35 @@ getgenv().ConfigsKaitun = {
 
 	["Seed Pack"] = {
 		Locked = {
-            "Sprout Seed Pack",
+
 		}
 	},
 
 	Events = {
-		["Bean Event"] = {
+		["Fairy Event"] = {
 			Minimum_Money = 10_000_000, -- minimum money to start play this event
+			Rewards_Item = {
+				"Enchanted Egg",
+				"FairyPoints",
+				"Enchanted Seed Pack",
+			},
+			Upgrade = {
+				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
+				Order = { -- top upgrade first, not put mean not upgrade
+					"Fairy Spawn Amount",
+					"Loose Fairy Spawn Amount",
+					"Glimmer Multiplier",
+					"Fairy Event Duration",
+				},
+				Limit = {
+					["Glimmer Multiplier"] = 10, -- max 10
+					["Loose Fairy Spawn Amount"] = 4, -- max 4
+					["Fairy Event Duration"] = 10, -- max 10
+					["Fairy Spawn Amount"] = 9, -- max 9
+				}
+			}
 		},
-		MaxMoney_Restocks = 1_000_000_000_000,
+		MaxMoney_Restocks = 50_000_000_000_000,
 		Shop = { -- un comment to buy
 			"Sprout Seed Pack",
 			"Sprout Egg",
@@ -109,13 +135,15 @@ getgenv().ConfigsKaitun = {
 			-- "Amberheart",
 			-- ["Spriggan"] = 8,
 			-- Friend Shop
+			"Sprout Egg",
 			"Skyroot Chest",
 			"Pet Shard GiantBean",
-			"Gnome",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
 			"Paradise Egg",
+			"Rare Summer Egg", 
+			"Common Summer Egg",
 		},
 		Craft = {
 			"Anti Bee Egg",
@@ -147,49 +175,104 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-            "Gourmet Egg", "Zen Egg", "Anti Bee Egg", "Primal Egg", "Bug Egg", "Paradise Egg", "Legendary Egg", "Uncommon Egg", "Rare Egg", "Mythical Egg", "Common Summer Egg", "Rare Summer Egg", "Common Egg" 
+			"Gourmet Egg",
+			"Enchanted Egg",
+			"Sprout Egg",
+			"Zen Egg",
+			"Primal Egg",
+			"Dinosaur Egg",
+			"Oasis Egg",
+			"Anti Bee Egg",
+			"Night Egg",
+			"Bug Egg",
+			"Paradise Egg",
+			"Bee Egg",
+			"Rare Summer Egg",
+			"Mythical Egg",
+			"Legendary Egg",
+			"Rare Egg",
 		},
 		Buy = {
-            "Mythical Egg", "Bug Egg", "Bee Egg", "Paradise Egg", ["Common Summer Egg"] = 20, ["Rare Summer Egg"] = 20, "Uncommon Egg", "Rare Egg","Common Egg" , "Legendary Egg"
+			"Bee Egg",
+			"Enchanted Egg",
+			"Oasis Egg",
+			"Paradise Egg",
+			"Anti Bee Egg",
+			"Night Egg",
+			"Rare Summer Egg",
+			"Bug Egg",
+			"Mythical Egg",
+			"Uncommon Egg",
+			"Common Egg",
+			"Legendary Egg",
+			"Rare Egg",
 		}
 	},
 
 	Pets = {
 		["Auto Feed"] = true,
 
-		["Start Delete Pet At"] = 45,
+		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
-			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
+			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
+				["Glimmering Sprite"] = { 8, 100 },
 				["Capybara"] = { 1, 100 },
 				["Rooster"] = { 5, 100 },
-				["Sunny-Side Chicken"] = { 5, 100 },
-                ["Starfish"] = { 2, 100 },
-                ["Grey Mous"] = 2,
-                ["Brown Mouse"] = 2,
-                "Squirrel" ,
-                ["Rooster"] = 5 ,
-                ["Chicken"] = 5,
+                ["Starfish"] = { 1, 100 },
+                ["Brown Mouse"] = { 1, 100 },
+                ["Squirrel"] = { 1, 100 }, 
+                ["Grey Mouse"] = { 1, 100 },
+                ["Sunny-Side Chicken"] = { 5, 100 },
 			},
 		},
 		Unfavorite_AllPet = false,
 		Favorite_LockedPet = true,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
-		Locked = {
-                ["Rooster"] = 16 , ["Chicken"] = 5, ["Mandrake"] = 2, "Griffin", "Chicken Zombie", "Peach Wasp", "Lemon Lion", "Apple Gazelle", "Green Bean", ["Golem"] = 1, "Gorilla Chef", "Golden Goose", ["Spriggan"] = 4, "Lobster Thermidor", ["Gorilla Chef"] = 1, ["Sunny-Side Chicken"] = 35, ["Hotdog Daschund"] = 1, ["Bacon Pig"] = 1, ["Junkbot"] = 3, "French Fry Ferret", ["Spaghetti Sloth"] = 1, ["Mochi Mouse"] = 1, ["Kodama"] = 1, "Corrupted Kitsune", ["Starfish"] = 8, ["Capybara"] = 1, ["Tanchozuru"] = 1, ["Seal"] = 1, "Dilophosaurus", "Brontosaurus", "Ankylosaurus", "Spinosaurus", "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox",
+        Locked = {
+                "Cockatrice",
+                ["Imp"] = 2,
+                ["Glimmering Sprite"] = 8,
+                "Griffin",
+                "Chicken Zombie",
+                "Peach Wasp",
+                "Lemon Lion",
+                "Green Bean",
+                "Golden Goose",
+                ["Golem"] = 2,
+                ["Rooster"] = 10,
+                ["Sapling"] = 5,
+                "Lobster Thermidor",
+                ["Sunny-Side Chicken"] = 35,
+                "French Fry Ferret",
+                "Kodama",
+                "Corrupted Kitsune",
+                "Nihonzaru",
+                ["Starfish"] = 6,
+                ["Capybara"] = 1,
+                ["Seal"] = 3,
+                "Kitsune",
+                "Blood Kiwi",
+                "Disco Bee",
+                "Raccoon",
+                "Queen Bee",
+                "Dragonfly",
+                "Butterfly",
+                "Mimic Octopus",
+                "Red Fox",
 		},
-		LockPet_Weight = 6, -- if Weight >= 10 they will locked
+		LockPet_Weight = 5, -- if Weight >= 10 they will locked
 	},
 
 	Webhook = {
 		UrlPet = "https://discord.com/api/webhooks/1408866663558025278/ohhAUmTACbJP2YbxoGH8iXRYJpT36w0HcHrffSsza8TA6iw62VUO1Sb2jCBavqeK1FeW",
 		UrlSeed = "xxx",
-		PcName = "xxx",
+		PcName = "1",
 
-		Mention = "", -- discord id
+		Mention = "698853568291143821", -- discord id
 
 		Noti = {
 			Seeds = {
@@ -202,9 +285,8 @@ getgenv().ConfigsKaitun = {
 			},
 			Pets = {
 				"Golden Goose",
-				"Griffin",
 				"French Fry Ferret",
-				"Corrupted Kitsune",
+				"Cockatrice",
 				"Kitsune",
 				"Spinosaurus",
 				"T-Rex",
