@@ -4,7 +4,7 @@ setfpscap(2)
 getgenv().gagConfig = {
     -- Event:
     CRAFT_EVENT = { "Anti Bee Egg" },
-    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg", "Loquat", "Feijoa", "Pitcher Plant" },
+    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg", "Common Summer Egg", "Loquat", "Feijoa", "Pitcher Plant" },
     CLAIM_FAIRY_REWARD = { "Enchanted Egg", "FairyPoints", "Enchanted Seed Pack", "Pet Shard Glimmering" },
     PLANT_EVENT_TREES = true,  -- This config will replace most plant related config
     PLACE_COSMETIC = { "Cooking Kit" },
