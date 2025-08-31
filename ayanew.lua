@@ -3,12 +3,12 @@ setfpscap(2)
 
 getgenv().gagConfig = {
     -- Event:
-    CRAFT_EVENT = { "Anti Bee Egg", "Skyroot Chest", "Sprout Egg" },
-    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg", "Common Summer Egg" },
-    MAX_EVENT_RESTOCK_SHECKLES = 100_000_000_000_000,  -- Restock stop at..
-    BUY_EVENT_SHOP = { "Sprout Egg", "Spriggan", "Skyroot Chest", "Sprout Seed Pack" },
-    CLAIM_FAIRY_REWARD = { "Enchanted Egg", "FairyPoints", "Pet Shard Glimmering",  "Fairy Targeter" },
-
+    CRAFT_EVENT = { "Anti Bee Egg" },
+    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg", "Loquat", "Feijoa", "Pitcher Plant" },
+    CLAIM_FAIRY_REWARD = { "Enchanted Egg", "FairyPoints", "Enchanted Seed Pack", "Pet Shard Glimmering" },
+    PLANT_EVENT_TREES = true,  -- This config will replace most plant related config
+    PLACE_COSMETIC = { "Cooking Kit" },
+    
     -- General:
     AUTO_UPDATE_RESTART = true,
     REDEEM_CODES = {},
@@ -16,7 +16,6 @@ getgenv().gagConfig = {
     EXTRA_EGG_SLOTS = 5,
     ADD_FRIEND = true,
     OPEN_ALL_SEED_PACK = true,
-    PLANT_EVENT_TREES = true,
 
     MAX_PLANTS = 300,
     DESTROY_UNTIL_MIN_PLANTS = 200,
