@@ -10,7 +10,7 @@ getgenv().gagConfig = {
     CLAIM_FAIRY_REWARD = { "Enchanted Egg", "FairyPoints", "Pet Shard Glimmering" },
 
     -- General:
-    AUTO_UPDATE_RESTART = false,
+    AUTO_UPDATE_RESTART = true,
     REDEEM_CODES = {},
     EXTRA_PET_SLOTS = 5,
     EXTRA_EGG_SLOTS = 5,
