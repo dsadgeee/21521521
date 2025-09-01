@@ -10,7 +10,7 @@ getgenv().ConfigsKaitun = {
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = true,
+	["Rejoin When Update"] = false,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -24,8 +24,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 250,
-		["Destroy Until"] = 250,
+		["Limit"] = 330,
+		["Destroy Until"] = 330,
 
 		["Safe Tree"] = {
 			"Moon Blossom",
@@ -108,8 +108,8 @@ getgenv().ConfigsKaitun = {
 				"Enchanted Egg",
 				"Fairy Targeter",
 				"FairyPoints",
-				"Enchanted Seed Pack",
-				"Enchanted Crate",
+				--"Enchanted Seed Pack",
+				--"Enchanted Crate",
 			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
@@ -137,18 +137,14 @@ getgenv().ConfigsKaitun = {
 			-- "Amberheart",
 			-- ["Spriggan"] = 8,
 			-- Friend Shop
-			"Sprout Egg",
 			"Skyroot Chest",
-			"Pet Shard GiantBean",
+			--"Pet Shard GiantBean",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
 			"Paradise Egg",
 			"Rare Summer Egg", 
 			"Common Summer Egg",
-			"Pitcher Plant",
-			"Feijoa",
-			"Loquat",
 		},
 		Craft = {
 			"Anti Bee Egg",
@@ -171,6 +167,7 @@ getgenv().ConfigsKaitun = {
 		},
 		Lock = {
 			"Master Sprinkler",
+			
 			"Godly Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
@@ -180,19 +177,19 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Gourmet Egg",
 			"Enchanted Egg",
 			"Sprout Egg",
+			"Legendary Egg",
+			"Gourmet Egg",
 			"Zen Egg",
-			"Primal Egg",
-			"Dinosaur Egg",
-			"Oasis Egg",
 			"Anti Bee Egg",
-			"Night Egg",
+			"Primal Egg",
 			"Bug Egg",
 			"Paradise Egg",
-			"Bee Egg",
 			"Mythical Egg",
+			"Common Summer Egg",
+			"Rare Summer Egg",
+			"Rare Egg",
 		},
 		Buy = {
 			"Bee Egg",
@@ -204,8 +201,6 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
-			"Uncommon Egg",
-			"Common Egg",
 			"Legendary Egg",
 			"Rare Egg",
 		}
@@ -217,14 +212,15 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				 ["Brown Mouse"] = { 2, 100, 1 },
+				 ["Squirrel"] = { 1, 100, 2 },
+				 ["Grey Mouse"] = { 2, 100, 3 },-- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 4, 100, 1 },
-				["Sunny-Side Chicken"] = { 4, 100, 2 }, -- 5 on the first mean equip only 5 | pet , 100 mean equip only level pet lower than 100 | the one on the last is priority it will ues first if possible 
-				["Hotdog Daschund"] = { 4, 100, 3 },
-				["Rooster"] = { 8, 100, 5 },
+				["Glimmering Sprite"] = { 3, 100, 1 },
+				["Sunny-Side Chicken"] = { 5, 100, 2 },
+				["Rooster"] = { 5, 100, 3 },
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -280,37 +276,32 @@ getgenv().ConfigsKaitun = {
 		LockPet_Weight = 5, -- if Weight >= 10 they will locked
 	},
 
-	Webhook = {
+    Webhook = {
 		UrlPet = "https://discord.com/api/webhooks/1408866663558025278/ohhAUmTACbJP2YbxoGH8iXRYJpT36w0HcHrffSsza8TA6iw62VUO1Sb2jCBavqeK1FeW",
-		UrlSeed = "xxx",
+		UrlSeed = "XXX",
 		PcName = "2",
-
-		Mention = "698853568291143821", -- discord id
 
 		Noti = {
 			Seeds = {
-				"Sunflower",
-				"Dragon Pepper",
-				"Elephant Ears",
 			},
 			SeedPack = {
 				"Idk"
 			},
 			Pets = {
 				"Golden Goose",
-				"French Fry Ferret",
 				"Cockatrice",
-				"Kitsune",
-				"Spinosaurus",
-				"T-Rex",
+				"Griffin",
+				"French Fry Ferret",
+                "Lobster Thermidor",
 				"Disco Bee",
+		        "Corrupted Kitsune",
 				"Butterfly",
 				"Mimic Octopus",
 				"Queen Bee",
-				"Fennec Fox",
 				"Dragonfly",
+				"Kitsune",
 				"Raccoon",
-				"Red Fox",
+				"Fennec Fox",
 			},
 			Pet_Weight_Noti = true,
 		}
