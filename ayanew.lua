@@ -146,9 +146,6 @@ getgenv().ConfigsKaitun = {
 			"Paradise Egg",
 			"Rare Summer Egg", 
 			"Common Summer Egg",
-			"Pitcher Plant",
-			"Feijoa",
-			"Loquat",
 		},
 		Craft = {
 			"Anti Bee Egg",
