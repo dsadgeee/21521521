@@ -1,4 +1,3 @@
-setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -11,7 +10,7 @@ getgenv().ConfigsKaitun = {
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -25,7 +24,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 200,
+		["Limit"] = 250,
 		["Destroy Until"] = 250,
 
 		["Safe Tree"] = {
@@ -109,8 +108,8 @@ getgenv().ConfigsKaitun = {
 				"Enchanted Egg",
 				"Fairy Targeter",
 				"FairyPoints",
-				--"Enchanted Seed Pack",
-				--"Enchanted Crate",
+				"Enchanted Seed Pack",
+				"Enchanted Crate",
 			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
@@ -138,14 +137,18 @@ getgenv().ConfigsKaitun = {
 			-- "Amberheart",
 			-- ["Spriggan"] = 8,
 			-- Friend Shop
+			"Sprout Egg",
 			"Skyroot Chest",
-			--"Pet Shard GiantBean",
+			"Pet Shard GiantBean",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
 			"Paradise Egg",
 			"Rare Summer Egg", 
 			"Common Summer Egg",
+			"Pitcher Plant",
+			"Feijoa",
+			"Loquat",
 		},
 		Craft = {
 			"Anti Bee Egg",
@@ -168,7 +171,6 @@ getgenv().ConfigsKaitun = {
 		},
 		Lock = {
 			"Master Sprinkler",
-			
 			"Godly Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
@@ -178,19 +180,19 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
+			"Gourmet Egg",
 			"Enchanted Egg",
 			"Sprout Egg",
-			"Legendary Egg",
-			"Gourmet Egg",
 			"Zen Egg",
-			"Anti Bee Egg",
 			"Primal Egg",
+			"Dinosaur Egg",
+			"Oasis Egg",
+			"Anti Bee Egg",
+			"Night Egg",
 			"Bug Egg",
 			"Paradise Egg",
+			"Bee Egg",
 			"Mythical Egg",
-			"Common Summer Egg",
-			"Rare Summer Egg",
-			"Rare Egg",
 		},
 		Buy = {
 			"Bee Egg",
@@ -202,6 +204,8 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
+			"Uncommon Egg",
+			"Common Egg",
 			"Legendary Egg",
 			"Rare Egg",
 		}
@@ -213,15 +217,14 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-				 ["Brown Mouse"] = { 2, 100, 1 },
-				 ["Squirrel"] = { 1, 100, 2 },
-				 ["Grey Mouse"] = { 2, 100, 3 },-- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 3, 100, 1 },
-				["Sunny-Side Chicken"] = { 5, 100, 2 },
-				["Rooster"] = { 5, 100, 3 },
+				["Glimmering Sprite"] = { 4, 100, 1 },
+				["Sunny-Side Chicken"] = { 4, 100, 2 }, -- 5 on the first mean equip only 5 | pet , 100 mean equip only level pet lower than 100 | the one on the last is priority it will ues first if possible 
+				["Hotdog Daschund"] = { 4, 100, 3 },
+				["Rooster"] = { 8, 100, 5 },
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -274,35 +277,40 @@ getgenv().ConfigsKaitun = {
 			"Red Fox",
 			"Chicken Zombie"
 		},
-		LockPet_Weight = 5, -- if Weight >= 10 they will locked
+		LockPet_Weight = 6, -- if Weight >= 10 they will locked
 	},
 
-    Webhook = {
-		UrlPet = "https://discord.com/api/webhooks/1408866663558025278/ohhAUmTACbJP2YbxoGH8iXRYJpT36w0HcHrffSsza8TA6iw62VUO1Sb2jCBavqeK1FeW",
-		UrlSeed = "XXX",
+	Webhook = {
+		UrlPet = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
+		UrlSeed = "xxx",
 		PcName = "1",
+
+		Mention = "698853568291143821", -- discord id
 
 		Noti = {
 			Seeds = {
+				"Sunflower",
+				"Dragon Pepper",
+				"Elephant Ears",
 			},
 			SeedPack = {
 				"Idk"
 			},
 			Pets = {
 				"Golden Goose",
-				"Cockatrice",
-				"Griffin",
 				"French Fry Ferret",
-                "Lobster Thermidor",
+				"Cockatrice",
+				"Kitsune",
+				"Spinosaurus",
+				"T-Rex",
 				"Disco Bee",
-		        "Corrupted Kitsune",
 				"Butterfly",
 				"Mimic Octopus",
 				"Queen Bee",
-				"Dragonfly",
-				"Kitsune",
-				"Raccoon",
 				"Fennec Fox",
+				"Dragonfly",
+				"Raccoon",
+				"Red Fox",
 			},
 			Pet_Weight_Noti = true,
 		}
@@ -310,7 +318,8 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
-wait(3)
+wait(10)
+-- Auto interact Fairy trong workspace["1"] -> workspace["10"]
 while true do
     for i = 1, 10 do
         local fairy = workspace:FindFirstChild(tostring(i))
@@ -322,7 +331,5 @@ while true do
             end
         end
     end
-    wait(20) -- lặp lại sau 60 giây
+    wait(30) -- lặp lại sau 60 giây
 end
-
-
