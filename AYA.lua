@@ -212,17 +212,18 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-				 ["Brown Mouse"] = { 2, 100, 1 },
-				 ["Squirrel"] = { 1, 100, 2 },
-				 ["Grey Mouse"] = { 2, 100, 3 },-- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
-				 ["Starfish"] = { 8, 100, 4 },
+				["Sunny-Side Chicken"] = { 5, 100, true },
+				["Rooster"] = { 5, 100, true },
+				 ["Brown Mouse"] = { 2, 100, true },
+				 ["Squirrel"] = { 1, 100, true },
+				 ["Grey Mouse"] = { 2, 100, true }
 			},
 			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 3, 100, 1 },
-				["Sunny-Side Chicken"] = { 5, 100, 2 },
-				["Rooster"] = { 5, 100, 3 },
-				["Starfish"] = { 8, 100, 4 },
+				["Imp"] = { 8, 100, 1 }
+				["Glimmering Sprite"] = { 3, 100, 2 },
+				["Sunny-Side Chicken"] = { 5, 100, 3 },
+				["Rooster"] = { 5, 100, 4 },
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -230,9 +231,10 @@ getgenv().ConfigsKaitun = {
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
 			"Cockatrice",
-			["Imp"] = 2,
-			["Glimmering Sprite"] = 8,
+			["Glimmering Sprite"] = 3,
+			["Imp"] = 15,
 			"Griffin",
+			["Spriggan"] = 1, 
 			"Chicken Zombie",
 			"Peach Wasp",
 			"Lemon Lion",
