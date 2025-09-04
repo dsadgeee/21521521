@@ -312,5 +312,5 @@ while true do
             end
         end
     end
-    wait(20) -- lặp lại sau 60 giây
+    wait(60) -- lặp lại sau 60 giây
 end
