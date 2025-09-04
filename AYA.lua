@@ -215,12 +215,14 @@ getgenv().ConfigsKaitun = {
 				 ["Brown Mouse"] = { 2, 100, 1 },
 				 ["Squirrel"] = { 1, 100, 2 },
 				 ["Grey Mouse"] = { 2, 100, 3 },-- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				 ["Starfish"] = { 8, 100, 4 },
 			},
 			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Glimmering Sprite"] = { 3, 100, 1 },
 				["Sunny-Side Chicken"] = { 5, 100, 2 },
 				["Rooster"] = { 5, 100, 3 },
+				["Starfish"] = { 8, 100, 4 },
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -245,7 +247,7 @@ getgenv().ConfigsKaitun = {
 			"Kodama",
 			"Corrupted Kitsune",
 			"Nihonzaru",
-			["Starfish"] = 6,
+			["Starfish"] = 15,
 			["Capybara"] = 1,
 			["Seal"] = 3,
 			"Kitsune",
