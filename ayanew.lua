@@ -220,7 +220,7 @@ getgenv().ConfigsKaitun = {
 			},
 			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Imp"] = { 8, 100, 1 }
+				["Imp"] = { 8, 100, 1 },
 				["Glimmering Sprite"] = { 3, 100, 2 },
 				["Sunny-Side Chicken"] = { 5, 100, 3 },
 				["Rooster"] = { 5, 100, 4 },
