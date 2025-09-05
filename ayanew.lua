@@ -110,7 +110,7 @@ getgenv().ConfigsKaitun = {
 				"FairyPoints",
 				"Pet Shard Glimmering",
 				--"Enchanted Seed Pack",
-				--"Enchanted Crate",
+				"Enchanted Crate",
 			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
