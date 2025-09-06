@@ -215,7 +215,7 @@ getgenv().ConfigsKaitun = {
 			},
 			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 5, 100, 1 },
+			--	["Glimmering Sprite"] = { 5, 100, 1 },
                 		["Sunny-Side Chicken"] = { 3, 100, 2 },
                 		["Starfish"] = { 5, 100, 3 },
                 		["Brown Mouse"] = { 3, 100, 4 },
