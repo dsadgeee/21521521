@@ -300,7 +300,8 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
-wait(3)
+
+wait(2)
 while true do
     for i = 1, 10 do
         local fairy = workspace:FindFirstChild(tostring(i))
@@ -312,5 +313,69 @@ while true do
             end
         end
     end
-    wait(60) -- lặp lại sau 60 giây
+    wait(25) -- lặp lại sau 60 giây
+end
+
+wait(2)
+local Rep = game:GetService('ReplicatedStorage')
+local CraftRemote = Rep.GameEvents.CraftingGlobalObjectService
+local bench =
+    workspace.Interaction.UpdateItems.FairyGenius.FairyWorldCraftingWorkBench
+local player = game.Players.LocalPlayer
+
+-- Hàm lấy UUID từ Backpack/Character
+local function getUUID(itemName)
+    for _, item in ipairs(player.Backpack:GetChildren()) do
+        if string.find(item.Name, itemName) then
+            return item:GetAttribute('c')
+        end
+    end
+    for _, item in ipairs(player.Character:GetChildren()) do
+        if string.find(item.Name, itemName) then
+            return item:GetAttribute('c')
+        end
+    end
+    return nil
+end
+
+-- Hàm auto craft 1 lần
+local function autoCraft()
+    -- chọn công thức
+    CraftRemote:FireServer(
+        'SetRecipe',
+        bench,
+        'FairyWorldCraftingWorkBench',
+        'Enchanted Chest'
+    )
+
+    -- nhét nguyên liệu
+    local items = {
+        { slot = 1, Name = 'Sunbulb', Type = 'Holdable' },
+        { slot = 2, Name = 'Enchanted Seed Pack', Type = 'Seed Pack' },
+        { slot = 3, Name = 'Enchanted Egg', Type = 'PetEgg' },
+    }
+
+    for _, v in ipairs(items) do
+        local uuid = getUUID(v.Name)
+        if uuid then
+            CraftRemote:FireServer(
+                'InputItem',
+                bench,
+                'FairyWorldCraftingWorkBench',
+                v.slot,
+                {
+                    ItemType = v.Type,
+                    ItemData = { UUID = uuid },
+                }
+            )
+        end
+    end
+
+    -- thực hiện craft
+    CraftRemote:FireServer('Craft', bench, 'FairyWorldCraftingWorkBench')
+end
+
+-- 🔄 Vòng lặp auto craft
+while task.wait(30) do -- chỉnh số giây delay tùy ý
+    autoCraft()
 end
