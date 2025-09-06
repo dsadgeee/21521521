@@ -261,7 +261,7 @@ getgenv().ConfigsKaitun = {
 			"Cardinal",
 			"Cockatrice",
 			["Glimmering Sprite"] = 3,
-			["Imp"] = 15,
+			["Imp"] = 2,
 			"Griffin",
 			["Spriggan"] = 1, 
 			"Chicken Zombie",
@@ -291,7 +291,7 @@ getgenv().ConfigsKaitun = {
 			"Mimic Octopus",
 			"Red Fox",
 		},
-		LockPet_Weight = 5, -- if Weight >= 10 they will locked
+		LockPet_Weight = 6, -- if Weight >= 10 they will locked
 	},
 
 	Webhook = {
@@ -331,7 +331,7 @@ getgenv().ConfigsKaitun = {
 		}
 	},
 }
-License = "hLv5vGDrHC1cR2eyIaPkonhV0CmU0L12"
+License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
 wait(10)
 -- Auto interact Fairy trong workspace["1"] -> workspace["10"]
