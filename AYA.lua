@@ -139,7 +139,6 @@ getgenv().ConfigsKaitun = {
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
 			"Drake",
-
 			"Sprout Seed Pack",
 			"Sprout Egg",
 			-- "Mandrake",
@@ -256,6 +255,7 @@ getgenv().ConfigsKaitun = {
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
+			"Drake",
 			"Phoenix",
 			"Shroomie",
 			"Cardinal",
