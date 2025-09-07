@@ -83,7 +83,7 @@ getgenv().ConfigsKaitun = {
 				"Carrot"
 			},
 			Lock = {
-				"Strawberry"
+				"Strawberry",
 				"Maple Apple",
 				"Sunflower",
 				"Dragon Pepper",
