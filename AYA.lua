@@ -342,7 +342,8 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
-wait(10)
+-- 🌟 Auto Harvest Sunbulb + Auto Craft Seed Pack/Chest + Claim + Fairy
+
 local Players = game:GetService('Players')
 local Rep = game:GetService('ReplicatedStorage')
 local CollectionService = game:GetService('CollectionService')
@@ -656,34 +657,6 @@ task.spawn(function()
                         end
                     end
                 end
-            end
-        end
-    end
-end)
-
--- Task 2: Fake teleport tới RewardPoint 1 → 20
-task.spawn(function()
-    while task.wait(1) do
-        for i = 1, 20 do
-            local point = workspace:FindFirstChild('RewardPoint' .. i)
-            if point and point:IsA('Part') then
-                local objPos = point.Position
-                local targetPos = objPos + Vector3.new(0, 3, 0)
-                hrp.CFrame = CFrame.new(targetPos)
-
-                workspace.CurrentCamera.CFrame =
-                    CFrame.new(objPos + Vector3.new(0, 10, 15), objPos)
-
-                local attach = point:FindFirstChild('Attachment')
-                if attach then
-                    local prompt =
-                        attach:FindFirstChildOfClass('ProximityPrompt')
-                    if prompt then
-                        fireproximityprompt(prompt)
-                    end
-                end
-
-                task.wait(0.5)
             end
         end
     end
