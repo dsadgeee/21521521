@@ -10,7 +10,7 @@ getgenv().ConfigsKaitun = {
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -24,8 +24,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 250,
-		["Destroy Until"] = 250,
+		["Limit"] = 400,
+		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
 			"Moon Blossom",
@@ -38,41 +38,41 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
-			["Bamboo"] = 10,
-			["Coconut"] = 5,
-			["Mushroom"] = 5,
-			["Glowthorn"] = 5,
-			["Tomato"] = 5,
-			["Pumpkin"] = 5,
-			["Pepper"] = 5,
-			["Cacao"] = 5,
-			["Apple"] = 5,
-			["Romanesco"] = 10,
-			["Elder Strawberry"] = 10,
-			["Burning Bud"] = 10,
-			["Giant Pinecone"] = 5,
-			["Corn"] = 5,
-			["Sugar Apple"] = 5,
-			["Ember Lily"] = 5,
-			["Dragon Fruit"] = 5,
-			["Sunbulb"] = 5,
-			["Orange Tulip"] = 10,
-			["Blueberry"] = 5,
-			["Watermelon"] = 5,
-			["Mango"] = 5,
-			["Cactus"] = 5,
-			["Strawberry"] = 5,
-			["Beanstalk"] = 10,
-			["Lightshoot"] = 5,
-			["Grape"] = 5,
-			["Daffodil"] = 5,
+			Bamboo = 4,
+			Coconut = 4,
+			Mushroom = 4,
+			Glowthorn = 4,
+			Tomato = 4,
+			Pumpkin = 4,
+			Pepper = 4,
+			Cacao = 4,
+			Apple = 4,
+			Romanesco = 4,
+			["Elder Strawberry"] = 4,
+			["Burning Bud"] = 4,
+			["Giant Pinecone"] = 4,
+			Corn = 4,
+			["Sugar Apple"] = 4,
+			["Ember Lily"] = 4,
+			["Dragon Fruit"] = 4,
+			Sunbulb = 8,
+			["Orange Tulip"] = 4,
+			Blueberry = 4,
+			Watermelon = 4,
+			Mango = 4,
+			Cactus = 4,
+			Strawberry = 4,
+			Beanstalk = 4,
+			Lightshoot = 4,
+			Grape = 4,
+			Daffodil = 4,
 		}
 	},
 
 	Seed = {
 		Buy = {
 			Mode = "Auto", -- Custom , Auto
-			Custom = { -- any fruit u need to place
+			Custom = { -- any seed u need to buy
 				"Carrot",
 			}
 		},
@@ -97,18 +97,20 @@ getgenv().ConfigsKaitun = {
 
 	["Seed Pack"] = {
 		Locked = {
-"Enchanted Seed Pack",
+			"Enchanted Seed Pack",
 		}
 	},
 
 	Events = {
 		["Fairy Event"] = {
-			Minimum_Money = 10_000_000, -- minimum money to start play this event
-			Rewards_Item = {
+			Minimum_Money = 100_000_000_000, -- minimum money to start play this event
+			Rewards_Item = { -- top mean select first
+				"Pet Shard Glimmering",
 				"Enchanted Egg",
+				"Mutation Spray Glimmering",
 				"FairyPoints",
-				"Enchanted Seed Pack",
 				"Fairy Targeter",
+				"Enchanted Seed Pack",
 			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
@@ -119,41 +121,46 @@ getgenv().ConfigsKaitun = {
 					"Fairy Event Duration",
 				},
 				Limit = {
-					["Glimmer Multiplier"] = 10, -- max 10
-					["Loose Fairy Spawn Amount"] = 4, -- max 4
+					["Glimmer Multiplier"] = 5, -- max 10
+					["Loose Fairy Spawn Amount"] = 10, -- max 10
 					["Fairy Event Duration"] = 10, -- max 10
 					["Fairy Spawn Amount"] = 9, -- max 9
 				}
 			}
 		},
-		MaxMoney_Restocks = 5_000_000_000_000,
+		MaxMoney_Restocks = 100_000_000_000,
 		Shop = { -- un comment to buy
+			"Enchanted Chest",
+			"Pet Shard Glimmering",
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
+			-- "Drake",
+
 			"Sprout Seed Pack",
 			"Sprout Egg",
 			-- "Mandrake",
-			-- "Silver Fertilizer",
+			"Silver Fertilizer",
 			-- "Canary Melon",
 			-- "Amberheart",
-			-- ["Spriggan"] = 8,
+			["Spriggan"] = 8,
 			-- Friend Shop
 			"Skyroot Chest",
-		},
-		Craft = {
-			"Enchanted Chest",
-			"Enchanted Egg",
-			"Anti Bee Egg",
-			"Sprout Egg",
+			"Pet Shard GiantBean",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
-			"Paradise Egg",
+			"Paradise Egg", 
 			"Rare Summer Egg", 
-			"Common Summer Egg",
-			"Pitcher Plant",
-			"Feijoa",
-			"Loquat",
+			"Common Summer Egg"
+		},
+		Craft = {
+			"Enchanted Chest",
+			"Fairy Net",
+			"Enchanted Egg",
+			"Enchanted Seed Pack",
+			"Anti Bee Egg",
+			"Pet Shard GiantBean",
+			"Sprout Egg",
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
@@ -168,6 +175,7 @@ getgenv().ConfigsKaitun = {
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
+			"Harvest Tool",
 		},
 		Lock = {
 			"Master Sprinkler",
@@ -180,9 +188,9 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Gourmet Egg",
 			"Enchanted Egg",
 			"Sprout Egg",
+			"Gourmet Egg",
 			"Zen Egg",
 			"Primal Egg",
 			"Dinosaur Egg",
@@ -191,11 +199,11 @@ getgenv().ConfigsKaitun = {
 			"Night Egg",
 			"Bug Egg",
 			"Paradise Egg",
-			"Rare Summer Egg",
+			"Bee Egg",
+			"Mythical Egg",
 		},
 		Buy = {
 			"Bee Egg",
-			"Enchanted Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
@@ -203,72 +211,106 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
-			"Legendary Egg",
-			"Rare Egg",
+			"Uncommon Egg",
+			"Common Egg",
 		}
 	},
 
 	Pets = {
 		["Auto Feed"] = true,
 
+		MutationPet = {
+			["PET NAME"] = { "Glimmering","... any other" }
+		},
+
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-                ["Brown Mouse"] = { 3, 100, 4, true },
-                ["Grey Mouse"] = { 3, 100, 5, true },
-				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Starfish"] = { 1, 100, 1 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
-			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
+			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 5, 100, 1 },
-                ["Sunny-Side Chicken"] = { 3, 100, 2 },
-                ["Starfish"] = { 5, 100, 3 },
-            	["Brown Mouse"] = { 3, 100, 4 },
-                ["Grey Mouse"] = { 3, 100, 5 },
-                ["Rooster"] = { 4, 100, 6 },
+				["Starfish"] = { 1, 100, 1 },
+				["Glimmering Sprite"] = { 4, 100, 2 },
+				["Sunny-Side Chicken"] = { 4, 100, 3 }, -- 5 on the first mean equip only 5 | pet , 100 mean equip only level pet lower than 100 | the one on the last is priority it will ues first if possible 
+				["Hotdog Daschund"] = { 4, 100, 4 },
+				["Blood Kiwi"] = { 8, 100, 5 },
+				["Rooster"] = { 8, 100, 6 },
 			},
 		},
 		Unfavorite_AllPet = false,
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
-			"Drake",
 			"Phoenix",
-			"Shroomie",
-			"Cardinal",
-			"Cockatrice",
-			["Glimmering Sprite"] = 3,
-			["Imp"] = 2,
+			["Shroomie"] = 2,
+			["Drake"] = 2,
+			["Luminous Sprite"] = 2,
 			"Griffin",
-			["Spriggan"] = 1, 
-			"Chicken Zombie",
+			["Glimmering Sprite"] = 5,
+			"Cockatrice",
+			"Golem",
+			"Gnome",
+			"Green Bean", 
+			"Apple Gazelle", 
+			"Lemon Lion", 
 			"Peach Wasp",
-			"Lemon Lion",
-			"Green Bean",
 			"Golden Goose",
-			["Golem"] = 2,
-			["Rooster"] = 10,
-			["Sapling"] = 5,
+			["Spriggan"] = 5,
+			["Gorilla Chef"] = 4,
+			"Junkbot",
+			"Hotdog Daschund",
+			"Sunny-Side Chicken",
 			"Lobster Thermidor",
-			["Sunny-Side Chicken"] = 35,
 			"French Fry Ferret",
-			"Kodama",
-			"Corrupted Kitsune",
-			"Nihonzaru",
-			["Starfish"] = 15,
-			["Capybara"] = 1,
-			["Seal"] = 3,
+			["Starfish"] = 8,
+			"Raiju",
+			"Corrupted Kodama",
+			["Rooster"] = 6,
+			"Capybara",
+			["Koi"] = 2,
+			["Tanchozuru"] = 3,
 			"Kitsune",
+			"Corrupted Kitsune",
+			"Dilophosaurus",
+			"Spinosaurus",
+			"Brontosaurus",
+			"T-Rex",
+			"Fennec Fox",
 			"Blood Kiwi",
+			["Hamster"] = 2,
 			"Disco Bee",
 			"Raccoon",
 			"Queen Bee",
 			"Dragonfly",
 			"Butterfly",
+			["Tarantula Hawk"] = 3,
+			["Wasp"] = 3,
+			["Honey Bee"] = 2,
+			["Bee"] = 2,
 			"Mimic Octopus",
 			"Red Fox",
+			"Chicken Zombie"
 		},
 		LockPet_Weight = 6, -- if Weight >= 10 they will locked
+		Ignore_Pet_Weight = {
+			"Imp ",
+			"Pixie",
+			"Brown Mouse",
+			"Grey Mouse",
+			"Ladybug",
+			"Spotted Deer",
+			"Caterpillar",
+		},
+		Instant_Sell = {
+			"Imp ",
+			"Pixie",
+			"Brown Mouse",
+			"Grey Mouse",
+			"Ladybug",
+			"Spotted Deer",
+			"Caterpillar",
+		}
 	},
 
 	Webhook = {
@@ -310,7 +352,21 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
-wait(4)
+wait(10)
+-- Auto interact Fairy trong workspace["1"] -> workspace["10"]
+while true do
+    for i = 1, 10 do
+        local fairy = workspace:FindFirstChild(tostring(i))
+        if fairy then
+            local prompt = fairy:FindFirstChildWhichIsA('ProximityPrompt', true)
+            if prompt then
+                fireproximityprompt(prompt)
+                print('Đã tương tác với Fairy:', fairy.Name)
+            end
+        end
+    end
+    wait(30) -- lặp lại sau 60 giây
+end
 -- 🌟 Auto Harvest Sunbulb + Auto Craft Seed Pack/Chest
 local Players = game:GetService("Players")
 local Rep = game:GetService("ReplicatedStorage")
@@ -458,4 +514,3 @@ while task.wait(60) do
         craftChest()
     end
 end
-
