@@ -38,6 +38,7 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
+			["Strawberry"] = 4,
 			["Bamboo"] = 10,
 			["Coconut"] = 5,
 			["Mushroom"] = 5,
@@ -82,6 +83,7 @@ getgenv().ConfigsKaitun = {
 				"Carrot"
 			},
 			Lock = {
+				"Strawberry"
 				"Maple Apple",
 				"Sunflower",
 				"Dragon Pepper",
