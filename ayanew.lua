@@ -10,7 +10,7 @@ getgenv().ConfigsKaitun = {
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = true,
+	["Rejoin When Update"] = false,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -28,7 +28,7 @@ getgenv().ConfigsKaitun = {
 		["Destroy Until"] = 250,
 
 		["Safe Tree"] = {
-	        "Moon Blossom",
+			"Moon Blossom",
 			"Bone Blossom",
 			"Moon Melon",
 			"Maple Apple",
@@ -38,7 +38,7 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
-	        ["Bamboo"] = 10,
+			["Bamboo"] = 10,
 			["Coconut"] = 5,
 			["Mushroom"] = 5,
 			["Glowthorn"] = 5,
@@ -47,7 +47,6 @@ getgenv().ConfigsKaitun = {
 			["Pepper"] = 5,
 			["Cacao"] = 5,
 			["Apple"] = 5,
-			["Wispwing"] = 10,
 			["Romanesco"] = 10,
 			["Elder Strawberry"] = 10,
 			["Burning Bud"] = 10,
@@ -56,7 +55,7 @@ getgenv().ConfigsKaitun = {
 			["Sugar Apple"] = 5,
 			["Ember Lily"] = 5,
 			["Dragon Fruit"] = 5,
-			["Sunbulb"] = 10,
+			["Sunbulb"] = 5,
 			["Orange Tulip"] = 10,
 			["Blueberry"] = 5,
 			["Watermelon"] = 5,
@@ -67,8 +66,6 @@ getgenv().ConfigsKaitun = {
 			["Lightshoot"] = 5,
 			["Grape"] = 5,
 			["Daffodil"] = 5,
-			["Aurora Vine"] = 10,
-			["Aetherfruit"] = 10,
 		}
 	},
 
@@ -94,29 +91,24 @@ getgenv().ConfigsKaitun = {
 				"Moon Mango",
 				"Bone Blossom",
 				"Fossilight",
-				"Sunbulb",
-				"Strawberry",
-				"Dragon Fruit",
-				"Mango",
 			}
 		}
 	},
 
 	["Seed Pack"] = {
 		Locked = {
-				"Enchanted Seed Pack",
+"Enchanted Seed Pack",
 		}
 	},
 
 	Events = {
 		["Fairy Event"] = {
 			Minimum_Money = 10_000_000, -- minimum money to start play this event
-			Rewards_Item = { -- top mean select first
+			Rewards_Item = {
 				"Enchanted Egg",
+				"FairyPoints",
 				"Enchanted Seed Pack",
 				"Fairy Targeter",
-				"FairyPoints",
-				"Pet Shard Glimmering",
 			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
@@ -127,8 +119,8 @@ getgenv().ConfigsKaitun = {
 					"Fairy Event Duration",
 				},
 				Limit = {
-					["Glimmer Multiplier"] = 1, -- max 10
-					["Loose Fairy Spawn Amount"] = 10, -- max 10
+					["Glimmer Multiplier"] = 10, -- max 10
+					["Loose Fairy Spawn Amount"] = 4, -- max 4
 					["Fairy Event Duration"] = 10, -- max 10
 					["Fairy Spawn Amount"] = 9, -- max 9
 				}
@@ -138,8 +130,6 @@ getgenv().ConfigsKaitun = {
 		Shop = { -- un comment to buy
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
-			"Drake",
-
 			"Sprout Seed Pack",
 			"Sprout Egg",
 			-- "Mandrake",
@@ -201,9 +191,7 @@ getgenv().ConfigsKaitun = {
 			"Night Egg",
 			"Bug Egg",
 			"Paradise Egg",
-			"Legendary Egg",
-			"Rare Egg",
-			"Mythical Egg",
+			"Rare Summer Egg",
 		},
 		Buy = {
 			"Bee Egg",
@@ -215,8 +203,6 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
-			"Uncommon Egg",
-			"Common Egg",
 			"Legendary Egg",
 			"Rare Egg",
 		}
@@ -224,32 +210,22 @@ getgenv().ConfigsKaitun = {
 
 	Pets = {
 		["Auto Feed"] = true,
-		MutationPet = {
-			["Rooster"] = { "Glimmering" },
-			["Sunny-Side Chicken"] = { "Glimmering" },
-			["Glimmering Sprite"] = { "Glimmering" },
-			["Brown Mouse"] = { "Glimmering" },
-			["Grey Mouse"] = { "Glimmering" },
-			["Squirrel"] = { "Glimmering" },
-		},
+
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
+                ["Brown Mouse"] = { 3, 100, 4, true },
+                ["Grey Mouse"] = { 3, 100, 5, true },
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
-				["Brown Mouse"] = { 1, 100 },
-				["Squirrel"] = { 1, 100 }, 
-				["Grey Mouse"] = { 1, 100 },
 			},
-		["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
-		["Equip When Done"] = {
-			["Glimmering Sprite"] = { 3, 100, 1 },
-			["Capybara"] = { 1, 100 },
-			["Rooster"] = { 5, 100, 2 },
-            ["Starfish"] = { 1, 100 },
-            ["Brown Mouse"] = { 1, 100 },
-            ["Squirrel"] = { 1, 100 }, 
-            ["Grey Mouse"] = { 1, 100 },
-            ["Sunny-Side Chicken"] = { 5, 100, 2 },
+			["Limit Upgrade"] = 2, -- max is 5 (more than or lower than 1 will do nothing)
+			["Equip When Done"] = {
+				["Glimmering Sprite"] = { 5, 100, 1 },
+                ["Sunny-Side Chicken"] = { 3, 100, 2 },
+                ["Starfish"] = { 5, 100, 3 },
+            	["Brown Mouse"] = { 3, 100, 4 },
+                ["Grey Mouse"] = { 3, 100, 5 },
+                ["Rooster"] = { 4, 100, 6 },
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -334,21 +310,7 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
-wait(10)
--- Auto interact Fairy trong workspace["1"] -> workspace["10"]
-while true do
-    for i = 1, 10 do
-        local fairy = workspace:FindFirstChild(tostring(i))
-        if fairy then
-            local prompt = fairy:FindFirstChildWhichIsA('ProximityPrompt', true)
-            if prompt then
-                fireproximityprompt(prompt)
-                print('Đã tương tác với Fairy:', fairy.Name)
-            end
-        end
-    end
-    wait(30) -- lặp lại sau 60 giây
-end
+wait(4)
 -- 🌟 Auto Harvest Sunbulb + Auto Craft Seed Pack/Chest
 local Players = game:GetService("Players")
 local Rep = game:GetService("ReplicatedStorage")
@@ -496,3 +458,4 @@ while task.wait(60) do
         craftChest()
     end
 end
+
