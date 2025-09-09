@@ -1,62 +1,346 @@
-script_key="qwhIjrnQcSQLjUUOrAZHQCVQCmflwHDc";
-setfpscap(2)
+getgenv().ConfigsKaitun = {
+	Beta_Fix_Data_Sync = true,
 
-getgenv().gagConfig = {
-    -- Event:
-    CRAFT_EVENT = { "Enchanted Chest", "Fairy Net", "Enchanted Seed Pack", "Anti Bee Egg", "Mutation Spray Glimmering" },
-    BUY_TRAVELING_MERCHANT = { "Bee Egg", "Primal Egg", "Paradise Egg", "Rare Summer Egg", "Common Summer Egg" },
-    MAX_EVENT_RESTOCK_SHECKLES = 5_000_000_000_000,
-    BUY_EVENT_SHOP = { "Enchanted Chest", "Enchanted Egg", "Enchanted Seed Pack", "Luminous Sprite", "Mutation Spray Luminous", "Drake", "Wisp", "Wisp Well" },
-    
-    CLAIM_FAIRY_REWARD = { "Mutation Spray Glimmering", "Enchanted Egg", "Enchanted Seed Pack", "FairyPoints", "Fairy Targeter" },
-    CLAIM_FOOD_CONNOISSEUR_REWARD = {"Culinarian Chest", "Gourmet Egg", "Gorilla Chef"},
-    PLANT_EVENT_TREES = false,
+	NoDeletePlayer = false,
 
-    -- General:
-    AUTO_UPDATE_RESTART = false,
-    REDEEM_CODES = {},
-    EXTRA_PET_SLOTS = 5,
-    EXTRA_EGG_SLOTS = 5,
-    ADD_FRIEND = true,
-    OPEN_ALL_SEED_PACK = false,
-    PLACE_COSMETIC = { "Cooking Kit", "Cooking Cauldron" },
+	["Block Pet Gift"] = true,
 
-    MAX_PLANTS = 300,
-    DESTROY_UNTIL_MIN_PLANTS = 300,
-    DELETE_PLANTS_AFTER_MAX = { "Carrot", "Strawberry", "Blueberry", "Tomato", "Cauliflower", "Apple" },
+	Collect_Cooldown = 90, -- cooldown to collect fruit
 
-    BUY_EGGS = { ["Legendary Egg"] = 99, "Mythical Egg", "Bug Egg", "Bee Egg", "Paradise Egg", ["Common Summer Egg"] = 99, ["Rare Summer Egg"] = 99, ["Rare Egg"] = 99},
-    PLANT_EGGS = { "Enchanted Egg", "Sprout Egg", "Gourmet Egg", "Zen Egg", "Anti Bee Egg", "Primal Egg", "Bug Egg", "Paradise Egg", "Mythical Egg", "Common Summer Egg", "Rare Summer Egg", "Rare Egg" },
-    
-    -- BUY_SEED_SHOP Priority (Left -> Right)
-    BUY_SEED_SHOP = { ["Sunbulb"] = 10, ["Glimmering Sprite"] = 10, ["Romanesco"] = 10, ["Giant Pinecone"] = 10, ["Burning Bud"] = 10, ["Sugar Apple"] = 10, ["Ember Lily"] = 10, ["Beanstalk"] = 10, ["Cacao"] = 10, ["Pepper"] = 10, ["Mushroom"] = 10, ["Grape"] = 10, ["Mango"] = 10, ["Dragon Fruit"] = 10, ["Cactus"] = 10, ["Coconut"] = 10, ["Bamboo"] = 10, ["Apple"] = 10, ["Pumpkin"] = 10, ["Watermelon"] = 10, ["Daffodil"] = 10, ["Tomato"] = 10, ["Orange Tulip"] = 10, ["Blueberry"] = 10, ["Strawberry"] = 10, ["Carrot"] = 10 },
-    KEEP_SEEDS = { "Grand Tomato", "King Cabbage", "Bone Blossom", "Mushroom" },
-    
-    FAVOURITE_FRUIT_MUTATIONS = {},
-    SKIP_HARVEST_MUTATIONS = {},
+	["Low Cpu"] = true,
+	["Auto Rejoin"] = true,
 
-    KEEP_PETS = { ["Shroomie"] = 1, ["Drake"] = 2, ["Wisp"] = 2, ["Luminous Sprite"] = 5, ["Wisp Well"] = 2, "Cockatrice", "Phoenix", ["Glimmering Sprite"] = 8, ["Imp"] = 2, "Griffin", ["Brown Mouse"] = 2, ["Squirrel"] = 1, ["Grey Mouse"] = 2, ["Rooster"] = 10, "Lemon Lion", "Peach Wasp", "Chicken Zombie", ["Gorilla Chef"] = 8, "Green Bean", "Golden Goose", ["Spriggan"] = 1, "Lobster Thermidor", ["Sunny-Side Chicken"] = 35, "French Fry Ferret", ["Kodama"] = 1, "Corrupted Kitsune", ["Starfish"] = 10, ["Capybara"] = 1, ["Seal"] = 1, "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon","Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox", "Bee", "Honey Bee", "Bear Bee", "Petal Bee", "Wasp", "Tarantula Hawk" },
-    KEEP_PETS_WEIGHT = 6,
+	["Rejoin When Update"] = true,
 
-    -- EQUIP_PETS Priority (Left -> Right)
-    EQUIP_PETS = { "Bee", "Honey Bee", "Bear Bee", "Petal Bee", "Wasp", "Tarantula Hawk", ["Glimmering Sprite"] = 5, ["Sunny-Side Chicken"] = 3, ["Brown Mouse"] = 2, ["Squirrel"] = 1, ["Grey Mouse"] = 2,  ["Rooster"] = 4 },
-    USE_PETS_FOR_UPGRADE_SLOT = { "Starfish", "Capybara", "Brown Mouse", "Grey Mouse", "Rooster", "Squirrel" },
+	["Auto Trade Pet"] = { -- not done yet bro dont use
+		["Enabled"] = false, 
+		["Target"] =  { -- multi users
+			"username1",
+			"username2",
+		},
+		["Pet To Send"] = {
+			
+		}
+	},
 
-    BUY_GEAR_SHOP = { "Fairy Targeter", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler" },
-    USE_SPRINKLER = { "Fairy Targeter", "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler" },
+	["Limit Tree"] = {
+		["Limit"] = 250,
+		["Destroy Until"] = 250,
 
-    PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1408866663558025278/ohhAUmTACbJP2YbxoGH8iXRYJpT36w0HcHrffSsza8TA6iw62VUO1Sb2jCBavqeK1FeW",
-    SEED_WEBHOOK_URL = "", 
-    NOTIFY_PETS = { "Phoenix", "Cockatrice", "Griffin", "Golden Goose", "Lobster Thermidor", "French Fry Ferret", "Corrupted Kitsune", "Kitsune", "Fennec Fox", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "T-Rex", "Red Fox", "Spinosaurus"},
-    NOTIFY_PETS_WEIGHT = 6,
-    DISCORD_ID = "698853568291143821",
-    WEBHOOK_NOTE = "1",
-    SHOW_WEBHOOK_USERNAME = true,
+		["Safe Tree"] = {
+	        "Moon Blossom",
+			"Bone Blossom",
+			"Moon Melon",
+			"Maple Apple",
+			"Moon Mango",
+			"Dragon Pepper",
+			"Elephant Ears",
+			"Fossilight",
+			"Princess Thorn",
+			-- for the event
+	        ["Bamboo"] = 10,
+			["Coconut"] = 5,
+			["Mushroom"] = 5,
+			["Glowthorn"] = 5,
+			["Tomato"] = 5,
+			["Pumpkin"] = 5,
+			["Pepper"] = 5,
+			["Cacao"] = 5,
+			["Apple"] = 5,
+			["Wispwing"] = 10,
+			["Romanesco"] = 10,
+			["Elder Strawberry"] = 10,
+			["Burning Bud"] = 10,
+			["Giant Pinecone"] = 5,
+			["Corn"] = 5,
+			["Sugar Apple"] = 5,
+			["Ember Lily"] = 5,
+			["Dragon Fruit"] = 5,
+			["Sunbulb"] = 10,
+			["Orange Tulip"] = 10,
+			["Blueberry"] = 5,
+			["Watermelon"] = 5,
+			["Mango"] = 5,
+			["Cactus"] = 5,
+			["Strawberry"] = 5,
+			["Beanstalk"] = 10,
+			["Lightshoot"] = 5,
+			["Grape"] = 5,
+			["Daffodil"] = 5,
+			["Aurora Vine"] = 10,
+			["Aetherfruit"] = 10,
+		}
+	},
+
+	Seed = {
+		Buy = {
+			Mode = "Auto", -- Custom , Auto
+			Custom = { -- any fruit u need to place
+				"Carrot",
+			}
+		},
+		Place = {
+			Mode = "Lock", -- Select , Lock
+			Select = {
+				"Carrot"
+			},
+			Lock = {
+				"Maple Apple",
+				"Sunflower",
+				"Dragon Pepper",
+				"Elephant Ears",
+				"Moon Melon",
+				"Easter Egg",
+				"Moon Mango",
+				"Bone Blossom",
+				"Fossilight",
+				"Strawberry",
+			}
+		}
+	},
+
+	["Seed Pack"] = {
+		Locked = {
+				"Enchanted Seed Pack",
+		}
+	},
+
+	Events = {
+		["Fairy Event"] = {
+			Minimum_Money = 10_000_000, -- minimum money to start play this event
+			Rewards_Item = { -- top mean select first
+				"Enchanted Egg",
+				"Enchanted Seed Pack",
+				"FairyPoints",
+				"Pet Shard Glimmering",
+			    "Fairy Targeter",
+			},
+			Upgrade = {
+				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
+				Order = { -- top upgrade first, not put mean not upgrade
+					"Fairy Spawn Amount",
+					"Loose Fairy Spawn Amount",
+					"Glimmer Multiplier",
+					"Fairy Event Duration",
+				},
+				Limit = {
+					["Glimmer Multiplier"] = 1, -- max 10
+					["Loose Fairy Spawn Amount"] = 10, -- max 10
+					["Fairy Event Duration"] = 10, -- max 10
+					["Fairy Spawn Amount"] = 9, -- max 9
+				}
+			}
+		},
+		MaxMoney_Restocks = 5_000_000_000_000,
+		Shop = { -- un comment to buy
+			"Enchanted Chest",
+			"Enchanted Egg",
+			"Enchanted Seed Pack",
+			"Drake",
+			"Wisp",
+			"Luminous Sprite",
+
+			"Sprout Seed Pack",
+			"Sprout Egg",
+			-- "Mandrake",
+			-- "Silver Fertilizer",
+			-- "Canary Melon",
+			-- "Amberheart",
+			-- ["Spriggan"] = 8,
+			-- Friend Shop
+			"Skyroot Chest",
+		},
+		Craft = {
+			"Fairy Net",
+			"Enchanted Chest",
+			"Enchanted Egg",
+			"Anti Bee Egg",
+			"Sprout Egg",
+		},
+		["Traveling Shop"] = {
+			"Bee Egg",
+			"Paradise Egg",
+			"Rare Summer Egg", 
+			"Common Summer Egg",
+			"Pitcher Plant",
+			"Feijoa",
+			"Loquat",
+		},
+		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
+	},
+
+	Gear = {
+		Buy = { 
+			"Harvest Tool",
+			"Master Sprinkler",
+			"Godly Sprinkler",
+			"Grandmaster Sprinkler",
+			"Advanced Sprinkler",
+			"Basic Sprinkler",
+			"Lightning Rod",
+			"Level Up Lollipop",
+			"Medium Treat",
+			"Medium Toy",
+		},
+		Lock = {
+			"Grandmaster Sprinkler",
+			"Godly Sprinkler",
+			"Lightning Rod",
+			"Harvest Tool",
+			"Level Up Lollipop",
+			"Medium Treat",
+			"Medium Toy",
+		},
+	},
+
+	Eggs = {
+		Place = {
+			"Gourmet Egg",
+			"Enchanted Egg",
+			"Sprout Egg",
+			"Zen Egg",
+			"Primal Egg",
+			"Dinosaur Egg",
+			"Oasis Egg",
+			"Anti Bee Egg",
+			"Night Egg",
+			"Bug Egg",
+			"Paradise Egg",
+			"Rare Summer Egg",
+		},
+		Buy = {
+			"Bee Egg",
+			"Enchanted Egg",
+			"Oasis Egg",
+			"Paradise Egg",
+			"Anti Bee Egg",
+			"Night Egg",
+			"Rare Summer Egg",
+			"Bug Egg",
+			"Mythical Egg",
+			"Legendary Egg",
+			"Rare Egg",
+		}
+	},
+
+	Pets = {
+		["Auto Feed"] = true,
+		MutationPet = {
+			["Rooster"] = { "Glimmering" },
+			["Sunny-Side Chicken"] = { "Glimmering" },
+			["Glimmering Sprite"] = { "Glimmering" },
+			["Brown Mouse"] = { "Glimmering" },
+			["Grey Mouse"] = { "Glimmering" },
+			["Squirrel"] = { "Glimmering" },
+		},
+		["Start Delete Pet At"] = 40,
+		["Upgrade Slot"] = {
+			["Pet"] = {
+                ["Brown Mouse"] = { 3, 100, 4, true },
+                ["Grey Mouse"] = { 3, 100, 5, true },
+				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+			},
+			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
+			["Equip When Done"] = {
+				["Bee"] = { 5, 100, 1 },
+				["Honey Bee"] = { 5, 100, 2 },
+				["Bear Bee"] = { 5, 100, 3 },
+				["Petal Bee"] = { 5, 100, 4 },
+				["Wasp"] = { 5, 100, 5 },
+				["Tarantula Hawk"] = { 5, 100, 6 },
+				["Glimmering Sprite"] = { 5, 100, 7 },
+                ["Sunny-Side Chicken"] = { 3, 100, 8 },
+                ["Starfish"] = { 5, 100, 9 },
+            	["Brown Mouse"] = { 3, 100, 10 },
+                ["Grey Mouse"] = { 3, 100, 11 },
+                ["Rooster"] = { 4, 100, 12 },
+			},
+		},
+		Unfavorite_AllPet = false,
+		Favorite_LockedPet = false,
+		Locked_Pet_Age = 60, -- pet that age > 60 will lock
+		Locked = {
+			"Cockatrice",
+			"Drake",
+			"Wisp",
+			"Luminous Sprite",
+			"Wisp Well",
+			"Phoenix",
+			["Glimmering Sprite"] = 8,
+			["Imp"] = 3,
+			"Griffin",
+			["Brown Mouse"] = 2,
+			["Squirrel"] = 1,
+			["Grey Mouse"] = 2,
+			["Rooster"] = 10,
+			"Lemon Lion",
+			"Peach Wasp",
+			"Chicken Zombie",
+			["Gorilla Chef"] = 8,
+			"Green Bean",
+			"Golden Goose",
+			["Spriggan"] = 1, 
+			"Lobster Thermidor",
+			["Sunny-Side Chicken"] = 35,
+			"French Fry Ferret",
+			["Kodama"] = 1,
+			"Corrupted Kitsune",
+			["Starfish"] = 10,
+			["Capybara"] = 1,
+			["Seal"] = 1,
+			"Kitsune",
+			"Blood Kiwi",
+			"Disco Bee",
+			"Raccoon",
+			"Queen Bee",
+			"Dragonfly",
+			"Butterfly",
+			"Mimic Octopus",
+			"Red Fox",
+			"Bee",
+			"Honey Bee",
+			"Bear Bee",
+			"Petal Bee",
+			"Wasp",
+			"Tarantula Hawk",
+		},
+		LockPet_Weight = 6, -- if Weight >= 10 they will locked
+	},
+
+    Webhook = {
+		UrlPet = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
+		UrlSeed = "XXX",
+		PcName = "1",
+
+		Noti = {
+			Seeds = {
+			},
+			SeedPack = {
+				"Idk"
+			},
+			Pets = {
+				"Golden Goose",
+				"Phoenix",
+				"Cockatrice",
+				"Griffin",
+				"French Fry Ferret",
+                "Lobster Thermidor",
+				"Disco Bee",
+		        "Corrupted Kitsune",
+				"Butterfly",
+				"Mimic Octopus",
+				"Queen Bee",
+				"Dragonfly",
+				"Kitsune",
+				"Raccoon",
+				"Fennec Fox",
+			},
+			Pet_Weight_Noti = true,
+		}
+	},
 }
-
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/c916e5b90dc37c71ecf1ec00dfce3d5d.lua"))()
-
-wait(4)
+License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
+loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
 -- 🌟 Auto Fairy Event Script (Modified)
 local Players = game:GetService('Players')
 local Rep = game:GetService('ReplicatedStorage')
