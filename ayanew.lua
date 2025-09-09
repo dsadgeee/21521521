@@ -28,7 +28,7 @@ getgenv().ConfigsKaitun = {
 		["Destroy Until"] = 250,
 
 		["Safe Tree"] = {
-	        "Moon Blossom",
+	"Moon Blossom",
 			"Bone Blossom",
 			"Moon Melon",
 			"Maple Apple",
@@ -131,7 +131,7 @@ getgenv().ConfigsKaitun = {
 				}
 			}
 		},
-		MaxMoney_Restocks = 5_000_000_000_000,
+		MaxMoney_Restocks = 1_000_000_000_000,
 		Shop = { -- un comment to buy
 			"Enchanted Chest",
 			"Enchanted Egg",
@@ -304,7 +304,7 @@ getgenv().ConfigsKaitun = {
 			"Wasp",
 			"Tarantula Hawk",
 		},
-		LockPet_Weight = 6, -- if Weight >= 10 they will locked
+		LockPet_Weight = 5, -- if Weight >= 10 they will locked
 	},
 
     Webhook = {
