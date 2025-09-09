@@ -50,7 +50,7 @@ getgenv().gagConfig = {
     NOTIFY_PETS = { "Phoenix", "Cockatrice", "Griffin", "Golden Goose", "Lobster Thermidor", "French Fry Ferret", "Corrupted Kitsune", "Kitsune", "Fennec Fox", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "T-Rex", "Red Fox", "Spinosaurus"},
     NOTIFY_PETS_WEIGHT = 6,
     DISCORD_ID = "698853568291143821",
-    WEBHOOK_NOTE = "1",
+    WEBHOOK_NOTE = "2",
     SHOW_WEBHOOK_USERNAME = true,
 }
 
