@@ -243,12 +243,13 @@ getgenv().ConfigsKaitun = {
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 3, 100, 1 },
-                		["Sunny-Side Chicken"] = { 5, 100, 2 },
-                		["Starfish"] = { 1, 100, 3 },
-                		["Brown Mouse"] = { 1, 100, 4 },
-                		["Grey Mouse"] = { 1, 100, 5 },
-                		["Rooster"] = { 4, 100, 6 },
+				["Glimmering Sprite"] = { 8, 100, 1 },
+				["Tarantula Hawk"] = { 1, 100, 2 },
+				["Sunny-Side Chicken"] = { 4, 100, 3 }, -- 5 on the first mean equip only 5 | pet , 100 mean equip only level pet lower than 100 | the one on the last is priority it will ues first if possible 
+				["Hotdog Daschund"] = { 4, 100, 4 },
+				["Blood Kiwi"] = { 8, 100, 5 },
+				["Rooster"] = { 8, 100, 6 },
+				["Starfish"] = { 1, 100, 7 },
 			},
 		},
 		Unfavorite_AllPet = false,
