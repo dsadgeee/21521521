@@ -5,12 +5,12 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 120, -- cooldown to collect fruit
+	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = false,
+	["Auto Rejoin"] = true,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -24,11 +24,11 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 200,
-		["Destroy Until"] = 200,
+		["Limit"] = 250,
+		["Destroy Until"] = 250,
 
 		["Safe Tree"] = {
-			"Moon Blossom",
+	"Moon Blossom",
 			"Bone Blossom",
 			"Moon Melon",
 			"Maple Apple",
@@ -124,22 +124,20 @@ getgenv().ConfigsKaitun = {
 					"Fairy Event Duration",
 				},
 				Limit = {
-					["Glimmer Multiplier"] = 1, -- max 10
-					["Loose Fairy Spawn Amount"] = 10, -- max 10
-					["Fairy Event Duration"] = 10, -- max 10
-					["Fairy Spawn Amount"] = 9, -- max 9
+					["Glimmer Multiplier"] = 8, -- max 10
+					["Loose Fairy Spawn Amount"] = 8, -- max 10
+					["Fairy Event Duration"] = 8, -- max 10
+					["Fairy Spawn Amount"] = 8, -- max 9
 				}
-			}
+			},
+		Minimum_Fairy_Point_Restock = 5000, -- if fairy point more then this will restock
+        Catch_Fairy_Before_Restock = 51, -- fr it 50 but to be sure i put 51
 		},
 		MaxMoney_Restocks = 1_000_000_000_000,
 		Shop = { -- un comment to buy
 			"Enchanted Chest",
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
-			"Drake",
-			"Wisp",
-			"Luminous Sprite",
-
 			"Sprout Seed Pack",
 			"Sprout Egg",
 			-- "Mandrake",
@@ -151,7 +149,6 @@ getgenv().ConfigsKaitun = {
 			"Skyroot Chest",
 		},
 		Craft = {
-			"Fairy Net",
 			"Enchanted Chest",
 			"Enchanted Egg",
 			"Anti Bee Egg",
@@ -236,20 +233,24 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
+                ["Brown Mouse"] = { 3, 100, 4, true },
+                ["Grey Mouse"] = { 3, 100, 5, true },
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
-				["Brown Mouse"] = { 1, 100 },
-				["Squirrel"] = { 1, 100 }, 
-				["Grey Mouse"] = { 1, 100 },
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 8, 100, 1 },
-				["Tarantula Hawk"] = { 1, 100, 2 },
-				["Sunny-Side Chicken"] = { 4, 100, 3 }, -- 5 on the first mean equip only 5 | pet , 100 mean equip only level pet lower than 100 | the one on the last is priority it will ues first if possible 
-				["Hotdog Daschund"] = { 4, 100, 4 },
-				["Blood Kiwi"] = { 8, 100, 5 },
-				["Rooster"] = { 8, 100, 6 },
-				["Starfish"] = { 1, 100, 7 },
+				["Bee"] = { 5, 100, 1 },
+				["Honey Bee"] = { 5, 100, 2 },
+				["Bear Bee"] = { 5, 100, 3 },
+				["Petal Bee"] = { 5, 100, 4 },
+				["Wasp"] = { 5, 100, 5 },
+				["Tarantula Hawk"] = { 5, 100, 6 },
+				["Glimmering Sprite"] = { 5, 100, 7 },
+                ["Sunny-Side Chicken"] = { 3, 100, 8 },
+                ["Starfish"] = { 5, 100, 9 },
+            	["Brown Mouse"] = { 3, 100, 10 },
+                ["Grey Mouse"] = { 3, 100, 11 },
+                ["Rooster"] = { 4, 100, 12 },
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -339,178 +340,44 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
--- 🌟 Auto Fairy Event Script (Modified)
+-- 🌟 Auto Fairy Event Script (Switch by Score)
 local Players = game:GetService('Players')
 local Rep = game:GetService('ReplicatedStorage')
-local CollectionService = game:GetService('CollectionService')
-
-local localPlayer = Players.LocalPlayer
 local DataService = require(Rep.Modules.DataService)
+local localPlayer = Players.LocalPlayer
 
-local CollectRemote = Rep.GameEvents.Crops.Collect
-local SubmitFairy = Rep.GameEvents.FairyService.SubmitFairyFountainAllPlants
-local CraftRemote = Rep.GameEvents.CraftingGlobalObjectService
+-- 🔮 Các remote quan trọng
 local FairyNetEvent = Rep.GameEvents.FairyNetActivated
-
-local benchFairy =
-    workspace.Interaction.UpdateItems.FairyGenius.FairyGeniusEventCraftingWorkBench
-
--- ⚙️ Config
-local HARVEST_INTERVAL = 50
-local CRAFT_INTERVAL = 5
-local FAIRY_SUBMIT_INTERVAL = 10
-local LIMIT = 20
-local FIRE_DELAY = 2
-local SUBMIT_DELAY = 1
-local USE_FARM_ONLY = true
-
--- Farm folder
-local farmFolder
-pcall(function()
-    if
-        workspace:FindFirstChild('Farm')
-        and workspace.Farm:FindFirstChild('Farm')
-    then
-        farmFolder = workspace.Farm.Farm
-    end
-end)
-
--- 🟢 Utility
-local function getUUID(itemName)
-    for _, item in ipairs(localPlayer.Backpack:GetChildren()) do
-        if string.find(item.Name, itemName) then
-            return item:GetAttribute('c')
-        end
-    end
-    for _, item in ipairs(localPlayer.Character:GetChildren()) do
-        if string.find(item.Name, itemName) then
-            return item:GetAttribute('c')
-        end
-    end
-    return nil
-end
-
-local function countItem(itemName)
-    local count = 0
-    for _, item in ipairs(localPlayer.Backpack:GetChildren()) do
-        if string.find(item.Name, itemName) then
-            count += 1
-        end
-    end
-    return count
-end
-
-local function hasCollectTag(obj)
-    if type(obj.HasTag) == 'function' then
-        local ok, res = pcall(function()
-            return obj:HasTag('CollectPrompt')
-        end)
-        if ok then
-            return res
-        end
-    end
-    return CollectionService:HasTag(obj, 'CollectPrompt')
-end
-
--- 🛠 Harvest
-local function harvestItem(itemName, limit)
-    local collected = 0
-    local descendants = USE_FARM_ONLY and farmFolder:GetDescendants()
-        or workspace:GetDescendants()
-
-    for _, inst in ipairs(descendants) do
-        if inst:IsA('ProximityPrompt') and hasCollectTag(inst) then
-            local crop = inst.Parent and inst.Parent.Parent
-            if crop and crop.Name == itemName then
-                CollectRemote:FireServer({ crop })
-                task.wait(FIRE_DELAY)
-                SubmitFairy:FireServer()
-                task.wait(SUBMIT_DELAY)
-                SubmitFairy:FireServer()
-
-                collected += 1
-                if collected >= limit then
-                    break
-                end
-            end
-        end
-    end
-end
-
-local function harvestGlimmering(limit)
-    local tier = (DataService:GetData() or {}).FairyQuests
-            and DataService:GetData().FairyQuests.WishLevel
-        or 0
-    if tier >= 5 then
-        return
-    end
-    local collected = 0
-    local descendants = USE_FARM_ONLY and farmFolder:GetDescendants()
-        or workspace:GetDescendants()
-
-    for _, inst in ipairs(descendants) do
-        if inst:IsA('ProximityPrompt') and hasCollectTag(inst) then
-            local crop = inst.Parent and inst.Parent.Parent
-            if crop and crop:GetAttribute('Glimmering') then
-                CollectRemote:FireServer({ crop })
-                task.wait(FIRE_DELAY)
-                SubmitFairy:FireServer()
-                task.wait(SUBMIT_DELAY)
-                SubmitFairy:FireServer()
-
-                collected += 1
-                if collected >= limit then
-                    break
-                end
-            end
-        end
-    end
-end
-
--- 🧰 Craft
-local function craftItem(bench, benchType, recipe, items)
-    CraftRemote:FireServer('SetRecipe', bench, benchType, recipe)
-    for _, v in ipairs(items) do
-        local uuid = getUUID(v.Name)
-        if uuid then
-            CraftRemote:FireServer('InputItem', bench, benchType, v.slot, {
-                ItemType = v.Type,
-                ItemData = { UUID = uuid },
-            })
-        end
-    end
-    CraftRemote:FireServer('Craft', bench, benchType)
-    CraftRemote:FireServer('Claim', bench, benchType, 1)
-end
-
-local function craftFairyNet()
-    craftItem(benchFairy, 'FairyGeniusEventWorkbench', 'Fairy Net', {
-        { slot = 1, Name = 'Sunbulb', Type = 'Holdable' },
-        { slot = 2, Name = 'Strawberry Seed', Type = 'Seed' },
-        { slot = 3, Name = 'Harvest Tool', Type = 'Harvest Tool' },
-    })
-end
-
--- 🧪 Collect Fairy
-local player = localPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild('HumanoidRootPart')
 local FairyEventVisuals = require(Rep.Modules.FairyEventVisualsController)
 
+-- 🧰 Utility
+local function getFairyCount()
+    local data = DataService:GetData()
+    if data and data.FairyEvent then
+        return (data.FairyEvent.FairiesCapturedWithNetV1 or 0)
+            + (data.FairyEvent.FairiesCapturedWithNetV2 or 0)
+    end
+    return 0
+end
+
 local function equipItemContains(keyword)
-    for _, tool in ipairs(player.Character:GetChildren()) do
+    for _, tool in ipairs(localPlayer.Character:GetChildren()) do
         if tool:IsA('Tool') and string.find(tool.Name, keyword) then
             return tool
         end
     end
-    for _, tool in ipairs(player.Backpack:GetChildren()) do
+    for _, tool in ipairs(localPlayer.Backpack:GetChildren()) do
         if tool:IsA('Tool') and string.find(tool.Name, keyword) then
-            tool.Parent = player.Character
+            tool.Parent = localPlayer.Character
             return tool
         end
     end
     return nil
 end
+
+-- 🧚 Collect Fairy gần
+local char = localPlayer.Character or localPlayer.CharacterAdded:Wait()
+local hrp = char:WaitForChild('HumanoidRootPart')
 
 local function collectNearbyFairies()
     local fairies = FairyEventVisuals:GetAllFairies()
@@ -535,20 +402,15 @@ local function collectNearbyFairies()
     end
 end
 
--- 🔄 Main Loops
--- 1️⃣ Harvest + Craft
-task.spawn(function()
-    while task.wait(HARVEST_INTERVAL) do
-        harvestItem('Sunbulb', LIMIT)
-        harvestGlimmering(LIMIT)
-
-        craftFairyNet() -- chỉ còn craft Fairy Net
-    end
-end)
-
--- 2️⃣ Collect Fairy + Fake Teleport
-task.spawn(function()
+-- 🌌 Script 1: Fake teleport + FairyNet
+local function runNetMode()
     while task.wait(1) do
+        local score = getFairyCount()
+        if score < 900 then
+            print('🔁 Chuyển sang Auto Interact Mode!')
+            break -- thoát vòng loop này
+        end
+
         if equipItemContains('Fairy Net') then
             for i = 1, 10 do
                 local folder = workspace:FindFirstChild(tostring(i))
@@ -562,15 +424,18 @@ task.spawn(function()
                         end
                         if objCF then
                             local objPos = objCF.Position
-                            local forward = objCF.LookVector * 6
+                            local forward = objCF.LookVector * 4
                             local targetPos = objPos
                                 + forward
-                                + Vector3.new(0, 7, 0)
+                                + Vector3.new(0, 1, 0)
                             hrp.CFrame = CFrame.new(targetPos, objPos)
+
+                            -- camera follow
                             workspace.CurrentCamera.CFrame = CFrame.new(
                                 objPos + Vector3.new(0, 10, 15),
                                 objPos
                             )
+
                             collectNearbyFairies()
                             task.wait(0.5)
                         end
@@ -579,23 +444,113 @@ task.spawn(function()
             end
         end
     end
+end
+
+-- 🌌 Script 2: Auto interact fairy bằng prompt
+local function runInteractMode()
+    while task.wait(5) do
+        local score = getFairyCount()
+        if score > 900 then
+            print('🔁 Quay lại Net Mode!')
+            break
+        end
+
+        for i = 1, 10 do
+            local fairy = workspace:FindFirstChild(tostring(i))
+            if fairy then
+                local prompt =
+                    fairy:FindFirstChildWhichIsA('ProximityPrompt', true)
+                if prompt then
+                    fireproximityprompt(prompt)
+                    print('✨ Đã tương tác với Fairy:', fairy.Name)
+                end
+            end
+        end
+    end
+end
+
+-- 🔄 Vòng điều khiển chính
+task.spawn(function()
+    while task.wait(2) do
+        local score = getFairyCount()
+        if score < 900 then
+            print('📊 Điểm hiện tại:', score, '→ chạy Net Mode')
+            runNetMode()
+        else
+            print(
+                '📊 Điểm hiện tại:',
+                score,
+                '→ chạy Interact Mode'
+            )
+            runInteractMode()
+        end
+    end
 end)
 
--- Task 3: Spam lệnh mỗi 60s (giữ lại print + chuẩn args)
+-- 🟢 Auto teleport + nộp jar + mua item shop
+local npc =
+    workspace.Interaction.UpdateItems.FairyIsland.FairyIsland['Luminous Sprite']
 task.spawn(function()
-    while task.wait(60) do
-        -- Nộp tất cả fairy jar
-        game:GetService('ReplicatedStorage').GameEvents.FairyService.FairySubmitAllJar
-            :FireServer()
+    while task.wait(30) do
+        Rep.GameEvents.FairyService.TeleportFairyWorld:FireServer()
+        print('🌌 Đã teleport vào Fairy World!')
+        task.wait(2)
+
+        local npcPos = npc.PrimaryPart.Position
+        local targetPos = npcPos + Vector3.new(0, 6, 0)
+        hrp.CFrame = CFrame.lookAt(targetPos, npcPos, Vector3.new(0, 1, 0))
+
+        Rep.GameEvents.FairyService.FairySubmitAllJar:FireServer()
         print('📦 FairySubmitAllJar đã gửi!')
 
-        -- Mua Enchanted Chest x2
-        local args = {
-            [1] = 'Enchanted Chest',
-            [2] = 2,
-        }
-        game:GetService('ReplicatedStorage').GameEvents.BuyEventShopStock
-            :FireServer(unpack(args))
+        local args1 = { 'Enchanted Chest', 2 }
+        Rep.GameEvents.BuyEventShopStock:FireServer(unpack(args1))
         print('💎 Đã mua Enchanted Chest x2!')
+
+        local args2 = { 'Luminous Sprite', 2 }
+        Rep.GameEvents.BuyEventShopStock:FireServer(unpack(args2))
+        print('✨ Đã mua Luminous Sprite x2!')
+    end
+end)
+
+-- 🟢 Teleport + collect RewardPoint1 → RewardPoint20
+print('🔍 Bắt đầu teleport + collect RewardPoint1 → RewardPoint20...')
+local function tryCollect(point)
+    if not point or not point.Parent then
+        return false
+    end
+    for _, descendant in ipairs(point:GetDescendants()) do
+        if descendant:IsA('ProximityPrompt') and descendant.Enabled then
+            fireproximityprompt(descendant)
+            print('✅ Đã lấy RewardPoint:', point.Name)
+            return true
+        end
+    end
+    return false
+end
+
+task.spawn(function()
+    while task.wait(20) do
+        for i = 1, 20 do
+            local point = workspace:FindFirstChild('RewardPoint' .. i)
+            if point then
+                local objCF
+                if point:IsA('Model') and point.PrimaryPart then
+                    objCF = point:GetPivot()
+                elseif point:IsA('BasePart') then
+                    objCF = point.CFrame
+                end
+                if objCF then
+                    local objPos = objCF.Position
+                    local forward = objCF.LookVector * 3
+                    local targetPos = objPos + forward + Vector3.new(0, 1, 0)
+                    hrp.CFrame = CFrame.new(targetPos, objPos)
+                    workspace.CurrentCamera.CFrame =
+                        CFrame.new(objPos + Vector3.new(0, 10, 15), objPos)
+                    task.wait(0.4)
+                    tryCollect(point)
+                end
+            end
+        end
     end
 end)
