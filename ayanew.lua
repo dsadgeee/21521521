@@ -129,7 +129,7 @@ getgenv().ConfigsKaitun = {
 					["Fairy Spawn Amount"] = 8, -- max 9
 				}
 			},
-		Minimum_Fairy_Point_Restock = 5000, -- if fairy point more then this will restock
+		Minimum_Fairy_Point_Restock = 10000, -- if fairy point more then this will restock
         Catch_Fairy_Before_Restock = 51, -- fr it 50 but to be sure i put 51
 		},
 		MaxMoney_Restocks = 1_000_000_000_000,
@@ -150,6 +150,7 @@ getgenv().ConfigsKaitun = {
 		Craft = {
 			"Enchanted Chest",
 			"Anti Bee Egg",
+			"Enchanted Egg",
 			"Sprout Egg",
 		},
 		["Traveling Shop"] = {
