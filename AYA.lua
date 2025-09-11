@@ -24,8 +24,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 345,
-		["Destroy Until"] = 321,
+		["Limit"] = 250,
+		["Destroy Until"] = 250,
 
 		["Safe Tree"] = {
 	"Moon Blossom",
