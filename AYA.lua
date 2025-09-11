@@ -253,6 +253,8 @@ getgenv().ConfigsKaitun = {
             	["Brown Mouse"] = { 3, 100, 10 },
                 ["Grey Mouse"] = { 3, 100, 11 },
                 ["Rooster"] = { 4, 100, 12 },
+				"Bear Bee",
+			 	"Petal Bee",
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -428,3 +430,6 @@ task.spawn(function()
         fairySummoner()
     end
 end)
+
+
+
