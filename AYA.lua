@@ -1,4 +1,3 @@
-setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -9,9 +8,9 @@ getgenv().ConfigsKaitun = {
 	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = false,
+	["Auto Rejoin"] = true,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -108,11 +107,13 @@ getgenv().ConfigsKaitun = {
 
 	Events = {
 		["Fairy Event"] = {
-			Minimum_Money = 100_000, -- minimum money to start play this event
+			Minimum_Money = 10_000_000, -- minimum money to start play this event
 			Rewards_Item = { -- top mean select first
 				"Enchanted Egg",
 				"Enchanted Seed Pack",
 				"FairyPoints",
+				"Pet Shard Glimmering",
+			    "Fairy Targeter",
 			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
@@ -123,20 +124,22 @@ getgenv().ConfigsKaitun = {
 					"Fairy Event Duration",
 				},
 				Limit = {
-					["Glimmer Multiplier"] = 8, -- max 10
-					["Loose Fairy Spawn Amount"] = 8, -- max 10
-					["Fairy Event Duration"] = 8, -- max 10
-					["Fairy Spawn Amount"] = 8, -- max 9
+					["Glimmer Multiplier"] = 1, -- max 10
+					["Loose Fairy Spawn Amount"] = 10, -- max 10
+					["Fairy Event Duration"] = 10, -- max 10
+					["Fairy Spawn Amount"] = 9, -- max 9
 				}
-			},
-		Minimum_Fairy_Point_Restock = 10000, -- if fairy point more then this will restock
-        Catch_Fairy_Before_Restock = 51, -- fr it 50 but to be sure i put 51
+			}
 		},
-		MaxMoney_Restocks = 1_000_000_000_000,
+		MaxMoney_Restocks = 5_000_000_000_000,
 		Shop = { -- un comment to buy
 			"Enchanted Chest",
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
+			"Drake",
+			"Wisp",
+			"Luminous Sprite",
+
 			"Sprout Seed Pack",
 			"Sprout Egg",
 			-- "Mandrake",
@@ -148,9 +151,10 @@ getgenv().ConfigsKaitun = {
 			"Skyroot Chest",
 		},
 		Craft = {
+			"Fairy Net",
 			"Enchanted Chest",
-			"Anti Bee Egg",
 			"Enchanted Egg",
+			"Anti Bee Egg",
 			"Sprout Egg",
 		},
 		["Traveling Shop"] = {
@@ -167,6 +171,7 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
+			"Harvest Tool",
 			"Master Sprinkler",
 			"Godly Sprinkler",
 			"Grandmaster Sprinkler",
@@ -190,7 +195,6 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Common Summer Egg",
 			"Gourmet Egg",
 			--"Enchanted Egg",
 			"Sprout Egg",
@@ -202,7 +206,7 @@ getgenv().ConfigsKaitun = {
 			"Night Egg",
 			"Bug Egg",
 			"Paradise Egg",
-			"Rare Summer Egg",
+			"Rare Egg",
 		},
 		Buy = {
 			"Bee Egg",
@@ -214,6 +218,8 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
+			"Uncommon Egg",
+			"Common Egg",
 			"Legendary Egg",
 			"Rare Egg",
 		}
@@ -232,26 +238,19 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-                ["Brown Mouse"] = { 3, 100, 4, true },
-                ["Grey Mouse"] = { 3, 100, 5, true },
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Brown Mouse"] = { 1, 100 },
+				["Squirrel"] = { 1, 100 }, 
+				["Grey Mouse"] = { 1, 100 },
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Bee"] = { 5, 100, 1 },
-				["Honey Bee"] = { 5, 100, 2 },
-				["Bear Bee"] = { 5, 100, 3 },
-				["Petal Bee"] = { 5, 100, 4 },
-				["Wasp"] = { 5, 100, 5 },
-				["Tarantula Hawk"] = { 5, 100, 6 },
-				["Glimmering Sprite"] = { 8, 100, 7 },
-                ["Sunny-Side Chicken"] = { 3, 100, 8 },
-                ["Starfish"] = { 5, 100, 9 },
-            	["Brown Mouse"] = { 3, 100, 10 },
-                ["Grey Mouse"] = { 3, 100, 11 },
-                ["Rooster"] = { 4, 100, 12 },
-				"Bear Bee",
-			 	"Petal Bee",
+				["Glimmering Sprite"] = { 3, 100, 1 },
+                		["Sunny-Side Chicken"] = { 5, 100, 2 },
+                		["Starfish"] = { 1, 100, 3 },
+                		["Brown Mouse"] = { 1, 100, 4 },
+                		["Grey Mouse"] = { 1, 100, 5 },
+                		["Rooster"] = { 4, 100, 6 },
 			},
 		},
 		Unfavorite_AllPet = false,
