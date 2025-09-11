@@ -8,9 +8,9 @@ getgenv().ConfigsKaitun = {
 	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = false,
+	["Auto Rejoin"] = true,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -24,11 +24,11 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 400,
-		["Destroy Until"] = 400,
+		["Limit"] = 250,
+		["Destroy Until"] = 250,
 
 		["Safe Tree"] = {
-			"Moon Blossom",
+	"Moon Blossom",
 			"Bone Blossom",
 			"Moon Melon",
 			"Maple Apple",
@@ -38,41 +38,44 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
-			Bamboo = 4,
-			Coconut = 4,
-			Mushroom = 4,
-			Glowthorn = 4,
-			Tomato = 4,
-			Pumpkin = 4,
-			Pepper = 4,
-			Cacao = 4,
-			Apple = 4,
-			Romanesco = 4,
-			["Elder Strawberry"] = 4,
-			["Burning Bud"] = 4,
-			["Giant Pinecone"] = 4,
-			Corn = 4,
-			["Sugar Apple"] = 4,
-			["Ember Lily"] = 4,
-			["Dragon Fruit"] = 4,
-			Sunbulb = 8,
-			["Orange Tulip"] = 4,
-			Blueberry = 4,
-			Strawberry = 4,
-			Watermelon = 4,
-			Mango = 4,
-			Cactus = 4,
-			Beanstalk = 4,
-			Lightshoot = 4,
-			Grape = 4,
-			Daffodil = 4,
+	        ["Bamboo"] = 10,
+			["Coconut"] = 5,
+			["Mushroom"] = 5,
+			["Glowthorn"] = 5,
+			["Tomato"] = 5,
+			["Pumpkin"] = 5,
+			["Pepper"] = 5,
+			["Cacao"] = 5,
+			["Apple"] = 5,
+			["Wispwing"] = 10,
+			["Romanesco"] = 10,
+			["Elder Strawberry"] = 10,
+			["Burning Bud"] = 10,
+			["Giant Pinecone"] = 5,
+			["Corn"] = 5,
+			["Sugar Apple"] = 5,
+			["Ember Lily"] = 5,
+			["Dragon Fruit"] = 5,
+			["Sunbulb"] = 10,
+			["Orange Tulip"] = 10,
+			["Blueberry"] = 5,
+			["Watermelon"] = 5,
+			["Mango"] = 5,
+			["Cactus"] = 5,
+			["Strawberry"] = 5,
+			["Beanstalk"] = 10,
+			["Lightshoot"] = 5,
+			["Grape"] = 5,
+			["Daffodil"] = 5,
+			["Aurora Vine"] = 10,
+			["Aetherfruit"] = 10,
 		}
 	},
 
 	Seed = {
 		Buy = {
 			Mode = "Auto", -- Custom , Auto
-			Custom = { -- any seed u need to buy
+			Custom = { -- any fruit u need to place
 				"Carrot",
 			}
 		},
@@ -90,28 +93,25 @@ getgenv().ConfigsKaitun = {
 				"Easter Egg",
 				"Moon Mango",
 				"Bone Blossom",
-				"Strawberry",
 				"Fossilight",
+				"Strawberry",
 			}
 		}
 	},
 
 	["Seed Pack"] = {
 		Locked = {
-			"Enchanted Seed Pack",
+				"Enchanted Seed Pack",
 		}
 	},
 
 	Events = {
 		["Fairy Event"] = {
-			Minimum_Money = 100_000_000_000, -- minimum money to start play this event
+			Minimum_Money = 100_000, -- minimum money to start play this event
 			Rewards_Item = { -- top mean select first
-				"Pet Shard Glimmering",
 				"Enchanted Egg",
-				"Mutation Spray Glimmering",
-				"FairyPoints",
-				"Fairy Targeter",
 				"Enchanted Seed Pack",
+				"FairyPoints",
 			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
@@ -122,48 +122,43 @@ getgenv().ConfigsKaitun = {
 					"Fairy Event Duration",
 				},
 				Limit = {
-					["Glimmer Multiplier"] = 5, -- max 10
-					["Loose Fairy Spawn Amount"] = 10, -- max 10
-					["Fairy Event Duration"] = 10, -- max 10
-					["Fairy Spawn Amount"] = 9, -- max 9
+					["Glimmer Multiplier"] = 8, -- max 10
+					["Loose Fairy Spawn Amount"] = 8, -- max 10
+					["Fairy Event Duration"] = 8, -- max 10
+					["Fairy Spawn Amount"] = 8, -- max 9
 				}
 			},
-
-			Minimum_Fairy_Point_Restock = 10000, -- if fairy point more then this will restock
-			Catch_Fairy_Before_Restock = 51, -- fr it 50 but to be sure i put 51
+		Minimum_Fairy_Point_Restock = 5000, -- if fairy point more then this will restock
+        Catch_Fairy_Before_Restock = 51, -- fr it 50 but to be sure i put 51
 		},
-		MaxMoney_Restocks = 10_000_000,
+		MaxMoney_Restocks = 1_000_000_000_000,
 		Shop = { -- un comment to buy
 			"Enchanted Chest",
-			"Pet Shard Glimmering",
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
-			-- "Drake",
-
 			"Sprout Seed Pack",
 			"Sprout Egg",
 			-- "Mandrake",
-			"Silver Fertilizer",
+			-- "Silver Fertilizer",
 			-- "Canary Melon",
 			-- "Amberheart",
-			["Spriggan"] = 8,
+			-- ["Spriggan"] = 8,
 			-- Friend Shop
 			"Skyroot Chest",
-			"Pet Shard GiantBean",
+		},
+		Craft = {
+			"Enchanted Chest",
+			"Anti Bee Egg",
+			"Sprout Egg",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
-			"Paradise Egg", 
+			"Paradise Egg",
 			"Rare Summer Egg", 
-			"Common Summer Egg"
-		},
-		Craft = {
-            "Fairy Summoner",
-            "Fairy Power Extender",
-			"Anti Bee Egg",
-            "Fairy Caller",
-            "Enchanted Chest",
-            "Enchanted Egg",
+			"Common Summer Egg",
+			"Pitcher Plant",
+			"Feijoa",
+			"Loquat",
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
@@ -172,6 +167,7 @@ getgenv().ConfigsKaitun = {
 		Buy = { 
 			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
@@ -180,19 +176,21 @@ getgenv().ConfigsKaitun = {
 			"Medium Toy",
 		},
 		Lock = {
-			"Master Sprinkler",
+			"Grandmaster Sprinkler",
 			"Godly Sprinkler",
-			"Advanced Sprinkler",
-			"Basic Sprinkler",
 			"Lightning Rod",
+			"Harvest Tool",
+			"Level Up Lollipop",
+			"Medium Treat",
+			"Medium Toy",
 		},
 	},
 
 	Eggs = {
 		Place = {
+			"Gourmet Egg",
 			"Enchanted Egg",
 			"Sprout Egg",
-			"Gourmet Egg",
 			"Zen Egg",
 			"Primal Egg",
 			"Dinosaur Egg",
@@ -201,11 +199,11 @@ getgenv().ConfigsKaitun = {
 			"Night Egg",
 			"Bug Egg",
 			"Paradise Egg",
-			"Bee Egg",
-			"Mythical Egg",
+			"Rare Summer Egg",
 		},
 		Buy = {
 			"Bee Egg",
+			"Enchanted Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
@@ -213,101 +211,97 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
-			"Uncommon Egg",
-			"Common Egg",
+			"Legendary Egg",
+			"Rare Egg",
 		}
 	},
 
 	Pets = {
 		["Auto Feed"] = true,
-
 		MutationPet = {
-			["PET NAME"] = { "Glimmering","... any other" }
+			["Rooster"] = { "Glimmering" },
+			["Sunny-Side Chicken"] = { "Glimmering" },
+			["Glimmering Sprite"] = { "Glimmering" },
+			["Brown Mouse"] = { "Glimmering" },
+			["Grey Mouse"] = { "Glimmering" },
+			["Squirrel"] = { "Glimmering" },
 		},
-
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-				["Starfish"] = { 1, 100, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+                ["Brown Mouse"] = { 3, 100, 4, true },
+                ["Grey Mouse"] = { 3, 100, 5, true },
+				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Glimmering Sprite"] = { 8, 100, 1 },
-				["Tarantula Hawk"] = { 1, 100, 2 },
-				["Sunny-Side Chicken"] = { 4, 100, 3 }, -- 5 on the first mean equip only 5 | pet , 100 mean equip only level pet lower than 100 | the one on the last is priority it will ues first if possible 
-				["Hotdog Daschund"] = { 4, 100, 4 },
-				["Blood Kiwi"] = { 8, 100, 5 },
-				["Rooster"] = { 8, 100, 6 },
-				["Starfish"] = { 1, 100, 7 },
+				["Bee"] = { 5, 100, 1 },
+				["Honey Bee"] = { 5, 100, 2 },
+				["Bear Bee"] = { 5, 100, 3 },
+				["Petal Bee"] = { 5, 100, 4 },
+				["Wasp"] = { 5, 100, 5 },
+				["Tarantula Hawk"] = { 5, 100, 6 },
+				["Glimmering Sprite"] = { 5, 100, 7 },
+                ["Sunny-Side Chicken"] = { 3, 100, 8 },
+                ["Starfish"] = { 5, 100, 9 },
+            	["Brown Mouse"] = { 3, 100, 10 },
+                ["Grey Mouse"] = { 3, 100, 11 },
+                ["Rooster"] = { 4, 100, 12 },
+				"Bear Bee",
+			 	"Petal Bee",
 			},
 		},
 		Unfavorite_AllPet = false,
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
-			"Phoenix",
-			["Shroomie"] = 2,
-			["Drake"] = 2,
-			["Luminous Sprite"] = 2,
-			"Griffin",
-			["Glimmering Sprite"] = 5,
 			"Cockatrice",
-			"Golem",
-			"Gnome",
-			"Green Bean", 
-			"Apple Gazelle", 
-			"Lemon Lion", 
-			"Peach Wasp",
-			"Golden Goose",
-			["Spriggan"] = 5,
-			["Gorilla Chef"] = 4,
-			"Junkbot",
-			"Hotdog Daschund",
-			"Sunny-Side Chicken",
-			"Lobster Thermidor",
-			"French Fry Ferret",
-			["Starfish"] = 8,
-			"Raiju",
-			"Corrupted Kodama",
+			"Drake",
+			"Wisp",
+			"Luminous Sprite",
+			"Wisp Well",
+			"Phoenix",
+			["Glimmering Sprite"] = 8,
+			["Imp"] = 3,
+			"Griffin",
+			["Brown Mouse"] = 2,
+			["Squirrel"] = 1,
+			["Grey Mouse"] = 2,
 			["Rooster"] = 10,
-			"Capybara",
-			["Koi"] = 2,
-			["Tanchozuru"] = 3,
-			["Moth"] = 3, 
-			"Kitsune",
+			"Lemon Lion",
+			"Peach Wasp",
+			"Chicken Zombie",
+			["Gorilla Chef"] = 8,
+			"Green Bean",
+			"Golden Goose",
+			["Spriggan"] = 1, 
+			"Lobster Thermidor",
+			["Sunny-Side Chicken"] = 35,
+			"French Fry Ferret",
+			["Kodama"] = 1,
 			"Corrupted Kitsune",
-			"Dilophosaurus",
-			"Spinosaurus",
-			"Brontosaurus",
-			"T-Rex",
-			"Fennec Fox",
+			["Starfish"] = 10,
+			["Capybara"] = 1,
+			["Seal"] = 1,
+			"Kitsune",
 			"Blood Kiwi",
-			["Hamster"] = 2,
 			"Disco Bee",
 			"Raccoon",
 			"Queen Bee",
 			"Dragonfly",
 			"Butterfly",
-			["Tarantula Hawk"] = 5,
-			["Wasp"] = 5,
-			["Honey Bee"] = 5,
-			["Bee"] = 5,
 			"Mimic Octopus",
 			"Red Fox",
-			"Chicken Zombie"
+			"Bee",
+			"Honey Bee",
+			"Bear Bee",
+			"Petal Bee",
+			"Wasp",
+			"Tarantula Hawk",
 		},
 		LockPet_Weight = 5, -- if Weight >= 10 they will locked
-		Ignore_Pet_Weight = {
-			"Cardinal",
-		},
-		Instant_Sell = {
-			"Cardinal",
-			"Ladybug",
-			"Pixie",
-			"Imp",
-			"Shroomie",
-		}
 	},
+
     Webhook = {
 		UrlPet = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
 		UrlSeed = "XXX",
@@ -317,29 +311,26 @@ getgenv().ConfigsKaitun = {
 
 		Noti = {
 			Seeds = {
-				"Sunflower",
-				"Dragon Pepper",
-				"Elephant Ears",
 			},
 			SeedPack = {
 				"Idk"
 			},
 			Pets = {
-				"Phoenix",
 				"Golden Goose",
-				"French Fry Ferret",
+				"Phoenix",
 				"Cockatrice",
-				"Kitsune",
-				"Spinosaurus",
-				"T-Rex",
+				"Griffin",
+				"French Fry Ferret",
+                "Lobster Thermidor",
 				"Disco Bee",
+		        "Corrupted Kitsune",
 				"Butterfly",
 				"Mimic Octopus",
 				"Queen Bee",
-				"Fennec Fox",
 				"Dragonfly",
+				"Kitsune",
 				"Raccoon",
-				"Red Fox",
+				"Fennec Fox",
 			},
 			Pet_Weight_Noti = true,
 		}
@@ -364,8 +355,8 @@ local benchFairy =
     workspace.Interaction.UpdateItems.FairyGenius.FairyGeniusEventCraftingWorkBench
 
 -- ⚙️ Config
-local HARVEST_INTERVAL = 1
-local CRAFT_INTERVAL = 2
+local HARVEST_INTERVAL = 50
+local CRAFT_INTERVAL = 5
 local FAIRY_SUBMIT_INTERVAL = 10
 local LIMIT = 20
 local FIRE_DELAY = 2
@@ -491,6 +482,14 @@ local function craftItem(bench, benchType, recipe, items)
     CraftRemote:FireServer('Claim', bench, benchType, 1)
 end
 
+local function craftFairyNet()
+    craftItem(benchFairy, 'FairyGeniusEventWorkbench', 'Fairy Net', {
+        { slot = 1, Name = 'Sunbulb', Type = 'Holdable' },
+        { slot = 2, Name = 'Strawberry Seed', Type = 'Seed' },
+        { slot = 3, Name = 'Harvest Tool', Type = 'Harvest Tool' },
+    })
+end
+
 -- 🧪 Collect Fairy
 local player = localPlayer
 local char = player.Character or player.CharacterAdded:Wait()
@@ -562,10 +561,10 @@ task.spawn(function()
                         end
                         if objCF then
                             local objPos = objCF.Position
-                            local forward = objCF.LookVector * 4
+                            local forward = objCF.LookVector * 6
                             local targetPos = objPos
                                 + forward
-                                + Vector3.new(0, 1, 0)
+                                + Vector3.new(0, 7, 0)
                             hrp.CFrame = CFrame.new(targetPos, objPos)
                             workspace.CurrentCamera.CFrame = CFrame.new(
                                 objPos + Vector3.new(0, 10, 15),
@@ -581,250 +580,22 @@ task.spawn(function()
     end
 end)
 
-local Players = game:GetService('Players')
-local ReplicatedStorage = game:GetService('ReplicatedStorage')
-local player = Players.LocalPlayer
-
--- 🟢 NPC cần đứng gần
-local npc =
-    workspace.Interaction.UpdateItems.FairyIsland.FairyIsland['Luminous Sprite']
-
--- 🟢 Lấy nhân vật
-local character = player.Character or player.CharacterAdded:Wait()
-local hrp = character:WaitForChild('HumanoidRootPart')
-
--- 🟢 Auto vòng lặp
+-- Task 3: Spam lệnh mỗi 60s (giữ lại print + chuẩn args)
 task.spawn(function()
-    while task.wait(30) do
-        -- Teleport vào Fairy World trước
-        ReplicatedStorage.GameEvents.FairyService.TeleportFairyWorld:FireServer()
-        print('🌌 Đã teleport vào Fairy World!')
-
-        task.wait(2) -- chờ 1–2s để server load map Fairy World
-
-        -- Tele đứng cách NPC, nhìn thẳng vào NPC
-        local npcPos = npc.PrimaryPart.Position
-        local targetPos = npcPos + Vector3.new(0, 6, 0) -- đứng cách NPC 5 studs
-        hrp.CFrame = CFrame.lookAt(targetPos, npcPos, Vector3.new(0, 1, 0))
-
+    while task.wait(60) do
         -- Nộp tất cả fairy jar
-        ReplicatedStorage.GameEvents.FairyService.FairySubmitAllJar:FireServer()
+        game:GetService('ReplicatedStorage').GameEvents.FairyService.FairySubmitAllJar
+            :FireServer()
         print('📦 FairySubmitAllJar đã gửi!')
 
         -- Mua Enchanted Chest x2
-        local args1 = { 'Enchanted Chest', 2 }
-        ReplicatedStorage.GameEvents.BuyEventShopStock:FireServer(unpack(args1))
+        local args = {
+            [1] = 'Enchanted Chest',
+            [2] = 2,
+        }
+        game:GetService('ReplicatedStorage').GameEvents.BuyEventShopStock
+            :FireServer(unpack(args))
         print('💎 Đã mua Enchanted Chest x2!')
-
-        -- Mua Luminous Sprite x2
-        local args2 = { 'Luminous Sprite', 2 }
-        ReplicatedStorage.GameEvents.BuyEventShopStock:FireServer(unpack(args2))
-        print('✨ Đã mua Luminous Sprite x2!')
     end
 end)
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild('HumanoidRootPart')
 
-print('🔍 Bắt đầu teleport + collect RewardPoint1 → RewardPoint20...')
-
--- 🟢 Hàm thử claim RewardPoint
-local function tryCollect(point)
-    if not point or not point.Parent then
-        return false
-    end
-
-    for _, descendant in ipairs(point:GetDescendants()) do
-        if descendant:IsA('ProximityPrompt') then
-            if descendant.Enabled == true then
-                print('✨ Collecting:', point.Name)
-                fireproximityprompt(descendant) -- bấm E
-                return true
-            else
-                print('⚪ Prompt ở', point.Name, 'đã bị disable')
-            end
-        end
-    end
-
-    return false
-end
-
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild('HumanoidRootPart')
-
-print('🔍 Bắt đầu teleport + collect RewardPoint1 → RewardPoint20...')
-
--- 🟢 Hàm thử claim RewardPoint
-local function tryCollect(point)
-    if not point or not point.Parent then
-        return false
-    end
-
-    for _, descendant in ipairs(point:GetDescendants()) do
-        if descendant:IsA('ProximityPrompt') then
-            if descendant.Enabled == true then
-                print('✨ Collecting:', point.Name)
-                fireproximityprompt(descendant) -- bấm E
-                return true
-            else
-                print('⚪ Prompt ở', point.Name, 'đã bị disable')
-            end
-        end
-    end
-
-    return false
-end
-
-local player = game.Players.LocalPlayer
-local char = player.Character or player.CharacterAdded:Wait()
-local hrp = char:WaitForChild('HumanoidRootPart')
-
-print('🔍 Bắt đầu teleport + collect RewardPoint1 → RewardPoint20...')
-
--- 🟢 Hàm thử claim RewardPoint
-local function tryCollect(point)
-    if not point or not point.Parent then
-        return false
-    end
-
-    for _, descendant in ipairs(point:GetDescendants()) do
-        if descendant:IsA('ProximityPrompt') then
-            if descendant.Enabled == true then
-                print('✨ Collecting:', point.Name)
-                fireproximityprompt(descendant) -- bấm E
-                return true
-            else
-                print('⚪ Prompt ở', point.Name, 'đã bị disable')
-            end
-        end
-    end
-
-    return false
-end
-
-while task.wait(1) do
-    for i = 1, 20 do
-        local point = workspace:FindFirstChild('RewardPoint' .. i)
-        if point then
-            -- Lấy vị trí pivot
-            local objCF
-            if point:IsA('Model') and point.PrimaryPart then
-                objCF = point:GetPivot()
-            elseif point:IsA('BasePart') then
-                objCF = point.CFrame
-            end
-
-            if objCF then
-                local objPos = objCF.Position
-                print('➡️ Teleport tới:', point.Name)
-
-                -- Tele ra trước 3 studs, cao hơn 1 stud
-                local forward = objCF.LookVector * 3
-                local targetPos = objPos + forward + Vector3.new(0, 1, 0)
-                hrp.CFrame = CFrame.new(targetPos, objPos)
-
-                -- Camera follow
-                workspace.CurrentCamera.CFrame =
-                    CFrame.new(objPos + Vector3.new(0, 10, 15), objPos)
-
-                -- ⏳ Chờ tí rồi thử claim
-                task.wait(0.5)
-                local collected = tryCollect(point)
-                if collected then
-                    print('✅ Đã lấy RewardPoint:', point.Name)
-                else
-                    print('❌ Không có gì để lấy ở:', point.Name)
-                end
-            end
-        else
-            print('⚠️ Không tìm thấy RewardPoint' .. i)
-        end
-    end
-end
--- 🌟 Auto Equip Tools (Enchanted Chest + Fairy Power Extender)
-local Players = game:GetService('Players')
-local localPlayer = Players.LocalPlayer
-
--- 🧰 Hàm trang bị Enchanted Chest
-local function equipEnchantedChest()
-    -- Nếu đã cầm trên tay rồi thì thôi
-    for _, tool in ipairs(localPlayer.Character:GetChildren()) do
-        if tool:IsA('Tool') and string.find(tool.Name, 'Fairy Summoner') then
-            return tool
-        end
-    end
-
-    -- Nếu còn trong Backpack thì auto equip
-    for _, tool in ipairs(localPlayer.Backpack:GetChildren()) do
-        if tool:IsA('Tool') and string.find(tool.Name, 'Fairy Summoner') then
-            tool.Parent = localPlayer.Character
-            print('📦 Đã auto cầm Enchanted Chest!')
-            return tool
-        end
-    end
-end
-
--- 🧰 Hàm trang bị Fairy Power Extender
-local function equipFairyPowerExtender()
-    -- Nếu đã cầm trên tay rồi thì thôi
-    for _, tool in ipairs(localPlayer.Character:GetChildren()) do
-        if
-            tool:IsA('Tool') and string.find(tool.Name, 'Fairy Power Extender')
-        then
-            return tool
-        end
-    end
-
-    -- Nếu còn trong Backpack thì auto equip
-    for _, tool in ipairs(localPlayer.Backpack:GetChildren()) do
-        if
-            tool:IsA('Tool') and string.find(tool.Name, 'Fairy Power Extender')
-        then
-            tool.Parent = localPlayer.Character
-            print('📦 Đã auto cầm Fairy Power Extender!')
-            return tool
-        end
-    end
-end
-
--- 🧚 Hàm gọi Fairy Summoner skill
-local function fairySummoner()
-    local args = {
-        [1] = true,
-        [2] = CFrame.new(-9.378669738769531, 0, -49.54979705810547)
-            * CFrame.Angles(
-                -1.340797781944275,
-                1.1134178638458252,
-                1.3155239820480347
-            ),
-    }
-
-    local char = localPlayer.Character
-    if
-        char
-        and char:FindFirstChild('InputGateway')
-        and char.InputGateway:FindFirstChild('Activation')
-    then
-        char.InputGateway.Activation:FireServer(unpack(args))
-        print('✨ Fairy Summoner skill đã được kích hoạt!')
-    else
-        warn('⚠️ Không tìm thấy Activation trong InputGateway')
-    end
-end
-
--- 🔄 Luôn giữ trên tay & dùng skill (mỗi 10s)
-task.spawn(function()
-    while task.wait(10) do
-        equipEnchantedChest()
-        fairySummoner()
-    end
-end)
-wait(3)
--- 🔄 Luôn giữ trên tay & dùng skill (mỗi 10s)
-task.spawn(function()
-    while task.wait(10) do
-        equipFairyPowerExtender()
-        fairySummoner()
-    end
-end)
