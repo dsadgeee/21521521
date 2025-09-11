@@ -269,7 +269,7 @@ getgenv().ConfigsKaitun = {
 			["Starfish"] = 8,
 			"Raiju",
 			"Corrupted Kodama",
-			["Rooster"] = 4,
+			["Rooster"] = 10,
 			"Capybara",
 			["Koi"] = 2,
 			["Tanchozuru"] = 3,
