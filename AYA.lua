@@ -10,7 +10,7 @@ getgenv().ConfigsKaitun = {
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = true,
+	["Rejoin When Update"] = false,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
