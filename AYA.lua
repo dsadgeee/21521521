@@ -159,6 +159,7 @@ getgenv().ConfigsKaitun = {
 			"Common Summer Egg"
 		},
 		Craft = {
+			"Fairy Net",
             "Fairy Summoner",
             "Fairy Power Extender",
 			"Anti Bee Egg",
