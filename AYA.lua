@@ -237,6 +237,7 @@ getgenv().ConfigsKaitun = {
 	Pets = {
 		["Auto Feed"] = true,
 		MutationPet = {
+			["Phoenix"] = { "Luminous" },
 			["Rooster"] = { "Glimmering" },
 			["Sunny-Side Chicken"] = { "Glimmering" },
 			["Glimmering Sprite"] = { "Glimmering" },
@@ -254,12 +255,14 @@ getgenv().ConfigsKaitun = {
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-                		["Sunny-Side Chicken"] = { 5, 100, 1 },
-                		["Rooster"] = { 5, 100, 2 },
-                		["Starfish"] = { 1, 100, 3 },
-                		["Brown Mouse"] = { 1, 100, 4 },
-                		["Grey Mouse"] = { 1, 100, 5 },
-                		["Rooster"] = { 5, 100, 6 },
+			["Capybara"] = { 1, 100 },
+			["Rooster"] = { 5, 100, 2 },
+            ["Starfish"] = { 1, 100 },
+			["Barn Owl"] = { 5, 100, 1 },
+            ["Brown Mouse"] = { 1, 100 },
+            ["Squirrel"] = { 1, 100 }, 
+            ["Grey Mouse"] = { 1, 100 },
+            ["Sunny-Side Chicken"] = { 5, 100, 2 },
 			},
 		},
 		Unfavorite_AllPet = false,
