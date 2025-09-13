@@ -8,9 +8,9 @@ getgenv().ConfigsKaitun = {
 	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = false,
+	["Auto Rejoin"] = true,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -109,11 +109,10 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Events = {
-		["Fairy Event"] = {
-					["Fall Event"] = {
-			Minimum_Money = 10_000_000, -- minimum money to start play this event
+		["Fall Event"] = {
+			Minimum_Money = 10_000_000,
 		},
-					["Fairy Event"] = {
+		["Fairy Event"] = {
 			Minimum_Money = 10_000_000, -- minimum money to start play this event
 			Rewards_Item = { -- top mean select first
 				"Enchanted Egg",
@@ -121,7 +120,7 @@ getgenv().ConfigsKaitun = {
 				"FairyPoints",
 				"Pet Shard Glimmering",
 			    "Fairy Targeter",
-		},
+			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
 				Order = { -- top upgrade first, not put mean not upgrade
@@ -136,17 +135,17 @@ getgenv().ConfigsKaitun = {
 					["Fairy Event Duration"] = 10, -- max 10
 					["Fairy Spawn Amount"] = 9, -- max 9
 				}
+			}
 		},
-			Minimum_Fairy_Point_Restock = 8000, -- if fairy point more then this will restock
-			Catch_Fairy_Before_Restock = 51, -- fr it 50 but to be sure i put 51
-		},
-		MaxMoney_Restocks = 1_000_000_000_000,
+		MaxMoney_Restocks = 5_000_000_000_000,
 		Shop = { -- un comment to buy
-			"Fall Egg",
-			
+			"Fell Egg",
 			"Enchanted Chest",
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
+			"Drake",
+			"Wisp",
+			"Luminous Sprite",
 
 			"Sprout Seed Pack",
 			"Sprout Egg",
@@ -159,6 +158,7 @@ getgenv().ConfigsKaitun = {
 			"Skyroot Chest",
 		},
 		Craft = {
+			"Fairy Net",
 			"Enchanted Chest",
 			"Enchanted Egg",
 			"Anti Bee Egg",
@@ -175,9 +175,10 @@ getgenv().ConfigsKaitun = {
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
-	
+
 	Gear = {
 		Buy = { 
+			"Harvest Tool",
 			"Master Sprinkler",
 			"Godly Sprinkler",
 			"Grandmaster Sprinkler",
@@ -202,8 +203,8 @@ getgenv().ConfigsKaitun = {
 	Eggs = {
 		Place = {
 			"Fall Egg",
-			"Rare Egg",
 			"Gourmet Egg",
+			"Enchanted Egg",
 			"Sprout Egg",
 			"Zen Egg",
 			"Primal Egg",
@@ -213,7 +214,7 @@ getgenv().ConfigsKaitun = {
 			"Night Egg",
 			"Bug Egg",
 			"Paradise Egg",
-			"Rare Summer Egg",
+			"Rare Egg",
 		},
 		Buy = {
 			"Fall Egg",
@@ -226,6 +227,8 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
+			"Uncommon Egg",
+			"Common Egg",
 			"Legendary Egg",
 			"Rare Egg",
 		}
@@ -262,53 +265,42 @@ getgenv().ConfigsKaitun = {
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
-			["Barn Owl"] = 8,
-			"Swan",
-			["Space Squirrel"] = 3,
-			"Cockatrice",
-			"Drake",
-			"Wisp",
-			"Luminous Sprite",
-			"Wisp Well",
 			"Phoenix",
-			["Glimmering Sprite"] = 2,
-			"Griffin",
-			["Brown Mouse"] = 2,
-			["Squirrel"] = 1,
-			["Grey Mouse"] = 2,
-			["Rooster"] = 4,
-			"Lemon Lion",
-			"Peach Wasp",
-			"Chicken Zombie",
-			["Gorilla Chef"] = 8,
-			"Green Bean",
-			"Golden Goose",
-			["Spriggan"] = 1, 
-			"Lobster Thermidor",
-			["Sunny-Side Chicken"] = 35,
-			"French Fry Ferret",
-			["Kodama"] = 1,
-			"Corrupted Kitsune",
-			["Starfish"] = 10,
-			["Capybara"] = 1,
-			["Seal"] = 1,
-			"Kitsune",
-			"Blood Kiwi",
-			"Disco Bee",
-			"Raccoon",
-			"Queen Bee",
-			"Dragonfly",
-			"Butterfly",
-			"Mimic Octopus",
-			"Red Fox",
-			"Bee",
-			"Honey Bee",
-			"Bear Bee",
-			"Petal Bee",
-			"Wasp",
-			"Tarantula Hawk",
+			"Cockatrice",
+			"Swan",
+			"Barn Owl",
+ 			"Griffin",
+ 			"Chicken Zombie",
+ 			"Peach Wasp",
+ 			"Lemon Lion",
+ 			"Golden Goose",
+ 			["Rooster"] = 5,
+ 			"Lobster Thermidor",
+ 			["Sunny-Side Chicken"] = 35,
+ 			"French Fry Ferret",
+ 			"Kodama",
+ 			"Corrupted Kitsune",
+ 			"Nihonzaru",
+ 			["Starfish"] = 6,
+ 			["Capybara"] = 1,
+ 			["Seal"] = 3,
+ 			"Kitsune",
+ 			"Blood Kiwi",
+ 			"Disco Bee",
+ 			"Raccoon",
+ 			"Queen Bee",
+ 			"Dragonfly",
+ 			"Butterfly",
+ 			"Mimic Octopus",
+ 			"Red Fox",
 		},
-		LockPet_Weight = 5, -- if Weight >= 10 they will locked
+		LockPet_Weight = 7, -- if Weight >= 10 they will locked
+		Ignore_Pet_Weight = {
+			"NAME oF PET THAT U DONT NEED LOCK",
+		},
+		Instant_Sell = {
+			"NAME oF SOMETHING",
+		}
 	},
 
     Webhook = {
@@ -320,27 +312,30 @@ getgenv().ConfigsKaitun = {
 
 		Noti = {
 			Seeds = {
+				"Sunflower",
+				"Dragon Pepper",
+				"Elephant Ears",
 			},
 			SeedPack = {
 				"Idk"
 			},
 			Pets = {
 				"Swan",
-				"Golden Goose",
 				"Phoenix",
-				"Cockatrice",
-				"Griffin",
+				"Golden Goose",
 				"French Fry Ferret",
-                "Lobster Thermidor",
+				"Cockatrice",
+				"Kitsune",
+				"Spinosaurus",
+				"T-Rex",
 				"Disco Bee",
-		        "Corrupted Kitsune",
 				"Butterfly",
 				"Mimic Octopus",
 				"Queen Bee",
-				"Dragonfly",
-				"Kitsune",
-				"Raccoon",
 				"Fennec Fox",
+				"Dragonfly",
+				"Raccoon",
+				"Red Fox",
 			},
 			Pet_Weight_Noti = true,
 		}
@@ -348,6 +343,7 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
+
 wait(4)
 -- Script generated by SimpleSpy - credits to exx#9394
 local Rep = game:GetService("ReplicatedStorage")
@@ -451,7 +447,7 @@ local function harvestAndSubmit()
     local descendants = USE_FARMONLY and farmFolder:GetDescendants()
         or workspace:GetDescendants()
 
-    for , inst in ipairs(descendants) do
+    for _, inst in ipairs(descendants) do
         if inst:IsA('ProximityPrompt') and hasCollectTag(inst) then
             local crop = inst.Parent and inst.Parent.Parent
             if crop and targetCrops[crop.Name] then
