@@ -38,44 +38,41 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
-	        ["Bamboo"] = 10,
-			["Coconut"] = 5,
-			["Mushroom"] = 5,
-			["Glowthorn"] = 5,
-			["Tomato"] = 5,
-			["Pumpkin"] = 5,
-			["Pepper"] = 5,
-			["Cacao"] = 5,
-			["Apple"] = 5,
-			["Wispwing"] = 10,
-			["Romanesco"] = 10,
-			["Elder Strawberry"] = 10,
-			["Burning Bud"] = 10,
-			["Giant Pinecone"] = 5,
-			["Corn"] = 5,
-			["Sugar Apple"] = 5,
-			["Ember Lily"] = 5,
-			["Dragon Fruit"] = 5,
-			["Sunbulb"] = 10,
-			["Orange Tulip"] = 10,
-			["Blueberry"] = 5,
-			["Watermelon"] = 5,
-			["Mango"] = 5,
-			["Cactus"] = 5,
-			["Strawberry"] = 5,
-			["Beanstalk"] = 10,
-			["Lightshoot"] = 5,
-			["Grape"] = 5,
-			["Daffodil"] = 5,
-			["Aurora Vine"] = 10,
-			["Aetherfruit"] = 10,
+			Bamboo = 4,
+			Coconut = 4,
+			Mushroom = 4,
+			Glowthorn = 4,
+			Tomato = 4,
+			Pumpkin = 4,
+			Pepper = 4,
+			Cacao = 4,
+			Apple = 4,
+			Romanesco = 4,
+			["Elder Strawberry"] = 4,
+			["Burning Bud"] = 4,
+			["Giant Pinecone"] = 4,
+			Corn = 4,
+			["Sugar Apple"] = 4,
+			["Ember Lily"] = 4,
+			["Dragon Fruit"] = 4,
+			Sunbulb = 8,
+			["Orange Tulip"] = 4,
+			Blueberry = 4,
+			Strawberry = 4,
+			Watermelon = 4,
+			Mango = 4,
+			Cactus = 4,
+			Beanstalk = 4,
+			Lightshoot = 4,
+			Grape = 4,
+			Daffodil = 4,
 		}
 	},
 
 	Seed = {
 		Buy = {
 			Mode = "Auto", -- Custom , Auto
-			Custom = { -- any fruit u need to place
+			Custom = { -- any seed u need to buy
 				"Carrot",
 			}
 		},
@@ -93,27 +90,28 @@ getgenv().ConfigsKaitun = {
 				"Easter Egg",
 				"Moon Mango",
 				"Bone Blossom",
-				"Fossilight",
 				"Strawberry",
+				"Fossilight",
 			}
 		}
 	},
 
 	["Seed Pack"] = {
 		Locked = {
-				"Enchanted Seed Pack",
+			"Enchanted Seed Pack",
 		}
 	},
 
 	Events = {
 		["Fairy Event"] = {
-			Minimum_Money = 10_000_000, -- minimum money to start play this event
+			Minimum_Money = 100_000_000_000, -- minimum money to start play this event
 			Rewards_Item = { -- top mean select first
-				"Enchanted Egg",
-				"Enchanted Seed Pack",
-				"FairyPoints",
 				"Pet Shard Glimmering",
-			    "Fairy Targeter",
+				"Enchanted Egg",
+				"Mutation Spray Glimmering",
+				"FairyPoints",
+				"Fairy Targeter",
+				"Enchanted Seed Pack",
 			},
 			Upgrade = {
 				Mode = "Order", -- Order (mean will up on order), Chepest, Highest
@@ -124,57 +122,56 @@ getgenv().ConfigsKaitun = {
 					"Fairy Event Duration",
 				},
 				Limit = {
-					["Glimmer Multiplier"] = 1, -- max 10
+					["Glimmer Multiplier"] = 5, -- max 10
 					["Loose Fairy Spawn Amount"] = 10, -- max 10
 					["Fairy Event Duration"] = 10, -- max 10
 					["Fairy Spawn Amount"] = 9, -- max 9
 				}
-			}
+			},
+
+			Minimum_Fairy_Point_Restock = 10000, -- if fairy point more then this will restock
+			Catch_Fairy_Before_Restock = 51, -- fr it 50 but to be sure i put 51
 		},
-		MaxMoney_Restocks = 5_000_000_000_000,
+		MaxMoney_Restocks = 10_000_000,
 		Shop = { -- un comment to buy
 			"Enchanted Chest",
+			"Pet Shard Glimmering",
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
-			"Drake",
-			"Wisp",
-			"Luminous Sprite",
+			-- "Drake",
 
 			"Sprout Seed Pack",
 			"Sprout Egg",
 			-- "Mandrake",
-			-- "Silver Fertilizer",
+			"Silver Fertilizer",
 			-- "Canary Melon",
 			-- "Amberheart",
-			-- ["Spriggan"] = 8,
+			["Spriggan"] = 8,
 			-- Friend Shop
 			"Skyroot Chest",
-		},
-		Craft = {
-			"Fairy Net",
-			"Enchanted Chest",
-			"Enchanted Egg",
-			"Anti Bee Egg",
-			"Sprout Egg",
+			"Pet Shard GiantBean",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
-			"Paradise Egg",
+			"Paradise Egg", 
 			"Rare Summer Egg", 
-			"Common Summer Egg",
-			"Pitcher Plant",
-			"Feijoa",
-			"Loquat",
+			"Common Summer Egg"
+		},
+		Craft = {
+            "Fairy Summoner",
+            "Fairy Power Extender",
+			"Anti Bee Egg",
+            "Fairy Caller",
+            "Enchanted Chest",
+            "Enchanted Egg",
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
-	
+
 	Gear = {
 		Buy = { 
-			"Harvest Tool",
 			"Master Sprinkler",
 			"Godly Sprinkler",
-			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
@@ -183,21 +180,19 @@ getgenv().ConfigsKaitun = {
 			"Medium Toy",
 		},
 		Lock = {
-			"Grandmaster Sprinkler",
+			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Advanced Sprinkler",
+			"Basic Sprinkler",
 			"Lightning Rod",
-			"Harvest Tool",
-			"Level Up Lollipop",
-			"Medium Treat",
-			"Medium Toy",
 		},
 	},
 
 	Eggs = {
 		Place = {
-			"Gourmet Egg",
 			"Enchanted Egg",
 			"Sprout Egg",
+			"Gourmet Egg",
 			"Zen Egg",
 			"Primal Egg",
 			"Dinosaur Egg",
@@ -206,11 +201,11 @@ getgenv().ConfigsKaitun = {
 			"Night Egg",
 			"Bug Egg",
 			"Paradise Egg",
-			"Rare Summer Egg",
+			"Bee Egg",
+			--"Mythical Egg",
 		},
 		Buy = {
 			"Bee Egg",
-			"Enchanted Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
@@ -218,8 +213,8 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
-			"Legendary Egg",
-			"Rare Egg",
+			"Uncommon Egg",
+			"Common Egg",
 		}
 	},
 
