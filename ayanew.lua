@@ -219,6 +219,7 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
+				["Barn Owl"] = { 3, 100, true },
                 ["Brown Mouse"] = { 3, 100, 4, true },
                 ["Grey Mouse"] = { 3, 100, 5, true },
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
