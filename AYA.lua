@@ -1,4 +1,3 @@
-setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -25,11 +24,11 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 250,
+		["Limit"] = 350,
 		["Destroy Until"] = 300,
 
 		["Safe Tree"] = {
-			"Moon Blossom",
+	"Moon Blossom",
 			"Bone Blossom",
 			"Moon Melon",
 			"Maple Apple",
@@ -251,7 +250,7 @@ getgenv().ConfigsKaitun = {
 			"Luminous Sprite",
 			"Wisp Well",
 			"Phoenix",
-			["Glimmering Sprite"] = 5,
+			["Glimmering Sprite"] = 8,
 			"Griffin",
 			["Brown Mouse"] = 2,
 			["Squirrel"] = 1,
@@ -449,7 +448,3 @@ end
 while task.wait(INTERVAL) do
     harvestAndSubmit()
 end
-
-
-
-
