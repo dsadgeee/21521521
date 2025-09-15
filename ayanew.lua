@@ -30,7 +30,7 @@ getgenv().gagConfig = {
     REDEEM_CODES = {},
     EXTRA_PET_SLOTS = 5,
     EXTRA_EGG_SLOTS = 5,
-    MAX_REBIRTH_SHECKLES = 0,
+    MAX_REBIRTH_SHECKLES = 1_000_000_000_000,
     ADD_FRIEND = true,
     OPEN_ALL_SEED_PACK = false,
 
