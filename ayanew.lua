@@ -1,4 +1,3 @@
-setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -140,11 +139,6 @@ getgenv().ConfigsKaitun = {
 		Shop = { -- un comment to buy
 			"Fall Egg",
 			"Enchanted Chest",
-			"Enchanted Egg",
-			"Enchanted Seed Pack",
-			"Sprout Seed Pack",
-			"Sprout Egg",
-			"Skyroot Chest",
 		},
 		Craft = {
 			"Enchanted Chest",
@@ -191,16 +185,6 @@ getgenv().ConfigsKaitun = {
 		Place = {
 			"Anti Bee Egg",
 			"Fall Egg",
-			"Gourmet Egg",
-			"Sprout Egg",
-			"Zen Egg",
-			"Primal Egg",
-			"Dinosaur Egg",
-			"Oasis Egg",
-			"Night Egg",
-			"Bug Egg",
-			"Paradise Egg",
-			"Rare Egg",
 		},
 		Buy = {
 			"Fall Egg",
@@ -265,7 +249,7 @@ getgenv().ConfigsKaitun = {
 			"Luminous Sprite",
 			"Wisp Well",
 			"Phoenix",
-			["Glimmering Sprite"] = 8,
+			["Glimmering Sprite"] = 5,
 			"Griffin",
 			["Brown Mouse"] = 2,
 			["Squirrel"] = 1,
@@ -463,4 +447,3 @@ end
 while task.wait(INTERVAL) do
     harvestAndSubmit()
 end
-
