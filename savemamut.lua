@@ -1,19 +1,4 @@
-local keys = {  -- Add as many key
-    "fQrVRyUtoHvGxEEgsYYFMIciFOVzIIaw", 
-    "PaNXzVUDIqqFAcrbQmCdIxkqCTkOiNon", 
-    "PBHaDrKRnhKUubEXFQChbeqPEAEiQGuD", 
-    "RXUJRIJBWUUBfxlzyxElIHjevvqLyrxJ", 
-    "RrWyNgerXuGouiXoWhJelcgKSPrWofbE", 
-    "pgSKtZuHiqROwmdOcPnmBnMGtDFVzAxO", 
-    "PdnOvVkSNPxSeuGptLHqcpccVdHIkGxI", 
-    "SPrBpusRNXXLoimtzfdhTBvqFBOUhfDt", 
-    "IUXEKHPBlNXgvKqAyNzXouyOhKMTBGHu", 
-    "MHjKRLurezSEgfcLduUniaIKEzjYGefm", 
-	"aRzIpWwUcfpPkRbRakOGqoMcYpbxgKyf",
-	"xXzzNEuwOUQMJrYpualNDpIdTmpCMEvU",
-}
-
-script_key = keys[math.random(#keys)];
+script_key = "";
 setfpscap(2)
 
 getgenv().gagConfig = {
