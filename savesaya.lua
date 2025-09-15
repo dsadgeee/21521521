@@ -10,7 +10,7 @@ getgenv().ConfigsKaitun = {
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- not done yet bro dont use
 		["Enabled"] = false, 
@@ -24,8 +24,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 250,
-		["Destroy Until"] = 250,
+		["Limit"] = 350,
+		["Destroy Until"] = 300,
 
 		["Safe Tree"] = {
 	"Moon Blossom",
@@ -38,37 +38,40 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
-	        ["Bamboo"] = 10,
-			["Coconut"] = 5,
-			["Mushroom"] = 5,
-			["Glowthorn"] = 5,
-			["Tomato"] = 5,
-			["Pumpkin"] = 5,
-			["Pepper"] = 5,
-			["Cacao"] = 5,
-			["Apple"] = 5,
+			["Coconut"] = 10,
+			["Mushroom"] = 10,
+			["Glowthorn"] = 10,
+			["Pepper"] = 10,
+			["Cacao"] = 10,
+			["Apple"] = 10,
 			["Wispwing"] = 10,
 			["Romanesco"] = 10,
 			["Elder Strawberry"] = 10,
 			["Burning Bud"] = 10,
-			["Giant Pinecone"] = 5,
-			["Corn"] = 5,
-			["Sugar Apple"] = 5,
-			["Ember Lily"] = 5,
-			["Dragon Fruit"] = 5,
+			["Giant Pinecone"] = 10,
+			["Corn"] = 10,
+			["Sugar Apple"] = 10,
+			["Ember Lily"] = 10,
+			["Dragon Fruit"] = 10,
 			["Sunbulb"] = 10,
 			["Orange Tulip"] = 10,
-			["Blueberry"] = 5,
-			["Watermelon"] = 5,
-			["Mango"] = 5,
-			["Cactus"] = 5,
-			["Strawberry"] = 5,
+			["Mango"] = 10,
+			["Cactus"] = 10,
 			["Beanstalk"] = 10,
-			["Lightshoot"] = 5,
-			["Grape"] = 5,
-			["Daffodil"] = 5,
+			["Lightshoot"] = 10,
+			["Grape"] = 10,
+			["Daffodil"] = 10,
 			["Aurora Vine"] = 10,
-			["Aetherfruit"] = 10,
+			["Grand Tomato"] = 10,
+			["Maple Apple"] = 10,
+			["Princess Thorn"] = 10,
+			["Spiked Mango"] = 10,
+			["Pineapple"] = 10,
+			["King Cabbage"] = 10,
+			["Carnival Pumpkin"] = 10,
+			["Kniphofia"] = 10,
+			["Golden Peach"] = 10,
+			["Maple Resin"] = 10,
 		}
 	},
 
@@ -110,8 +113,9 @@ getgenv().ConfigsKaitun = {
 			Minimum_Money = 10_000_000, -- minimum money to start play this event
 			Rewards_Item = { -- top mean select first
 				"Enchanted Egg",
-				"Enchanted Seed Pack",
 				"FairyPoints",
+				"Enchanted Seed Pack",
+				"Mutation Spray Glimmering",
 				"Pet Shard Glimmering",
 			    "Fairy Targeter",
 			},
@@ -125,37 +129,21 @@ getgenv().ConfigsKaitun = {
 				},
 				Limit = {
 					["Glimmer Multiplier"] = 8, -- max 10
-					["Loose Fairy Spawn Amount"] = 8, -- max 10
-					["Fairy Event Duration"] = 8, -- max 10
-					["Fairy Spawn Amount"] = 8, -- max 9
+					["Loose Fairy Spawn Amount"] = 10, -- max 10
+					["Fairy Event Duration"] = 10, -- max 10
+					["Fairy Spawn Amount"] = 9, -- max 9
 				}
-			},
-		Minimum_Fairy_Point_Restock = 5000, -- if fairy point more then this will restock
-        Catch_Fairy_Before_Restock = 51, -- fr it 50 but to be sure i put 51
+			}
 		},
 		MaxMoney_Restocks = 1_000_000_000_000,
 		Shop = { -- un comment to buy
+			"Fall Egg",
 			"Enchanted Chest",
-			"Enchanted Egg",
-			"Enchanted Seed Pack",
-			"Sprout Seed Pack",
-			"Sprout Egg",
-			-- "Mandrake",
-			-- "Silver Fertilizer",
-			-- "Canary Melon",
-			-- "Amberheart",
-			-- ["Spriggan"] = 8,
-			-- Friend Shop
-			"Skyroot Chest",
 		},
 		Craft = {
 			"Enchanted Chest",
 			"Enchanted Egg",
-			"Fairy Summoner",
-            "Fairy Power Extender",
-            "Fairy Caller",
 			"Anti Bee Egg",
-			"Sprout Egg",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
@@ -183,6 +171,7 @@ getgenv().ConfigsKaitun = {
 		},
 		Lock = {
 			"Grandmaster Sprinkler",
+			"Master Sprinkler",
 			"Godly Sprinkler",
 			"Lightning Rod",
 			"Harvest Tool",
@@ -194,20 +183,11 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Gourmet Egg",
-			"Enchanted Egg",
-			"Sprout Egg",
-			"Zen Egg",
-			"Primal Egg",
-			"Dinosaur Egg",
-			"Oasis Egg",
 			"Anti Bee Egg",
-			"Night Egg",
-			"Bug Egg",
-			"Paradise Egg",
-			"Rare Summer Egg",
+			"Fall Egg",
 		},
 		Buy = {
+			"Fall Egg",
 			"Bee Egg",
 			"Enchanted Egg",
 			"Oasis Egg",
@@ -217,6 +197,8 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
+			"Uncommon Egg",
+			"Common Egg",
 			"Legendary Egg",
 			"Rare Egg",
 		}
@@ -225,6 +207,7 @@ getgenv().ConfigsKaitun = {
 	Pets = {
 		["Auto Feed"] = true,
 		MutationPet = {
+			["Phoenix"] = { "Luminous" },
 			["Rooster"] = { "Glimmering" },
 			["Sunny-Side Chicken"] = { "Glimmering" },
 			["Glimmering Sprite"] = { "Glimmering" },
@@ -235,30 +218,32 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
+				["Barn Owl"] = { 3, 100, true },
                 ["Brown Mouse"] = { 3, 100, 4, true },
                 ["Grey Mouse"] = { 3, 100, 5, true },
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Bee"] = { 5, 100, 1 },
-				["Honey Bee"] = { 5, 100, 2 },
-				["Bear Bee"] = { 5, 100, 3 },
-				["Petal Bee"] = { 5, 100, 4 },
-				["Wasp"] = { 5, 100, 5 },
-				["Tarantula Hawk"] = { 5, 100, 6 },
-				["Glimmering Sprite"] = { 5, 100, 7 },
-                ["Sunny-Side Chicken"] = { 3, 100, 8 },
-                ["Starfish"] = { 5, 100, 9 },
-            	["Brown Mouse"] = { 3, 100, 10 },
-                ["Grey Mouse"] = { 3, 100, 11 },
-                ["Rooster"] = { 4, 100, 12 },
+				["Wasp"] = { 1, 100, 1 },
+				["Tarantula Hawk"] = { 1, 100, 2 },
+				["Barn Owl"] = { 1, 100, 4 },
+                ["Sunny-Side Chicken"] = { 5, 100, 3 },
+                ["Starfish"] = { 5, 100, 5 },
+            	["Brown Mouse"] = { 3, 100, 6 },
+                ["Grey Mouse"] = { 3, 100, 7 },
+                ["Rooster"] = { 4, 100, 8 },
+				"Bear Bee",
+			 	"Petal Bee",
 			},
 		},
 		Unfavorite_AllPet = false,
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
+			["Barn Owl"] = 8,
+			"Swan",
+			["Space Squirrel"] = 3,
 			"Cockatrice",
 			"Drake",
 			"Wisp",
@@ -266,12 +251,11 @@ getgenv().ConfigsKaitun = {
 			"Wisp Well",
 			"Phoenix",
 			["Glimmering Sprite"] = 8,
-			["Imp"] = 3,
 			"Griffin",
 			["Brown Mouse"] = 2,
 			["Squirrel"] = 1,
 			["Grey Mouse"] = 2,
-			["Rooster"] = 10,
+			["Rooster"] = 4,
 			"Lemon Lion",
 			"Peach Wasp",
 			"Chicken Zombie",
@@ -305,7 +289,6 @@ getgenv().ConfigsKaitun = {
 		},
 		LockPet_Weight = 5, -- if Weight >= 10 they will locked
 	},
-
     Webhook = {
 		UrlPet = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
 		UrlSeed = "XXX",
@@ -320,6 +303,7 @@ getgenv().ConfigsKaitun = {
 				"Idk"
 			},
 			Pets = {
+				"Swan",
 				"Golden Goose",
 				"Phoenix",
 				"Cockatrice",
@@ -342,89 +326,125 @@ getgenv().ConfigsKaitun = {
 }
 License = "8xGBxxJlHuPLdS1c2sW50enf54WzHG6L"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
--- 🌟 Auto Equip Tools (Enchanted Chest + Fairy Power Extender)
+wait(4)
+-- Script generated by SimpleSpy - credits to exx#9394
+local Rep = game:GetService("ReplicatedStorage")
+
+task.spawn(function()
+    while task.wait(1) do -- delay 1 giây để tránh kick
+        -- 🛒 Mua Fall Egg
+        local args1 = {
+            [1] = "Fall Egg",
+            [2] = 3
+        }
+        Rep.GameEvents.BuyEventShopStock:FireServer(unpack(args1))
+        print("🛒 Đã mua:", args1[1])
+
+        -- 🛒 Mua Space Squirrel
+        local args2 = {
+            [1] = "Space Squirrel",
+            [2] = 3
+        }
+        Rep.GameEvents.BuyEventShopStock:FireServer(unpack(args2))
+        print("🛒 Đã mua:", args2[1])
+    end
+end)
+
 local Players = game:GetService('Players')
+local Rep = game:GetService('ReplicatedStorage')
+local CollectionService = game:GetService('CollectionService')
+
 local localPlayer = Players.LocalPlayer
+local CollectRemote = Rep.GameEvents.Crops.Collect
+local SubmitAllRemote = Rep.GameEvents.FallMarketEvent.SubmitAllPlants
 
--- 🧰 Hàm trang bị Enchanted Chest
-local function equipEnchantedChest()
-    -- Nếu đã cầm trên tay rồi thì thôi
-    for _, tool in ipairs(localPlayer.Character:GetChildren()) do
-        if tool:IsA('Tool') and string.find(tool.Name, 'Fairy Summoner') then
-            return tool
-        end
-    end
+-- ⚙️ Delay và quét
+local USE_FARM_ONLY = true
+local FIRE_DELAY = 1
+local INTERVAL = 10
 
-    -- Nếu còn trong Backpack thì auto equip
-    for _, tool in ipairs(localPlayer.Backpack:GetChildren()) do
-        if tool:IsA('Tool') and string.find(tool.Name, 'Fairy Summoner') then
-            tool.Parent = localPlayer.Character
-            print('📦 Đã auto cầm Enchanted Chest!')
-            return tool
-        end
-    end
-end
-
--- 🧰 Hàm trang bị Fairy Power Extender
-local function equipFairyPowerExtender()
-    -- Nếu đã cầm trên tay rồi thì thôi
-    for _, tool in ipairs(localPlayer.Character:GetChildren()) do
-        if
-            tool:IsA('Tool') and string.find(tool.Name, 'Fairy Power Extender')
-        then
-            return tool
-        end
-    end
-
-    -- Nếu còn trong Backpack thì auto equip
-    for _, tool in ipairs(localPlayer.Backpack:GetChildren()) do
-        if
-            tool:IsA('Tool') and string.find(tool.Name, 'Fairy Power Extender')
-        then
-            tool.Parent = localPlayer.Character
-            print('📦 Đã auto cầm Fairy Power Extender!')
-            return tool
-        end
-    end
-end
-
--- 🧚 Hàm gọi Fairy Summoner skill
-local function fairySummoner()
-    local args = {
-        [1] = true,
-        [2] = CFrame.new(-9.378669738769531, 0, -49.54979705810547)
-            * CFrame.Angles(
-                -1.340797781944275,
-                1.1134178638458252,
-                1.3155239820480347
-            ),
-    }
-
-    local char = localPlayer.Character
+-- 📂 Farm folder
+local farmFolder
+pcall(function()
     if
-        char
-        and char:FindFirstChild('InputGateway')
-        and char.InputGateway:FindFirstChild('Activation')
+        workspace:FindFirstChild('Farm')
+        and workspace.Farm:FindFirstChild('Farm')
     then
-        char.InputGateway.Activation:FireServer(unpack(args))
-        print('✨ Fairy Summoner skill đã được kích hoạt!')
-    else
-        warn('⚠️ Không tìm thấy Activation trong InputGateway')
+        farmFolder = workspace.Farm.Farm
+    end
+end)
+
+-- 🏷️ Các loại cây cần thu hoạch
+local targetCrops = {
+    ['Mushroom'] = true,
+    ['Glowthorn'] = true,
+    ['Pepper'] = true,
+    ['Cacao'] = true,
+    ['Apple'] = true,
+    ['Wispwing'] = true,
+    ['Romanesco'] = true,
+    ['Elder Strawberry'] = true,
+    ['Burning Bud'] = true,
+    ['Giant Pinecone'] = true,
+    ['Corn'] = true,
+    ['Sugar Apple'] = true,
+    ['Ember Lily'] = true,
+    ['Dragon Fruit'] = true,
+    ['Sunbulb'] = true,
+    ['Orange Tulip'] = true,
+    ['Mango'] = true,
+    ['Cactus'] = true,
+    ['Beanstalk'] = true,
+    ['Lightshoot'] = true,
+    ['Grape'] = true,
+    ['Daffodil'] = true,
+    ['Aurora Vine'] = true,
+    ['Grand Tomato'] = true,
+    ['Maple Apple'] = true,
+    ['Princess Thorn'] = true,
+    ['Spiked Mango'] = true,
+    ['Pineapple'] = true,
+    ['King Cabbage'] = true,
+    ['Carnival Pumpkin'] = true,
+    ['Kniphofia'] = true,
+    ['Golden Peach'] = true,
+    ['Maple Resin'] = true,
+}
+
+-- 🏷️ Kiểm tra tag thu hoạch
+local function hasCollectTag(obj)
+    if type(obj.HasTag) == 'function' then
+        local ok, res = pcall(function()
+            return obj:HasTag('CollectPrompt')
+        end)
+        if ok then
+            return res
+        end
+    end
+    return CollectionService:HasTag(obj, 'CollectPrompt')
+end
+
+-- 🌱 Thu hoạch và nộp ngay sau mỗi lần
+local function harvestAndSubmit()
+    local descendants = USE_FARM_ONLY and farmFolder:GetDescendants()
+        or workspace:GetDescendants()
+
+    for _, inst in ipairs(descendants) do
+        if inst:IsA('ProximityPrompt') and hasCollectTag(inst) then
+            local crop = inst.Parent and inst.Parent.Parent
+            if crop and targetCrops[crop.Name] then
+                -- Thu hoạch
+                CollectRemote:FireServer({ crop })
+                task.wait(FIRE_DELAY)
+
+                -- Nộp ngay sau khi thu hoạch cây này
+                SubmitAllRemote:FireServer()
+            end
+        end
     end
 end
 
--- 🔄 Luôn giữ trên tay & dùng skill (mỗi 10s)
-task.spawn(function()
-    while task.wait(10) do
-        equipEnchantedChest()
-        fairySummoner()
-    end
-end)
-wait(3)
--- 🔄 Luôn giữ trên tay & dùng skill (mỗi 10s)
-task.spawn(function()
-    while task.wait(10) do
-        equipFairyPowerExtender()
-        fairySummoner()
-    end
-end)
+-- 🔄 Loop
+while task.wait(INTERVAL) do
+    harvestAndSubmit()
+end
