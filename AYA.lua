@@ -57,7 +57,7 @@ getgenv().gagConfig = {
     USE_PETS_FOR_UPGRADE_SLOT = { ["Barn Owl"] = 3, ["Brown Mouse"] = 3, ["Grey Mouse"] = 3, ["Starfish"] = 5 },
     REMOVE_PET_MAX_UPGRADE = { "Chicken" },  -- Unequip from garden
 
-    BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Trading Ticket" },
+    BUY_GEAR_SHOP = { "Golden Acorn", "Cleansing Pet Shard", "Master Sprinkler", "Godly Sprinkler", "Grandmaster Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Lightning Rod", "Level Up Lollipop", "Medium Treat", "Medium Toy" },
     USE_SPRINKLER = { "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Grandmaster Sprinkler" },
 
     PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1408866663558025278/ohhAUmTACbJP2YbxoGH8iXRYJpT36w0HcHrffSsza8TA6iw62VUO1Sb2jCBavqeK1FeW", 
