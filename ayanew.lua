@@ -43,7 +43,7 @@ getgenv().gagConfig = {
     BUY_EGGS = { "Bug Egg", "Bee Egg", "Paradise Egg", "Mythical Egg", "Rare Summer Egg", "Common Summer Egg", "Rare Egg", "Uncommon Egg" },
     PLANT_EGGS = { "Fall Egg" , "Anti Bee Egg" , "Common Summer Egg", "Rare Egg" },
     
-    BUY_SEED_SHOP = { "Romanesco", "Elder Strawberry", "Giant Pinecone", "Burning Bud", "Sugar Apple", "Ember Lily", "Beanstalk", "Cacao", "Pepper", "Mushroom", "Grape", "Mango", "Dragon Fruit", "Cactus", ["Coconut"] = 50, ["Bamboo"] = 50, ["Apple"] = 50, ["Pumpkin"] = 50, ["Watermelon"] = 50, ["Daffodil"] = 50, ["Tomato"] = 50, ["Orange Tulip"] = 50, ["Blueberry"] = 50, ["Strawberry"] = 50, ["Carrot"] = 50 },
+    BUY_SEED_SHOP = {"Moon Blossom", "Bone Blossom", "Moon Melon", "Maple Apple", "Moon Mango", "Dragon Pepper", "Elephant Ears", "Fossilight", "Princess Thorn", ["Coconut"] = 10, ["Mushroom"] = 10, ["Glowthorn"] = 10, ["Pepper"] = 10, ["Cacao"] = 10, ["Apple"] = 10, ["Wispwing"] = 10, ["Romanesco"] = 10, ["Elder Strawberry"] = 10, ["Burning Bud"] = 10, ["Giant Pinecone"] = 10, ["Corn"] = 10, ["Sugar Apple"] = 10, ["Ember Lily"] = 10, ["Dragon Fruit"] = 10, ["Sunbulb"] = 10, ["Orange Tulip"] = 10, ["Mango"] = 10, ["Cactus"] = 10, ["Beanstalk"] = 10, ["Lightshoot"] = 10, ["Grape"] = 10, ["Daffodil"] = 10, ["Aurora Vine"] = 10, ["Grand Tomato"] = 10, ["Maple Apple"] = 10, ["Princess Thorn"] = 10, ["Spiked Mango"] = 10, ["Pineapple"] = 10, ["King Cabbage"] = 10, ["Carnival Pumpkin"] = 10, ["Kniphofia"] = 10, ["Golden Peach"] = 10, ["Maple Resin"] = 50},
     KEEP_SEEDS = { "Bone Blossom" },
     KEEP_SEEDS_AFTER_MAX_PLANTS = { "Carrot", "Strawberry", "Blueberry", "Tomato", "Apple" },
     
@@ -57,7 +57,7 @@ getgenv().gagConfig = {
     USE_PETS_FOR_UPGRADE_SLOT = { ["Barn Owl"] = 3, ["Brown Mouse"] = 3, ["Grey Mouse"] = 3, ["Starfish"] = 5 },
     REMOVE_PET_MAX_UPGRADE = { "Chicken" },  -- Unequip from garden
 
-    BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Trading Ticket" },
+    BUY_GEAR_SHOP = { "Golden Acorn", "Cleansing Pet Shard", "Master Sprinkler", "Godly Sprinkler", "Grandmaster Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Lightning Rod", "Level Up Lollipop", "Medium Treat", "Medium Toy" },
     USE_SPRINKLER = { "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Grandmaster Sprinkler" },
 
     PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1408866663558025278/ohhAUmTACbJP2YbxoGH8iXRYJpT36w0HcHrffSsza8TA6iw62VUO1Sb2jCBavqeK1FeW", 
