@@ -128,14 +128,14 @@ getgenv().ConfigsKaitun = {
 					"Fairy Event Duration",
 				},
 				Limit = {
-					["Glimmer Multiplier"] = 8, -- max 10
+					["Glimmer Multiplier"] = 1, -- max 10
 					["Loose Fairy Spawn Amount"] = 10, -- max 10
 					["Fairy Event Duration"] = 10, -- max 10
 					["Fairy Spawn Amount"] = 9, -- max 9
 				}
 			}
 		},
-		MaxMoney_Restocks = 1_000_000_000_000,
+		MaxMoney_Restocks = 5_000_000_000_000,
 		Shop = { -- un comment to buy
 			"Golden Acorn",
 			"Firefly Jar",
@@ -157,6 +157,9 @@ getgenv().ConfigsKaitun = {
 			"Wisp",
 		},
 		Craft = {
+			"Fairy Summoner",
+			"Fairy Power Extender",
+			"Fairy Caller",
 			"Enchanted Chest",
 			"Enchanted Egg",
 			"Anti Bee Egg",
@@ -176,7 +179,7 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
-		    "Golden Acorn",
+			"Golden Acorn",
 			"Cleansing Pet Shard",
 			"Master Sprinkler",
 			"Godly Sprinkler",
@@ -189,7 +192,7 @@ getgenv().ConfigsKaitun = {
 			"Medium Toy",
 		},
 		Lock = {
-			"Golden Acorn",
+	        "Golden Acorn",
 			"Firefly Jar",
 			"Sky Lantern",
 			"Maple Leaf Kite",
@@ -217,10 +220,10 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Anti Bee Egg",
 			"Fall Egg",
+			"Anti Bee Egg",
 			"Rare Egg",
-			"Rare Summer Egg",
+			"Common Summer Egg",
 		},
 		Buy = {
 			"Fall Egg",
@@ -375,14 +378,7 @@ task.spawn(function()
         }
         Rep.GameEvents.BuyEventShopStock:FireServer(unpack(args1))
         print("🛒 Đã mua:", args1[1])
-
-        -- 🛒 Mua Space Squirrel
-        local args2 = {
-            [1] = "Space Squirrel",
-            [2] = 3
-        }
-        Rep.GameEvents.BuyEventShopStock:FireServer(unpack(args2))
-        print("🛒 Đã mua:", args2[1])
+			
     end
 end)
 
@@ -484,3 +480,4 @@ end
 while task.wait(INTERVAL) do
     harvestAndSubmit()
 end
+_G.Config = { UserID = "85a00e19-30eb-4b2f-acfd-a9634446a76c", discord_id = "1067392103585423440" , Note = "Pc", } loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/gag"))()
