@@ -10,9 +10,9 @@ getgenv().ConfigsKaitun = {
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = true,
 
-	["Rejoin When Update"] = true,
+	["Rejoin When Update"] = false,
 
-	["Auto Trade Pet"] = { -- not done yet bro dont use
+	["Auto Trade Pet"] = { -- beta idk it work or no
 		["Enabled"] = false, 
 		["Target"] =  { -- multi users
 			"username1",
@@ -20,6 +20,14 @@ getgenv().ConfigsKaitun = {
 		},
 		["Pet To Send"] = {
 			
+		}
+	},
+
+	Ascend = {
+		Enabled = false,
+		Max_Rebirth_Money = 1_000_000_000_000,
+		Shop = {
+			"Egg Capacity"
 		}
 	},
 
@@ -71,7 +79,7 @@ getgenv().ConfigsKaitun = {
 			["Carnival Pumpkin"] = 10,
 			["Kniphofia"] = 10,
 			["Golden Peach"] = 10,
-			["Maple Resin"] = 50,
+			["Maple Resin"] = 10,
 		}
 	},
 
@@ -112,72 +120,44 @@ getgenv().ConfigsKaitun = {
 		["Fall Event"] = {
 			Minimum_Money = 10_000_000, -- minimum money to start play this event
 		},
-		MaxMoney_Restocks = 10_000_000,
+		MaxMoney_Restocks = 1_000_000_000_000,
 		
 		Shop = { -- un comment to buy
 			"Fall Egg",
 			"Enchanted Chest",
 		},
 		["Traveling Shop"] = {
-			"Honey Sprinkler",
 			"Bee Egg",
-			"Paradise Egg",
+			"Paradise Egg", 
 			"Rare Summer Egg", 
-			"Common Summer Egg",
-			"Pitcher Plant",
-			"Feijoa",
-			"Loquat",
+			"Common Summer Egg"
 		},
 		Craft = {
 			"Enchanted Chest",
-			"Fairy Net",
 			"Enchanted Egg",
-			"Enchanted Seed Pack",
 			"Anti Bee Egg",
-			"Pet Shard GiantBean",
-			"Sprout Egg",
 		},
 		Start_Do_Honey = 2_000_000 -- start trade fruit for honey at money
 	},
 
 	Gear = {
 		Buy = { 
-			"Golden Acorn",
-			"Cleansing Pet Shard",
 			"Master Sprinkler",
 			"Godly Sprinkler",
-			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
+			"Harvest Tool",
 		},
 		Lock = {
-	        "Golden Acorn",
-			"Firefly Jar",
-			"Sky Lantern",
-			"Maple Leaf Kite",
-			"Leaf Blower",
-			"Maple Leaf Charm",
-			"Maple Sprinkler",
-			"Bonfire",
-			"Harvest Basket",
-			"Fall Leaf Chair",
-			"Maple Flag",
-			"Flying Kite",
-			"Maple Resin",
-			"Fall Fountain",
-			"Cleansing Pet Shard",
-			"Grandmaster Sprinkler",
 			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Advanced Sprinkler",
+			"Basic Sprinkler",
 			"Lightning Rod",
-			"Harvest Tool",
-			"Level Up Lollipop",
-			"Medium Treat",
-			"Medium Toy",
 		},
 	},
 
@@ -208,21 +188,13 @@ getgenv().ConfigsKaitun = {
 
 	Pets = {
 		["Auto Feed"] = true,
+
 		MutationPet = {
-			["Phoenix"] = { "Luminous" },
-			["Rooster"] = { "Glimmering" },
-			["Sunny-Side Chicken"] = { "Glimmering" },
-			["Glimmering Sprite"] = { "Glimmering" },
-			["Brown Mouse"] = { "Glimmering" },
-			["Grey Mouse"] = { "Glimmering" },
-			["Squirrel"] = { "Glimmering" },
+			["PET NAME"] = { "Glimmering","... any other" }
 		},
+
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
-			["Pet"] = {
-				["Barn Owl"] = { 3, 100, true },
-                ["Brown Mouse"] = { 3, 100, 4, true },
-                ["Grey Mouse"] = { 3, 100, 5, true },
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
@@ -232,8 +204,6 @@ getgenv().ConfigsKaitun = {
 				["Barn Owl"] = { 1, 100, 4 },
                 ["Sunny-Side Chicken"] = { 5, 100, 3 },
                 ["Starfish"] = { 5, 100, 5 },
-            	["Brown Mouse"] = { 3, 100, 6 },
-                ["Grey Mouse"] = { 3, 100, 7 },
                 ["Rooster"] = { 4, 100, 8 },
 				"Bear Bee",
 			 	"Petal Bee",
