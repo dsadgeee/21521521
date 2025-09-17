@@ -1,4 +1,3 @@
-setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -9,7 +8,7 @@ getgenv().ConfigsKaitun = {
 	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = true,
+	["Auto Rejoin"] = false,
 
 	["Rejoin When Update"] = true,
 
@@ -25,8 +24,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 250,
-		["Destroy Until"] = 300,
+		["Limit"] = 400,
+		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
 			"Moon Blossom",
@@ -203,24 +202,17 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 50,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-				["Starfish"] = { 1, 100, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
-				["Barn Owl"] = { 3, 100, true },
-                ["Brown Mouse"] = { 3, 100, 4, true },
-                ["Grey Mouse"] = { 3, 100, 5, true },
-				["Starfish"] = { 5, 100, 6, true },
+				["Starfish"] = { 1, 75, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Wasp"] = { 1, 100, 1 },
 				["Tarantula Hawk"] = { 1, 100, 2 },
-				["Barn Owl"] = { 1, 100, 4 },
                 ["Sunny-Side Chicken"] = { 5, 100, 3 },
-                ["Starfish"] = { 5, 100, 5 },
-            	["Brown Mouse"] = { 3, 100, 6 },
-                ["Grey Mouse"] = { 3, 100, 7 },
-                ["Rooster"] = { 4, 100, 8 },
-				"Bear Bee",
-			 	"Petal Bee",
+				["Barn Owl"] = { 1, 100, 4 },
+                ["Rooster"] = { 4, 100, 5 },
+				["Bear Bee"] = { 1, 100, 6 },
+			 	["Petal Bee"] = { 1, 100, 7 },
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -362,7 +354,6 @@ getgenv().ConfigsKaitun = {
 License = "4vWx20QgVjGB2bC68YTGTKTo4OyjKSaP"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
 
-wait(4)
 local Players = game:GetService('Players')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
 local Workspace = game:GetService('Workspace')
