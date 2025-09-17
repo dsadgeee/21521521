@@ -206,7 +206,7 @@ getgenv().ConfigsKaitun = {
 				["Barn Owl"] = { 3, 100, true },
                 ["Brown Mouse"] = { 3, 100, 4, true },
                 ["Grey Mouse"] = { 3, 100, 5, true },
-				["Starfish"] = { 5, 100
+				["Starfish"] = { 5, 100, 6 },
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
