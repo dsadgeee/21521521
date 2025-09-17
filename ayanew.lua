@@ -24,7 +24,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 400,
+		["Limit"] = 300,
 		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
@@ -38,34 +38,40 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
-			Bamboo = 4,
-			Coconut = 15,
-			Mushroom = 4,
-			Glowthorn = 4,
-			Tomato = 15,
-			Pumpkin = 4,
-			Pepper = 4,
-			Cacao = 15,
-			Apple = 15,
-			Romanesco = 4,
-			["Elder Strawberry"] = 4,
-			["Burning Bud"] = 4,
-			["Giant Pinecone"] = 4,
-			Corn = 4,
-			["Sugar Apple"] = 4,
-			["Ember Lily"] = 4,
-			["Dragon Fruit"] = 15,
-			Sunbulb = 8,
-			["Orange Tulip"] = 4,
-			Blueberry = 15,
-			Watermelon = 4,
-			Mango = 15,
-			Cactus = 4,
-			Strawberry = 15,
-			Beanstalk = 4,
-			Lightshoot = 4,
-			Grape = 4,
-			Daffodil = 4,
+			["Coconut"] = 10,
+			["Mushroom"] = 10,
+			["Glowthorn"] = 10,
+			["Pepper"] = 10,
+			["Cacao"] = 10,
+			["Apple"] = 10,
+			["Wispwing"] = 10,
+			["Romanesco"] = 10,
+			["Elder Strawberry"] = 10,
+			["Burning Bud"] = 10,
+			["Giant Pinecone"] = 10,
+			["Corn"] = 10,
+			["Sugar Apple"] = 10,
+			["Ember Lily"] = 10,
+			["Dragon Fruit"] = 10,
+			["Sunbulb"] = 10,
+			["Orange Tulip"] = 10,
+			["Mango"] = 10,
+			["Cactus"] = 10,
+			["Beanstalk"] = 10,
+			["Lightshoot"] = 10,
+			["Grape"] = 10,
+			["Daffodil"] = 10,
+			["Aurora Vine"] = 10,
+			["Grand Tomato"] = 10,
+			["Maple Apple"] = 10,
+			["Princess Thorn"] = 10,
+			["Spiked Mango"] = 10,
+			["Pineapple"] = 10,
+			["King Cabbage"] = 10,
+			["Carnival Pumpkin"] = 10,
+			["Kniphofia"] = 10,
+			["Golden Peach"] = 10,
+			["Maple Resin"] = 50,
 		}
 	},
 
@@ -91,6 +97,7 @@ getgenv().ConfigsKaitun = {
 				"Moon Mango",
 				"Bone Blossom",
 				"Fossilight",
+				"Strawberry",
 			}
 		}
 	},
@@ -133,10 +140,14 @@ getgenv().ConfigsKaitun = {
 			"Pet Shard GiantBean",
 		},
 		["Traveling Shop"] = {
+			"Honey Sprinkler",
 			"Bee Egg",
-			"Paradise Egg", 
+			"Paradise Egg",
 			"Rare Summer Egg", 
-			"Common Summer Egg"
+			"Common Summer Egg",
+			"Pitcher Plant",
+			"Feijoa",
+			"Loquat",
 		},
 		Craft = {
 			"Enchanted Chest",
@@ -173,24 +184,14 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Fall Egg",
-			"Sprout Egg",
-			"Gourmet Egg",
-			"Zen Egg",
-			"Primal Egg",
-			"Dinosaur Egg",
-			"Oasis Egg",
 			"Anti Bee Egg",
-			"Night Egg",
-			"Bug Egg",
-			"Paradise Egg",
-			"Bee Egg",
-			"Mythical Egg",
+			"Fall Egg",
 			"Rare Egg",
 		},
 		Buy = {
+			"Fall Egg",
 			"Bee Egg",
-			"Rare Egg",
+			"Enchanted Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
@@ -200,9 +201,10 @@ getgenv().ConfigsKaitun = {
 			"Mythical Egg",
 			"Uncommon Egg",
 			"Common Egg",
+			"Legendary Egg",
+			"Rare Egg",
 		}
 	},
-
 	Pets = {
 		["Auto Feed"] = true,
 
@@ -210,19 +212,24 @@ getgenv().ConfigsKaitun = {
 			["PET NAME"] = { "Glimmering","... any other" }
 		},
 
-		["Start Delete Pet At"] = 50,
+		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-				["Starfish"] = { 1, 100, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Barn Owl"] = { 3, 100, true },
+                ["Brown Mouse"] = { 3, 100, 4, true },
+                ["Grey Mouse"] = { 3, 100, 5, true },
+				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Wasp"] = { 1, 100, 1 },
-				["Tarantula Hawk"] = { 1, 100, 1 },
-				["Sunny-Side Chicken"] = { 4, 100, 2 }, 
-				["Hotdog Daschund"] = { 4, 100, 3 },
-				["Rooster"] = { 8, 100, 5 },
-				["Starfish"] = { 1, 100, 6 },
+				["Tarantula Hawk"] = { 1, 100, 2 },
+				["Barn Owl"] = { 1, 100, 4 },
+                ["Sunny-Side Chicken"] = { 5, 100, 3 },
+                ["Starfish"] = { 5, 100, 5 },
+            	["Brown Mouse"] = { 3, 100, 6 },
+                ["Grey Mouse"] = { 3, 100, 7 },
+                ["Rooster"] = { 4, 100, 8 },
 				"Bear Bee",
 			 	"Petal Bee",
 			},
