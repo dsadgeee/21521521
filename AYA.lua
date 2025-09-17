@@ -388,9 +388,7 @@ getgenv().ConfigsKaitun = {
 	},
 }
 License = "4vWx20QgVjGB2bC68YTGTKTo4OyjKSaP"
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
 
-wait(5)
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
 local Players = game:GetService('Players')
 local ReplicatedStorage = game:GetService('ReplicatedStorage')
