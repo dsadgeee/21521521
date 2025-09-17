@@ -315,9 +315,6 @@ getgenv().ConfigsKaitun = {
 
 		Noti = {
 			Seeds = {
-				"Sunflower",
-				"Dragon Pepper",
-				"Elephant Ears",
 			},
 			SeedPack = {
 				"Idk"
