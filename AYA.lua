@@ -1,4 +1,3 @@
-setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -9,9 +8,9 @@ getgenv().ConfigsKaitun = {
 	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = true,
+	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- beta idk it work or no
 		["Enabled"] = false, 
@@ -47,34 +46,40 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
-			Bamboo = 4,
-			Coconut = 15,
-			Mushroom = 4,
-			Glowthorn = 4,
-			Tomato = 15,
-			Pumpkin = 4,
-			Pepper = 4,
-			Cacao = 15,
-			Apple = 15,
-			Romanesco = 4,
-			["Elder Strawberry"] = 4,
-			["Burning Bud"] = 4,
-			["Giant Pinecone"] = 4,
-			Corn = 4,
-			["Sugar Apple"] = 4,
-			["Ember Lily"] = 4,
-			["Dragon Fruit"] = 15,
-			Sunbulb = 8,
-			["Orange Tulip"] = 4,
-			Blueberry = 15,
-			Watermelon = 4,
-			Mango = 15,
-			Cactus = 4,
-			Strawberry = 15,
-			Beanstalk = 4,
-			Lightshoot = 4,
-			Grape = 4,
-			Daffodil = 4,
+			["Coconut"] = 10,
+			["Mushroom"] = 10,
+			["Glowthorn"] = 10,
+			["Pepper"] = 10,
+			["Cacao"] = 10,
+			["Apple"] = 10,
+			["Wispwing"] = 10,
+			["Romanesco"] = 10,
+			["Elder Strawberry"] = 10,
+			["Burning Bud"] = 10,
+			["Giant Pinecone"] = 10,
+			["Corn"] = 10,
+			["Sugar Apple"] = 10,
+			["Ember Lily"] = 10,
+			["Dragon Fruit"] = 10,
+			["Sunbulb"] = 10,
+			["Orange Tulip"] = 10,
+			["Mango"] = 10,
+			["Cactus"] = 10,
+			["Beanstalk"] = 10,
+			["Lightshoot"] = 10,
+			["Grape"] = 10,
+			["Daffodil"] = 10,
+			["Aurora Vine"] = 10,
+			["Grand Tomato"] = 10,
+			["Maple Apple"] = 10,
+			["Princess Thorn"] = 10,
+			["Spiked Mango"] = 10,
+			["Pineapple"] = 10,
+			["King Cabbage"] = 10,
+			["Carnival Pumpkin"] = 10,
+			["Kniphofia"] = 10,
+			["Golden Peach"] = 10,
+			["Maple Resin"] = 50,
 		}
 	},
 
@@ -107,27 +112,50 @@ getgenv().ConfigsKaitun = {
 
 	["Seed Pack"] = {
 		Locked = {
-			"Enchanted Seed Pack",
+			["Enchanted Seed Pack"] = 10,
 		}
 	},
 
 	Events = {
 		["Fall Event"] = {
-			Minimum_Money = 10_000_000, -- minimum money to start play this event
+			Minimum_Money = 1_000_000_000, -- minimum money to start play this event
 		},
-		MaxMoney_Restocks = 1_000_000_000_000,
+		MaxMoney_Restocks = 1_000_000_000,
 		
 		Shop = { -- un comment to buy
-			"Fall Egg",
+			"Golden Acorn",
+			"Firefly Jar",
+			"Sky Lantern",
+			"Maple Leaf Kite",
+			"Leaf Blower",
+			"Maple Leaf Charm",
+			"Maple Sprinkler",
+			"Bonfire",
+			"Harvest Basket",
+			"Fall Leaf Chair",
+			"Maple Flag",
+			"Flying Kite",
+			"Maple Resin",
+			"Fall Fountain",
 			"Enchanted Chest",
+			"Enchanted Egg",
+			"Luminous Sprite",
+			"Wisp",
 		},
 		["Traveling Shop"] = {
+			"Honey Sprinkler",
 			"Bee Egg",
-			"Paradise Egg", 
+			"Paradise Egg",
 			"Rare Summer Egg", 
-			"Common Summer Egg"
+			"Common Summer Egg",
+			"Pitcher Plant",
+			"Feijoa",
+			"Loquat",
 		},
 		Craft = {
+			"Fairy Summoner",
+			"Fairy Power Extender",
+			"Fairy Caller",
 			"Enchanted Chest",
 			"Enchanted Egg",
 			"Anti Bee Egg",
@@ -137,22 +165,42 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
+			"Golden Acorn",
+			"Cleansing Pet Shard",
 			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
-			"Harvest Tool",
 		},
 		Lock = {
+	        "Golden Acorn",
+			"Firefly Jar",
+			"Sky Lantern",
+			"Maple Leaf Kite",
+			"Leaf Blower",
+			"Maple Leaf Charm",
+			"Maple Sprinkler",
+			"Bonfire",
+			"Harvest Basket",
+			"Fall Leaf Chair",
+			"Maple Flag",
+			"Flying Kite",
+			"Maple Resin",
+			"Fall Fountain",
+			"Cleansing Pet Shard",
+			"Grandmaster Sprinkler",
 			"Master Sprinkler",
 			"Godly Sprinkler",
-			"Advanced Sprinkler",
-			"Basic Sprinkler",
 			"Lightning Rod",
+			"Harvest Tool",
+			"Level Up Lollipop",
+			"Medium Treat",
+			"Medium Toy",
 		},
 	},
 
@@ -161,7 +209,6 @@ getgenv().ConfigsKaitun = {
 			"Fall Egg",
 			"Anti Bee Egg",
 			"Rare Egg",
-			"Common Summer Egg",
 		},
 		Buy = {
 			"Fall Egg",
@@ -183,13 +230,21 @@ getgenv().ConfigsKaitun = {
 
 	Pets = {
 		["Auto Feed"] = true,
-
 		MutationPet = {
-			["PET NAME"] = { "Glimmering","... any other" }
+			["Phoenix"] = { "Luminous" },
+			["Rooster"] = { "Glimmering" },
+			["Sunny-Side Chicken"] = { "Glimmering" },
+			["Glimmering Sprite"] = { "Glimmering" },
+			["Brown Mouse"] = { "Glimmering" },
+			["Grey Mouse"] = { "Glimmering" },
+			["Squirrel"] = { "Glimmering" },
 		},
-
 		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
+			["Pet"] = {
+				["Barn Owl"] = { 3, 100, true },
+                ["Brown Mouse"] = { 3, 100, 4, true },
+                ["Grey Mouse"] = { 3, 100, 5, true },
 				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
@@ -199,13 +254,15 @@ getgenv().ConfigsKaitun = {
 				["Barn Owl"] = { 1, 100, 4 },
                 ["Sunny-Side Chicken"] = { 5, 100, 3 },
                 ["Starfish"] = { 5, 100, 5 },
+            	["Brown Mouse"] = { 3, 100, 6 },
+                ["Grey Mouse"] = { 3, 100, 7 },
                 ["Rooster"] = { 4, 100, 8 },
 				"Bear Bee",
 			 	"Petal Bee",
 			},
 		},
 		Unfavorite_AllPet = false,
-		Favorite_LockedPet = false,
+		Favorite_LockedPet = true,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
 			["Barn Owl"] = 8,
@@ -286,21 +343,15 @@ getgenv().ConfigsKaitun = {
 			"Wasp",
 			"Tarantula Hawk",
 		},
-		LockPet_Weight = 5, -- if Weight >= 10 they will locked
+		LockPet_Weight = 6, -- if Weight >= 10 they will locked
 		Ignore_Pet_Weight = {
-			"Cardinal",
+			"NAME oF PET THAT U DONT NEED LOCK",
 		},
 		Instant_Sell = {
-			"Cardinal",
-			"Ladybug",
-			"Pixie",
-			"Imp",
-			"Shroomie",
-			"Badger",
-			"Robin",
-			"Grizzly Bear",
+			"NAME oF SOMETHING",
 		}
 	},
+
     Webhook = {
 		UrlPet = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
 		UrlSeed = "XXX",
@@ -315,12 +366,11 @@ getgenv().ConfigsKaitun = {
 				"Idk"
 			},
 			Pets = {
-				"Space Squirrel",
-				"Swan",
 				"Phoenix",
+				"Cockatrice",
 				"Golden Goose",
 				"French Fry Ferret",
-				"Cockatrice",
+				"Corrupted Kitsune",
 				"Kitsune",
 				"Spinosaurus",
 				"T-Rex",
