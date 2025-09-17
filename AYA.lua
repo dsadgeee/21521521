@@ -196,22 +196,36 @@ getgenv().ConfigsKaitun = {
 		["Auto Feed"] = true,
 
 		MutationPet = {
-			["PET NAME"] = { "Glimmering","... any other" }
+			["Phoenix"] = { "Luminous" },
+			["Rooster"] = { "Glimmering" },
+			["Sunny-Side Chicken"] = { "Glimmering" },
+			["Glimmering Sprite"] = { "Glimmering" },
+			["Brown Mouse"] = { "Glimmering" },
+			["Grey Mouse"] = { "Glimmering" },
+			["Squirrel"] = { "Glimmering" },
 		},
 
 		["Start Delete Pet At"] = 50,
 		["Upgrade Slot"] = {
 			["Pet"] = {
 				["Starfish"] = { 1, 100, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Barn Owl"] = { 3, 100, true },
+                ["Brown Mouse"] = { 3, 100, 4, true },
+                ["Grey Mouse"] = { 3, 100, 5, true },
+				["Starfish"] = { 5, 100
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Tarantula Hawk"] = { 1, 100, 1 },
-				["Sunny-Side Chicken"] = { 4, 100, 2 }, 
-				["Hotdog Daschund"] = { 4, 100, 3 },
-				["Blood Kiwi"] = { 8, 100, 4 },
-				["Rooster"] = { 8, 100, 5 },
-				["Starfish"] = { 1, 100, 6 },
+				["Wasp"] = { 1, 100, 1 },
+				["Tarantula Hawk"] = { 1, 100, 2 },
+				["Barn Owl"] = { 1, 100, 4 },
+                ["Sunny-Side Chicken"] = { 5, 100, 3 },
+                ["Starfish"] = { 5, 100, 5 },
+            	["Brown Mouse"] = { 3, 100, 6 },
+                ["Grey Mouse"] = { 3, 100, 7 },
+                ["Rooster"] = { 4, 100, 8 },
+				"Bear Bee",
+			 	"Petal Bee",
 			},
 		},
 		Unfavorite_AllPet = false,
