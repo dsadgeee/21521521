@@ -118,9 +118,9 @@ getgenv().ConfigsKaitun = {
 
 	Events = {
 		["Fall Event"] = {
-			Minimum_Money = 10_000_000, -- minimum money to start play this event
+			Minimum_Money = 1_000_000_000, -- minimum money to start play this event
 		},
-		MaxMoney_Restocks = 10_000_000,
+		MaxMoney_Restocks = 1_000_000_000,
 		
 		Shop = { -- un comment to buy
 			"Golden Acorn",
@@ -266,6 +266,7 @@ getgenv().ConfigsKaitun = {
 		Favorite_LockedPet = true,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
+			["Barn Owl"] = 8,
 			"Swan",
 			"Phoenix",
 			"Cockatrice",
@@ -297,7 +298,7 @@ getgenv().ConfigsKaitun = {
 			"Mimic Octopus",
 			"Red Fox",
 			"Blood Owl",
-			["Starfish"] = 10,			["Barn Owl"] = 8,
+			["Starfish"] = 10,
 			"Swan",
 			["Space Squirrel"] = 3,
 			"Cockatrice",
