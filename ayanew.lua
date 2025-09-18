@@ -216,7 +216,7 @@ getgenv().ConfigsKaitun = {
 			 	["Petal Bee"] = { 1, 100, 7 },
 			},
 		},
-		Unfavorite_AllPet = false,
+		Unfavorite_AllPet = true,
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
