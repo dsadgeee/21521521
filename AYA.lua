@@ -158,15 +158,17 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
+			"Golden Acorn",
+			"Cleansing Pet Shard",
 			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
-			"Harvest Tool",
 		},
 		Lock = {
 			"Master Sprinkler",
