@@ -231,11 +231,12 @@ getgenv().ConfigsKaitun = {
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-                		["Sunny-Side Chicken"] = { 8, 100, 2 },
-                		["Starfish"] = { 1, 100, 3 },
-                		["Brown Mouse"] = { 1, 100, 4 },
-                		["Grey Mouse"] = { 1, 100, 5 },
-                		["Rooster"] = { 5, 100, 6 },
+				["Tarantula Hawk"] = { 1, 100, 1 },
+				["Sunny-Side Chicken"] = { 4, 100, 2 }, 
+				["Hotdog Daschund"] = { 4, 100, 3 },
+				["Blood Kiwi"] = { 8, 100, 4 },
+				["Rooster"] = { 8, 100, 5 },
+				["Starfish"] = { 1, 100, 6 },
 			},
 		},
 		Unfavorite_AllPet = true,
