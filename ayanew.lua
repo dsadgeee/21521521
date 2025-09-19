@@ -182,13 +182,21 @@ getgenv().ConfigsKaitun = {
 	Eggs = {
 		Place = {
 			"Fall Egg",
+			"Sprout Egg",
+			"Zen Egg",
+			"Primal Egg",
+			"Dinosaur Egg",
+			"Oasis Egg",
 			"Anti Bee Egg",
-			"Rare Egg",
+			"Night Egg",
 			"Bug Egg",
+			"Paradise Egg",
+			"Rare Egg",
 		},
 		Buy = {
+			"Fall Egg",
 			"Bee Egg",
-			"Rare Egg",
+			"Enchanted Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
@@ -198,30 +206,36 @@ getgenv().ConfigsKaitun = {
 			"Mythical Egg",
 			"Uncommon Egg",
 			"Common Egg",
+			"Legendary Egg",
+			"Rare Egg",
 		}
 	},
 
 	Pets = {
 		["Auto Feed"] = true,
-
 		MutationPet = {
-			["PET NAME"] = { "Glimmering","... any other" }
+			["Rooster"] = { "Glimmering" },
+			["Sunny-Side Chicken"] = { "Glimmering" },
+			["Glimmering Sprite"] = { "Glimmering" },
+			["Brown Mouse"] = { "Glimmering" },
+			["Grey Mouse"] = { "Glimmering" },
+			["Squirrel"] = { "Glimmering" },
 		},
-
-		["Start Delete Pet At"] = 50,
+		["Start Delete Pet At"] = 40,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-				["Starfish"] = { 1, 75, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Starfish"] = { 5, 100, 1, true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Brown Mouse"] = { 1, 100 },
+				["Squirrel"] = { 1, 100 }, 
+				["Grey Mouse"] = { 1, 100 },
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Wasp"] = { 1, 100, 1 },
-				["Tarantula Hawk"] = { 1, 100, 2 },
-                ["Sunny-Side Chicken"] = { 5, 100, 3 },
-				["Barn Owl"] = { 1, 100, 4 },
-                ["Rooster"] = { 4, 100, 5 },
-				["Bear Bee"] = { 1, 100, 6 },
-			 	["Petal Bee"] = { 1, 100, 7 },
+                		["Sunny-Side Chicken"] = { 8, 100, 2 },
+                		["Starfish"] = { 1, 100, 3 },
+                		["Brown Mouse"] = { 1, 100, 4 },
+                		["Grey Mouse"] = { 1, 100, 5 },
+                		["Rooster"] = { 5, 100, 6 },
 			},
 		},
 		Unfavorite_AllPet = true,
