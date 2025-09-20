@@ -1,3 +1,4 @@
+
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -24,7 +25,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 300,
+		["Limit"] = 250,
 		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
@@ -109,6 +110,8 @@ getgenv().ConfigsKaitun = {
 		
 		Shop = { -- un comment to buy
             "Golden Acorn",
+			"Fall Egg",
+			"Red Panda",
             "Firefly Jar",
             "Sky Lantern",
             "Maple Leaf Kite",
@@ -186,6 +189,8 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
+			"Anti Bee Egg",
+			"Bug Egg",
 			"Fall Egg",
 			"Sprout Egg",
 			"Gourmet Egg",
@@ -193,9 +198,7 @@ getgenv().ConfigsKaitun = {
 			"Primal Egg",
 			"Dinosaur Egg",
 			"Oasis Egg",
-			"Anti Bee Egg",
 			"Night Egg",
-			"Bug Egg",
 			"Paradise Egg",
 			"Mythical Egg",
 			"Rare Egg",
@@ -241,8 +244,10 @@ getgenv().ConfigsKaitun = {
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
-			["Barn Owl"] = 8,
 			"Swan",
+			"Red Panda",
+			"Space Squirrel",
+			"Barn Owl",
 			"Phoenix",
 			"Cockatrice",
 			"Griffin",
