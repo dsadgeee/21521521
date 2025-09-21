@@ -227,7 +227,6 @@ getgenv().ConfigsKaitun = {
 				["Wasp"] = { 1, 100, 2 }, 
 				["Sunny-Side Chicken"] = { 8, 100, 3 },
 				["Rooster"] = { 8, 100, 4 },
-				["Starfish"] = { 1, 100, 5 },
 			},
 		},
 		Unfavorite_AllPet = false,
