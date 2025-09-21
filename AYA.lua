@@ -190,7 +190,6 @@ getgenv().ConfigsKaitun = {
 	Eggs = {
 		Place = {
 			"Anti Bee Egg",
-			"Bug Egg",
 			"Fall Egg",
 			"Rare Egg",
 		},
@@ -224,14 +223,13 @@ getgenv().ConfigsKaitun = {
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Tarantula Hawk"] = { 1, 100, 1 },
-				["Sunny-Side Chicken"] = { 4, 100, 2 }, 
-				["Hotdog Daschund"] = { 4, 100, 3 },
-				["Sunny-Side Chicken"] = { 8, 100, 4 },
-				["Rooster"] = { 8, 100, 5 },
-				["Starfish"] = { 1, 100, 6 },
+				["Wasp",] = { 1, 100, 2 }, 
+				["Sunny-Side Chicken"] = { 8, 100, 3 },
+				["Rooster"] = { 8, 100, 4 },
+				["Starfish"] = { 1, 100, 5 },
 			},
 		},
-		Unfavorite_AllPet = true,
+		Unfavorite_AllPet = false,
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
