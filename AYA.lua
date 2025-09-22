@@ -346,23 +346,6 @@ getgenv().ConfigsKaitun = {
 				"Idk"
 			},
 			Pets = {
-				"Space Squirrel",
-				"Swan",
-				"Phoenix",
-				"Golden Goose",
-				"French Fry Ferret",
-				"Cockatrice",
-				"Kitsune",
-				"Spinosaurus",
-				"T-Rex",
-				"Disco Bee",
-				"Butterfly",
-				"Mimic Octopus",
-				"Queen Bee",
-				"Fennec Fox",
-				"Dragonfly",
-				"Raccoon",
-				"Red Fox",
 			},
 			Pet_Weight_Noti = true,
 		}
