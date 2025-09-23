@@ -227,8 +227,7 @@ getgenv().ConfigsKaitun = {
 			["Equip When Done"] = {
 				["Tarantula Hawk"] = { 1, 100, 1 },
 				["Wasp"] = { 1, 100, 2 }, 
-				["Sunny-Side Chicken"] = { 8, 100, 3 },
-				["Rooster"] = { 8, 100, 4 },
+				["Rooster"] = { 8, 100, 3 },
 			},
 		},
 		Unfavorite_AllPet = false,
