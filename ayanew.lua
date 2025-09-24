@@ -191,7 +191,6 @@ getgenv().ConfigsKaitun = {
 	Eggs = {
 		Place = {
 			"Anti Bee Egg",
-			"Fall Egg",
 			"Rare Egg",
 			"Bug Egg",
 			"Enchanted Egg",
