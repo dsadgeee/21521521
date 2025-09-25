@@ -112,7 +112,6 @@ getgenv().ConfigsKaitun = {
 		Shop = { -- un comment to buy
             "Golden Acorn",
 			"Fall Egg",
-			"Red Panda",
             "Firefly Jar",
             "Sky Lantern",
             "Maple Leaf Kite",
