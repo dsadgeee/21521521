@@ -218,15 +218,15 @@ getgenv().ConfigsKaitun = {
 			["PET NAME"] = { "Glimmering","... any other" }
 		},
 
-		["Start Delete Pet At"] = 50,
+		["Start Delete Pet At"] = 60,
 		["Upgrade Slot"] = {
 			["Pet"] = {
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Tarantula Hawk"] = { 1, 100, 1 },
-				["Wasp"] = { 1, 100, 2 }, 
-				["Rooster"] = { 8, 100, 3 },
+				["Wasp"] = { 1, 100, 1 }, 
+				["Rooster"] = { 7, 100, 2 },
 			},
 		},
 		Unfavorite_AllPet = false,
