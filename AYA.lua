@@ -113,6 +113,7 @@ getgenv().ConfigsKaitun = {
             "Golden Acorn",
 			"Fall Egg",
             "Firefly Jar",
+			"Red Panda",
             "Sky Lantern",
             "Maple Leaf Kite",
             "Leaf Blower",
