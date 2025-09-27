@@ -1,4 +1,3 @@
-
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -6,14 +5,14 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 90, -- cooldown to collect fruit
+	Collect_Cooldown = 60, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = true,
+	["Rejoin When Update"] = false,
 
-	["Auto Trade Pet"] = { -- not done yet bro dont use
+	["Auto Trade Pet"] = { -- beta idk it work or no
 		["Enabled"] = false, 
 		["Target"] =  { -- multi users
 			"username1",
@@ -21,6 +20,14 @@ getgenv().ConfigsKaitun = {
 		},
 		["Pet To Send"] = {
 			
+		}
+	},
+
+	Ascend = {
+		Enabled = false,
+		Max_Rebirth_Money = 1_000_000_000_000,
+		Shop = {
+			"Egg Capacity"
 		}
 	},
 
@@ -98,38 +105,18 @@ getgenv().ConfigsKaitun = {
 
 	["Seed Pack"] = {
 		Locked = {
-			"Enchanted Seed Pack",
-            "Fall Seed Pack",
+			["Enchanted Seed Pack"] = 10,
 		}
 	},
 
 	Events = {
-		["Fall Event"] = {
-			Minimum_Money = 10_000_000, -- minimum money to start play this event
-		},
-		MaxMoney_Restocks = 10_000_000,
+		-- MaxMoney_Restocks = 10_000_000,
 		
 		Shop = { -- un comment to buy
-            "Golden Acorn",
-			"Fall Egg",
-            "Firefly Jar",
-			"Red Panda",
-            "Sky Lantern",
-            "Maple Leaf Kite",
-            "Leaf Blower",
-            "Maple Leaf Charm",
-            "Maple Sprinkler",
-            "Bonfire",
-            "Harvest Basket",
-            "Fall Leaf Chair",
-            "Maple Flag",
-            "Flying Kite",
-            "Maple Resin",
-            "Fall Fountain",
-            "Enchanted Chest",
-            "Enchanted Egg",
-            "Luminous Sprite",
-            "Wisp",
+			"Evo Beetroot I",
+			"Evo Blueberry I",
+			"Evo Pumpkin I",
+			"Evo Mushroom I",
 		},
 		["Traveling Shop"] = {
 			"Bee Egg",
@@ -139,7 +126,6 @@ getgenv().ConfigsKaitun = {
 		},
 		Craft = {
 			"Enchanted Chest",
-			"Fairy Net",
 			"Enchanted Egg",
 			"Enchanted Seed Pack",
 			"Anti Bee Egg",
@@ -191,6 +177,7 @@ getgenv().ConfigsKaitun = {
 	Eggs = {
 		Place = {
 			"Anti Bee Egg",
+			"Jungle Egg",
 			"Rare Egg",
 			"Bug Egg",
 			"Enchanted Egg",
@@ -234,6 +221,9 @@ getgenv().ConfigsKaitun = {
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
+			"Tiger",
+			"Chimpanzee",
+			"Hummingbird",			
             "Red Panda",
 			["Barn Owl"] = 8,
 			"Swan",
@@ -244,7 +234,7 @@ getgenv().ConfigsKaitun = {
 			"Luminous Sprite",
 			"Wisp Well",
 			"Phoenix",
-			["Glimmering Sprite"] = 8,
+			["Glimmering Sprite"] = 4,
 			"Griffin",
 			["Brown Mouse"] = 2,
 			["Squirrel"] = 1,
