@@ -10,7 +10,7 @@ getgenv().ConfigsKaitun = {
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = true,
+	["Rejoin When Update"] = false,
 
 	["Auto Trade Pet"] = { -- beta idk it work or no
 		["Enabled"] = false, 
@@ -33,7 +33,7 @@ getgenv().ConfigsKaitun = {
 
 	["Limit Tree"] = {
 		["Limit"] = 250,
-		["Destroy Until"] = 200,
+		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
 			"Moon Blossom",
@@ -110,7 +110,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Events = {
-		-- MaxMoney_Restocks = 10_000_000,
+		MaxMoney_Restocks = 5_000_000_000_000,
 		
 		Shop = { -- un comment to buy
 			"Evo Beetroot I",
@@ -125,9 +125,10 @@ getgenv().ConfigsKaitun = {
 			"Common Summer Egg"
 		},
 		Craft = {
-			"Anti Bee Egg",
 			"Enchanted Chest",
 			"Enchanted Egg",
+			"Enchanted Seed Pack",
+			"Anti Bee Egg",
 			"Pet Shard GiantBean",
 			"Sprout Egg",
 		},
@@ -136,47 +137,49 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
+			"Harvest Tool",
 			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
-			"Harvest Tool",
 		},
 		Lock = {
-			"Master Sprinkler",
+			"Grandmaster Sprinkler",
 			"Godly Sprinkler",
-			"Advanced Sprinkler",
-			"Basic Sprinkler",
 			"Lightning Rod",
+			"Harvest Tool",
+			"Level Up Lollipop",
+			"Medium Treat",
+			"Medium Toy",
 		},
 	},
 
 	Eggs = {
 		Place = {
 			"Jungle Egg",
-			"Anti Bee Egg",
-			"Bug Egg",
 			"Fall Egg",
-			"Enchanted Egg",
-			"Sprout Egg",
 			"Gourmet Egg",
+			"Sprout Egg",
 			"Zen Egg",
 			"Primal Egg",
 			"Dinosaur Egg",
 			"Oasis Egg",
+			"Anti Bee Egg",
 			"Night Egg",
+			"Bug Egg",
 			"Paradise Egg",
-			"Bee Egg",
-			"Rare Summer Egg",
-			"Mythical Egg",
-			"Common Egg",
+			"Rare Egg",
 		},
 		Buy = {
+			"Jungle Egg",
+			"Fall Egg",
 			"Bee Egg",
+			"Enchanted Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
@@ -186,9 +189,11 @@ getgenv().ConfigsKaitun = {
 			"Mythical Egg",
 			"Uncommon Egg",
 			"Common Egg",
+			"Legendary Egg",
+			"Rare Egg",
 		}
 	},
-
+	
 	Pets = {
 		["Auto Feed"] = true,
 
