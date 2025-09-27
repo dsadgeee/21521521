@@ -5,12 +5,12 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 60, -- cooldown to collect fruit
+	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- beta idk it work or no
 		["Enabled"] = false, 
@@ -33,7 +33,7 @@ getgenv().ConfigsKaitun = {
 
 	["Limit Tree"] = {
 		["Limit"] = 250,
-		["Destroy Until"] = 400,
+		["Destroy Until"] = 200,
 
 		["Safe Tree"] = {
 			"Moon Blossom",
@@ -125,10 +125,9 @@ getgenv().ConfigsKaitun = {
 			"Common Summer Egg"
 		},
 		Craft = {
+			"Anti Bee Egg",
 			"Enchanted Chest",
 			"Enchanted Egg",
-			"Enchanted Seed Pack",
-			"Anti Bee Egg",
 			"Pet Shard GiantBean",
 			"Sprout Egg",
 		},
@@ -148,45 +147,36 @@ getgenv().ConfigsKaitun = {
 			"Harvest Tool",
 		},
 		Lock = {
-            "Golden Acorn",
-            "Firefly Jar",
-            "Sky Lantern",
-            "Maple Leaf Kite",
-            "Leaf Blower",
-            "Maple Leaf Charm",
-            "Maple Sprinkler",
-            "Bonfire",
-            "Harvest Basket",
-            "Fall Leaf Chair",
-            "Maple Flag",
-            "Flying Kite",
-            "Maple Resin",
-            "Fall Fountain",
-            "Cleansing Pet Shard",
-            "Grandmaster Sprinkler",
-            "Master Sprinkler",
-            "Godly Sprinkler",
-            "Lightning Rod",
-            "Harvest Tool",
-            "Level Up Lollipop",
-            "Medium Treat",
-            "Medium Toy",
+			"Master Sprinkler",
+			"Godly Sprinkler",
+			"Advanced Sprinkler",
+			"Basic Sprinkler",
+			"Lightning Rod",
 		},
 	},
 
 	Eggs = {
 		Place = {
-			"Anti Bee Egg",
 			"Jungle Egg",
-			"Rare Egg",
+			"Anti Bee Egg",
 			"Bug Egg",
-			"Enchanted Egg",
 			"Fall Egg",
+			"Enchanted Egg",
+			"Sprout Egg",
+			"Gourmet Egg",
+			"Zen Egg",
+			"Primal Egg",
+			"Dinosaur Egg",
+			"Oasis Egg",
+			"Night Egg",
+			"Paradise Egg",
+			"Bee Egg",
+			"Rare Summer Egg",
 			"Mythical Egg",
+			"Common Egg",
 		},
 		Buy = {
 			"Bee Egg",
-			"Rare Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
