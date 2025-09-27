@@ -264,7 +264,7 @@ getgenv().ConfigsKaitun = {
 			"Corrupted Kitsune",
 			["Starfish"] = 10,
 			["Capybara"] = 1,
-			["Seal"] = 1,
+			["Seal"] = 8,
 			"Kitsune",
 			"Blood Kiwi",
 			"Disco Bee",
