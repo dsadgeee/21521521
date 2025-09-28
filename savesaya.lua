@@ -163,16 +163,9 @@ getgenv().ConfigsKaitun = {
 		Place = {
 			"Jungle Egg",
 			"Fall Egg",
-			"Gourmet Egg",
-			"Sprout Egg",
-			"Zen Egg",
-			"Primal Egg",
-			"Dinosaur Egg",
-			"Oasis Egg",
+			"Enchanted Egg",
 			"Anti Bee Egg",
-			"Night Egg",
 			"Bug Egg",
-			"Paradise Egg",
 			"Rare Egg",
 		},
 		Buy = {
@@ -193,18 +186,19 @@ getgenv().ConfigsKaitun = {
 			"Rare Egg",
 		}
 	},
-	
+
 	Pets = {
 		["Auto Feed"] = true,
-
 		MutationPet = {
-			["PET NAME"] = { "Glimmering","... any other" }
+			["Rooster"] = { "Glimmering" },
+			["Sunny-Side Chicken"] = { "Glimmering" },
+			["Glimmering Sprite"] = { "Glimmering" },
+			["Brown Mouse"] = { "Glimmering" },
+			["Grey Mouse"] = { "Glimmering" },
+			["Squirrel"] = { "Glimmering" },
 		},
-
-		["Start Delete Pet At"] = 60,
+		["Start Delete Pet At"] = 45,
 		["Upgrade Slot"] = {
-			["Pet"] = {
-			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Tarantula Hawk"] = { 1, 100, 1 },
@@ -229,12 +223,12 @@ getgenv().ConfigsKaitun = {
 			"Luminous Sprite",
 			"Wisp Well",
 			"Phoenix",
-			["Glimmering Sprite"] = 4,
+			["Glimmering Sprite"] = 1,
 			"Griffin",
-			["Brown Mouse"] = 2,
+			["Brown Mouse"] = 1,
 			["Squirrel"] = 1,
-			["Grey Mouse"] = 2,
-			["Rooster"] = 4,
+			["Grey Mouse"] = 1,
+			["Rooster"] = 8,
 			"Lemon Lion",
 			"Peach Wasp",
 			"Chicken Zombie",
