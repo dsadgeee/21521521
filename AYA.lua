@@ -209,9 +209,7 @@ getgenv().ConfigsKaitun = {
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
 			"Tiger",
-			"Firefly",
-			"Chimpanzee",
-			"Hummingbird",			
+			"Firefly",		
             "Red Panda",
 			["Barn Owl"] = 8,
 			"Swan",
