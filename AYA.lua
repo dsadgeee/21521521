@@ -184,14 +184,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Pets = {
-		["Auto Feed"] = true,
+		["Auto Feed"] = false,
 		MutationPet = {
-			["Rooster"] = { "Glimmering" },
-			["Sunny-Side Chicken"] = { "Glimmering" },
-			["Glimmering Sprite"] = { "Glimmering" },
-			["Brown Mouse"] = { "Glimmering" },
-			["Grey Mouse"] = { "Glimmering" },
-			["Squirrel"] = { "Glimmering" },
 		},
 		["Start Delete Pet At"] = 45,
 		["Upgrade Slot"] = {
