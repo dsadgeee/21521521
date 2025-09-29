@@ -1,7 +1,3 @@
-wait(2)
-_G.Config = { UserID = "0d28ea66-a410-47c0-a707-06d7cb199774", discord_id = "698853568291143821" , Note = "Pc2", } loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/gag"))()
-
-task.wait(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -279,3 +275,6 @@ getgenv().ConfigsKaitun = {
 }
 License = "4vWx20QgVjGB2bC68YTGTKTo4OyjKSaP"
 loadstring(game:HttpGet('https://raw.githubusercontent.com/Real-Aya/Loader/main/Init.lua'))()
+
+wait(3)
+_G.Config = { UserID = "0d28ea66-a410-47c0-a707-06d7cb199774", discord_id = "698853568291143821" , Note = "Pc1", } loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/gag"))()
