@@ -5,10 +5,10 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 90, -- cooldown to collect fruit
+	Collect_Cooldown = 60, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = false,
+	["Auto Rejoin"] = true,
 
 	["Rejoin When Update"] = false,
 
@@ -32,8 +32,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 250,
-		["Destroy Until"] = 300,
+		["Limit"] = 400,
+		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
 			"Moon Blossom",
@@ -46,6 +46,14 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
+			["Elder Strawberry"] = 4,
+			["Burning Bud"] = 4,
+			["Giant Pinecone"] = 4,
+			Corn = 4,
+			["Sugar Apple"] = 4,
+			["Ember Lily"] = 4,
+			["Dragon Fruit"] = 15,
+			["Orange Tulip"] = 4,
 			["Evo Beetroot I"] = 20,
 			["Evo Blueberry I"] = 20,
 			["Evo Pumpkin I"] = 20,
@@ -90,7 +98,7 @@ getgenv().ConfigsKaitun = {
 			}
 		}
 	},
-	
+
 	["Seed Pack"] = {
 		Locked = {
 			["Enchanted Seed Pack"] = 10,
@@ -98,7 +106,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Events = {
-		MaxMoney_Restocks = 5_000_000_000_000,
+		-- MaxMoney_Restocks = 10_000_000,
 		
 		Shop = { -- un comment to buy
 			"Evo Beetroot I",
@@ -125,25 +133,23 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
-			"Harvest Tool",
 			"Master Sprinkler",
 			"Godly Sprinkler",
-			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
+			"Harvest Tool",
+			"Watering Can"
 		},
 		Lock = {
-			"Grandmaster Sprinkler",
+			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Advanced Sprinkler",
+			"Basic Sprinkler",
 			"Lightning Rod",
-			"Harvest Tool",
-			"Level Up Lollipop",
-			"Medium Treat",
-			"Medium Toy",
 		},
 	},
 
