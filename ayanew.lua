@@ -1,4 +1,3 @@
-setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -9,7 +8,7 @@ getgenv().ConfigsKaitun = {
 	Collect_Cooldown = 60, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
-	["Auto Rejoin"] = true,
+	["Auto Rejoin"] = false,
 
 	["Rejoin When Update"] = false,
 
@@ -33,8 +32,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 250,
-		["Destroy Until"] = 300,
+		["Limit"] = 200,
+		["Destroy Until"] = 200,
 
 		["Safe Tree"] = {
 			"Moon Blossom",
@@ -47,6 +46,16 @@ getgenv().ConfigsKaitun = {
 			"Fossilight",
 			"Princess Thorn",
 			-- for the event
+			Bamboo = 4,
+			Coconut = 15,
+			Mushroom = 4,
+			Glowthorn = 4,
+			Tomato = 15,
+			Pumpkin = 4,
+			Pepper = 4,
+			Cacao = 15,
+			Apple = 15,
+			Romanesco = 4,
 			["Elder Strawberry"] = 4,
 			["Burning Bud"] = 4,
 			["Giant Pinecone"] = 4,
@@ -54,23 +63,17 @@ getgenv().ConfigsKaitun = {
 			["Sugar Apple"] = 4,
 			["Ember Lily"] = 4,
 			["Dragon Fruit"] = 15,
+			Sunbulb = 8,
 			["Orange Tulip"] = 4,
-			["Evo Beetroot I"] = 20,
-			["Evo Blueberry I"] = 20,
-			["Evo Pumpkin I"] = 20,
-			["Evo Mushroom I"] = 20,
-			["Evo Beetroot II"] = 20,
-			["Evo Blueberry II"] = 20,
-			["Evo Pumpkin II"] = 20,
-			["Evo Mushroom II"] = 20,
-			["Evo Beetroot III"] = 20,
-			["Evo Blueberry III"] = 20,
-			["Evo Pumpkin III"] = 20,
-			["Evo Mushroom III"] = 20,
-			["Evo Beetroot IV"] = 20,
-			["Evo Blueberry IV"] = 20,
-			["Evo Pumpkin IV"] = 20,
-			["Evo Mushroom IV"] = 20,
+			Blueberry = 15,
+			Watermelon = 4,
+			Mango = 15,
+			Cactus = 4,
+			Strawberry = 15,
+			Beanstalk = 4,
+			Lightshoot = 4,
+			Grape = 4,
+			Daffodil = 4,
 		}
 	},
 
@@ -107,7 +110,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Events = {
-		-- MaxMoney_Restocks = 10_000_000,
+		MaxMoney_Restocks = 5_000_000_000_000,
 		
 		Shop = { -- un comment to buy
 			"Evo Beetroot I",
@@ -134,31 +137,43 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
+			"Harvest Tool",
 			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
-			"Harvest Tool",
-			"Watering Can"
 		},
 		Lock = {
-			"Master Sprinkler",
+			"Grandmaster Sprinkler",
 			"Godly Sprinkler",
-			"Advanced Sprinkler",
-			"Basic Sprinkler",
 			"Lightning Rod",
+			"Harvest Tool",
+			"Level Up Lollipop",
+			"Medium Treat",
+			"Medium Toy",
 		},
 	},
 
 	Eggs = {
 		Place = {
 			"Jungle Egg",
+			"Fall Egg",
+			"Gourmet Egg",
+			"Sprout Egg",
+			"Zen Egg",
+			"Primal Egg",
+			"Dinosaur Egg",
+			"Oasis Egg",
 			"Anti Bee Egg",
+			"Night Egg",
 			"Bug Egg",
+			"Paradise Egg",
+			"Rare Egg",
 		},
 		Buy = {
 			"Jungle Egg",
