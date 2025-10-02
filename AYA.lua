@@ -182,7 +182,7 @@ getgenv().ConfigsKaitun = {
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Tarantula Hawk"] = { 1, 100, 1 },
-				["Sunny-Side Chicken"] = { 5, 100, 1 }, 
+				["Sunny-Side Chicken"] = { 5, 100, 3 }, 
 				["Wasp"] = { 1, 100, 1 }, 
 				["Rooster"] = { 5, 100, 2 },
 			},
