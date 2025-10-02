@@ -205,7 +205,6 @@ getgenv().ConfigsKaitun = {
 			"Luminous Sprite",
 			"Wisp Well",
 			"Phoenix",
-			["Glimmering Sprite"] = 1,
 			"Griffin",
 			["Brown Mouse"] = 1,
 			["Squirrel"] = 1,
