@@ -5,12 +5,12 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 60, -- cooldown to collect fruit
+	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- beta idk it work or no
 		["Enabled"] = false, 
