@@ -192,7 +192,6 @@ getgenv().ConfigsKaitun = {
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
 			"Mizuchi",
-			"Silver Dragonfly",
 			"Tiger",
 			"Firefly",		
             "Red Panda",
