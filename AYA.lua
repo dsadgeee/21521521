@@ -32,8 +32,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 200,
-		["Destroy Until"] = 300,
+		["Limit"] = 300,
+		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
 			"Moon Blossom",
@@ -98,7 +98,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Events = {
-		MaxMoney_Restocks = 5_000_000_000_000,
+		-- MaxMoney_Restocks = 10_000_000,
 		
 		Shop = { -- un comment to buy
 			"Evo Beetroot I",
@@ -113,10 +113,9 @@ getgenv().ConfigsKaitun = {
 			"Common Summer Egg"
 		},
 		Craft = {
+			"Anti Bee Egg",
 			"Enchanted Chest",
 			"Enchanted Egg",
-			"Enchanted Seed Pack",
-			"Anti Bee Egg",
 			"Pet Shard GiantBean",
 			"Sprout Egg",
 		},
@@ -125,25 +124,22 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
-			"Harvest Tool",
 			"Master Sprinkler",
 			"Godly Sprinkler",
-			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
+			"Harvest Tool",
 		},
 		Lock = {
-			"Grandmaster Sprinkler",
+			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Advanced Sprinkler",
+			"Basic Sprinkler",
 			"Lightning Rod",
-			"Harvest Tool",
-			"Level Up Lollipop",
-			"Medium Treat",
-			"Medium Toy",
 		},
 	},
 
@@ -153,8 +149,7 @@ getgenv().ConfigsKaitun = {
 			"Anti Bee Egg",
 			"Bug Egg",
 			"Paradise Egg",
-			"Enchanted Egg",
-			"Fall Egg",
+			"Bee Egg",
 			"Rare Egg",
 		},
 		Buy = {
@@ -172,18 +167,18 @@ getgenv().ConfigsKaitun = {
 			"Common Egg",
 		}
 	},
-
 	Pets = {
 		["Auto Feed"] = false,
 		MutationPet = {
 		},
-		["Start Delete Pet At"] = 50,
+		["Start Delete Pet At"] = 45,
 		["Upgrade Slot"] = {
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Rooster"] = { 5, 100, 1 },
-				["Tarantula Hawk"] = { 3, 100, 2 },
-				["Wasp"] = { 3, 100, 2 }, 
+				["Tarantula Hawk"] = { 1, 100, 1 },
+				["Sunny-Side Chicken"] = { 5, 100, 3 }, 
+				["Wasp"] = { 1, 100, 1 }, 
+				["Rooster"] = { 5, 100, 2 },
 			},
 		},
 		Unfavorite_AllPet = false,
