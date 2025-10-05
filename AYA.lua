@@ -167,7 +167,7 @@ getgenv().ConfigsKaitun = {
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Chubby Chipmunk"] = { 5, 100, 1},
+				["Chubby Chipmunk"] = { 6, 100, 1},
 				["Tarantula Hawk"] = { 2, 100, 2 },
 				["Wasp"] = { 2, 100, 2 }, 
 				["Rooster"] = { 5, 100, 3 },
