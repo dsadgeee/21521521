@@ -5,7 +5,7 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 90, -- cooldown to collect fruit
+	Collect_Cooldown = 60, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
@@ -32,7 +32,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 300,
+		["Limit"] = 400,
 		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
@@ -45,25 +45,6 @@ getgenv().ConfigsKaitun = {
 			"Elephant Ears",
 			"Fossilight",
 			"Princess Thorn",
-			["Acorn"] = 5,
-			["Persimmon"] =5,
-			-- for the event
-			["Evo Beetroot I"] = 10,
-			["Evo Blueberry I"] = 10,
-			["Evo Pumpkin I"] = 10,
-			["Evo Mushroom I"] = 10,
-			["Evo Beetroot II"] = 10,
-			["Evo Blueberry II"] = 10,
-			["Evo Pumpkin II"] = 10,
-			["Evo Mushroom II"] = 10,
-			["Evo Beetroot III"] = 10,
-			["Evo Blueberry III"] = 10,
-			["Evo Pumpkin III"] = 10,
-			["Evo Mushroom III"] = 10,
-			["Evo Beetroot IV"] = 10,
-			["Evo Blueberry IV"] = 10,
-			["Evo Pumpkin IV"] = 10,
-			["Evo Mushroom IV"] = 10,
 		}
 	},
 
@@ -181,15 +162,13 @@ getgenv().ConfigsKaitun = {
 		["Start Delete Pet At"] = 50,
 		["Upgrade Slot"] = {
 			["Pet"] = {
-				["Starfish"] = { 1, 100, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
-				["Capybara"] = { 1, 100, 6 , true },
 			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
 				["Chubby Chipmunk"] = { 6, 100, 1},
 				["Tarantula Hawk"] = { 2, 100, 2 },
-				["Wasp"] = { 2, 100, 2 }, 
-				["Rooster"] = { 5, 100, 3 },
+				["Wasp"] = { 2, 100, 3 }, 
+				["Rooster"] = { 5, 100, 4 },
 			},
 		},
 		Unfavorite_AllPet = false,
@@ -244,8 +223,8 @@ getgenv().ConfigsKaitun = {
 			"Honey Bee",
 			"Bear Bee",
 			"Petal Bee",
-			"Wasp",
-			"Tarantula Hawk",
+			["Wasp"] = 4,
+			["Tarantula Hawk"] = 4,
 		},
 		LockPet_Weight = 5, -- if Weight >= 10 they will locked
 	},
