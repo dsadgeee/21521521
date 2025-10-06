@@ -180,7 +180,6 @@ getgenv().ConfigsKaitun = {
 			"Chinchilla",
 			"Mizuchi",
 			"Tiger",
-			"Firefly",		
             "Red Panda",
 			["Barn Owl"] = 8,
 			"Swan",
