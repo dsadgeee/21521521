@@ -205,7 +205,7 @@ getgenv().ConfigsKaitun = {
 			"Golden Goose",
 			["Spriggan"] = 1, 
 			"Lobster Thermidor",
-			["Sunny-Side Chicken"] = 35,
+			["Sunny-Side Chicken"] = 25,
 			"French Fry Ferret",
 			["Kodama"] = 1,
 			"Corrupted Kitsune",
