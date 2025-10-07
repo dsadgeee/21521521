@@ -2,7 +2,7 @@ script_key="CnkuObJwgnkKiglxzVEsyiafKNFOtMtN";
 
 getgenv().pvbConfig = {
     AUTO_UPDATE_RESTART = true,
-    MAX_FPS = 2,  -- This will override setfpscap()
+    MAX_FPS = 3,  -- This will override setfpscap()
     LOW_CPU = true,
     MAX_REBIRTH = 99,  -- Stop rebirth at set amount
     FORCE_REBIRTH_IGNORE_KEEP_BRAINROT = true,  -- Ignore KEEP_BRAINROT related config until max rebirth
