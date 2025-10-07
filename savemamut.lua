@@ -29,7 +29,7 @@ getgenv().gagConfig = {
 
     KEEP_PETS = { "Idol Chipmunk", "Chinchilla", "Mizuchi", "Tiger", "Red Panda", "Barn Owl", "Swan", "Space Squirrel", "Cockatrice", "Drake", "Wisp", "Luminous Sprite", "Wisp Well", "Phoenix", "Griffin", "Brown Mouse", "Squirrel", "Grey Mouse", "Rooster", "Lemon Lion", "Peach Wasp", "Chicken Zombie", "Gorilla Chef", "Green Bean", "Golden Goose", "Spriggan", "Lobster Thermidor", "Sunny-Side Chicken", "French Fry Ferret", "Kodama", "Corrupted Kitsune", "Starfish", "Capybara", "Seal", "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox", "Bee", "Honey Bee", "Bear Bee", "Petal Bee", "Wasp", "Tarantula Hawk" }
     KEEP_PETS_WEIGHT = 5,
-    KEEP_PETS_AGE = 90,c
+    KEEP_PETS_AGE = 90,
 
     EQUIP_PETS = { ["Rooster"] = 2, ["Capybara"] = 1, ["Chicken"] = 5 },
     USE_PETS_FOR_UPGRADE_SLOT = { "Chicken" },
