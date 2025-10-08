@@ -1,4 +1,4 @@
-wait(2)
+wait(1)
 setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
