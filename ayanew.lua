@@ -225,8 +225,8 @@ getgenv().ConfigsKaitun = {
 			"Honey Bee",
 			"Bear Bee",
 			"Petal Bee",
-			["Wasp"] = 4,
-			["Tarantula Hawk"] = 4,
+			["Wasp"] = 5,
+			["Tarantula Hawk"] = 5,
 		},
 		LockPet_Weight = 5, -- if Weight >= 10 they will locked
 	},
