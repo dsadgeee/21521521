@@ -1,3 +1,5 @@
+wait(2)
+setfpscap(2)
 getgenv().ConfigsKaitun = {
 	Beta_Fix_Data_Sync = true,
 
@@ -5,12 +7,12 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 90, -- cooldown to collect fruit
+	Collect_Cooldown = 60, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
 
-	["Rejoin When Update"] = false,
+	["Rejoin When Update"] = true,
 
 	["Auto Trade Pet"] = { -- beta idk it work or no
 		["Enabled"] = false, 
@@ -32,7 +34,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	["Limit Tree"] = {
-		["Limit"] = 250,
+		["Limit"] = 200,
 		["Destroy Until"] = 400,
 
 		["Safe Tree"] = {
@@ -45,35 +47,6 @@ getgenv().ConfigsKaitun = {
 			"Elephant Ears",
 			"Fossilight",
 			"Princess Thorn",
-			-- for the event
-			Bamboo = 4,
-			Coconut = 15,
-			Mushroom = 4,
-			Glowthorn = 4,
-			Tomato = 15,
-			Pumpkin = 4,
-			Pepper = 4,
-			Cacao = 15,
-			Apple = 15,
-			Romanesco = 4,
-			["Elder Strawberry"] = 4,
-			["Burning Bud"] = 4,
-			["Giant Pinecone"] = 4,
-			Corn = 4,
-			["Sugar Apple"] = 4,
-			["Ember Lily"] = 4,
-			["Dragon Fruit"] = 15,
-			Sunbulb = 8,
-			["Orange Tulip"] = 4,
-			Blueberry = 15,
-			Watermelon = 4,
-			Mango = 15,
-			Cactus = 4,
-			Strawberry = 15,
-			Beanstalk = 4,
-			Lightshoot = 4,
-			Grape = 4,
-			Daffodil = 4,
 		}
 	},
 
@@ -110,7 +83,7 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Events = {
-		MaxMoney_Restocks = 5_000_000_000_000,
+		-- MaxMoney_Restocks = 10_000_000,
 		
 		Shop = { -- un comment to buy
 			"Evo Beetroot I",
@@ -137,42 +110,40 @@ getgenv().ConfigsKaitun = {
 
 	Gear = {
 		Buy = { 
-			"Harvest Tool",
 			"Master Sprinkler",
 			"Godly Sprinkler",
-			"Grandmaster Sprinkler",
 			"Advanced Sprinkler",
 			"Basic Sprinkler",
 			"Lightning Rod",
 			"Level Up Lollipop",
 			"Medium Treat",
 			"Medium Toy",
+			"Harvest Tool",
+			"Watering Can"
 		},
 		Lock = {
-			"Grandmaster Sprinkler",
+			"Master Sprinkler",
 			"Godly Sprinkler",
+			"Advanced Sprinkler",
+			"Basic Sprinkler",
 			"Lightning Rod",
-			"Harvest Tool",
-			"Level Up Lollipop",
-			"Medium Treat",
-			"Medium Toy",
 		},
 	},
 
 	Eggs = {
 		Place = {
 			"Jungle Egg",
-			"Fall Egg",
-			"Enchanted Egg",
 			"Anti Bee Egg",
 			"Bug Egg",
+			"Fall Egg",
+			"Enchanted Egg",
+			"Paradise Egg",
 			"Rare Egg",
 		},
 		Buy = {
+			"Rare Egg",
 			"Jungle Egg",
-			"Fall Egg",
 			"Bee Egg",
-			"Enchanted Egg",
 			"Oasis Egg",
 			"Paradise Egg",
 			"Anti Bee Egg",
@@ -180,39 +151,38 @@ getgenv().ConfigsKaitun = {
 			"Rare Summer Egg",
 			"Bug Egg",
 			"Mythical Egg",
-			"Uncommon Egg",
-			"Common Egg",
-			"Legendary Egg",
-			"Rare Egg",
 		}
 	},
 
 	Pets = {
 		["Auto Feed"] = true,
+
 		MutationPet = {
-			["Rooster"] = { "Glimmering" },
-			["Sunny-Side Chicken"] = { "Glimmering" },
-			["Glimmering Sprite"] = { "Glimmering" },
-			["Brown Mouse"] = { "Glimmering" },
-			["Grey Mouse"] = { "Glimmering" },
-			["Squirrel"] = { "Glimmering" },
+			["PET NAME"] = { "Glimmering","... any other" }
 		},
-		["Start Delete Pet At"] = 45,
+
+		["Start Delete Pet At"] = 50,
 		["Upgrade Slot"] = {
+			["Pet"] = {
+				["Starfish"] = { 1, 100, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
+				["Capybara"] = { 1, 100, 6 , true },
+			},
 			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Tarantula Hawk"] = { 1, 100, 1 },
-				["Wasp"] = { 1, 100, 1 }, 
-				["Rooster"] = { 7, 100, 2 },
+				["Chubby Chipmunk"] = { 6, 100, 1},
+				["Tarantula Hawk"] = { 2, 100, 2 },
+				["Wasp"] = { 2, 100, 3 }, 
+				["Rooster"] = { 5, 100, 4 },
 			},
 		},
 		Unfavorite_AllPet = false,
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
+			["Idol Chipmunk"] = 4,
+			"Chinchilla",
+			"Mizuchi",
 			"Tiger",
-			"Chimpanzee",
-			"Hummingbird",			
             "Red Panda",
 			["Barn Owl"] = 8,
 			"Swan",
@@ -223,7 +193,6 @@ getgenv().ConfigsKaitun = {
 			"Luminous Sprite",
 			"Wisp Well",
 			"Phoenix",
-			["Glimmering Sprite"] = 1,
 			"Griffin",
 			["Brown Mouse"] = 1,
 			["Squirrel"] = 1,
@@ -237,7 +206,7 @@ getgenv().ConfigsKaitun = {
 			"Golden Goose",
 			["Spriggan"] = 1, 
 			"Lobster Thermidor",
-			["Sunny-Side Chicken"] = 35,
+			["Sunny-Side Chicken"] = 25,
 			"French Fry Ferret",
 			["Kodama"] = 1,
 			"Corrupted Kitsune",
@@ -257,8 +226,8 @@ getgenv().ConfigsKaitun = {
 			"Honey Bee",
 			"Bear Bee",
 			"Petal Bee",
-			"Wasp",
-			"Tarantula Hawk",
+			["Wasp"] = 5,
+			["Tarantula Hawk"] = 5,
 		},
 		LockPet_Weight = 5, -- if Weight >= 10 they will locked
 	},
