@@ -7,7 +7,7 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 60, -- cooldown to collect fruit
+	Collect_Cooldown = 90, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = false,
@@ -132,6 +132,7 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
+            "Spooky Egg",
 			"Jungle Egg",
 			"Anti Bee Egg",
 			"Bug Egg",
@@ -141,6 +142,7 @@ getgenv().ConfigsKaitun = {
 			"Rare Egg",
 		},
 		Buy = {
+			"Spooky Egg",
 			"Rare Egg",
 			"Jungle Egg",
 			"Bee Egg",
@@ -167,18 +169,23 @@ getgenv().ConfigsKaitun = {
 				["Starfish"] = { 1, 100, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 				["Capybara"] = { 1, 100, 6 , true },
 			},
-			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
+			["Limit Upgrade"] = 4, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Chubby Chipmunk"] = { 6, 100, 1},
-				["Tarantula Hawk"] = { 2, 100, 2 },
-				["Wasp"] = { 2, 100, 3 }, 
-				["Rooster"] = { 5, 100, 4 },
+                ["Ghost Bear"] = { 3, 100, 1},
+				["Rooster"] = { 5, 100, 1 },
+				["Tarantula Hawk"] = { 1, 100, 2 },
+				["Wasp"] = { 1, 100, 3 }, 
 			},
 		},
 		Unfavorite_AllPet = false,
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
+			["Ghost Bear"] = 4,
+			"Headless Horseman",
+			["Black Cat"] = 5,
+			["Spider"] = 2,
+			["Bat"] = 2,
 			["Idol Chipmunk"] = 4,
 			"Chinchilla",
 			"Mizuchi",
@@ -213,6 +220,7 @@ getgenv().ConfigsKaitun = {
 			["Starfish"] = 10,
 			["Capybara"] = 1,
 			["Seal"] = 8,
+			"Peacock",
 			"Kitsune",
 			"Blood Kiwi",
 			"Disco Bee",
@@ -229,7 +237,7 @@ getgenv().ConfigsKaitun = {
 			["Wasp"] = 5,
 			["Tarantula Hawk"] = 5,
 		},
-		LockPet_Weight = 5, -- if Weight >= 10 they will locked
+		LockPet_Weight = 6, -- if Weight >= 10 they will locked
 	},
     Webhook = {
 		UrlPet = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",
