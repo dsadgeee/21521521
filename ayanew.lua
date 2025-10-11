@@ -10,6 +10,7 @@ getgenv().gagConfig = {
     DESTROY_UNTIL_MIN_PLANTS = 80,
     KEEP_SEEDS = { "Bone Blossom" },
     KEEP_SEEDS_AFTER_MAX_PLANTS = {},
+    COLLECT_FRUIT_PER_SECOND = 3,
 
     PLACE_COSMETIC = { "Cooking Kit" },
     
