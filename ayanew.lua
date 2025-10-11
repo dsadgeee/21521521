@@ -48,7 +48,7 @@ getgenv().gagConfig = {
     NOTIFY_PETS_WEIGHT = 7,
     DISCORD_ID = "",
     WEBHOOK_NOTE = "",
-    SHOW_WEBHOOK_USERNAME = false,
+    SHOW_WEBHOOK_USERNAME = true,
     SHOW_WEBHOOK_JOBID = true,
 
     KICK_AFTER_GIFT_PET = false,
