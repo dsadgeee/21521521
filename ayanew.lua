@@ -169,9 +169,9 @@ getgenv().ConfigsKaitun = {
 				["Starfish"] = { 1, 100, 7 , true }, -- the "true" on the last is auto equip (use for like only need to use for upgrade pet)
 				["Capybara"] = { 1, 100, 6 , true },
 			},
-			["Limit Upgrade"] = 5, -- max is 5 (more than or lower than 1 will do nothing)
+			["Limit Upgrade"] = 4, -- max is 5 (more than or lower than 1 will do nothing)
 			["Equip When Done"] = {
-				["Chubby Chipmunk"] = { 6, 100, 1},
+                ["Ghost Bear"] = { 2, 100, 1},
 				["Tarantula Hawk"] = { 2, 100, 2 },
 				["Wasp"] = { 2, 100, 3 }, 
 				["Rooster"] = { 5, 100, 4 },
@@ -181,7 +181,11 @@ getgenv().ConfigsKaitun = {
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
+			["Ghost Bear"] = 4,
 			"Headless Horseman",
+			["Black Cat"] = 5,
+			["Spider"] = 2,
+			["Bat"] = 2,
 			["Idol Chipmunk"] = 4,
 			"Chinchilla",
 			"Mizuchi",
