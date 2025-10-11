@@ -132,7 +132,7 @@ getgenv().ConfigsKaitun = {
 
 	Eggs = {
 		Place = {
-			"Headless Horseman",
+            "Spooky Egg",
 			"Jungle Egg",
 			"Anti Bee Egg",
 			"Bug Egg",
@@ -142,6 +142,7 @@ getgenv().ConfigsKaitun = {
 			"Rare Egg",
 		},
 		Buy = {
+			"Spooky Egg",
 			"Rare Egg",
 			"Jungle Egg",
 			"Bee Egg",
@@ -180,6 +181,7 @@ getgenv().ConfigsKaitun = {
 		Favorite_LockedPet = false,
 		Locked_Pet_Age = 60, -- pet that age > 60 will lock
 		Locked = {
+			"Headless Horseman",
 			["Idol Chipmunk"] = 4,
 			"Chinchilla",
 			"Mizuchi",
