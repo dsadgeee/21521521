@@ -34,11 +34,11 @@ getgenv().gagConfig = {
     FAVOURITE_FRUIT_MUTATIONS = {},
     SKIP_HARVEST_MUTATIONS = {},
 
-    KEEP_PETS = {["Ghost Bear"] = 4, "Headless Horseman", ["Black Cat"] = 5, ["Spider"] = 2, ["Bat"] = 2, ["Idol Chipmunk"] = 4, "Chinchilla", "Mizuchi", "Tiger", "Red Panda", ["Barn Owl"] = 8, "Swan", ["Space Squirrel"] = 3, "Cockatrice", "Drake", "Wisp", "Luminous Sprite", "Wisp Well", "Phoenix", "Griffin", ["Brown Mouse"] = 1, ["Squirrel"] = 1, ["Grey Mouse"] = 1, ["Rooster"] = 8, "Lemon Lion", "Peach Wasp", "Chicken Zombie", ["Gorilla Chef"] = 8, "Green Bean", "Golden Goose", ["Spriggan"] = 1, "Lobster Thermidor", ["Sunny-Side Chicken"] = 25, "French Fry Ferret", ["Kodama"] = 1, "Corrupted Kitsune", ["Starfish"] = 10, ["Capybara"] = 1, ["Seal"] = 8, "Peacock", "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox", "Bee", "Honey Bee", "Bear Bee", "Petal Bee", ["Wasp"] = 5, ["Tarantula Hawk"] = 5},
+    KEEP_PETS = {["Ghost Bear"] = 4, "Headless Horseman", ["Black Cat"] = 5, ["Spider"] = 5, ["Bat"] = 5, ["Idol Chipmunk"] = 4, "Chinchilla", "Mizuchi", "Tiger", "Red Panda", ["Barn Owl"] = 8, "Swan", ["Space Squirrel"] = 3, "Cockatrice", "Drake", "Wisp", "Luminous Sprite", "Wisp Well", "Phoenix", "Griffin", ["Brown Mouse"] = 1, ["Squirrel"] = 1, ["Grey Mouse"] = 1, ["Rooster"] = 8, "Lemon Lion", "Peach Wasp", "Chicken Zombie", ["Gorilla Chef"] = 8, "Green Bean", "Golden Goose", ["Spriggan"] = 1, "Lobster Thermidor", ["Sunny-Side Chicken"] = 25, "French Fry Ferret", ["Kodama"] = 1, "Corrupted Kitsune", ["Starfish"] = 10, ["Capybara"] = 1, ["Seal"] = 8, "Peacock", "Kitsune", "Blood Kiwi", "Disco Bee", "Raccoon", "Queen Bee", "Dragonfly", "Butterfly", "Mimic Octopus", "Red Fox", "Bee", "Honey Bee", "Bear Bee", "Petal Bee", ["Wasp"] = 5, ["Tarantula Hawk"] = 5},
     KEEP_PETS_WEIGHT = 7,
     KEEP_PETS_AGE = 90,
     
-    EQUIP_PETS = { ["Ghost Bear"] = 3 , ["Wasp"] = 1 , ["Sunny-Side Chicken"] = 5 , ["Rooster"] = 8 },
+    EQUIP_PETS = { ["Ghost Bear"] = 8 , ["Wasp"] = 1 , ["Sunny-Side Chicken"] = 5 , ["Rooster"] = 8 },
 
     BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Trading Ticket", "Watering Can", "Levelup Lollipop" },
     USE_SPRINKLER = { "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Grandmaster Sprinkler" },
