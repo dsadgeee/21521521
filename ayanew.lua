@@ -7,8 +7,8 @@ getgenv().gagConfig = {
     BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg", "Fall Egg", "Loquat", "Feijoa", "Pitcher Plant" },
     BUY_EVENT_SHOP = { "Spooky Egg", "Reaper" },
     
-    MAX_PLANTS = 100,
-    DESTROY_UNTIL_MIN_PLANTS = 80,
+    MAX_PLANTS = 200,
+    DESTROY_UNTIL_MIN_PLANTS = 300,
     KEEP_SEEDS = { "Bone Blossom" },
     KEEP_SEEDS_AFTER_MAX_PLANTS = {},
     COLLECT_FRUIT_PER_SECOND = 3,
