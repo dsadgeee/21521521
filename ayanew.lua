@@ -3,6 +3,7 @@ setfpscap(2)
 
 getgenv().gagConfig = {
     -- Event:
+    CRAFT_EVENT = { "Anti Bee Egg" },
     BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg", "Fall Egg", "Loquat", "Feijoa", "Pitcher Plant" },
     BUY_EVENT_SHOP = { "Spooky Egg", "Reaper" },
     
