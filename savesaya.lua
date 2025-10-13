@@ -5,7 +5,7 @@ getgenv().ConfigsKaitun = {
 
 	["Block Pet Gift"] = true,
 
-	Collect_Cooldown = 90, -- cooldown to collect fruit
+	Collect_Cooldown = 60, -- cooldown to collect fruit
 
 	["Low Cpu"] = true,
 	["Auto Rejoin"] = true,
@@ -81,11 +81,8 @@ getgenv().ConfigsKaitun = {
 	},
 
 	Events = {
-		MaxMoney_Restocks = 10_000_000,
-		    "Spooky Egg",
-		    ["Ghost Bear"] = 4,
-		    "Reaper",
- 		},
+		-- MaxMoney_Restocks = 10_000_000,
+		
 		Shop = { -- un comment to buy
 		
 		},
