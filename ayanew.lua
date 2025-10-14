@@ -1,4 +1,10 @@
-script_key="GRBNBkkgWdoICBmTzzeMewauyGQuCWXz";
+local keys = {  -- Add as many key
+    "DnreimGkPOIfioqPhKZliFwvGYnZPOBY", 
+    "GRBNBkkgWdoICBmTzzeMewauyGQuCWXz", 
+}
+
+math.randomseed(os.time())
+script_key = keys[math.random(#keys)];
 setfpscap(2)
 
 getgenv().gagConfig = {
