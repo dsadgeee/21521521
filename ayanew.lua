@@ -1,4 +1,3 @@
-
 script_key="GRBNBkkgWdoICBmTzzeMewauyGQuCWXz";
 setfpscap(2)
 
@@ -8,7 +7,7 @@ getgenv().gagConfig = {
     BUY_TRAVELING_MERCHANT = { "Bee Egg", "Paradise Egg", "Fall Egg", "Loquat", "Feijoa", "Pitcher Plant" },
     BUY_EVENT_SHOP = { "Spooky Egg", ["Ghost Bear"] = 4, ["Reaper"] = 3 },
     
-    MAX_PLANTS = 250,
+    MAX_PLANTS = 200,
     DESTROY_UNTIL_MIN_PLANTS = 400,
     KEEP_SEEDS = { "Bone Blossom" },
     KEEP_SEEDS_AFTER_MAX_PLANTS = {},
