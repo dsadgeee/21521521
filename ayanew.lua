@@ -40,14 +40,14 @@ getgenv().gagConfig = {
     KEEP_PETS_WEIGHT = 7,
     KEEP_PETS_AGE = 90,
     
-    EQUIP_PETS = { {"Ghost Bear", 4, 1}, {"Rooster", 3, 2}, {"Wasp", 1, 3}},
+    EQUIP_PETS = { {"Ghost Bear", 2, 1}, {"Rooster", 5, 2}, {"Wasp", 1, 3}},
 
     BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Trading Ticket", "Watering Can", "Levelup Lollipop" },
     USE_SPRINKLER = { "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Grandmaster Sprinkler" },
 
     PET_WEBHOOK_URL = "https://discord.com/api/webhooks/1408866663558025278/ohhAUmTACbJP2YbxoGH8iXRYJpT36w0HcHrffSsza8TA6iw62VUO1Sb2jCBavqeK1FeW",
     SHOW_PUBLIC_DISCORD_ID = true,
-    NOTIFY_PETS = { "Headless Horseman"},
+    NOTIFY_PETS = { "Headless Horseman","Hex Serpent"},
     NOTIFY_PETS_WEIGHT = 7,
     DISCORD_ID = "796010306966388777",
     WEBHOOK_NOTE = "",
