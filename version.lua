@@ -6,7 +6,7 @@ getgenv().Config = {
     ReceiverNames = {'amigaming2000', 'kirito_Huyk7', 'mikeythe1boss', 'DreamSoa6', 'DreamSoCow', 'DreamSoPig', 'TunTrapBoy', 'z1c7is', 'dream_cute0809'},
     PetName = 'Headless Horseman',
     WeightCondition = '<2',
-    GiftDelay = 0.5,
+    GiftDelay = 1,
     KickWhenReceiverHas = 85,
 }
 
