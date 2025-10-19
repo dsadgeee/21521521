@@ -1,3 +1,4 @@
+repeat task.wait() until game:IsLoaded()
 script_key="GRBNBkkgWdoICBmTzzeMewauyGQuCWXz";
 setfpscap(2)
 
