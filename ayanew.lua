@@ -1,4 +1,6 @@
 repeat task.wait() until game:IsLoaded()
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
 script_key="GRBNBkkgWdoICBmTzzeMewauyGQuCWXz";
 setfpscap(2)
 
