@@ -41,6 +41,7 @@ getgenv().gagConfig = {
     KEEP_PETS_AGE = 90,
     
     EQUIP_PETS = { {"Ghost Bear", 2, 1}, {"Rooster", 5, 2}, {"Wasp", 1, 3}},
+    USE_PETS_FOR_UPGRADE_SLOT = { "Rooster" },
 
     BUY_GEAR_SHOP = { "Grandmaster Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Basic Sprinkler", "Trading Ticket", "Watering Can", "Levelup Lollipop" },
     USE_SPRINKLER = { "Basic Sprinkler", "Master Sprinkler", "Godly Sprinkler", "Advanced Sprinkler", "Grandmaster Sprinkler" },
