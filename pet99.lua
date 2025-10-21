@@ -8,7 +8,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 -- ======= Cấu hình =======
 local admins = {
     -- Thêm UserId của admin ở đây, ví dụ: [12345678] = true,
-    [12345678] = true, -- <-- thay bằng UserId thực của bạn
+    [8737899170] = true, -- <-- thay bằng UserId thực của bạn
 }
 
 local remoteName = "AdminKickEvent" -- tên RemoteEvent sẽ được tạo trong ReplicatedStorage
