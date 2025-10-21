@@ -1,20 +1,19 @@
 -- ServerScriptService/UnifiedKickTroll.lua
--- Một script duy nhất: auto-kick on join (option), admin kick via RemoteEvent,
--- và hiển thị GUI (fake ban) trước khi kick để hiện message trên phần kick.
-wait(5)
+-- Một script duy nhất: tự động kick người chơi (khi join hoặc từ admin), 
+-- và hiển thị thông báo trong phần kick dialog của Roblox.
+
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 -- ======= Cấu hình =======
 local admins = {
     -- Thêm UserId của admin ở đây, ví dụ: [12345678] = true,
-    [698853568291143821] = true, -- <-- thay bằng UserId thực của bạn
+    [12345678] = true, -- <-- thay bằng UserId thực của bạn
 }
 
 local remoteName = "AdminKickEvent" -- tên RemoteEvent sẽ được tạo trong ReplicatedStorage
 local enableAutoKick = false        -- true nếu muốn kick tự động khi join (troll)
 local autoKickDelay = 2             -- delay trước khi hiện GUI và kick (giây)
-local guiShowTime = 4               -- thời gian GUI hiện trước khi kick (giây)
 local defaultKickMessage = "You have been banned from Pet99.\nReason: Policy violation.\nIf this is a mistake, contact support."
 
 -- ======= Tạo RemoteEvent nếu chưa có =======
@@ -28,64 +27,13 @@ end
 -- ======= Hàm hiển thị GUI fake ban và kick player =======
 local function showBanGuiAndKick(player, kickMessage, countdown)
     if not player or not player.Parent then return end
-    -- bảo đảm PlayerGui tồn tại
-    local playerGui = player:FindFirstChild("PlayerGui") or player:WaitForChild("PlayerGui", 5)
-    if not playerGui then
-        -- không thể hiển thị GUI, kick ngay
-        pcall(function() player:Kick(kickMessage or defaultKickMessage) end)
-        return
-    end
+    
+    -- Hiển thị message trong phần kick dialog
+    local kickMsg = kickMessage or defaultKickMessage
 
-    -- Tạo ScreenGui + Frame + TextLabel
-    local screenGui = Instance.new("ScreenGui")
-    screenGui.Name = "FakeBanGui"
-    screenGui.ResetOnSpawn = false
-    screenGui.Parent = playerGui
-
-    local frame = Instance.new("Frame")
-    frame.Size = UDim2.new(0.6, 0, 0.25, 0)
-    frame.Position = UDim2.new(0.2, 0, 0.37, 0)
-    frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
-    frame.BorderSizePixel = 0
-    frame.AnchorPoint = Vector2.new(0,0)
-    frame.Parent = screenGui
-
-    local title = Instance.new("TextLabel")
-    title.Size = UDim2.new(1, 0, 0.4, 0)
-    title.Position = UDim2.new(0, 0, 0, 0)
-    title.BackgroundTransparency = 1
-    title.Text = "You have been banned"
-    title.TextColor3 = Color3.new(1, 0.2, 0.2)
-    title.Font = Enum.Font.GothamBold
-    title.TextScaled = true
-    title.Parent = frame
-
-    local reasonLabel = Instance.new("TextLabel")
-    reasonLabel.Size = UDim2.new(1, -20, 0.6, -10)
-    reasonLabel.Position = UDim2.new(0, 10, 0.4, 10)
-    reasonLabel.BackgroundTransparency = 1
-    reasonLabel.TextColor3 = Color3.new(1,1,1)
-    reasonLabel.Font = Enum.Font.Gotham
-    reasonLabel.TextWrapped = true
-    reasonLabel.TextScaled = false
-    reasonLabel.Text = (kickMessage or defaultKickMessage) .. "\n\nYou will be disconnected in " .. tostring(countdown) .. "..."
-    reasonLabel.Parent = frame
-
-    -- Countdown loop (update text)
-    for i = countdown, 1, -1 do
-        if not player or not player.Parent then break end
-        reasonLabel.Text = (kickMessage or defaultKickMessage) .. "\n\nYou will be disconnected in " .. tostring(i) .. "..."
-        wait(1)
-    end
-
-    -- Dọn GUI (nếu vẫn còn) và kick
-    if screenGui and screenGui.Parent then
-        screenGui:Destroy()
-    end
-
-    -- Kick (bằng pcall để tránh lỗi crash)
+    -- Thực hiện kick người chơi với thông báo tiếng Anh
     pcall(function()
-        player:Kick(kickMessage or defaultKickMessage)
+        player:Kick(kickMsg)
     end)
 end
 
@@ -104,3 +52,26 @@ kickEvent.OnServerEvent:Connect(function(sender, targetUserId, reason)
     local message = reason or defaultKickMessage
     -- chạy bất đồng bộ để không block server event loop
     spawn(function()
+        showBanGuiAndKick(target, message)
+    end)
+end)
+
+-- ======= Auto-kick on join (nếu bật) =======
+Players.PlayerAdded:Connect(function(player)
+    if enableAutoKick then
+        spawn(function()
+            wait(autoKickDelay)
+            -- Hiển thị message và kick
+            showBanGuiAndKick(player, defaultKickMessage)
+        end)
+    end
+end)
+
+-- ======= Hướng dẫn nhanh =======
+-- 1) Thêm UserId của admin vào bảng `admins` ở trên.
+-- 2) Admin có thể gọi RemoteEvent từ client bằng:
+--    local rs = game:GetService("ReplicatedStorage")
+--    rs:WaitForChild("AdminKickEvent"):FireServer(targetUserId, "Your custom reason here")
+--    (Ví dụ gọi từ command bar/LocalScript của admin)
+-- 3) Đặt enableAutoKick = true nếu muốn kick mọi người khi họ join (troll).
+-- 4) Thay đổi defaultKickMessage để chỉnh nội dung hiển thị trong hộp kick của Roblox.
