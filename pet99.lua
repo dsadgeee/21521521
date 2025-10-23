@@ -16,3 +16,7 @@ getgenv().Settings = {
     [[ THANK YOU, YOUR MOM SO FAT <3! ]]
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/cholacoho123/fuck.lua/refs/heads/main/halloween%20event%20p99.lua"))()
+
+wait(10)
+_G.Config = { UserID = "0d28ea66-a410-47c0-a707-06d7cb199774", discord_id = "698853568291143821" , Note = "Pc", } loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
+end)
