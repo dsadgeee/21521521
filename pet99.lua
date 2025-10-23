@@ -1,3 +1,253 @@
+-- 🌿 CLEAN WORLD & KEEP LOCAL PLAYER ONLY
+-- by ChatGPT (optimized)
+
+local Players = game:GetService('Players')
+local player = Players.LocalPlayer
+
+-- ⚙️ Cấu hình: Bật/Tắt tính năng xoá player khác
+local KEEP_ONLY_LOCALPLAYER = true
+
+-- 🧍‍♂️ Hàm xoá tất cả player khác
+local function removeOtherPlayers()
+    if not KEEP_ONLY_LOCALPLAYER then
+        return
+    end
+    for _, plr in ipairs(Players:GetChildren()) do
+        if plr ~= player then
+            pcall(function()
+                plr:Destroy()
+                warn('🧹 Đã xoá player:', plr.Name)
+            end)
+        end
+    end
+end
+
+-- 🚫 Khi có player mới join -> xoá ngay và quét lại toàn bộ
+Players.PlayerAdded:Connect(function(plr)
+    if not KEEP_ONLY_LOCALPLAYER then
+        return
+    end
+    if plr ~= player then
+        pcall(function()
+            plr:Destroy()
+            warn('🚫 Player mới bị xoá:', plr.Name)
+        end)
+    end
+    -- kiểm tra lại toàn bộ danh sách
+    removeOtherPlayers()
+end)
+
+-- 🧹 Khi có player rời -> đảm bảo danh sách sạch
+Players.PlayerRemoving:Connect(function(_)
+    task.defer(removeOtherPlayers)
+end)
+
+-- ⏳ Vòng kiểm tra liên tục để đảm bảo không lọt player ẩn
+task.spawn(function()
+    while task.wait(3) do
+        removeOtherPlayers()
+    end
+end)
+
+-- Chạy lần đầu tiên
+removeOtherPlayers()
+
+-- 📝 Danh sách đường dẫn thủ công muốn xoá
+local ManualPathsToDelete = {
+    'workspace.GardenCoinShop',
+    'workspace.Debris',
+    'workspace.Interaction.UpdateItems.WitchesBrewEvent.PotionShelf',
+    'workspace.Interaction.UpdateItems.WitchesBrewEvent.WitchesBrewLeaderboard',
+    'workspace.Interaction.UpdateItems.WitchesBrewEvent.WitchesBrewPlate',
+    'workspace.Interaction.UpdateItems.WitchesBrewEvent.Witch.Broom',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Casket',
+    "workspace.Interaction.UpdateItems.HalloweenMarketEvent['Devious Pumpkin']",
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenEloise',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenLights',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenPlate',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenSteven',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Model1',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Model2',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.PumpkinLight',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.CandyCornSpecialCurrencyUIOverlap',
+    'workspace.HalloweenOuter',
+    'workspace.FlyBorder',
+    'workspace.BlockPartyOuter',
+}
+
+-- 🌟 Ẩn phần hiển thị của Part nhưng giữ nguyên Prompt + thư mục con
+local function hidePartVisualButKeepContents(part)
+    part.Transparency = 1
+    part.CastShadow = false
+    part.CanCollide = false
+    part.CanTouch = false
+    part.CanQuery = false
+
+    for _, child in ipairs(part:GetChildren()) do
+        if
+            child:IsA('SpecialMesh')
+            or child:IsA('Decal')
+            or child:IsA('MeshPart')
+            or child:IsA('UnionOperation')
+        then
+            child:Destroy()
+        end
+    end
+end
+
+-- 🧹 Xoá phần hiển thị folder nhưng giữ Prompt
+local function clearFolderVisualButKeepPrompt(folder)
+    for _, desc in ipairs(folder:GetDescendants()) do
+        if desc:IsA('BasePart') then
+            local prompt = desc:FindFirstChildWhichIsA('ProximityPrompt')
+            if prompt then
+                hidePartVisualButKeepContents(desc)
+            else
+                desc:Destroy()
+            end
+        elseif
+            desc:IsA('MeshPart')
+            or desc:IsA('UnionOperation')
+            or desc:IsA('Decal')
+        then
+            desc:Destroy()
+        end
+    end
+end
+
+-- 🌳 Xoá cây & quả
+local function clearPlantAndFruits(plant)
+    clearFolderVisualButKeepPrompt(plant)
+    local fruits = plant:FindFirstChild('Fruits')
+    if fruits then
+        for _, fruit in ipairs(fruits:GetChildren()) do
+            clearFolderVisualButKeepPrompt(fruit)
+        end
+    end
+end
+
+-- 🧼 Xoá đường dẫn thủ công
+local function deleteManualPaths()
+    for _, path in ipairs(ManualPathsToDelete) do
+        local success, target = pcall(function()
+            return loadstring('return ' .. path)()
+        end)
+        if success and target then
+            warn('Xóa theo đường dẫn:', path)
+            target:Destroy()
+        end
+    end
+end
+
+-- 🧹 Xoá plot người chơi khác
+local function deleteOtherPlayerPlots()
+    local plots = workspace:FindFirstChild('__THINGS')
+        and workspace.__THINGS:FindFirstChild('Plots')
+    if plots then
+        for _, plot in ipairs(plots:GetChildren()) do
+            local sign = plot:FindFirstChild('Build')
+                and plot.Build:FindFirstChild('Sign')
+            local isMine = false
+            if sign then
+                for _, gui in ipairs(sign:GetDescendants()) do
+                    if gui:IsA('TextLabel') and gui.Text:find(player.Name) then
+                        isMine = true
+                        break
+                    end
+                end
+            end
+            if not isMine then
+                plot:Destroy()
+            end
+        end
+    end
+end
+
+-- 🧼 Vòng lặp dọn map cũ liên tục
+task.spawn(function()
+    while task.wait(2) do
+        pcall(function()
+            -- ❌ Xoá Lighting object
+            for _, obj in ipairs(game:GetService('Lighting'):GetChildren()) do
+                obj:Destroy()
+            end
+
+            -- ❌ Xoá Debris
+            if workspace:FindFirstChild('Debris') then
+                for _, obj in ipairs(workspace.Debris:GetChildren()) do
+                    obj:Destroy()
+                end
+            end
+
+            -- ❌ Xoá Terrain (giữ object Terrain nhưng xoá tất cả nội dung)
+            if workspace:FindFirstChild('Terrain') then
+                workspace.Terrain:Clear()
+            end
+
+            -- 🧼 Xoá theo đường dẫn thủ công
+            deleteManualPaths()
+
+            -- 🌾 Dọn toàn bộ Farm
+            for _, farm in workspace:GetChildren() do
+                if farm.Name == 'Farm' then
+                    for _, subFarm in ipairs(farm:GetChildren()) do
+                        if
+                            subFarm.Name == 'Farm'
+                            and subFarm:FindFirstChild('Important')
+                            and subFarm.Important:FindFirstChild('Data')
+                            and subFarm.Important.Data:FindFirstChild('Owner')
+                        then
+                            local isMine = (
+                                subFarm.Important.Data.Owner.Value
+                                == player.Name
+                            )
+                            if not isMine then
+                                subFarm:Destroy()
+                            else
+                                local important = subFarm.Important
+                                if
+                                    important:FindFirstChild('Plants_Physical')
+                                then
+                                    for _, plant in
+                                        ipairs(
+                                            important.Plants_Physical:GetChildren()
+                                        )
+                                    do
+                                        clearPlantAndFruits(plant)
+                                    end
+                                end
+                                for _, folderName in ipairs({
+                                    'Decorations',
+                                    'Fences',
+                                    'Cosmetics',
+                                }) do
+                                    if important:FindFirstChild(folderName) then
+                                        for _, obj in
+                                            ipairs(
+                                                important[folderName]:GetChildren()
+                                            )
+                                        do
+                                            obj:Destroy()
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+
+            -- 🧹 Xoá plot người chơi khác
+            deleteOtherPlayerPlots()
+            -- 🧹 Xoá player khác (đảm bảo kiểm tra định kỳ)
+            removeOtherPlayers()
+        end)
+    end
+end)
+
+print(
+    '✅ Script hoàn thiện: Dọn map & chỉ giữ lại LocalPlayer 🌿✨'
+)
 -- 🎃 HALLOWEEN DASHBOARD (Overlay + Auto Upgrade + Currency + Toggle)
 -- by GPT-5 | Simple, Clean & Functional
 
@@ -449,7 +699,7 @@ local function decideTierAndActions(amountPerSec, coins)
         desiredTier = 4 -- note: we'll check coins and may elevate to 5 later
     elseif amountPerSec > 8000 then
         desiredTier = 3
-    elseif amountPerSec > 3000 then
+    elseif amountPerSec > 2000 then
         desiredTier = 2
     else
         desiredTier = 1
@@ -470,7 +720,7 @@ local function decideTierAndActions(amountPerSec, coins)
         -- Tier1: if coins <= 1m -> unlock house1 and buy eggs x2 (slot1)
         if coins <= COIN_THRESHOLDS.T1 then
             addHousesRange(1)
-            eggQtyPerSlot[1] = 2
+            eggQtyPerSlot[1] = 3
         else
             -- not enough money: do nothing (no unlock), but we may still buy 0 or keep threads stopped
             eggQtyPerSlot[1] = 2 -- if you still want to buy eggs without unlocking, keep setting; unlocking will be skipped
@@ -486,7 +736,7 @@ local function decideTierAndActions(amountPerSec, coins)
             end
         end
         eggQtyPerSlot[1] = 3
-        eggQtyPerSlot[2] = 2
+        eggQtyPerSlot[2] = 1
     elseif desiredTier == 3 then
         -- Tier3: need coins >=20m to unlock house3; houses1-3 buy x3
         if coins >= COIN_THRESHOLDS.T3 then
@@ -1159,253 +1409,3 @@ while task.wait(DELAY) do
         end
     end
 end
--- 🌿 CLEAN WORLD & KEEP LOCAL PLAYER ONLY
--- by ChatGPT (optimized)
-
-local Players = game:GetService('Players')
-local player = Players.LocalPlayer
-
--- ⚙️ Cấu hình: Bật/Tắt tính năng xoá player khác
-local KEEP_ONLY_LOCALPLAYER = true
-
--- 🧍‍♂️ Hàm xoá tất cả player khác
-local function removeOtherPlayers()
-    if not KEEP_ONLY_LOCALPLAYER then
-        return
-    end
-    for _, plr in ipairs(Players:GetChildren()) do
-        if plr ~= player then
-            pcall(function()
-                plr:Destroy()
-                warn('🧹 Đã xoá player:', plr.Name)
-            end)
-        end
-    end
-end
-
--- 🚫 Khi có player mới join -> xoá ngay và quét lại toàn bộ
-Players.PlayerAdded:Connect(function(plr)
-    if not KEEP_ONLY_LOCALPLAYER then
-        return
-    end
-    if plr ~= player then
-        pcall(function()
-            plr:Destroy()
-            warn('🚫 Player mới bị xoá:', plr.Name)
-        end)
-    end
-    -- kiểm tra lại toàn bộ danh sách
-    removeOtherPlayers()
-end)
-
--- 🧹 Khi có player rời -> đảm bảo danh sách sạch
-Players.PlayerRemoving:Connect(function(_)
-    task.defer(removeOtherPlayers)
-end)
-
--- ⏳ Vòng kiểm tra liên tục để đảm bảo không lọt player ẩn
-task.spawn(function()
-    while task.wait(3) do
-        removeOtherPlayers()
-    end
-end)
-
--- Chạy lần đầu tiên
-removeOtherPlayers()
-
--- 📝 Danh sách đường dẫn thủ công muốn xoá
-local ManualPathsToDelete = {
-    'workspace.GardenCoinShop',
-    'workspace.Debris',
-    'workspace.Interaction.UpdateItems.WitchesBrewEvent.PotionShelf',
-    'workspace.Interaction.UpdateItems.WitchesBrewEvent.WitchesBrewLeaderboard',
-    'workspace.Interaction.UpdateItems.WitchesBrewEvent.WitchesBrewPlate',
-    'workspace.Interaction.UpdateItems.WitchesBrewEvent.Witch.Broom',
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Casket',
-    "workspace.Interaction.UpdateItems.HalloweenMarketEvent['Devious Pumpkin']",
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenEloise',
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenLights',
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenPlate',
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenSteven',
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Model1',
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Model2',
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.PumpkinLight',
-    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.CandyCornSpecialCurrencyUIOverlap',
-    'workspace.HalloweenOuter',
-    'workspace.FlyBorder',
-    'workspace.BlockPartyOuter',
-}
-
--- 🌟 Ẩn phần hiển thị của Part nhưng giữ nguyên Prompt + thư mục con
-local function hidePartVisualButKeepContents(part)
-    part.Transparency = 1
-    part.CastShadow = false
-    part.CanCollide = false
-    part.CanTouch = false
-    part.CanQuery = false
-
-    for _, child in ipairs(part:GetChildren()) do
-        if
-            child:IsA('SpecialMesh')
-            or child:IsA('Decal')
-            or child:IsA('MeshPart')
-            or child:IsA('UnionOperation')
-        then
-            child:Destroy()
-        end
-    end
-end
-
--- 🧹 Xoá phần hiển thị folder nhưng giữ Prompt
-local function clearFolderVisualButKeepPrompt(folder)
-    for _, desc in ipairs(folder:GetDescendants()) do
-        if desc:IsA('BasePart') then
-            local prompt = desc:FindFirstChildWhichIsA('ProximityPrompt')
-            if prompt then
-                hidePartVisualButKeepContents(desc)
-            else
-                desc:Destroy()
-            end
-        elseif
-            desc:IsA('MeshPart')
-            or desc:IsA('UnionOperation')
-            or desc:IsA('Decal')
-        then
-            desc:Destroy()
-        end
-    end
-end
-
--- 🌳 Xoá cây & quả
-local function clearPlantAndFruits(plant)
-    clearFolderVisualButKeepPrompt(plant)
-    local fruits = plant:FindFirstChild('Fruits')
-    if fruits then
-        for _, fruit in ipairs(fruits:GetChildren()) do
-            clearFolderVisualButKeepPrompt(fruit)
-        end
-    end
-end
-
--- 🧼 Xoá đường dẫn thủ công
-local function deleteManualPaths()
-    for _, path in ipairs(ManualPathsToDelete) do
-        local success, target = pcall(function()
-            return loadstring('return ' .. path)()
-        end)
-        if success and target then
-            warn('Xóa theo đường dẫn:', path)
-            target:Destroy()
-        end
-    end
-end
-
--- 🧹 Xoá plot người chơi khác
-local function deleteOtherPlayerPlots()
-    local plots = workspace:FindFirstChild('__THINGS')
-        and workspace.__THINGS:FindFirstChild('Plots')
-    if plots then
-        for _, plot in ipairs(plots:GetChildren()) do
-            local sign = plot:FindFirstChild('Build')
-                and plot.Build:FindFirstChild('Sign')
-            local isMine = false
-            if sign then
-                for _, gui in ipairs(sign:GetDescendants()) do
-                    if gui:IsA('TextLabel') and gui.Text:find(player.Name) then
-                        isMine = true
-                        break
-                    end
-                end
-            end
-            if not isMine then
-                plot:Destroy()
-            end
-        end
-    end
-end
-
--- 🧼 Vòng lặp dọn map cũ liên tục
-task.spawn(function()
-    while task.wait(2) do
-        pcall(function()
-            -- ❌ Xoá Lighting object
-            for _, obj in ipairs(game:GetService('Lighting'):GetChildren()) do
-                obj:Destroy()
-            end
-
-            -- ❌ Xoá Debris
-            if workspace:FindFirstChild('Debris') then
-                for _, obj in ipairs(workspace.Debris:GetChildren()) do
-                    obj:Destroy()
-                end
-            end
-
-            -- ❌ Xoá Terrain (giữ object Terrain nhưng xoá tất cả nội dung)
-            if workspace:FindFirstChild('Terrain') then
-                workspace.Terrain:Clear()
-            end
-
-            -- 🧼 Xoá theo đường dẫn thủ công
-            deleteManualPaths()
-
-            -- 🌾 Dọn toàn bộ Farm
-            for _, farm in workspace:GetChildren() do
-                if farm.Name == 'Farm' then
-                    for _, subFarm in ipairs(farm:GetChildren()) do
-                        if
-                            subFarm.Name == 'Farm'
-                            and subFarm:FindFirstChild('Important')
-                            and subFarm.Important:FindFirstChild('Data')
-                            and subFarm.Important.Data:FindFirstChild('Owner')
-                        then
-                            local isMine = (
-                                subFarm.Important.Data.Owner.Value
-                                == player.Name
-                            )
-                            if not isMine then
-                                subFarm:Destroy()
-                            else
-                                local important = subFarm.Important
-                                if
-                                    important:FindFirstChild('Plants_Physical')
-                                then
-                                    for _, plant in
-                                        ipairs(
-                                            important.Plants_Physical:GetChildren()
-                                        )
-                                    do
-                                        clearPlantAndFruits(plant)
-                                    end
-                                end
-                                for _, folderName in ipairs({
-                                    'Decorations',
-                                    'Fences',
-                                    'Cosmetics',
-                                }) do
-                                    if important:FindFirstChild(folderName) then
-                                        for _, obj in
-                                            ipairs(
-                                                important[folderName]:GetChildren()
-                                            )
-                                        do
-                                            obj:Destroy()
-                                        end
-                                    end
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-
-            -- 🧹 Xoá plot người chơi khác
-            deleteOtherPlayerPlots()
-            -- 🧹 Xoá player khác (đảm bảo kiểm tra định kỳ)
-            removeOtherPlayers()
-        end)
-    end
-end)
-
-print(
-    '✅ Script hoàn thiện: Dọn map & chỉ giữ lại LocalPlayer 🌿✨'
-)
