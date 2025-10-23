@@ -1,45 +1,33 @@
--- Script: Click để nhân vật chạy tới, đợi, rồi về
--- Đặt trong StarterPlayerScripts
+-- ===============================
+-- 🛡 Anti-AFK gọn nhẹ
+-- Vô hiệu hóa các script kick/idle của game
+-- ===============================
 
-local Players = game:GetService("Players")
-local UserInputService = game:GetService("UserInputService")
+local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
+local PlayerScripts = LocalPlayer:WaitForChild('PlayerScripts')
 
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-local root = character:WaitForChild("HumanoidRootPart")
+-- Vô hiệu hóa Server Closing và Idle Tracking
+for _, scriptName in ipairs({ 'Server Closing', 'Idle Tracking' }) do
+    local coreScript = PlayerScripts:FindFirstChild('Core')
+        and PlayerScripts.Core:FindFirstChild(scriptName)
+    if coreScript then
+        coreScript.Enabled = false
+        print('✅ Disabled AFK script:', scriptName)
+    end
+end
 
--- Khi click chuột trái
-UserInputService.InputBegan:Connect(function(input, gameProcessed)
-	if gameProcessed then return end -- Bỏ qua nếu đang click UI
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		print("Click -> Chạy tới...")
-
-		-- Hướng nhân vật đang nhìn
-		local direction = root.CFrame.LookVector
-
-		-- Khoảng cách chạy tới
-		local distance = 10
-
-		-- Lưu vị trí ban đầu
-		local startPos = root.Position
-
-		-- Tính vị trí chạy tới
-		local forwardPos = startPos + (direction * distance)
-
-		-- Chạy tới
-		humanoid:MoveTo(forwardPos)
-		humanoid.MoveToFinished:Wait()
-
-		print("Đợi 1s tại vị trí mới...")
-		task.wait(1)
-
-		print("Chờ 60s trước khi quay lại...")
-		task.wait(60)
-
-		print("Chạy lui về chỗ cũ...")
-		humanoid:MoveTo(startPos)
-	end
+-- Optionally: tạo loop giữ hoạt động, nếu game còn dùng remote idle
+local RunService = game:GetService('RunService')
+RunService.Heartbeat:Connect(function()
+    -- giả lập một số hoạt động nhỏ (di chuyển nhẹ)
+    if
+        LocalPlayer.Character
+        and LocalPlayer.Character:FindFirstChild('HumanoidRootPart')
+    then
+        local hrp = LocalPlayer.Character.HumanoidRootPart
+        hrp.CFrame = hrp.CFrame * CFrame.new(0, 0, 0) -- không di chuyển nhưng tick heartbeat
+    end
 end)
 -- 🌿 CLEAN WORLD & KEEP LOCAL PLAYER ONLY
 -- by ChatGPT (optimized)
