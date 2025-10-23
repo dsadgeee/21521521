@@ -1,74 +1,66 @@
---// Auto Space Press Script (Modular Version)
---// Tác giả: ChatGPT
---// Chức năng: Tự động nhấn "space" (nhảy) mỗi X giây, không xung đột script khác
-
-local AutoJump = {}
-AutoJump.Delay = 30 -- Thời gian giữa mỗi lần nhấn (giây)
-AutoJump.Enabled = true
-
+-- =========================================================
+-- 🧠 ANTI-AFK + AUTO JUMP (tích hợp vào hệ thống chính)
+-- by ChatGPT (GPT-5)
+-- =========================================================
+local VirtualUser = game:GetService("VirtualUser")
 local Players = game:GetService("Players")
 local LocalPlayer = Players.LocalPlayer
+local AntiAFK_Enabled = true
 
--- Hàm nhảy
-function AutoJump:PressSpace()
-    if not self.Enabled then return end
+-- 🕹️ Hàm mô phỏng nhảy
+local function Jump()
     local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
     local humanoid = character:FindFirstChildOfClass("Humanoid")
-    local LocalPlayer = game:GetService("Players").LocalPlayer
-
-    if humanoid then
+    if humanoid and humanoid:GetState() ~= Enum.HumanoidStateType.Jumping then
         humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-        print("[AutoJump] Đã nhấn Space!")
+        print("[Anti-AFK] Đã mô phỏng nhảy 🕺")
     else
-        warn("[AutoJump] Không tìm thấy Humanoid!")
+        warn("[Anti-AFK] Không thể nhảy (chưa spawn hoặc đang nhảy).")
     end
 end
 
--- Khởi chạy vòng lặp trong thread riêng
-task.spawn(function()
-    while AutoJump.Enabled do
-        AutoJump:PressSpace()
-        task.wait(AutoJump.Delay)
-    end
-end)
-
-return AutoJump
-
-local VirtualUser = game:GetService("VirtualUser")
-local LocalPlayer = game:GetService("Players").LocalPlayer
-local AntiAFK_Enabled = true
-
--- Bật / tắt anti-AFK bằng phím F6
-game:GetService("UserInputService").InputBegan:Connect(function(input, gpe)
-    if input.KeyCode == Enum.KeyCode.F6 and not gpe then
-        AntiAFK_Enabled = not AntiAFK_Enabled
-        print("[Anti-AFK] " .. (AntiAFK_Enabled and "✅ Đã BẬT" or "❌ Đã TẮT"))
-    end
-end)
-
--- Chống AFK tự động
+-- 🛡️ Chống AFK tự động (giữ hoạt động)
 LocalPlayer.Idled:Connect(function()
     if AntiAFK_Enabled then
         VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+        task.wait(0.1)
         VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
         print("[Anti-AFK] Gửi tín hiệu giữ hoạt động.")
     end
 end)
 
--- Tắt Idle Tracking và Server Closing scripts
+-- ⚙️ Tắt Idle Tracking và Server Closing (nếu có)
 pcall(function()
-    LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
-    LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
-    print("[Anti-AFK] Đã vô hiệu hóa Idle Tracking và Server Closing.")
+    if LocalPlayer.PlayerScripts
+        and LocalPlayer.PlayerScripts:FindFirstChild("Scripts")
+        and LocalPlayer.PlayerScripts.Scripts:FindFirstChild("Core")
+    then
+        local core = LocalPlayer.PlayerScripts.Scripts.Core
+        if core:FindFirstChild("Idle Tracking") then
+            core["Idle Tracking"].Enabled = false
+        end
+        if core:FindFirstChild("Server Closing") then
+            core["Server Closing"].Enabled = false
+        end
+        print("[Anti-AFK] Đã vô hiệu hóa Idle Tracking & Server Closing.")
+    end
 end)
 
--- Gửi tín hiệu dừng Idle Tracking timer
+-- 🔄 Gửi tín hiệu dừng Idle Tracking Timer (nếu có Library)
 pcall(function()
-    Library.Network.Fire("Idle Tracking: Stop Timer")
-    print("[Anti-AFK] Đã gửi tín hiệu dừng Idle Tracking Timer.")
+    if Library and Library.Network and Library.Network.Fire then
+        Library.Network.Fire("Idle Tracking: Stop Timer")
+        print("[Anti-AFK] Đã gửi tín hiệu dừng Idle Tracking Timer.")
+    end
 end)
 
-print("[Anti-AFK] Script khởi động thành công. Nhấn F6 để bật/tắt.")
+-- ⏳ Vòng lặp tự động nhảy mỗi 5 phút (300 giây)
+task.spawn(function()
+    while AntiAFK_Enabled do
+        task.wait(60)
+        Jump()
+    end
+end)
 
 -- 🌿 CLEAN WORLD & KEEP LOCAL PLAYER ONLY
 -- by ChatGPT (optimized)
