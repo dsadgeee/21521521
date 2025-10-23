@@ -1,3 +1,38 @@
+--// Auto Space Press Script (Modular Version)
+--// Tác giả: ChatGPT
+--// Chức năng: Tự động nhấn "space" (nhảy) mỗi X giây, không xung đột script khác
+
+local AutoJump = {}
+AutoJump.Delay = 30 -- Thời gian giữa mỗi lần nhấn (giây)
+AutoJump.Enabled = true
+
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- Hàm nhảy
+function AutoJump:PressSpace()
+    if not self.Enabled then return end
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local humanoid = character:FindFirstChildOfClass("Humanoid")
+    local LocalPlayer = game:GetService("Players").LocalPlayer
+
+    if humanoid then
+        humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+        print("[AutoJump] Đã nhấn Space!")
+    else
+        warn("[AutoJump] Không tìm thấy Humanoid!")
+    end
+end
+
+-- Khởi chạy vòng lặp trong thread riêng
+task.spawn(function()
+    while AutoJump.Enabled do
+        AutoJump:PressSpace()
+        task.wait(AutoJump.Delay)
+    end
+end)
+
+return AutoJump
 
 local VirtualUser = game:GetService("VirtualUser")
 local LocalPlayer = game:GetService("Players").LocalPlayer
@@ -536,8 +571,8 @@ local CONFIG1 = {
         [1] = { delay = 0.1, enabled = true, amount = 3 },
         [2] = { delay = 30,  enabled = true, amount = 3 },
         [3] = { delay = 140, enabled = true, amount = 2 },
-        [4] = { delay = 300, enabled = true, amount = 2 },
-        [5] = { delay = 1200, enabled = true, amount = 2 },
+        [4] = { delay = 350, enabled = true, amount = 1 },
+        [5] = { delay = 900, enabled = true, amount = 1 },
     }
 }
 
