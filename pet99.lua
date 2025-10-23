@@ -1,22 +1,10 @@
--- ===============================
--- Anti-AFK + Auto Click + Rotate Camera (120s delay)
--- ===============================
-
-local Players = game:GetService('Players')
-local VirtualUser = game:GetService('VirtualUser')
-local ReplicatedStorage = game:GetService('ReplicatedStorage')
-local RunService = game:GetService('RunService')
-local player = Players.LocalPlayer
-local camera = workspace.CurrentCamera
-
--- ===============================
--- Anti-AFK Function
--- ===============================
-local function doAntiAFK()
-    VirtualUser:Button1Down(Vector2.new(0, 0), camera.CFrame)
-    wait(1)
-    VirtualUser:Button1Up(Vector2.new(0, 0), camera.CFrame)
-end
+LocalPlayer.Idled:Connect(function()
+    game:GetService("VirtualUser"):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    game:GetService("VirtualUser"):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+end)
+LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
+LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
+Library.Network.Fire("Idle Tracking: Stop Timer")
 
 -- ===============================
 -- Auto Click Function
@@ -57,20 +45,6 @@ local function doRotateCamera()
         end
     end
 end
-
--- ===============================
--- Main Loop (120s delay)
--- ===============================
-spawn(function()
-    while true do
-        doAntiAFK()
-        doClick()
-        doRotateCamera()
-        wait(120) -- delay 120 giây giữa các lần thực hiện
-    end
-end)
-
-print('Anti-AFK + Auto Click + Camera Rotation (120s interval) is running...')
 
 -- 🌿 CLEAN WORLD & KEEP LOCAL PLAYER ONLY
 -- by ChatGPT (optimized)
