@@ -1,3 +1,46 @@
+-- Script: Click để nhân vật chạy tới, đợi, rồi về
+-- Đặt trong StarterPlayerScripts
+
+local Players = game:GetService("Players")
+local UserInputService = game:GetService("UserInputService")
+
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+local root = character:WaitForChild("HumanoidRootPart")
+
+-- Khi click chuột trái
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end -- Bỏ qua nếu đang click UI
+	if input.UserInputType == Enum.UserInputType.MouseButton1 then
+		print("Click -> Chạy tới...")
+
+		-- Hướng nhân vật đang nhìn
+		local direction = root.CFrame.LookVector
+
+		-- Khoảng cách chạy tới
+		local distance = 10
+
+		-- Lưu vị trí ban đầu
+		local startPos = root.Position
+
+		-- Tính vị trí chạy tới
+		local forwardPos = startPos + (direction * distance)
+
+		-- Chạy tới
+		humanoid:MoveTo(forwardPos)
+		humanoid.MoveToFinished:Wait()
+
+		print("Đợi 1s tại vị trí mới...")
+		task.wait(1)
+
+		print("Chờ 60s trước khi quay lại...")
+		task.wait(60)
+
+		print("Chạy lui về chỗ cũ...")
+		humanoid:MoveTo(startPos)
+	end
+end)
 -- 🌿 CLEAN WORLD & KEEP LOCAL PLAYER ONLY
 -- by ChatGPT (optimized)
 
