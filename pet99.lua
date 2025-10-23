@@ -1,50 +1,102 @@
-LocalPlayer.Idled:Connect(function()
-    game:GetService("VirtualUser"):Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-    game:GetService("VirtualUser"):Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-end)
-LocalPlayer.PlayerScripts.Scripts.Core["Idle Tracking"].Enabled = false
-LocalPlayer.PlayerScripts.Scripts.Core["Server Closing"].Enabled = false
-Library.Network.Fire("Idle Tracking: Stop Timer")
+-- Tắt hệ thống Idle Tracking gốc
+local Player = game.Players.LocalPlayer
+Player.PlayerScripts.Scripts.Core['Idle Tracking'].Enabled = false
 
--- ===============================
--- Auto Click Function
--- ===============================
-local ClickEvent = ReplicatedStorage:WaitForChild('Network')
-    :WaitForChild('Click')
-
-local function doClick()
-    local args = {
-        [1] = Ray.new(
-            Vector3.new(-14717.569, 840.716, -10126.909),
-            Vector3.new(0.321, -0.398, -0.859)
-        ),
-        [2] = Vector3.new(-14709.156, 832.654, -10150.106),
-    }
-    ClickEvent:FireServer(unpack(args))
+-- Bắt sự kiện Idled và mô phỏng input
+if getconnections then
+    for _, conn in pairs(getconnections(Player.Idled)) do
+        conn:Disable()
+    end
+else
+    Player.Idled:Connect(function()
+        local VirtualUser = game:GetService('VirtualUser')
+        VirtualUser:Button2Down(
+            Vector2.new(0, 0),
+            workspace.CurrentCamera.CFrame
+        )
+        task.wait(1)
+        VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    end)
 end
 
--- ===============================
--- Rotate Camera Function
--- ===============================
-local function doRotateCamera()
-    local playerChar = player.Character
-    if playerChar and playerChar:FindFirstChild('HumanoidRootPart') then
-        local root = playerChar.HumanoidRootPart
-        -- Xoay camera 180 độ trong 2 giây
-        for i = 1, 60 do -- 60 frame ~ 2s
-            camera.CFrame = CFrame.new(
-                camera.CFrame.Position,
-                root.Position
-                    + Vector3.new(
-                        math.sin(i / 60 * math.pi * 2) * 5,
-                        0,
-                        math.cos(i / 60 * math.pi * 2) * 5
-                    )
-            )
-            RunService.RenderStepped:Wait()
-        end
+-- Chờ game load xong
+repeat
+    task.wait()
+until game:IsLoaded()
+
+local Players = game:GetService('Players')
+local Workspace = game:GetService('Workspace')
+local Player = Players.LocalPlayer
+local Camera = Workspace.CurrentCamera
+
+-- Nhân vật thật và nhân vật giả
+local RealCharacter = Player.Character or Player.CharacterAdded:Wait()
+RealCharacter.Archivable = true
+local FakeCharacter = RealCharacter:Clone()
+FakeCharacter.Parent = Workspace
+
+-- Tạo Part ẩn để đặt nhân vật giả
+local AnchorPart = Instance.new('Part', Workspace)
+AnchorPart.Anchored = true
+AnchorPart.Size = Vector3.new(200, 1, 200)
+AnchorPart.CFrame =
+    CFrame.new(math.random(-9999, 9999), -9999, math.random(-9999, 9999))
+AnchorPart.CanCollide = true
+FakeCharacter.HumanoidRootPart.CFrame = AnchorPart.CFrame * CFrame.new(0, 5, 0)
+
+-- Tăng độ trong suốt nhân vật giả
+for _, v in pairs(FakeCharacter:GetDescendants()) do
+    if v:IsA('BasePart') then
+        v.Transparency = 0.7
     end
 end
+
+-- Vô hiệu hóa LocalScript nhân vật giả
+for _, v in pairs(FakeCharacter:GetChildren()) do
+    if v:IsA('LocalScript') then
+        v.Disabled = true
+    end
+end
+
+-- Hoán đổi vị trí nhân vật thật và giả
+local StoredCF = RealCharacter.HumanoidRootPart.CFrame
+RealCharacter.HumanoidRootPart.CFrame = FakeCharacter.HumanoidRootPart.CFrame
+FakeCharacter.HumanoidRootPart.CFrame = StoredCF
+
+-- Camera gắn vào nhân vật giả
+Player.Character = FakeCharacter
+Camera.CameraSubject = FakeCharacter.Humanoid
+
+-- Kích hoạt lại LocalScript nhân vật giả
+for _, v in pairs(FakeCharacter:GetChildren()) do
+    if v:IsA('LocalScript') then
+        v.Disabled = false
+    end
+end
+
+-- Tái tạo nhân vật giả khi respawn
+local function RespawnHandler()
+    FakeCharacter:Destroy()
+    FakeCharacter = RealCharacter:Clone()
+    FakeCharacter.Parent = Workspace
+    FakeCharacter.HumanoidRootPart.CFrame = AnchorPart.CFrame
+        * CFrame.new(0, 5, 0)
+    for _, v in pairs(FakeCharacter:GetDescendants()) do
+        if v:IsA('BasePart') then
+            v.Transparency = 0.7
+        end
+    end
+    for _, v in pairs(FakeCharacter:GetChildren()) do
+        if v:IsA('LocalScript') then
+            v.Disabled = true
+        end
+    end
+    Player.Character = FakeCharacter
+    Camera.CameraSubject = FakeCharacter.Humanoid
+end
+
+RealCharacter.Humanoid.Died:Connect(RespawnHandler)
+Player.CharacterAppearanceLoaded:Connect(RespawnHandler)
 
 -- 🌿 CLEAN WORLD & KEEP LOCAL PLAYER ONLY
 -- by ChatGPT (optimized)
