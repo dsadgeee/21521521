@@ -390,25 +390,25 @@ local Plots_Invoke = ReplicatedStorage:WaitForChild("Network"):WaitForChild("Plo
 local CONFIG1 = {
 	NAME="Config 1", PRINT_VERBOSE=false, RECHECK_PLOT_EVERY=600,
 	EGGS = {
-		[1]={delay=0.9,enabled=true,amount=3},
+		[1]={delay=1,enabled=true,amount=3},
 		[2]={delay=30,enabled=true,amount=3},
-		[3]={delay=140,enabled=true,amount=2},
+		[3]={delay=120,enabled=true,amount=1},
 		[4]={delay=500,enabled=true,amount=1},
-		[5]={delay=200,enabled=true,amount=1},
+		[5]={delay=100,enabled=true,amount=1},
 	}
 }
 local CONFIG2 = {
 	NAME="Config 2 (>=10k/s)", PRINT_VERBOSE=false, RECHECK_PLOT_EVERY=600,
 	EGGS = {
-		[1]={delay=0.9,enabled=true,amount=3},
-		[2]={delay=0.9,enabled=true,amount=3},
-		[3]={delay=0.9,enabled=true,amount=1},
-		[4]={delay=600,enabled=false,amount=1},
-		[5]={delay=1000,enabled=false,amount=1},
+		[1]={delay=0.7,enabled=true,amount=3},
+		[2]={delay=1,enabled=true,amount=3},
+		[3]={delay=1.3,enabled=true,amount=3},
+		[4]={delay=400,enabled=true,amount=1},
+		[5]={delay=600,enabled=true,amount=1},
 	}
 }
-local THRESHOLD_AMOUNT = 16000
-local SIGN_RECHECK_INTERVAL = 30
+local THRESHOLD_AMOUNT = 12000
+local SIGN_RECHECK_INTERVAL = 15
 
 local function parseNumberWithSuffix(s)
 	if not s then return nil end
@@ -604,9 +604,9 @@ local HPillarItems = require(Rep.Library.Directory.HPillarItems)
 local EggHalloween = require(Rep.Library.Directory.EggHalloween)
 local Rarity = require(Rep.Library.Directory.Rarity)
 
-local PET_SLOTS = {1,2,3,4,5,6,7,8}
-local EGG_SLOTS = {9,10}
-local UPDATE_INTERVAL = 1.5
+local PET_SLOTS = {1,2,3,4,5,6,7,8,9}
+local EGG_SLOTS = {10}
+local UPDATE_INTERVAL = 4
 
 local function parseRate(text)
 	if not text then return 0 end
