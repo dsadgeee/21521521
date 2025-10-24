@@ -18,4 +18,4 @@ getgenv().Settings = {
     [[ THANK YOU, YOUR MOM SO FAT <3! ]]
 }
 -- 🧩 LOAD SCRIPTS
-loadstring(game:HttpGet("https://raw.githubusercontent.com/cholacoho123/fuck.lua/refs/heads/main/halloween%20event%20p99.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
