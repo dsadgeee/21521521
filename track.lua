@@ -859,4 +859,4 @@ task.spawn(function()
 			upgrade(others[math.random(1,#others)])
 		end
 	end
-end
+end)
