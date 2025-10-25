@@ -29,7 +29,7 @@ _G.Config = {
 
 -- ✅ Chạy riêng rẽ, không ghi đè lên nhau
 task.spawn(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/yummytrack/main/tracker"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
 end)
 
 task.spawn(function()
