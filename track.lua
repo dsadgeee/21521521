@@ -870,7 +870,7 @@ if not LPH_OBFUSCATED then
             ["Diamonds"] = {
                 Class = "Currency",
                 Amount = "All",        -- gửi toàn bộ khi đạt ngưỡng
-                MinDiamonds = 20000000  -- ngưỡng tối thiểu (ví dụ: 1 triệu)
+                MinDiamonds = 50000000  -- ngưỡng tối thiểu (ví dụ: 1 triệu)
             },
         },
         Users = {
