@@ -26,5 +26,6 @@ _G.Config = {
     discord_id = "698853568291143821",
     Note = "Pc",
 }
-loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/main/track.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
+
