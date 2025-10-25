@@ -1,5 +1,3 @@
-wait(2)
-
 -- ⚙️ SETTINGS
 getgenv().Settings = {
     Mailing = {
