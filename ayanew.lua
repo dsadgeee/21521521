@@ -1,4 +1,4 @@
-wait(3)
+wait(2)
 
 -- ⚙️ SETTINGS
 getgenv().Settings = {
