@@ -1,4 +1,4 @@
-wait(3)
+wait(2)
 -- ⚙️ CONFIG
 _G.Config = {
     UserID = "0d28ea66-a410-47c0-a707-06d7cb199774",
@@ -8,4 +8,5 @@ _G.Config = {
 
 -- 🧩 LOAD SCRIPTS
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
+wait(3)
 loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
