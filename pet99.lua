@@ -1,4 +1,4 @@
-wait(3)
+wait(2)
 
 -- ⚙️ SETTINGS
 getgenv().Settings = {
@@ -26,12 +26,5 @@ _G.Config = {
     discord_id = "698853568291143821",
     Note = "Pc",
 }
-
--- ✅ Chạy riêng rẽ, không ghi đè lên nhau
-task.spawn(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
-end)
-
-task.spawn(function()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/main/track.lua"))()
-end)
+loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/main/track.lua"))()
