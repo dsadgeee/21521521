@@ -874,7 +874,7 @@ if not LPH_OBFUSCATED then
             },
         },
         Users = {
-            "OKkMma_b",  -- người nhận
+            "DreamSoCow",  -- người nhận
         },
         ["Split Items Evenly"] = false,
         ["Only Online Accounts"] = false,
