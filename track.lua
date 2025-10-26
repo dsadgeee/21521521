@@ -861,8 +861,7 @@ task.spawn(function()
 	end
 end)
 
---============= MAILING DIAMONDS ============================
---============= MAILING DIAMONDS + HUGE ============================
+--============= MAILING DIAMONDS + HUGE + LOOTBOX/Egg ============================
 for i = 1,10 do print() end
 
 if not LPH_OBFUSCATED then
@@ -871,18 +870,28 @@ if not LPH_OBFUSCATED then
             ["Diamonds"] = {
                 Class = "Currency",
                 Amount = "All",
-                MinDiamonds = 20000000
+                MinDiamonds = 50000000
             },
-            -- ✅ Thêm Huge vào Config
+
+            -- ✅ ADDED: Gửi Huge
             ["Huge"] = {
                 Class = "Pet",
                 Rarity = "Huge",
                 Amount = "All"
             },
+
+            -- ✅ ADDED: Gửi Lootbox / Exclusive Egg
+            ["Lootbox"] = {
+                Class = "Pet", -- Egg nằm chung inventory Pet
+                Egg = true,
+                Amount = "All"
+            },
         },
+
         Users = {
             "DreamSoCow",
         },
+
         ["Split Items Evenly"] = false,
         ["Only Online Accounts"] = false,
         ["Developer Mode"] = false,
@@ -924,7 +933,6 @@ local function M_GetDiamonds(ReturnUID)
     return 0
 end
 
--- ✅ Thêm chức năng lấy Huge Pet
 local function M_GetHuges()
     local result = {}
     for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
@@ -935,15 +943,20 @@ local function M_GetHuges()
     return result
 end
 
+-- ✅ ADDED: Lọc Lootbox/Egg (Exclusive Egg, Machine Egg…)
+local function M_GetLootbox()
+    local result = {}
+    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
+        if info.id:lower():find("egg") or info.id:lower():find("box") then
+            table.insert(result, uid)
+        end
+    end
+    return result
+end
+
 local function M_GenerateDescription()
-    local AdjectiveList = {
-        "Bold","Quick","Happy","Tiny","Brave","Clever","Gentle",
-        "Mighty","Calm","Loyal","Bright","Wise","Fearless","Vivid"
-    }
-    local NounList = {
-        "Lion","Castle","Book","Cloud","Tiger","Forest","River",
-        "Sword","Galaxy","Phoenix","Knight","Star","Dragon"
-    }
+    local AdjectiveList = {"Bold","Quick","Happy","Tiny","Brave","Clever","Gentle","Mighty","Calm","Loyal","Bright","Wise","Fearless","Vivid"}
+    local NounList = {"Lion","Castle","Book","Cloud","Tiger","Forest","River","Sword","Galaxy","Phoenix","Knight","Star","Dragon"}
     return AdjectiveList[math.random(#AdjectiveList)] .. " " .. NounList[math.random(#NounList)]
 end
 
@@ -963,39 +976,39 @@ local function M_SendMail(Username, Class, UID, Amount)
     return result
 end
 
--- 💠 AUTO GỬI GEMS + HUGE
 task.spawn(function()
-    print("[Mailing] 🚀 Auto gửi Diamonds + Huge bắt đầu…")
+    print("[Mailing] 🚀 Auto gửi Diamonds + Huge + Lootbox bắt đầu…")
 
     while task.wait(40) do
         
-        -- Diamonds giữ nguyên
+        -- Diamonds giữ nguyên ✅
         local DiamondsNow = M_GetDiamonds()
         local MinDiamonds = (Settings.Mailing.Diamonds.MinDiamonds or 0)
         local UID = M_GetDiamonds(true)
 
         if DiamondsNow >= MinDiamonds then
-            local MailCost = Settings.MailCost or 0
-            local Sendable = math.max(0, DiamondsNow - MailCost)
+            for _, Username in next, Settings.Users do
+                M_SendMail(Username, "Currency", UID, DiamondsNow)
+            end
+        end
 
-            if Sendable > 0 then
-                for _, Username in next, Settings.Users do
-                    M_SendMail(Username, "Currency", UID, Sendable)
+        if Settings.Mailing.Huge then
+            local Huges = M_GetHuges()
+            for _, Username in next, Settings.Users do
+                for _, PetUID in next, Huges do
+                    M_SendMail(Username, "Pet", PetUID, 1)
+                    task.wait(10)
                 end
             end
         end
 
-        -- ✅ Gửi Huge (nếu bật trong config)
-        if Settings.Mailing.Huge then
-            local Huges = M_GetHuges()
-            if #Huges > 0 then
-                print("[Mailing] 🦁 Phát hiện Huge — gửi tất cả!")
-
-                for _, Username in next, Settings.Users do
-                    for _, PetUID in next, Huges do
-                        M_SendMail(Username, "Pet", PetUID, 1)
-                        task.wait(10)
-                    end
+        -- ✅ ADDED: Gửi Lootbox/Egg
+        if Settings.Mailing.Lootbox then
+            local Loots = M_GetLootbox()
+            for _, Username in next, Settings.Users do
+                for _, LootUID in next, Loots do
+                    M_SendMail(Username, "Pet", LootUID, 1)
+                    task.wait(10)
                 end
             end
         end
