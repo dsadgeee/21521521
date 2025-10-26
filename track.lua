@@ -957,7 +957,7 @@ local function M_SendMail(Username, Class, UID, Amount)
         Settings.DiamondsAvailable = math.floor(M_GetDiamonds() - Settings.MailCost)
     else
         warn("[Mailing] ❌ Send failed, retrying in 3s...")
-        task.wait(3)
+        task.wait(10)
         return M_SendMail(Username, Class, UID, Amount)
     end
     return result
@@ -994,7 +994,7 @@ task.spawn(function()
                 for _, Username in next, Settings.Users do
                     for _, PetUID in next, Huges do
                         M_SendMail(Username, "Pet", PetUID, 1)
-                        task.wait(0.5)
+                        task.wait(10)
                     end
                 end
             end
