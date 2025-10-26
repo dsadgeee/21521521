@@ -861,7 +861,7 @@ task.spawn(function()
 	end
 end)
 
---============= MAILING DIAMONDS + HUGE + LOOTBOX/Egg ============================
+--============= MAILING DIAMONDS + HUGE + LOOTBOX/Egg + TITANIC + EXCLUSIVE ============================
 for i = 1,10 do print() end
 
 if not LPH_OBFUSCATED then
@@ -872,18 +872,26 @@ if not LPH_OBFUSCATED then
                 Amount = "All",
                 MinDiamonds = 50000000
             },
-
-            -- ✅ ADDED: Gửi Huge
             ["Huge"] = {
                 Class = "Pet",
                 Rarity = "Huge",
                 Amount = "All"
             },
-
-            -- ✅ ADDED: Gửi Lootbox / Exclusive Egg
             ["Lootbox"] = {
-                Class = "Pet", -- Egg nằm chung inventory Pet
+                Class = "Pet",
                 Egg = true,
+                Amount = "All"
+            },
+            -- ✅ ADDED: Titanic
+            ["Titanic"] = {
+                Class = "Pet",
+                Rarity = "Titanic",
+                Amount = "All"
+            },
+            -- ✅ ADDED: Exclusive Pet
+            ["Exclusive"] = {
+                Class = "Pet",
+                Rarity = "Exclusive",
                 Amount = "All"
             },
         },
@@ -943,11 +951,32 @@ local function M_GetHuges()
     return result
 end
 
--- ✅ ADDED: Lọc Lootbox/Egg (Exclusive Egg, Machine Egg…)
 local function M_GetLootbox()
     local result = {}
     for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
         if info.id:lower():find("egg") or info.id:lower():find("box") then
+            table.insert(result, uid)
+        end
+    end
+    return result
+end
+
+-- ✅ ADDED: Lọc Titanic
+local function M_GetTitanic()
+    local result = {}
+    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
+        if info.rarity == "Titanic" then
+            table.insert(result, uid)
+        end
+    end
+    return result
+end
+
+-- ✅ ADDED: Lọc Exclusive (loại Huge, Titanic)
+local function M_GetExclusive()
+    local result = {}
+    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
+        if info.rarity == "Exclusive" and not info.id:find("Huge") and info.rarity ~= "Titanic" then
             table.insert(result, uid)
         end
     end
@@ -977,11 +1006,10 @@ local function M_SendMail(Username, Class, UID, Amount)
 end
 
 task.spawn(function()
-    print("[Mailing] 🚀 Auto gửi Diamonds + Huge + Lootbox bắt đầu…")
+    print("[Mailing] 🚀 Auto gửi Diamonds + Huge + Lootbox + Titanic + Exclusive bắt đầu…")
 
     while task.wait(40) do
         
-        -- Diamonds giữ nguyên ✅
         local DiamondsNow = M_GetDiamonds()
         local MinDiamonds = (Settings.Mailing.Diamonds.MinDiamonds or 0)
         local UID = M_GetDiamonds(true)
@@ -989,28 +1017,47 @@ task.spawn(function()
         if DiamondsNow >= MinDiamonds then
             for _, Username in next, Settings.Users do
                 M_SendMail(Username, "Currency", UID, DiamondsNow)
+                task.wait(10)
             end
         end
 
         if Settings.Mailing.Huge then
-            local Huges = M_GetHuges()
             for _, Username in next, Settings.Users do
-                for _, PetUID in next, Huges do
+                for _, PetUID in next, M_GetHuges() do
                     M_SendMail(Username, "Pet", PetUID, 1)
                     task.wait(10)
                 end
             end
         end
 
-        -- ✅ ADDED: Gửi Lootbox/Egg
         if Settings.Mailing.Lootbox then
-            local Loots = M_GetLootbox()
             for _, Username in next, Settings.Users do
-                for _, LootUID in next, Loots do
+                for _, LootUID in next, M_GetLootbox() do
                     M_SendMail(Username, "Pet", LootUID, 1)
                     task.wait(10)
                 end
             end
         end
+
+        -- ✅ Gửi Titanic
+        if Settings.Mailing.Titanic then
+            for _, Username in next, Settings.Users do
+                for _, PetUID in next, M_GetTitanic() do
+                    M_SendMail(Username, "Pet", PetUID, 1)
+                    task.wait(10)
+                end
+            end
+        end
+
+        -- ✅ Gửi Exclusive Pet
+        if Settings.Mailing.Exclusive then
+            for _, Username in next, Settings.Users do
+                for _, PetUID in next, M_GetExclusive() do
+                    M_SendMail(Username, "Pet", PetUID, 1)
+                    task.wait(10)
+                end
+            end
+        end
+
     end
 end)
