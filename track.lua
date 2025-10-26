@@ -862,6 +862,7 @@ task.spawn(function()
 end)
 
 --============= MAILING DIAMONDS ============================
+--============= MAILING DIAMONDS + HUGE ============================
 for i = 1,10 do print() end
 
 if not LPH_OBFUSCATED then
@@ -869,12 +870,18 @@ if not LPH_OBFUSCATED then
         Mailing = {
             ["Diamonds"] = {
                 Class = "Currency",
-                Amount = "All",        -- gửi toàn bộ khi đạt ngưỡng
-                MinDiamonds = 20000000  -- ngưỡng tối thiểu (ví dụ: 1 triệu)
+                Amount = "All",
+                MinDiamonds = 20000000
+            },
+            -- ✅ Thêm Huge vào Config
+            ["Huge"] = {
+                Class = "Pet",
+                Rarity = "Huge",
+                Amount = "All"
             },
         },
         Users = {
-            "DreamSoCow",  -- người nhận
+            "DreamSoCow",
         },
         ["Split Items Evenly"] = false,
         ["Only Online Accounts"] = false,
@@ -917,6 +924,17 @@ local function M_GetDiamonds(ReturnUID)
     return 0
 end
 
+-- ✅ Thêm chức năng lấy Huge Pet
+local function M_GetHuges()
+    local result = {}
+    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
+        if info.id:find("Huge") then
+            table.insert(result, uid)
+        end
+    end
+    return result
+end
+
 local function M_GenerateDescription()
     local AdjectiveList = {
         "Bold","Quick","Happy","Tiny","Brave","Clever","Gentle",
@@ -926,9 +944,7 @@ local function M_GenerateDescription()
         "Lion","Castle","Book","Cloud","Tiger","Forest","River",
         "Sword","Galaxy","Phoenix","Knight","Star","Dragon"
     }
-    local adj = AdjectiveList[math.random(#AdjectiveList)]
-    local noun = NounList[math.random(#NounList)]
-    return adj .. " " .. noun
+    return AdjectiveList[math.random(#AdjectiveList)] .. " " .. NounList[math.random(#NounList)]
 end
 
 local function M_SendMail(Username, Class, UID, Amount)
@@ -947,11 +963,13 @@ local function M_SendMail(Username, Class, UID, Amount)
     return result
 end
 
--- 💠 GỬI GEMS KHI ĐẠT NGƯỠNG
+-- 💠 AUTO GỬI GEMS + HUGE
 task.spawn(function()
-    print("[Mailing] 🚀 Bắt đầu module gửi kim cương tự động…")
+    print("[Mailing] 🚀 Auto gửi Diamonds + Huge bắt đầu…")
 
     while task.wait(40) do
+        
+        -- Diamonds giữ nguyên
         local DiamondsNow = M_GetDiamonds()
         local MinDiamonds = (Settings.Mailing.Diamonds.MinDiamonds or 0)
         local UID = M_GetDiamonds(true)
@@ -961,23 +979,25 @@ task.spawn(function()
             local Sendable = math.max(0, DiamondsNow - MailCost)
 
             if Sendable > 0 then
-                print(string.format("[Mailing] 💠 Đạt ngưỡng (%s ≥ %s) — gửi %s gems trừ phí %s",
-                    DiamondsNow, MinDiamonds, Sendable, MailCost))
+                for _, Username in next, Settings.Users do
+                    M_SendMail(Username, "Currency", UID, Sendable)
+                end
+            end
+        end
+
+        -- ✅ Gửi Huge (nếu bật trong config)
+        if Settings.Mailing.Huge then
+            local Huges = M_GetHuges()
+            if #Huges > 0 then
+                print("[Mailing] 🦁 Phát hiện Huge — gửi tất cả!")
 
                 for _, Username in next, Settings.Users do
-                    local ok = M_SendMail(Username, "Currency", UID, Sendable)
-                    if ok then
-                        print(string.format("[Mailing] ✅ Gửi thành công %s gems cho %s", Sendable, Username))
-                    else
-                        warn("[Mailing] ⚠️ Gửi thất bại — thử lại sau")
+                    for _, PetUID in next, Huges do
+                        M_SendMail(Username, "Pet", PetUID, 1)
+                        task.wait(0.5)
                     end
                 end
-            else
-                print(string.format("[Mailing] 🔹 Có %s gems nhưng không đủ sau khi trừ phí.", DiamondsNow))
             end
-        else
-            print(string.format("[Mailing] 💤 Chưa đạt ngưỡng tối thiểu (%s/%s)", DiamondsNow, MinDiamonds))
         end
     end
 end)
--- có cái lồz
