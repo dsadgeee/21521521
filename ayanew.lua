@@ -4,7 +4,7 @@ getgenv().Settings = {
         ["Diamonds"] = {
             Class = "Currency",
             Amount = "All",        -- gửi toàn bộ khi đạt ngưỡng
-            MinDiamonds = 100000000 -- ngưỡng tối thiểu (ví dụ: 20 triệu)
+            MinDiamonds = 20000000 -- ngưỡng tối thiểu (ví dụ: 20 triệu)
         },
     },
     Users = {
