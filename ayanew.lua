@@ -1,17 +1,3 @@
--- ⚙️ FPS & PERFORMANCE
-setfpscap(3)
-repeat task.wait() until game:IsLoaded()
-repeat task.wait() until game.Players
-repeat task.wait() until game.Players.LocalPlayer
-UserSettings():GetService("UserGameSettings").MasterVolume = 0
-UserSettings():GetService("UserGameSettings").SavedQualityLevel = 1
-workspace.LevelOfDetail = Enum.ModelLevelOfDetail.Disabled
-game:GetService("Lighting").GlobalShadows = false
-game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
-settings().Rendering.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level04
-settings().Rendering.GraphicsMode = 9
--- 🔑 KEY SYSTEM
 local keys = {
     "gBgCmAPZTSmdqGHMSmmUdgFuEcELDZWK", 
     "qIVzNCBYuxaJkHOwVmcdnrwgFCgjzopH", 
@@ -57,11 +43,4 @@ getgenv().GMAIL_ITEMS = {
 }
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/6e75890d2e36b4613270666c4f5ccab3.lua"))()
 
-wait((5)
-_G.Config = {
-     UserID = "0d28ea66-a410-47c0-a707-06d7cb199774",
-     discord_id = "698853568291143821",
-     Note = "Pc"
-    }
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
 
