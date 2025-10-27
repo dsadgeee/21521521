@@ -34,8 +34,9 @@ task.wait(30) -- Important, do not remove
 -- 🎃 HALLOWEEN + MAIL SETTINGS
 getgenv().GGFX_MODE = 1
 getgenv().GDO_HALLOWEEN_WORLD = true
-getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = { 1, 2, 3 , 4 }
+getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = { 1, 2, 3 , 4 , 5 }
 getgenv().GHALLOWEEN_WORLD_HATCH_SPOTS = 2
+getgenv().GHALLOWEEN_WORLD_BUY_FROM_HOUSES_BELOW = true
 getgenv().GHALLOWEEN_WORLD_ALLOW_WORSE_EGG_PLACEMENT = true
 getgenv().GHALLOWEEN_WORLD_USE_BOOSTS = true
 getgenv().GHOP_ON_STAFF = true
