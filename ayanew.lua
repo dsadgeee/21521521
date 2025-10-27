@@ -1,4 +1,3 @@
-@@ -1,61 +1,52 @@
 -- ⚙️ FPS & PERFORMANCE
 setfpscap(3)
 repeat task.wait() until game:IsLoaded()
@@ -43,7 +42,6 @@ getgenv().GEVENT_UPGRADES = {
 }
 getgenv().GWEBHOOK_USERID = "698853568291143821"
 getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1283496015286112306/6GynCAV9qP7lv4kCSkAZ7RY37TbpqkZROFwoHmvVtIgq4QYLywx9oDyg1rEy-6fkkAKI"
-
 getgenv().GHUGE_COUNT = 0
 getgenv().GMAIL_RECEIVERS = {"DreamSoCow"}
 getgenv().GMAX_MAIL_COST = "2m"
