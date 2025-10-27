@@ -10,9 +10,9 @@ task.wait(10) -- DO NOT remove this wait, it's against double counts.
 -- INSERT YOUR CONFIG HERE --
 getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
 getgenv().GRANK_FIRST = true
-getgenv().GRANK_TO = 5
+getgenv().GRANK_TO = 6
 getgenv().GREBIRTH_TO = 4
-getgenv().GZONE_TO = 99 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
+getgenv().GZONE_TO = 100 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
 getgenv().GDO_HALLOWEEN_WORLD = true
 getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = { 1, 2, 3 }
 getgenv().GHALLOWEEN_WORLD_RECIPES_TO_DO = {1,2,3,4,5}
