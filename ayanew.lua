@@ -58,13 +58,10 @@ getgenv().GMAIL_ITEMS = {
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/6e75890d2e36b4613270666c4f5ccab3.lua"))()
 
 wait((5)
--- HÀM CHẠY SCRIPT PET99
-function Run_Pet99()
-    _G.Config = {
-        UserID = "0d28ea66-a410-47c0-a707-06d7cb199774",
-        discord_id = "698853568291143821",
-        Note = "Pc"
+_G.Config = {
+     UserID = "0d28ea66-a410-47c0-a707-06d7cb199774",
+     discord_id = "698853568291143821",
+     Note = "Pc"
     }
-
     loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
-end
+
