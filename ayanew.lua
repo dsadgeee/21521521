@@ -15,7 +15,7 @@ getgenv().GHALLOWEEN_WORLD_HATCH_SPOTS = 3
 getgenv().GALLOW_HOPPING = true
 getgenv().GHALLOWEEN_WORLD_ALLOW_WORSE_EGG_PLACEMENT = false
 getgenv().GHALLOWEEN_WORLD_USE_BOOSTS = true
-getgenv().GRANK_FIRST = true --if you use this you have to specify values for GREBIRTH_TO and GRANK_TO
+getgenv().GRANK_FIRST = false --if you use this you have to specify values for GREBIRTH_TO and GRANK_TO
 getgenv().GZONE_TO = 101 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
 getgenv().GEVENT_UPGRADES = {
   "HalloweenCandyMultiplier",
