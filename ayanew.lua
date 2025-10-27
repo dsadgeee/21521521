@@ -5,17 +5,17 @@ local keys = {
 }
 math.randomseed(os.time())
 script_key = keys[math.random(#keys)]-- DO NOT remove this wait, it's against double counts.
+task.wait(30) -- DO NOT remove this wait, it's against double counts.
 -- INSERT YOUR CONFIG HERE --
 getgenv().GGFX_MODE = 1 -- or put 1 later = REMOVE_TEXTURES : might be more stable, but no visuals
 getgenv().GDO_HALLOWEEN_WORLD = true
 --read the buyer-announcements to understand these:
-getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = { 1, 2, 3,4,5} -- to buy from multiple houses at same time
-getgenv().GHALLOWEEN_WORLD_HATCH_SPOTS = 2
+getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = { 1, 2, 3, 4, 5} -- to buy from multiple houses at same time
+getgenv().GHALLOWEEN_WORLD_HATCH_SPOTS = 3
 getgenv().GALLOW_HOPPING = true
 getgenv().GHALLOWEEN_WORLD_ALLOW_WORSE_EGG_PLACEMENT = false
 getgenv().GHALLOWEEN_WORLD_USE_BOOSTS = true
 getgenv().GRANK_FIRST = true --if you use this you have to specify values for GREBIRTH_TO and GRANK_TO
-getgenv().GRANK_TO = 8
 getgenv().GZONE_TO = 101 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
 getgenv().GEVENT_UPGRADES = {
   "HalloweenCandyMultiplier",
