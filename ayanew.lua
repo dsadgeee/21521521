@@ -6,7 +6,7 @@ local keys = {
 math.randomseed(os.time())
 script_key = keys[math.random(#keys)]-- DO NOT remove this wait, it's against double counts.
 -- INSERT YOUR CONFIG HERE --
-getgenv().GGFX_MODE = 2 -- or put 1 later = REMOVE_TEXTURES : might be more stable, but no visuals
+getgenv().GGFX_MODE = 1 -- or put 1 later = REMOVE_TEXTURES : might be more stable, but no visuals
 getgenv().GDO_HALLOWEEN_WORLD = true
 --read the buyer-announcements to understand these:
 getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = { 1, 2, 3,4,5} -- to buy from multiple houses at same time
