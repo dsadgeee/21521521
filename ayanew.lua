@@ -21,7 +21,7 @@ getgenv().GALLOW_HOPPING = true
 getgenv().GHOP_ON_STAFF = true
 getgenv().GHALLOWEEN_WORLD_BUY_FROM_HOUSES_BELOW = false
 getgenv().GHALLOWEEN_WORLD_HATCH_SPOTS = 3
-getgenv().GHALLOWEEN_WORLD_ALLOW_WORSE_EGG_PLACEMENT = true
+getgenv().GHALLOWEEN_WORLD_ALLOW_WORSE_EGG_PLACEMENT = false
 getgenv().GHALLOWEEN_WORLD_USE_BOOSTS = true
 getgenv().GEVENT_UPGRADES = {
   "HalloweenCandyMultiplier",
