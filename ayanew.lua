@@ -570,7 +570,7 @@ local HOUSE_DELAYS = {
     [5] = 120,
 }
 
-local MAX_FALSE_LIMIT = 60 -- ❗ Số lần false liên tiếp để hop server
+local MAX_FALSE_LIMIT = 160 -- ❗ Số lần false liên tiếp để hop server
 
 -- ================== SERVICES ==================
 local Players = game:GetService('Players')
