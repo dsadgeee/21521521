@@ -1189,7 +1189,7 @@ if not LPH_OBFUSCATED then
             },
         },
         Users = {
-            'DreamSoSad', -- người nhận
+            'DreamSoCow', -- người nhận
         },
         ['Split Items Evenly'] = false,
         ['Only Online Accounts'] = false,
