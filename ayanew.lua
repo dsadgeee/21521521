@@ -9,9 +9,9 @@ script_key = keys[math.random(#keys)]-- DO NOT remove this wait, it's against do
 -- INSERT YOUR CONFIG HERE --
 getgenv().GGFX_MODE = 2 --1 = REMOVE_TEXTURES : more stable! but no visuals
 getgenv().GRANK_FIRST = true
-getgenv().GRANK_TO = 5
+getgenv().GRANK_TO = 6
 getgenv().GREBIRTH_TO = 4
-getgenv().GZONE_TO = 99 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
+getgenv().GZONE_TO = 100 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
 getgenv().GHALLOWEEN_JOIN_LOCAL = true
 getgenv().GDO_HALLOWEEN_WORLD = true
 getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = {1,2,3}
