@@ -39,7 +39,7 @@ getgenv().GMAIL_RECEIVERS = {"DreamSoCow"}
 getgenv().GMAX_MAIL_COST = "2m"
 getgenv().GMAIL_ITEMS = {
   ["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
-  ["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "5m", MinAmount = "50m"},
+  ["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "1k", MinAmount = "10m"},
   ["Hype Egg 2"] = {Class = "Lootbox", Id = "Hype Egg 2", MinAmount = 1},
   ["Daycare egg 5"] = {Class = "Egg", Id = "Huge Machine Egg 5", MinAmount = 1},
   ["Secret pet1"] = {Class = "Pet", Id = "Rainbow Swirl", MinAmount = 1, AllVariants = true},
