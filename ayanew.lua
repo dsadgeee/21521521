@@ -7,7 +7,7 @@ local keys = {
 math.randomseed(os.time())
 script_key = keys[math.random(#keys)];
 -- INSERT YOUR CONFIG HERE --
-getgenv().GGFX_MODE = 2 --1 = REMOVE_TEXTURES : more stable! but no visuals
+getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
 getgenv().GRANK_FIRST = true
 getgenv().GRANK_TO = 5
 getgenv().GREBIRTH_TO = 4
