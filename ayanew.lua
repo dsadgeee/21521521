@@ -6,7 +6,7 @@ local keys = {
 }
 math.randomseed(os.time())
 script_key = keys[math.random(#keys)];
-getgenv().GGFX_MODE = 2 --1 = REMOVE_TEXTURES : more stable! but no visuals
+getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
 getgenv().GRANK_FIRST = true
 getgenv().GRANK_TO = 5
 getgenv().GREBIRTH_TO = 4
@@ -35,7 +35,7 @@ getgenv().GWEBHOOK_USERID = ""
 getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1283496015286112306/6GynCAV9qP7lv4kCSkAZ7RY37TbpqkZROFwoHmvVtIgq4QYLywx9oDyg1rEy-6fkkAKI"
 getgenv().GMAIL_RECEIVERS = {"DreamSoCow"} -- for Huges and mailrules.
 getgenv().GMAIL_ITEMS = {
-["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "2m", MinAmount = "100m"}, -- mail diamonds, to enable lower MinAmount..
+["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "2m", MinAmount = "30m"}, -- mail diamonds, to enable lower MinAmount..
 }
 getgenv().GMAX_MAIL_COST = "2m" -- this can limit how many mails sent/day
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/6e75890d2e36b4613270666c4f5ccab3.lua"))()
