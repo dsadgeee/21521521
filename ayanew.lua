@@ -51,6 +51,7 @@ getgenv().GMAIL_RECEIVERS = {"DreamSoCow"} -- for Huges and mailrules.
 getgenv().GMAIL_ITEMS = {
 ["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
 ["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "2m", MinAmount = "30m"}, -- mail diamonds, to enable lower MinAmount..
+["All Egg"] = {Class = "Lootbox", Id = "All Egg", MinAmount = 1},
 }
 getgenv().GMAX_MAIL_COST = "2m" -- this can limit how many mails sent/day
 loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/6e75890d2e36b4613270666c4f5ccab3.lua"))()
