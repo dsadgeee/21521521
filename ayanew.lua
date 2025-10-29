@@ -35,6 +35,7 @@ getgenv().GWEBHOOK_USERID = ""
 getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1283496015286112306/6GynCAV9qP7lv4kCSkAZ7RY37TbpqkZROFwoHmvVtIgq4QYLywx9oDyg1rEy-6fkkAKI"
 getgenv().GMAIL_RECEIVERS = {"DreamSoCow"} -- for Huges and mailrules.
 getgenv().GMAIL_ITEMS = {
+["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
 ["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "2m", MinAmount = "30m"}, -- mail diamonds, to enable lower MinAmount..
 }
 getgenv().GMAX_MAIL_COST = "2m" -- this can limit how many mails sent/day
