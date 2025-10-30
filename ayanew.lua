@@ -19,7 +19,7 @@ local keys = {
 math.randomseed(os.time())
 script_key = keys[math.random(#keys)];
 -- INSERT YOUR CONFIG HERE --
-task.wait(10) -- DO NOT remove this wait, it's against double counts.
+task.wait(5) -- DO NOT remove this wait, it's against double counts.
 getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
 getgenv().GRANK_FIRST = true
 getgenv().GRANK_TO = 6
