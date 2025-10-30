@@ -21,7 +21,7 @@ script_key = keys[math.random(#keys)];
 -- INSERT YOUR CONFIG HERE --
 task.wait(5) -- DO NOT remove this wait, it's against double counts.
 getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
-getgenv().GRANK_FIRST = true
+getgenv().GRANK_FIRST = false
 getgenv().GRANK_TO = 6
 getgenv().GREBIRTH_TO = 4
 getgenv().GZONE_TO = 99 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
