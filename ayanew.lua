@@ -22,7 +22,7 @@ script_key = keys[math.random(#keys)];
 task.wait(10) -- DO NOT remove this wait, it's against double counts.
 getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
 getgenv().GRANK_FIRST = true
-getgenv().GRANK_TO = 5
+getgenv().GRANK_TO = 6
 getgenv().GREBIRTH_TO = 4
 getgenv().GZONE_TO = 99 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
 getgenv().GHALLOWEEN_JOIN_LOCAL = true
