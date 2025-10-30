@@ -1137,3 +1137,175 @@ task.spawn(function()
 
     end
 end)
+-- craft 
+task.spawn(function()
+    local Rep = game:GetService('ReplicatedStorage')
+    local Network = require(Rep.Library.Client.Network)
+    local Directory = require(Rep.Library.Directory)
+    local Types = require(Rep.Library.Items.Types)
+    local InventoryCmds = require(Rep.Library.Client.InventoryCmds)
+    local Player = game:GetService('Players').LocalPlayer
+
+    -- Hàm lấy tên item an toàn
+    local function getItemName(item)
+        if type(item) == 'table' then
+            if type(item.GetName) == 'function' then
+                return item:GetName()
+            elseif item.Name then
+                return tostring(item.Name)
+            else
+                return '[Table]'
+            end
+        else
+            return tostring(item)
+        end
+    end
+
+    -- Kiểm tra đủ nguyên liệu
+    local function hasIngredients(recipe)
+        if not recipe.Ingredients or #recipe.Ingredients == 0 then
+            return false
+        end
+
+        for _, ing in ipairs(recipe.Ingredients) do
+            local amountNeeded = ing.Amount or 1
+            local itemClone = ing.Item:Clone()
+            if itemClone:IsA('Pet') then
+                -- applyPetOptions nếu cần
+            end
+            if itemClone:CountAny() < amountNeeded then
+                return false
+            end
+        end
+        return true
+    end
+
+    -- Claim craft xong
+    local function claimCraft(queuedEntry)
+        local success, msg =
+            Network.Invoke('HalloweenCraftingMachine_Claim', queuedEntry.UID)
+        local resultName = getItemName(queuedEntry.Result)
+        if success then
+            print('✅ Claimed: ' .. resultName)
+        else
+            print('❌ Failed to claim: ' .. (msg or 'Unknown'))
+        end
+    end
+
+    -- Tự động craft
+    local function autoCraft(machineId, recipeIndex)
+        local args = {
+            [1] = machineId,
+            [2] = recipeIndex,
+            [3] = { ['shiny'] = false, ['pt'] = 0 },
+        }
+        Network.Invoke('HalloweenCraftingMachine_StartCraft', unpack(args))
+        print(
+            ('→ Sent craft request for recipe #%d on %s'):format(
+                recipeIndex,
+                machineId
+            )
+        )
+    end
+
+    -- In trạng thái recipe
+    local function printRecipeStatus(recipe, queuedEntry)
+        local resultName = getItemName(recipe.Result)
+        local status
+        if queuedEntry then
+            if queuedEntry.Remaining and queuedEntry.Remaining <= 0 then
+                status = '✅ Claimable'
+            else
+                status = '⏳ Crafting... ('
+                    .. queuedEntry.Remaining
+                    .. 's left)'
+            end
+        else
+            status = hasIngredients(recipe) and '🟢 Ready to craft'
+                or '🔴 Missing ingredients'
+        end
+        print(('  - %s → %s'):format(resultName, status))
+    end
+
+    while true do
+        for machineId, machineData in pairs(Directory.HalloweenCraftingMachines) do
+            print(
+                '\n=== Machine: '
+                    .. machineData.MachineName
+                    .. ' (ID: '
+                    .. machineId
+                    .. ') ==='
+            )
+
+            local recipes = Network.Invoke(
+                'HalloweenCraftingMachine_GetCurrentRecipes',
+                machineId
+            ) or {}
+            local queue = Network.Invoke('HalloweenCraftingMachine_GetQueue')
+                or {}
+
+            -- 1. Claim craft xong
+            for _, queuedEntry in ipairs(queue) do
+                if (queuedEntry.Remaining or 0) <= 0 then
+                    claimCraft(queuedEntry)
+                else
+                    local name = getItemName(queuedEntry.Result)
+                    print(
+                        '⏳ Still crafting: '
+                            .. name
+                            .. ' ('
+                            .. queuedEntry.Remaining
+                            .. 's left)'
+                    )
+                end
+            end
+
+            -- 2. Craft nếu đủ nguyên liệu
+            for i, recipeData in ipairs(recipes) do
+                local recipe = table.clone(recipeData)
+
+                if
+                    recipe.Result
+                    and recipe.Result.class
+                    and recipe.Result.data
+                then
+                    recipe.Result =
+                        Types.From(recipe.Result.class, recipe.Result.data)
+                end
+
+                if recipe.Ingredients then
+                    local newIngredients = {}
+                    for _, ing in ipairs(recipe.Ingredients) do
+                        if ing.Item and ing.Item.class and ing.Item.data then
+                            local realItem =
+                                Types.From(ing.Item.class, ing.Item.data)
+                            table.insert(
+                                newIngredients,
+                                { Item = realItem, Amount = ing.Amount }
+                            )
+                        end
+                    end
+                    recipe.Ingredients = newIngredients
+                end
+
+                -- Kiểm tra queued
+                local queuedEntry = nil
+                for _, q in ipairs(queue) do
+                    if q.RecipeIndex == i then
+                        queuedEntry = q
+                        break
+                    end
+                end
+
+                printRecipeStatus(recipe, queuedEntry)
+
+                -- Craft nếu đủ nguyên liệu và chưa đang craft
+                if not queuedEntry and hasIngredients(recipe) then
+                    autoCraft(machineId, i)
+                end
+            end
+        end
+
+        task.wait(5)
+    end
+end)
