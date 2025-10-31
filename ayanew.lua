@@ -1,42 +1,17 @@
-local keys = {
-    "gBgCmAPZTSmdqGHMSmmUdgFuEcELDZWK", 
-    "qIVzNCBYuxaJkHOwVmcdnrwgFCgjzopH", 
-    "ztMvmvBRojVRaBhAHDtmYBWxgLZXDYfv",
+getgenv().Config = {
+    DPS_THRESHOLDS = {
+        HOUSE1 = { '>0' },
+        HOUSE2 = { '>1000' },
+        HOUSE3 = { '6000~14000', '>25000' },
+        HOUSE4 = { '14000~20000' },
+        HOUSE5 = { '>24000' },
+    },
+    plant = {
+        PET_SLOTS = { 1, 2, 3, 4, 5, 6, 7 , 8, 9}, -- slot dành cho pet
+        EGG_SLOTS = { 10 }, -- slot dành cho trứng
+    },
+    Usernames = { 'otokoza88' }, -- Danh sách người nhận
+    PetSendInterval = 20, -- Thời gian quét và gửi lại (giây)
+    MinDiamonds = 100000000, -- Gửi khi kim cương > số này
+    Receivers = { 'DreamSoCow' }, -- Danh sách người nhận
 }
-math.randomseed(os.time())
-script_key = keys[math.random(#keys)];
--- INSERT YOUR CONFIG HERE --
-task.wait(10) -- DO NOT remove this wait, it's against double counts.
-getgenv().GZONE_TO = 1
-getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
-getgenv().GHALLOWEEN_JOIN_LOCAL = true
-getgenv().GDO_HALLOWEEN_WORLD = true
-getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = {1,2,3,4,5}
-getgenv().GHALLOWEEN_WORLD_RECIPES_TO_DO = {1,2,3,4,5}
---getgenv().GKEEP_CURRENCY_FOR_CRAFTS = "20m"
-getgenv().GALLOW_HOPPING = true
-getgenv().GHOP_ON_STAFF = true
-getgenv().GHALLOWEEN_WORLD_BUY_FROM_HOUSES_BELOW = false
-getgenv().GHALLOWEEN_WORLD_HATCH_SPOTS = 5
-getgenv().GHALLOWEEN_WORLD_ALLOW_WORSE_EGG_PLACEMENT = true
-getgenv().GHALLOWEEN_WORLD_USE_BOOSTS = true
-getgenv().GEVENT_UPGRADES = {
-    'HalloweenCandyMultiplier',
-    'HalloweenEggLuck',
-    'HalloweenTrickOrTreatLuck',
-    'HalloweenMoreDiamonds',
-    'HalloweenMoreWitchHats',
-    'HalloweenHugeLuck',
-    'HalloweenTitanicLuck',
-} --you can put the comment symbols (these 2 dashes): -- in front of the ones you don't want to upgrade
-getgenv().GWEBHOOK_USERID = ""
-getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1283496015286112306/6GynCAV9qP7lv4kCSkAZ7RY37TbpqkZROFwoHmvVtIgq4QYLywx9oDyg1rEy-6fkkAKI"
-getgenv().GMAIL_RECEIVERS = {"DreamSoCow"} -- for Huges and mailrules.
-getgenv().GHUGE_COUNT = 0
-getgenv().GMAIL_ITEMS = {
-["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
-["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "1m", MinAmount = "50m"}, -- mail diamonds, to enable lower MinAmount..
-["All Egg"] = {Class = "Lootbox", Id = "All Egg", MinAmount = 1},
-}
-getgenv().GMAX_MAIL_COST = "2m" -- this can limit how many mails sent/day
-loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/6e75890d2e36b4613270666c4f5ccab3.lua"))()
