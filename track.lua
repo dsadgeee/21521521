@@ -1536,6 +1536,7 @@ end
 
 local SaveModule = require(game.ReplicatedStorage.Library.Client.Save)
 
+-- Lấy UID của Diamonds trong inventory
 local function getDiamondsUID()
     local save = SaveModule.Get()
     local inv = save and save.Inventory and save.Inventory.Currency
@@ -1554,6 +1555,7 @@ if not diamondsUID then
     return
 end
 
+-- Gửi Diamonds
 local function sendDiamonds(amount, receiver)
     for _ = 1, 3 do
         local ok, res = pcall(function()
@@ -1574,24 +1576,34 @@ local function sendDiamonds(amount, receiver)
     return false
 end
 
-task.spawn(function()
-    while task.wait(5) do
-        local diamonds = diamondsStat.Value
-        -- Chỉ gửi khi diamonds >= Config.MinDiamonds
-        if diamonds >= Config.MinDiamonds then
-            local receiver = Config.Receivers[math.random(#Config.Receivers)]
-            local amount = diamonds  -- Gửi toàn bộ số diamonds hiện có
+-- Hàm ưu tiên gửi gems
+local function sendPriorityGems()
+    local diamonds = diamondsStat.Value
+    if diamonds >= Config.MinDiamonds then
+        -- Người nhận ưu tiên
+        local receiver
+        if Config.PriorityReceiver then
+            receiver = Config.PriorityReceiver
+        else
+            receiver = Config.Receivers[math.random(#Config.Receivers)]
+        end
 
-            if sendDiamonds(amount, receiver) then
-                print(
-                    ('📤 Đã gửi %s 💎 cho %s'):format(amount, receiver)
-                )
-            else
-                warn('⚠️ Gửi diamonds lỗi, thử lại sau.')
-            end
+        local amount = diamonds -- gửi toàn bộ
+        if sendDiamonds(amount, receiver) then
+            print(('📤 Đã gửi %s 💎 cho %s (ưu tiên)'):format(amount, receiver))
+        else
+            warn('⚠️ Gửi diamonds lỗi, thử lại sau.')
         end
     end
+end
+
+-- Vòng lặp chính
+task.spawn(function()
+    while task.wait(5) do
+        sendPriorityGems() -- ưu tiên gửi gems
+    end
 end)
+
 
 local Rep = game:GetService('ReplicatedStorage')
 local Network = Rep:WaitForChild('Network')
