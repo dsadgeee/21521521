@@ -47,7 +47,7 @@ getgenv().GMAIL_RECEIVERS = {"DreamSoCow"} -- for Huges and mailrules.
 getgenv().GHUGE_COUNT = 0
 getgenv().GMAIL_ITEMS = {
 ["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
-["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "2m", MinAmount = "100m"}, -- mail diamonds, to enable lower MinAmount..
+["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "1m", MinAmount = "50m"}, -- mail diamonds, to enable lower MinAmount..
 ["All Egg"] = {Class = "Lootbox", Id = "All Egg", MinAmount = 1},
 }
 getgenv().GMAX_MAIL_COST = "2m" -- this can limit how many mails sent/day
