@@ -1,1143 +1,1684 @@
--- log4
---============= UTIL: LOG & SAFE INVOKES =====================
-local LOG = { verbose = false } -- set true to see logs
-local function log(...)
-	if LOG.verbose then
-		print(...)
-	end
-end
-local function warnlog(...)
-	-- always keep warnings visible (rare)
-	warn(...)
+repeat
+    task.wait()
+until game:IsLoaded()
+
+local Workspace = game:GetService('Workspace')
+local Terrain = Workspace:WaitForChild('Terrain')
+Terrain.WaterReflectance = 0
+Terrain.WaterTransparency = 1
+Terrain.WaterWaveSize = 0
+Terrain.WaterWaveSpeed = 0
+
+local Lighting = game:GetService('Lighting')
+Lighting.Brightness = 0
+Lighting.GlobalShadows = false
+Lighting.FogEnd = 9e100
+Lighting.FogStart = 0
+
+sethiddenproperty(Lighting, 'Technology', 2)
+sethiddenproperty(Terrain, 'Decoration', false)
+
+local function clearTextures(v)
+    if v:IsA('BasePart') and not v:IsA('MeshPart') then
+        v.Material = 'Plastic'
+        v.Reflectance = 0
+    elseif v:IsA('Decal') or v:IsA('Texture') then
+        v.Transparency = 1
+    elseif v:IsA('ParticleEmitter') or v:IsA('Trail') then
+        v.Lifetime = NumberRange.new(0)
+    elseif v:IsA('Explosion') then
+        v.BlastPressure = 1
+        v.BlastRadius = 1
+    elseif
+        v:IsA('Fire')
+        or v:IsA('SpotLight')
+        or v:IsA('Smoke')
+        or v:IsA('Sparkles')
+    then
+        v.Enabled = false
+    elseif v:IsA('MeshPart') then
+        v.Material = 'Plastic'
+        v.Reflectance = 0
+        v.TextureID = 10385902758728957
+    elseif v:IsA('SpecialMesh') then
+        v.TextureId = 0
+    elseif v:IsA('ShirtGraphic') then
+        v.Graphic = 1
+    elseif v:IsA('Shirt') or v:IsA('Pants') then
+        v[v.ClassName .. 'Template'] = 1
+    elseif v.Name == 'Foilage' and v:IsA('Folder') then
+        v:Destroy()
+    elseif
+        string.find(v.Name, 'Tree')
+        or string.find(v.Name, 'Water')
+        or string.find(v.Name, 'Bush')
+        or string.find(v.Name, 'grass')
+    then
+        task.wait()
+        v:Destroy()
+    end
 end
 
-local function SafeCall(fn, ...)
-	local args = { ... }
-	local ok, res = pcall(function() return fn(table.unpack(args)) end)
-	return ok, res
+game:GetService('Lighting'):ClearAllChildren()
+
+for _, v in pairs(Workspace:GetDescendants()) do
+    clearTextures(v)
 end
 
-local function SafeInvoke(obj, method, ...)
-	local args = { ... }
-	for attempt = 1, 5 do
-		local ok, result = pcall(function()
-			return obj[method](obj, table.unpack(args))
-		end)
-		if ok then
-			return true, result
-		end
-		task.wait(math.min(0.25 * (2 ^ (attempt - 1)), 2))
-	end
-	return false, nil
-end
+Workspace.DescendantAdded:Connect(function(v)
+    clearTextures(v)
+end)
 
-local function RF(obj, ...)
-	return SafeInvoke(obj, "InvokeServer", ...)
-end
-local function EV(obj, ...)
-	return SafeInvoke(obj, "FireServer", ...)
-end
+-- ===================== AUTO TELEPORT =====================
+getgenv().AutoTeleportEnabled = true -- Bật / Tắt
+local TARGET_PLACE_ID = 131952481663528
+local CHECK_INTERVAL = 5 -- kiểm tra mỗi 5 giây
+
+task.spawn(function()
+    while true do
+        task.wait(CHECK_INTERVAL)
+        if
+            getgenv().AutoTeleportEnabled
+            and game.PlaceId ~= TARGET_PLACE_ID
+        then
+            pcall(function()
+                game:GetService('TeleportService'):Teleport(
+                    TARGET_PLACE_ID,
+                    game:GetService('Players').LocalPlayer
+                )
+            end)
+        end
+    end
+end)
 --============= ANTI-AFK (Full Safe + Jump Simulation) =======================
-local Players = game:GetService("Players")
+local Players = game:GetService('Players')
 local LocalPlayer = Players.LocalPlayer
-local VirtualUser = game:GetService("VirtualUser")
-local VirtualInputManager = game:GetService("VirtualInputManager")
+local VirtualUser = game:GetService('VirtualUser')
+local VirtualInputManager = game:GetService('VirtualInputManager')
 
 -- 🛡️ Chống AFK cơ bản bằng VirtualUser
 LocalPlayer.Idled:Connect(function()
-	VirtualUser:CaptureController()
-	VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
-	task.wait(1)
-	VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    VirtualUser:CaptureController()
+    VirtualUser:Button2Down(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
+    task.wait(1)
+    VirtualUser:Button2Up(Vector2.new(0, 0), workspace.CurrentCamera.CFrame)
 end)
 
 -- 🧠 Hàm tạo khoảng thời gian ngẫu nhiên (±30 giây)
 local function randomWait(base)
-	local variation = math.random(-30, 30)
-	return math.max(60, base + variation)
+    local variation = math.random(-30, 30)
+    return math.max(60, base + variation)
 end
 
 -- 🤸 Nhảy mô phỏng mỗi 5 phút ±30s
 task.spawn(function()
-	while task.wait(randomWait(300)) do
-		VirtualUser:CaptureController()
-		VirtualUser:SetKeyDown("0x20") -- phím Space
-		task.wait(0.5)
-		VirtualUser:SetKeyUp("0x20")
-	end
+    while task.wait(randomWait(300)) do
+        VirtualUser:CaptureController()
+        VirtualUser:SetKeyDown('0x20') -- phím Space
+        task.wait(0.5)
+        VirtualUser:SetKeyUp('0x20')
+    end
 end)
 
 -- 💨 Mô phỏng nhấn Space thực bằng VirtualInputManager (song song)
 function AFK()
-	while task.wait(randomWait(300)) do
-		VirtualInputManager:SendKeyEvent(true, "Space", false, game)
-		task.wait(0.5)
-		VirtualInputManager:SendKeyEvent(false, "Space", false, game)
-		print("[Anti-AFK] Jumped using VirtualInputManager.")
-	end
+    while task.wait(randomWait(300)) do
+        VirtualInputManager:SendKeyEvent(true, 'Space', false, game)
+        task.wait(0.5)
+        VirtualInputManager:SendKeyEvent(false, 'Space', false, game)
+        print('[Anti-AFK] Jumped using VirtualInputManager.')
+    end
 end
 
 spawn(AFK)
 
 -- 🧩 Tắt Idle Tracking gốc của game
 pcall(function()
-	game.ReplicatedStorage.Network["Idle Tracking: Stop Timer"]:FireServer()
-	local scripts = LocalPlayer.PlayerScripts.Scripts.Core
-	scripts["Idle Tracking"].Enabled = false
-	scripts["Server Closing"].Enabled = false
+    game.ReplicatedStorage.Network['Idle Tracking: Stop Timer']:FireServer()
+    local scripts = LocalPlayer.PlayerScripts.Scripts.Core
+    scripts['Idle Tracking'].Enabled = false
+    scripts['Server Closing'].Enabled = false
 end)
+local Players = game:GetService('Players')
+local player = Players.LocalPlayer
 
---============= LIGHT CLEANER (SAFE) =========================
+-- ⚙️ Cấu hình: Bật/Tắt tính năng xoá player khác
 local KEEP_ONLY_LOCALPLAYER = true
+
+-- 🧍‍♂️ Hàm xoá tất cả player khác
 local function removeOtherPlayers()
-	if not KEEP_ONLY_LOCALPLAYER then return end
-	for _, plr in ipairs(Players:GetPlayers()) do
-		if plr ~= LocalPlayer and plr.Character then
-			SafeCall(function()
-				plr.Character:Destroy()
-			end)
-		end
-	end
+    if not KEEP_ONLY_LOCALPLAYER then
+        return
+    end
+    for _, plr in ipairs(Players:GetChildren()) do
+        if plr ~= player then
+            pcall(function()
+                plr:Destroy()
+            end)
+        end
+    end
 end
 
+-- 🚫 Khi có player mới join -> xoá ngay và quét lại toàn bộ
+Players.PlayerAdded:Connect(function(plr)
+    if not KEEP_ONLY_LOCALPLAYER then
+        return
+    end
+    if plr ~= player then
+        pcall(function()
+            plr:Destroy()
+        end)
+    end
+    removeOtherPlayers()
+end)
+
+-- 🧹 Khi có player rời -> đảm bảo danh sách sạch
+Players.PlayerRemoving:Connect(function(_)
+    task.defer(removeOtherPlayers)
+end)
+
+-- ⏳ Vòng kiểm tra liên tục để đảm bảo không lọt player ẩn
+task.spawn(function()
+    while task.wait(3) do
+        removeOtherPlayers()
+    end
+end)
+
+-- Chạy lần đầu tiên
+removeOtherPlayers()
+
+-- 📝 Danh sách đường dẫn thủ công muốn xoá
 local ManualPathsToDelete = {
-	"workspace.GardenCoinShop",
-	"workspace.Interaction.UpdateItems.WitchesBrewEvent.WitchesBrewLeaderboard",
-	"workspace.Interaction.UpdateItems.HalloweenMarketEvent.Casket",
-	"workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenEloise",
-	"workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenLights",
-	"workspace.Interaction.UpdateItems.HalloweenMarketEvent.Model1",
-	"workspace.Interaction.UpdateItems.HalloweenMarketEvent.Model2",
-	"workspace.Interaction.UpdateItems.HalloweenMarketEvent.PumpkinLight",
-	"workspace.FlyBorder",
-	"workspace.BlockPartyOuter",
+    'workspace.GardenCoinShop',
+    'workspace.Debris',
+    'workspace.Interaction.UpdateItems.WitchesBrewEvent.PotionShelf',
+    'workspace.Interaction.UpdateItems.WitchesBrewEvent.WitchesBrewLeaderboard',
+    'workspace.Interaction.UpdateItems.WitchesBrewEvent.WitchesBrewPlate',
+    'workspace.Interaction.UpdateItems.WitchesBrewEvent.Witch.Broom',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Casket',
+    "workspace.Interaction.UpdateItems.HalloweenMarketEvent['Devious Pumpkin']",
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenEloise',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenLights',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenPlate',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.HalloweenSteven',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Model1',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.Model2',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.PumpkinLight',
+    'workspace.Interaction.UpdateItems.HalloweenMarketEvent.CandyCornSpecialCurrencyUIOverlap',
+    'workspace.HalloweenOuter',
+    'workspace.FlyBorder',
+    'workspace.BlockPartyOuter',
+    'workspace.__THINGS.Orbs',
+    'workspace.__THINGS.ExclusiveEggs',
 }
 
-local function safeHide(part)
-	if part and part:IsA("BasePart") then
-		part.Transparency = 1
-		part.CanCollide = false
-		part.CanTouch = false
-		part.CanQuery = false
-	end
+-- 🌟 Ẩn phần hiển thị của Part nhưng giữ nguyên Prompt + thư mục con
+local function hidePartVisualButKeepContents(part)
+    part.Transparency = 1
+    part.CastShadow = false
+    part.CanCollide = false
+    part.CanTouch = false
+    part.CanQuery = false
+
+    for _, child in ipairs(part:GetChildren()) do
+        if
+            child:IsA('SpecialMesh')
+            or child:IsA('Decal')
+            or child:IsA('MeshPart')
+            or child:IsA('UnionOperation')
+        then
+            child:Destroy()
+        end
+    end
 end
 
-local function safeClean()
-	for _, path in ipairs(ManualPathsToDelete) do
-		local ok, obj = SafeCall(function()
-			return loadstring("return " .. path)()
-		end)
-		if ok and obj then
-			SafeCall(function()
-				for _, d in ipairs(obj:GetDescendants()) do
-					safeHide(d)
-				end
-				safeHide(obj)
-			end)
-		end
-	end
+-- 🧹 Xoá phần hiển thị folder nhưng giữ Prompt
+local function clearFolderVisualButKeepPrompt(folder)
+    for _, desc in ipairs(folder:GetDescendants()) do
+        if desc:IsA('BasePart') then
+            local prompt = desc:FindFirstChildWhichIsA('ProximityPrompt')
+            if prompt then
+                hidePartVisualButKeepContents(desc)
+            else
+                desc:Destroy()
+            end
+        elseif
+            desc:IsA('MeshPart')
+            or desc:IsA('UnionOperation')
+            or desc:IsA('Decal')
+        then
+            desc:Destroy()
+        end
+    end
 end
+local Success, Err = pcall(function()
+    local Rep = game:GetService('ReplicatedStorage')
 
-local function deleteOtherPlayerPlots()
-	local plotsFolder = workspace:FindFirstChild("__THINGS")
-		and workspace.__THINGS:FindFirstChild("Plots")
-	if not plotsFolder then return end
-	for _, plot in ipairs(plotsFolder:GetChildren()) do
-		local sign = plot:FindFirstChild("Build") and plot.Build:FindFirstChild("Sign")
-		local mine = false
-		if sign then
-			for _, gui in ipairs(sign:GetDescendants()) do
-				if gui:IsA("TextLabel") and gui.Text:find(LocalPlayer.Name) then
-					mine = true; break
-				end
-			end
-		end
-		if not mine then
-			SafeCall(function() plot:Destroy() end)
-		end
-	end
-end
+    local NotifItem = require(Rep.Library.Client.NotificationCmds).Item
+    local UIReward = require(Rep.Library.Client.UI.BuyMultiple)
 
-task.spawn(function()
-	while task.wait(30) do
-		SafeCall(function()
-			safeClean()
-			deleteOtherPlayerPlots()
-			removeOtherPlayers()
-		end)
-	end
+    -- Vô hiệu hóa toàn bộ UI thông báo item / reward
+    NotifItem.Bottom = function(...) end
+    UIReward.Reward = function(...) end
 end)
 
-print("✅ Anti-AFK + Cleaner (safe) loaded.")
+print(Success and '✅ UI Disabled!' or Err)
 
---============= HALLOWEEN DASHBOARD ==========================
+-- 🌳 Xoá cây & quả
+local function clearPlantAndFruits(plant)
+    clearFolderVisualButKeepPrompt(plant)
+    local fruits = plant:FindFirstChild('Fruits')
+    if fruits then
+        for _, fruit in ipairs(fruits:GetChildren()) do
+            clearFolderVisualButKeepPrompt(fruit)
+        end
+    end
+end
+
+-- 🧼 Xoá đường dẫn thủ công
+local function deleteManualPaths()
+    for _, path in ipairs(ManualPathsToDelete) do
+        local success, target = pcall(function()
+            return loadstring('return ' .. path)()
+        end)
+        if success and target then
+            target:Destroy()
+        end
+    end
+end
+
+-- 🧹 Xoá plot người chơi khác
+local function deleteOtherPlayerPlots()
+    local plots = workspace:FindFirstChild('__THINGS')
+        and workspace.__THINGS:FindFirstChild('Plots')
+    if plots then
+        for _, plot in ipairs(plots:GetChildren()) do
+            local sign = plot:FindFirstChild('Build')
+                and plot.Build:FindFirstChild('Sign')
+            local isMine = false
+            if sign then
+                for _, gui in ipairs(sign:GetDescendants()) do
+                    if gui:IsA('TextLabel') and gui.Text:find(player.Name) then
+                        isMine = true
+                        break
+                    end
+                end
+            end
+            if not isMine then
+                plot:Destroy()
+            end
+        end
+    end
+end
+
+-- 🧼 Vòng lặp dọn map cũ liên tục
+task.spawn(function()
+    while task.wait(2) do
+        pcall(function()
+            for _, obj in ipairs(game:GetService('Lighting'):GetChildren()) do
+                obj:Destroy()
+            end
+            if workspace:FindFirstChild('Debris') then
+                for _, obj in ipairs(workspace.Debris:GetChildren()) do
+                    obj:Destroy()
+                end
+            end
+            if workspace:FindFirstChild('Terrain') then
+                workspace.Terrain:Clear()
+            end
+            deleteManualPaths()
+            for _, farm in workspace:GetChildren() do
+                if farm.Name == 'Farm' then
+                    for _, subFarm in ipairs(farm:GetChildren()) do
+                        if
+                            subFarm.Name == 'Farm'
+                            and subFarm:FindFirstChild('Important')
+                            and subFarm.Important:FindFirstChild('Data')
+                            and subFarm.Important.Data:FindFirstChild('Owner')
+                        then
+                            local isMine = (
+                                subFarm.Important.Data.Owner.Value
+                                == player.Name
+                            )
+                            if not isMine then
+                                subFarm:Destroy()
+                            else
+                                local important = subFarm.Important
+                                if
+                                    important:FindFirstChild('Plants_Physical')
+                                then
+                                    for _, plant in
+                                        ipairs(
+                                            important.Plants_Physical:GetChildren()
+                                        )
+                                    do
+                                        clearPlantAndFruits(plant)
+                                    end
+                                end
+                                for _, folderName in ipairs({
+                                    'Decorations',
+                                    'Fences',
+                                    'Cosmetics',
+                                }) do
+                                    if important:FindFirstChild(folderName) then
+                                        for _, obj in
+                                            ipairs(
+                                                important[folderName]:GetChildren()
+                                            )
+                                        do
+                                            obj:Destroy()
+                                        end
+                                    end
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+            deleteOtherPlayerPlots()
+            removeOtherPlayers()
+        end)
+    end
+end)
+-- HalloweenDashboard Neon Cyberpunk UI
+-- Full integrated UI (auto-scale, neon glow, hover, and original logic preserved)
+
+local Rep = game:GetService('ReplicatedStorage')
+local Network = require(Rep.Library.Client.Network)
+local Directory = require(Rep.Library.Directory)
+local Types = require(Rep.Library.Items.Types)
+local Save = require(Rep.Library.Client.Save)
+local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
+local TweenService = game:GetService('TweenService')
+
+-- ================ Camera / Resolution ================
+local camera = workspace.CurrentCamera
+local function GetResolution()
+    local size = camera.ViewportSize
+    return math.floor(size.X), math.floor(size.Y)
+end
+local width, height = GetResolution()
+
+-- ================ UI ROOT ================
+local gui = Instance.new('ScreenGui')
+gui.Name = 'HalloweenDashboard'
+gui.ResetOnSpawn = false
+gui.IgnoreGuiInset = true
+gui.DisplayOrder = 999
+
+-- parent only after PlayerGui exists
+gui.Parent = LocalPlayer:WaitForChild('PlayerGui')
+
+local overlay = Instance.new('Frame', gui)
+overlay.Size = UDim2.new(1, 0, 1, 0)
+overlay.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+overlay.BackgroundTransparency = 0.6
+overlay.BorderSizePixel = 0
+overlay.ZIndex = 900
+
+-- Toggle button (neon style)
+local toggleButton = Instance.new('TextButton', gui)
+local function CalcToggleSize()
+    return UDim2.new(
+        0,
+        math.max(40, math.floor(width * 0.035)),
+        0,
+        math.max(40, math.floor(height * 0.06))
+    )
+end
+toggleButton.Size = CalcToggleSize()
+toggleButton.Position = UDim2.new(0, 10, 0.5, -25)
+toggleButton.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
+toggleButton.Text = '🎃'
+toggleButton.TextColor3 = Color3.fromRGB(200, 255, 255)
+toggleButton.Font = Enum.Font.GothamBold
+toggleButton.TextSize = 22
+toggleButton.ZIndex = 1001
+
+local toggleCorner = Instance.new('UICorner', toggleButton)
+toggleCorner.CornerRadius = UDim.new(0, 10)
+local toggleStroke = Instance.new('UIStroke', toggleButton)
+toggleStroke.Thickness = 2
+toggleStroke.Color = Color3.fromRGB(0, 225, 255)
+
+-- Hover effect for toggle
+toggleButton.MouseEnter:Connect(function()
+    TweenService:Create(
+        toggleButton,
+        TweenInfo.new(0.18, Enum.EasingStyle.Quad),
+        { BackgroundColor3 = Color3.fromRGB(255, 0, 255) }
+    ):Play()
+    TweenService:Create(
+        toggleButton,
+        TweenInfo.new(0.18, Enum.EasingStyle.Quad),
+        { TextSize = 26 }
+    ):Play()
+end)
+toggleButton.MouseLeave:Connect(function()
+    TweenService:Create(
+        toggleButton,
+        TweenInfo.new(0.25, Enum.EasingStyle.Quad),
+        { BackgroundColor3 = Color3.fromRGB(12, 12, 16) }
+    ):Play()
+    TweenService:Create(
+        toggleButton,
+        TweenInfo.new(0.25, Enum.EasingStyle.Quad),
+        { TextSize = 22 }
+    ):Play()
+end)
+
+-- Overlay visibility toggle
+toggleButton.MouseButton1Click:Connect(function()
+    overlay.Visible = not overlay.Visible
+end)
+
+-- ================ Main Panel (Auto-scale) ================
+local main = Instance.new('Frame', overlay)
+main.AnchorPoint = Vector2.new(0.5, 0.5)
+main.Position = UDim2.new(0.5, 0, 0.5, 0)
+main.Size = UDim2.new(1, 0, 1, 0)
+main.BackgroundColor3 = Color3.fromRGB(12, 12, 16)
+main.BackgroundTransparency = 0
+main.BorderSizePixel = 0
+main.ZIndex = 1000
+
+-- Neon corner + stroke + gradient
+local mainCorner = Instance.new('UICorner', main)
+mainCorner.CornerRadius = UDim.new(0, 12)
+
+local mainStroke = Instance.new('UIStroke', main)
+mainStroke.Thickness = 2
+mainStroke.Color = Color3.fromRGB(0, 225, 255)
+mainStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+
+local strokeGradient = Instance.new('UIGradient', mainStroke)
+strokeGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(0, 255, 255)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(255, 0, 255)),
+})
+strokeGradient.Rotation = 45
+
+local bgGradient = Instance.new('UIGradient', main)
+bgGradient.Color = ColorSequence.new({
+    ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 0, 40)),
+    ColorSequenceKeypoint.new(1, Color3.fromRGB(0, 0, 20)),
+})
+bgGradient.Rotation = 45
+
+-- Glow image behind panel (soft aura)
+local glow = Instance.new('ImageLabel', main)
+glow.Size = UDim2.new(1.25, 0, 1.25, 0)
+glow.Position = UDim2.new(0.5, 0, 0.5, 0)
+glow.AnchorPoint = Vector2.new(0.5, 0.5)
+glow.BackgroundTransparency = 1
+glow.Image = 'rbxassetid://4996891970' -- soft glow image
+glow.ImageColor3 = Color3.fromRGB(0, 170, 255)
+glow.ImageTransparency = 0.78
+glow.ZIndex = 995
+
+-- Title
+local title = Instance.new('TextLabel', main)
+title.Size = UDim2.new(1, 0, 0, 50)
+title.Position = UDim2.new(0, 0, 0, 6)
+title.BackgroundTransparency = 1
+title.Text = '🎃 SUCACHEO HUB 🎃'
+title.Font = Enum.Font.GothamBold
+title.TextColor3 = Color3.fromRGB(200, 255, 255)
+title.TextSize = 20
+title.ZIndex = 1001
+title.TextStrokeTransparency = 0.5
+title.TextStrokeColor3 = Color3.fromRGB(0, 225, 255)
+
+-- Uptime label
+local uptimeLabel = Instance.new('TextLabel', main)
+uptimeLabel.Size = UDim2.new(1, 0, 0, 28)
+uptimeLabel.Position = UDim2.new(0, 12, 0, 60)
+uptimeLabel.BackgroundTransparency = 1
+uptimeLabel.Font = Enum.Font.Gotham
+uptimeLabel.TextSize = 18
+uptimeLabel.TextColor3 = Color3.fromRGB(200, 255, 255)
+uptimeLabel.Text = '⏱️ Uptime: 00:00:00'
+uptimeLabel.ZIndex = 1001
+uptimeLabel.TextStrokeTransparency = 0.6
+
+-- Scrolling frame (original layout preserved)
+local scroll = Instance.new('ScrollingFrame', main)
+scroll.Size = UDim2.new(1, -20, 1, -90)
+scroll.Position = UDim2.new(0, 10, 0, 90)
+scroll.BackgroundTransparency = 1
+scroll.ScrollBarThickness = 6
+scroll.CanvasSize = UDim2.new(0, 0, 0, 10)
+scroll.ZIndex = 1001
+
+local uiListLayout = Instance.new('UIListLayout', scroll)
+uiListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+uiListLayout.Padding = UDim.new(0, 6)
+
+-- Labels container
+local labels = { currencies = {}, upgrades = {}, crafting = {} }
+
+-- ================ Utility functions (formatting & data) ================
+local function formatNumber(n)
+    if not n then
+        return '0'
+    end
+    if n >= 1e9 then
+        return string.format('%.2fB', n / 1e9)
+    elseif n >= 1e6 then
+        return string.format('%.2fM', n / 1e6)
+    elseif n >= 1e3 then
+        return string.format('%.1fK', n / 1e3)
+    else
+        return tostring(math.floor(n))
+    end
+end
+
+local function getData()
+    return Save.Get() or {}
+end
+
+local function getCurrencies()
+    local cur = (getData().Inventory and getData().Inventory.Currency) or {}
+    local result = {}
+    for _, info in pairs(cur) do
+        result[info.id] = info._am or 0
+    end
+    return result
+end
+
+-- ================ Build default UI items (Currencies / Upgrades / Crafting) ================
+local currencyList = { 'Diamonds', 'HalloweenCoins', 'Diamonds/M' }
+
+-- Header factory
+local function MakeHeader(text)
+    local h = Instance.new('TextLabel')
+    h.Size = UDim2.new(1, 0, 0, 28)
+    h.BackgroundTransparency = 1
+    h.Font = Enum.Font.GothamBold
+    h.TextSize = 15
+    h.Text = text
+    h.TextColor3 = Color3.fromRGB(0, 225, 255)
+    h.TextStrokeTransparency = 0.6
+    h.TextStrokeColor3 = Color3.fromRGB(0, 120, 255)
+    h.ZIndex = 1002
+    h.Parent = scroll
+    return h
+end
+
+MakeHeader('💰 [CURRENCY]')
+
+for _, name in ipairs(currencyList) do
+    local lbl = Instance.new('TextLabel')
+    lbl.Size = UDim2.new(1, 0, 0, 24)
+    lbl.BackgroundTransparency = 1
+    lbl.Font = Enum.Font.Gotham
+    lbl.TextSize = 15
+    lbl.TextXAlignment = Enum.TextXAlignment.Left
+    lbl.Text = '• ' .. name .. ' = 0'
+    lbl.TextColor3 = Color3.fromRGB(200, 255, 255)
+    lbl.TextStrokeTransparency = 0.7
+    lbl.ZIndex = 1002
+    lbl.Parent = scroll
+    labels.currencies[name] = lbl
+end
+
+MakeHeader('⚙️ [UPGRADES]')
+
+local AllUpgrades = {
+    'HalloweenCandyMultiplier',
+    'HalloweenTrickOrTreatLuck',
+    'HalloweenHugeLuck',
+    'HalloweenTitanicLuck',
+    'HalloweenMoreDiamonds',
+    'HalloweenMoreWitchHats',
+    'HalloweenEggLuck',
+}
+
+for _, name in ipairs(AllUpgrades) do
+    local lbl = Instance.new('TextLabel')
+    lbl.Size = UDim2.new(1, 0, 0, 24)
+    lbl.BackgroundTransparency = 1
+    lbl.Font = Enum.Font.Gotham
+    lbl.TextSize = 15
+    lbl.TextXAlignment = Enum.TextXAlignment.Left
+    lbl.Text = '• ' .. name .. ' = 0/10'
+    lbl.TextColor3 = Color3.fromRGB(200, 255, 255)
+    lbl.TextStrokeTransparency = 0.7
+    lbl.ZIndex = 1002
+    lbl.Parent = scroll
+    labels.upgrades[name] = lbl
+end
+
+MakeHeader('🎃 [CRAFTING QUEUE]')
+
+local craftLabels = {}
+
+local function updateCraftingUI()
+    local allQueue = {}
+    -- Lấy thông tin hàng đợi chế tạo từ các máy chế tạo
+    for machineId, machineData in pairs(Directory.HalloweenCraftingMachines) do
+        local recipes = Network.Invoke(
+            'HalloweenCraftingMachine_GetCurrentRecipes',
+            machineId
+        ) or {}
+        local queue = Network.Invoke('HalloweenCraftingMachine_GetQueue') or {}
+
+        for i, recipeData in ipairs(recipes) do
+            local recipe = table.clone(recipeData)
+            if recipe.Result and recipe.Result.class and recipe.Result.data then
+                recipe.Result =
+                    Types.From(recipe.Result.class, recipe.Result.data)
+            end
+
+            local queuedEntry
+            for _, q in ipairs(queue) do
+                if q.RecipeIndex == i then
+                    queuedEntry = q
+                    break
+                end
+            end
+
+            if queuedEntry and queuedEntry.Remaining > 0 then
+                table.insert(
+                    allQueue,
+                    { Recipe = recipe, Remaining = queuedEntry.Remaining }
+                )
+            end
+        end
+    end
+
+    -- Clear old craft labels ordering (we reuse labels table)
+    local yCount = 0
+    for _, entry in ipairs(allQueue) do
+        local recipe = entry.Recipe
+        local remaining = entry.Remaining
+        if recipe and recipe.Result then
+            local itemName = recipe.Result.GetName and recipe.Result:GetName()
+                or tostring(recipe.Result)
+            local lbl = craftLabels[itemName]
+
+            if not lbl then
+                lbl = Instance.new('TextLabel')
+                lbl.Size = UDim2.new(1, 0, 0, 24)
+                lbl.BackgroundTransparency = 1
+                lbl.Font = Enum.Font.Gotham
+                lbl.TextSize = 15
+                lbl.TextXAlignment = Enum.TextXAlignment.Left
+                lbl.TextColor3 = Color3.fromRGB(200, 255, 255)
+                lbl.TextStrokeTransparency = 0.7
+                lbl.ZIndex = 1002
+                lbl.Parent = scroll
+                craftLabels[itemName] = lbl
+            end
+
+            lbl.Text = '• '
+                .. itemName
+                .. ' ⏳ Crafting ('
+                .. string.format('%.1f', remaining)
+                .. 's)'
+            yCount = yCount + 1
+        end
+    end
+
+    -- Update canvas size (UIListLayout handles spacing) but ensure enough space
+    local contentSize = uiListLayout.AbsoluteContentSize.Y + 20
+    scroll.CanvasSize = UDim2.new(0, 0, 0, contentSize)
+end
+
+-- ================ UPDATE UI (DPM, currencies, upgrades, uptime) ================
+local startTime = os.clock()
+local lastDiamonds = getCurrencies()['Diamonds'] or 0
+local dpm = 0
+local lastDPMTime = os.clock()
+
+local function updateUI()
+    local currencies = getCurrencies()
+    local now = os.clock()
+    local currentDiamonds = currencies['Diamonds'] or 0
+
+    if now - lastDPMTime >= 60 then
+        dpm = currentDiamonds - lastDiamonds
+        lastDiamonds = currentDiamonds
+        lastDPMTime = now
+    end
+
+    for _, name in ipairs(currencyList) do
+        local lbl = labels.currencies[name]
+        if lbl then
+            if name == 'Diamonds/M' then
+                lbl.Text =
+                    string.format('• %-15s = %s', name, formatNumber(dpm))
+            else
+                lbl.Text = string.format(
+                    '• %-15s = %s',
+                    name,
+                    formatNumber(currencies[name] or 0)
+                )
+            end
+        end
+    end
+
+    -- Upgrades
+    local up = getData().EventUpgrades or {}
+    for _, name in ipairs(AllUpgrades) do
+        local lvl = up[name] or 0
+        local lbl = labels.upgrades[name]
+        if lbl then
+            lbl.Text = string.format('• %-25s = %d/10', name, lvl)
+            lbl.TextColor3 = (lvl >= 10) and Color3.fromRGB(0, 255, 128)
+                or Color3.fromRGB(200, 255, 255)
+        end
+    end
+
+    -- Uptime
+    local elapsed = os.clock() - startTime
+    uptimeLabel.Text = '⏱️ Uptime: '
+        .. string.format(
+            '%02d:%02d:%02d',
+            math.floor(elapsed / 3600),
+            math.floor((elapsed % 3600) / 60),
+            math.floor(elapsed % 60)
+        )
+
+    -- Crafting
+    updateCraftingUI()
+end
+
+-- ================ Loop updater ================
+task.spawn(function()
+    while task.wait(2) do
+        pcall(updateUI)
+    end
+end)
+
+updateUI()
+
+-- ================ Auto-resize handler ================
+camera:GetPropertyChangedSignal('ViewportSize'):Connect(function()
+    width, height = GetResolution()
+    main.Size =
+        UDim2.new(0, math.floor(width * 0.90), 0, math.floor(height * 0.90))
+    toggleButton.Size = CalcToggleSize()
+end)
+
+-- ================ Auto-resize handler ================
+camera:GetPropertyChangedSignal('ViewportSize'):Connect(function()
+    width, height = GetResolution()
+    main.Size =
+        UDim2.new(0, math.floor(width * 0.90), 0, math.floor(height * 0.90))
+    toggleButton.Size = CalcToggleSize()
+end)
+-- ================== SETTINGS ==================
+local HOUSE_DELAYS = { [1] = 0.5, [2] = 0.5, [3] = 1, [4] = 10, [5] = 10 }
+local SIGN_RECHECK_INTERVAL = 10
+local EGG_DELAY = 0.5
+local MAX_EGG_SLOT = 5
+local RANDOM_HOP_DELAY = 60
+local MIN_HOP_COOLDOWN = 10
+local FAIL_LIMIT = 60
+
+-- ================== SERVICES ==================
+local Players = game:GetService('Players')
+local ReplicatedStorage = game:GetService('ReplicatedStorage')
+local HttpService = game:GetService('HttpService')
+local TeleportService = game:GetService('TeleportService')
+local LocalPlayer = Players.LocalPlayer
+local PLOTS = workspace:WaitForChild('__THINGS'):WaitForChild('Plots')
+local Plots_Invoke = ReplicatedStorage:WaitForChild('Network')
+    :WaitForChild('Plots_Invoke')
+
+-- ================== SERVER HOP ==================
+local hoppedServers = {} -- server đã hop trong session
+local badServers = {} -- server lỗi mua House → không hop lại
+local lastHopTime = 0
+
+local function safeWaitCooldown()
+    local elapsed = os.clock() - lastHopTime
+    if elapsed < MIN_HOP_COOLDOWN then
+        task.wait(MIN_HOP_COOLDOWN - elapsed)
+    end
+end
+
+local function hopRandomServer()
+    safeWaitCooldown()
+
+    local servers
+    local ok, err = pcall(function()
+        servers = HttpService:JSONDecode(
+            game:HttpGet(
+                'https://games.roblox.com/v1/games/'
+                    .. tostring(game.PlaceId)
+                    .. '/servers/Public?sortOrder=Asc&limit=100'
+            )
+        ).data
+    end)
+    if not ok or not servers or #servers == 0 then
+        warn(
+            '⚠️ Không lấy được server, teleport lại chính server'
+        )
+        task.wait(RANDOM_HOP_DELAY)
+        TeleportService:Teleport(game.PlaceId, LocalPlayer)
+        lastHopTime = os.clock()
+        return
+    end
+
+    local candidates = {}
+    for _, s in ipairs(servers) do
+        if
+            s.id ~= game.JobId
+            and not hoppedServers[s.id]
+            and not badServers[s.id]
+        then
+            table.insert(candidates, s.id)
+        end
+    end
+
+    if #candidates == 0 then
+        warn(
+            '⚠️ Không còn server hợp lệ, reset danh sách đã hop...'
+        )
+        hoppedServers = {}
+        for _, s in ipairs(servers) do
+            if s.id ~= game.JobId and not badServers[s.id] then
+                table.insert(candidates, s.id)
+            end
+        end
+        if #candidates == 0 then
+            warn(
+                '⚠️ Không còn server nào hợp lệ để hop → đợi ngẫu nhiên'
+            )
+            task.wait(RANDOM_HOP_DELAY)
+            return hopRandomServer()
+        end
+    end
+
+    local nextServer = candidates[math.random(#candidates)]
+    print(
+        '⏱ Đang chờ '
+            .. RANDOM_HOP_DELAY
+            .. ' giây trước khi hop server: '
+            .. nextServer
+    )
+    task.wait(RANDOM_HOP_DELAY)
+
+    local ok = pcall(function()
+        TeleportService:TeleportToPlaceInstance(
+            game.PlaceId,
+            nextServer,
+            LocalPlayer
+        )
+    end)
+
+    lastHopTime = os.clock()
+    if ok then
+        print('🎲 Hop server thành công: ' .. nextServer)
+        hoppedServers[nextServer] = true
+    else
+        warn('⚠️ Không vào được server: ' .. nextServer)
+        hoppedServers[nextServer] = true
+        task.wait(MIN_HOP_COOLDOWN)
+        hopRandomServer()
+    end
+end
+
+local function hopServer(reason)
+    print(
+        '🚫 Server lỗi ('
+            .. tostring(reason)
+            .. ') → Hop RANDOM server...'
+    )
+    hopRandomServer()
+end
+
+-- ================== EGG/HOUSE HANDLER ==================
+local lastPurchaseTimes = {}
+local consecutiveFail = { [1] = 0, [2] = 0 }
+
+local function purchaseEgg(plotId, slot, qty)
+    qty = qty or 1
+    local success, result = pcall(function()
+        return Plots_Invoke:InvokeServer(plotId, 'PurchaseEgg', slot, qty)
+    end)
+
+    lastPurchaseTimes[slot] = os.clock()
+
+    if slot == 1 or slot == 2 then
+        if success and result ~= false then
+            consecutiveFail[1] = 0
+            consecutiveFail[2] = 0
+            print(string.format('[✅ HOUSE %d]: Mua thành công', slot))
+        else
+            consecutiveFail[slot] = consecutiveFail[slot] + 1
+            print(
+                string.format(
+                    '[❌ HOUSE %d ERROR #%d]',
+                    slot,
+                    consecutiveFail[slot]
+                )
+            )
+
+            if
+                consecutiveFail[1] >= FAIL_LIMIT
+                and consecutiveFail[2] >= FAIL_LIMIT
+            then
+                warn(
+                    string.format(
+                        '[⚠️ HOUSE 1 & 2 lỗi liên tiếp %d lần → Hop server]',
+                        FAIL_LIMIT
+                    )
+                )
+                badServers[game.JobId] = true
+                hopServer('House 1 & 2')
+                consecutiveFail[1] = 0
+                consecutiveFail[2] = 0
+            end
+        end
+    else
+        pcall(function()
+            Plots_Invoke:InvokeServer(plotId, 'PurchaseEgg', slot, qty)
+        end)
+    end
+end
+
+-- ================== THREAD CONTROL ==================
+local activeThreads = {}
+local function stopAllThreads()
+    for _, ctrl in pairs(activeThreads) do
+        ctrl.stopFlag = true
+    end
+    task.wait(0.05)
+    activeThreads = {}
+end
+
+local function startEggThread(plotId, slot, delay, qty)
+    qty = qty or 1
+    local ctrl = { stopFlag = false }
+    activeThreads[slot] = ctrl
+    lastPurchaseTimes[slot] = os.clock()
+    task.spawn(function()
+        while not ctrl.stopFlag do
+            purchaseEgg(plotId, slot, qty)
+            local t = 0
+            while t < delay and not ctrl.stopFlag do
+                task.wait(1)
+                t += 1
+            end
+        end
+    end)
+end
+
+-- ================== DPS LOGIC ==================
+local function checkThreshold(thresholds, amountPerSec)
+    for _, t in ipairs(thresholds) do
+        t = t:gsub(' ', '')
+        if t:match('^>') then
+            local val = tonumber(t:match('^>(%d+)'))
+            if amountPerSec > val then
+                return true
+            end
+        elseif t:match('^<') then
+            local val = tonumber(t:match('^<(%d+)'))
+            if amountPerSec < val then
+                return true
+            end
+        elseif t:match('~') then
+            local minVal, maxVal = t:match('(%d+)~(%d+)')
+            minVal, maxVal = tonumber(minVal), tonumber(maxVal)
+            if amountPerSec >= minVal and amountPerSec <= maxVal then
+                return true
+            end
+        end
+    end
+    return false
+end
+
+local function decideHousesByDPS(amountPerSec)
+    local housesToUnlock = {}
+    local eggQtyPerSlot = {}
+    for h = 1, MAX_EGG_SLOT do
+        local key = 'HOUSE' .. h
+        local thresholds = getgenv().Config.DPS_THRESHOLDS[key]
+        if thresholds and checkThreshold(thresholds, amountPerSec) then
+            housesToUnlock[h] = true
+            eggQtyPerSlot[h] = h <= 2 and 3 or 1
+        end
+    end
+
+    local finalHouses, finalEggQty = {}, {}
+    for h = 1, MAX_EGG_SLOT do
+        if housesToUnlock[h] then
+            table.insert(finalHouses, h)
+        end
+        finalEggQty[h] = eggQtyPerSlot[h] or 0
+    end
+    return finalHouses, finalEggQty
+end
+
+-- ================== FIND PLOT ==================
+local function findMyPlotAndAmount()
+    for _, plot in pairs(PLOTS:GetChildren()) do
+        local sign = plot:FindFirstChild('Build')
+            and plot.Build:FindFirstChild('Sign')
+        if sign then
+            for _, gui in pairs(sign:GetDescendants()) do
+                if gui:IsA('TextLabel') and gui.Text:find(LocalPlayer.Name) then
+                    return plot, 99999
+                end
+            end
+        end
+    end
+    return nil, 0
+end
+
+-- ================== MAIN LOOP ==================
+local lastPlotId, lastHouses = nil, {}
+task.spawn(function()
+    while true do
+        local plot, amount = findMyPlotAndAmount()
+        if plot then
+            local plotId = tonumber(plot:GetAttribute('ID'))
+                or tonumber(plot.Name)
+                or 1
+            local housesToUnlock, eggQtyPerSlot = decideHousesByDPS(amount)
+            local housesJson = HttpService:JSONEncode(housesToUnlock)
+            local lastHousesJson = HttpService:JSONEncode(lastHouses)
+            if plotId ~= lastPlotId or housesJson ~= lastHousesJson then
+                print(
+                    '🔁 Cập nhật thread, DPS thay đổi hoặc plot khác.'
+                )
+                stopAllThreads()
+                for _, h in ipairs(housesToUnlock) do
+                    local qty = eggQtyPerSlot[h] or 0
+                    if qty > 0 then
+                        local delay = HOUSE_DELAYS[h] or EGG_DELAY
+                        startEggThread(plotId, h, delay, qty)
+                    end
+                end
+                lastPlotId, lastHouses = plotId, housesToUnlock
+            end
+        end
+        task.wait(SIGN_RECHECK_INTERVAL)
+    end
+end)
+
+--============= UTILS ==================
+local LOG = { verbose = false }
+local function log(...)
+    if LOG.verbose then
+        print(...)
+    end
+end
+local function warnlog(...)
+    warn(...)
+end
+
+local function SafeInvoke(obj, method, ...)
+    local args = { ... }
+    for attempt = 1, 5 do
+        local ok, result = pcall(function()
+            return obj[method](obj, table.unpack(args))
+        end)
+        if ok then
+            return true, result
+        end
+        task.wait(math.min(0.25 * (2 ^ (attempt - 1)), 2))
+    end
+    return false, nil
+end
+
+local function RF(obj, ...)
+    return SafeInvoke(obj, 'InvokeServer', ...)
+end
+local function EV(obj, ...)
+    return SafeInvoke(obj, 'FireServer', ...)
+end
+--============= UTILS ==================
+local LOG = { verbose = false }
+local function log(...)
+    if LOG.verbose then
+        print(...)
+    end
+end
+local function warnlog(...)
+    warn(...)
+end
+
+local function SafeInvoke(obj, method, ...)
+    local args = { ... }
+    for attempt = 1, 5 do
+        local ok, result = pcall(function()
+            return obj[method](obj, table.unpack(args))
+        end)
+        if ok then
+            return true, result
+        end
+        task.wait(math.min(0.25 * (2 ^ (attempt - 1)), 2))
+    end
+    return false, nil
+end
+
+local function RF(obj, ...)
+    return SafeInvoke(obj, 'InvokeServer', ...)
+end
+local function EV(obj, ...)
+    return SafeInvoke(obj, 'FireServer', ...)
+end
+
+--============= SERVICES & PLAYER ==================
+local Players = game:GetService('Players')
+local LocalPlayer = Players.LocalPlayer
 local Rep = game:GetService('ReplicatedStorage')
 local Network = Rep:WaitForChild('Network')
 local Save = require(Rep.Library.Client.Save)
-local PURCHASE = Network:FindFirstChild('EventUpgrades: Purchase')
-
-local gui = Instance.new('ScreenGui', LocalPlayer:WaitForChild('PlayerGui'))
-gui.IgnoreGuiInset = true
-gui.ResetOnSpawn = false
-gui.DisplayOrder = 999
-gui.Name = 'HalloweenDashboard'
-
-local function formatNumber(n)
-	if not n then return '0' end
-	if n >= 1e9 then return string.format('%.2fB', n / 1e9)
-	elseif n >= 1e6 then return string.format('%.2fM', n / 1e6)
-	elseif n >= 1e3 then return string.format('%.1fK', n / 1e3)
-	else return tostring(math.floor(n)) end
-end
-
-local function getData() return Save.Get() or {} end
-local function getUpgradeLevel(name) return (getData().EventUpgrades or {})[name] or 0 end
-local function getCurrencies()
-	local cur = (getData().Inventory and getData().Inventory.Currency) or {}
-	local result = {}
-	for _, info in pairs(cur) do result[info.id] = info._am or 0 end
-	return result
-end
-
-local overlay = Instance.new('Frame', gui)
-overlay.Size = UDim2.new(1,0,1,0)
-overlay.BackgroundColor3 = Color3.new(0,0,0)
-overlay.BackgroundTransparency = 0.4
-overlay.BorderSizePixel = 0
-
-local toggleButton = Instance.new('TextButton', gui)
-toggleButton.Size = UDim2.new(0,50,0,50)
-toggleButton.Position = UDim2.new(0,10,0.5,-25)
-toggleButton.BackgroundColor3 = Color3.fromRGB(255,50,50)
-toggleButton.Text = 'MT'
-toggleButton.TextColor3 = Color3.new(1,1,1)
-toggleButton.Font = Enum.Font.GothamBold
-toggleButton.TextSize = 20
-toggleButton.ZIndex = 1000
-toggleButton.MouseButton1Click:Connect(function()
-	overlay.Visible = not overlay.Visible
-end)
-
-local main = Instance.new('Frame', overlay)
-main.AnchorPoint = Vector2.new(0.5,0.5)
-main.Position = UDim2.new(0.5,0,0.5,0)
-main.Size = UDim2.new(0,520,0,420)
-main.BackgroundColor3 = Color3.fromRGB(20,20,20)
-main.BackgroundTransparency = 0.3
-main.BorderSizePixel = 0
-main.ZIndex = 999
-
-local title = Instance.new('TextLabel', main)
-title.Size = UDim2.new(1,0,0,50)
-title.BackgroundTransparency = 1
-title.Text = '🎃 HALLOWEEN DASHBOARD'
-title.Font = Enum.Font.GothamBold
-title.TextColor3 = Color3.fromRGB(255,170,0)
-title.TextSize = 28
-title.ZIndex = 1000
-
--- ⏱️ Uptime label
-local uptimeLabel = Instance.new('TextLabel', main)
-uptimeLabel.Size = UDim2.new(1,0,0,28)
-uptimeLabel.Position = UDim2.new(0,0,0,60)
-uptimeLabel.BackgroundTransparency = 1
-uptimeLabel.Font = Enum.Font.Gotham
-uptimeLabel.TextSize = 22
-uptimeLabel.TextColor3 = Color3.fromRGB(255,255,120)
-uptimeLabel.Text = "⏱️ Uptime: 00:00:00"
-uptimeLabel.ZIndex = 1000
-
-local scroll = Instance.new('ScrollingFrame', main)
-scroll.Size = UDim2.new(1,-20,1,-60)
-scroll.Position = UDim2.new(0,10,0,90)
-scroll.BackgroundTransparency = 1
-scroll.CanvasSize = UDim2.new(0,0,0,600)
-scroll.ScrollBarThickness = 6
-scroll.ZIndex = 999
-
-local labels = { currencies = {}, upgrades = {} }
-local currencyList = { 'Diamonds', 'HalloweenCoins', 'Coins' }
-local y = 0
-
-local header1 = Instance.new('TextLabel', scroll)
-header1.Text = '💰 [CURRENCY]'
-header1.Size = UDim2.new(1,0,0,30)
-header1.BackgroundTransparency = 1
-header1.TextColor3 = Color3.fromRGB(0,255,150)
-header1.Font = Enum.Font.GothamBold
-header1.TextSize = 28
-header1.ZIndex = 999
-y = 40
-
-for _, name in ipairs(currencyList) do
-	local lbl = Instance.new('TextLabel', scroll)
-	lbl.Position = UDim2.new(0,10,0,y)
-	lbl.Size = UDim2.new(1,-20,0,28)
-	lbl.BackgroundTransparency = 1
-	lbl.TextColor3 = Color3.new(1,1,1)
-	lbl.Font = Enum.Font.Gotham
-	lbl.TextSize = 28
-	lbl.TextXAlignment = Enum.TextXAlignment.Left
-	lbl.Text = '• ' .. name .. ' = 0'
-	lbl.ZIndex = 999
-	labels.currencies[name] = lbl
-	y += 32
-end
-
-local header2 = Instance.new('TextLabel', scroll)
-header2.Text = '⚙️ [UPGRADES]'
-header2.Position = UDim2.new(0,0,0,y+10)
-header2.Size = UDim2.new(1,0,0,30)
-header2.BackgroundTransparency = 1
-header2.TextColor3 = Color3.fromRGB(255,200,0)
-header2.Font = Enum.Font.GothamBold
-header2.TextSize = 28
-header2.ZIndex = 999
-y += 50
-
-local AllUpgrades = {
-	'HalloweenCandyMultiplier','HalloweenTrickOrTreatLuck','HalloweenHugeLuck',
-	'HalloweenTitanicLuck','HalloweenMoreDiamonds','HalloweenMoreWitchHats','HalloweenEggLuck',
-}
-for _, name in ipairs(AllUpgrades) do
-	local lbl = Instance.new('TextLabel', scroll)
-	lbl.Position = UDim2.new(0,10,0,y)
-	lbl.Size = UDim2.new(1,-20,0,28)
-	lbl.BackgroundTransparency = 1
-	lbl.TextColor3 = Color3.new(1,1,1)
-	lbl.Font = Enum.Font.Gotham
-	lbl.TextSize = 28
-	lbl.TextXAlignment = Enum.TextXAlignment.Left
-	lbl.Text = '• ' .. name .. ' = 0/10'
-	lbl.ZIndex = 999
-	labels.upgrades[name] = lbl
-	y += 32
-end
-scroll.CanvasSize = UDim2.new(0,0,0,y+50)
-
--- 🕒 Bộ đếm thời gian hoạt động
-local startTime = os.clock()
-local function formatTime(seconds)
-	local hours = math.floor(seconds / 3600)
-	local minutes = math.floor((seconds % 3600) / 60)
-	local secs = math.floor(seconds % 60)
-	return string.format("%02d:%02d:%02d", hours, minutes, secs)
-end
-
-local function updateUI()
-	local currencies = getCurrencies()
-	for _, name in ipairs(currencyList) do
-		local lbl = labels.currencies[name]
-		if lbl then
-			lbl.Text = string.format('• %-15s = %s', name, formatNumber(currencies[name] or 0))
-		end
-	end
-	local up = getData().EventUpgrades or {}
-	for _, name in ipairs(AllUpgrades) do
-		local lvl = up[name] or 0
-		local lbl = labels.upgrades[name]
-		if lbl then
-			lbl.Text = string.format('• %-25s = %d/10', name, lvl)
-			lbl.TextColor3 = (lvl >= 10) and Color3.fromRGB(0,255,100) or Color3.new(1,1,1)
-		end
-	end
-	-- ⏱️ Cập nhật thời gian chạy
-local elapsed = os.clock() - startTime
-uptimeLabel.Text = "⏱️ Uptime: " .. formatTime(elapsed)
-
-end
-
-
-local Priority = {'HalloweenMoreDiamonds','HalloweenMoreWitchHats','HalloweenCandyMultiplier'}
-local DELAY, RUN_AUTO = 5, true
-task.spawn(function()
-	while task.wait(DELAY) do
-		if not RUN_AUTO then continue end
-		local done = true
-		for _, n in ipairs(Priority) do
-			if getUpgradeLevel(n) < 10 then
-				done = false
-				RF(PURCHASE, n)
-			end
-		end
-		if done then
-			local others = {}
-			for _, n in ipairs(AllUpgrades) do
-				if not table.find(Priority, n) and getUpgradeLevel(n) < 10 then
-					table.insert(others, n)
-				end
-			end
-			if #others == 0 then break end
-			RF(PURCHASE, others[math.random(1,#others)])
-		end
-		updateUI()
-	end
-end)
-
-task.spawn(function()
-	while task.wait(2) do
-		updateUI()
-	end
-end)
-updateUI()
-
---============ CONFIGS + EGG THREADS + SIGN READ + WORLD SWITCH ============
-local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local Players = game:GetService("Players")
-local TeleportService = game:GetService("TeleportService")
-local LocalPlayer = Players.LocalPlayer
-local PlotsFolder = workspace:WaitForChild("__THINGS"):WaitForChild("Plots")
-local Network = ReplicatedStorage:WaitForChild("Network")
-local Plots_Invoke = Network:WaitForChild("Plots_Invoke")
-local OrbsEvent = Network:WaitForChild("Orbs: Collect")
-
--- 🌍 WORLD IDS
-local worldA = 131952481663528
-local worldB = 8737899170
-
--- ⚡ Nếu đang ở world phụ → quay lại world chính (có delay + retry)
-if game.PlaceId == worldB then
-	print("🌍 Đang ở world phụ, chuẩn bị quay lại world chính trong 5s...")
-	task.wait(5)
-
-	local ok, err = pcall(function()
-		TeleportService:Teleport(worldA, LocalPlayer)
-	end)
-
-	if not ok then
-		warn("⚠️ Teleport về world chính thất bại:", err)
-		task.wait(10)
-		print("🔁 Thử lại teleport về world chính...")
-		pcall(function()
-			TeleportService:Teleport(worldA, LocalPlayer)
-		end)
-	else
-		print("✅ Đang chuyển về world chính...")
-	end
-
-	task.wait(10)
-	return
-end
-
---============ CONFIGS ============
-local CONFIG1 = {
-	NAME="Config 1", PRINT_VERBOSE=false, RECHECK_PLOT_EVERY=600,
-	EGGS = {
-		[1]={delay=1,enabled=true,amount=3},
-		[2]={delay=30,enabled=true,amount=3},
-		[3]={delay=150,enabled=true,amount=1},
-		[4]={delay=500,enabled=true,amount=1},
-		[5]={delay=60,enabled=true,amount=1},
-	}
-}
-
-local CONFIG2 = {
-	NAME="Config 2 (>=10k/s)", PRINT_VERBOSE=false, RECHECK_PLOT_EVERY=600,
-	SWITCH_AFTER = { count = 2 },
-	EGGS = {
-		[1]={delay=0.4,enabled=true,amount=3},
-		[2]={delay=0.7,enabled=true,amount=3},
-		[3]={delay=1,enabled=true,amount=3},
-		[4]={delay=30,enabled=true,amount=1},
-		[5]={delay=500,enabled=true,amount=1},
-	}
-}
-
-local THRESHOLD_AMOUNT = 11000
-local SIGN_RECHECK_INTERVAL = 15
-
---============ UTIL ============
-local function parseNumberWithSuffix(s)
-	if not s then return nil end
-	local str = tostring(s):lower():match("^%s*(.-)%s*$") or s
-	local clean = str:gsub(",", ""):gsub("%s+", " ")
-	local num, suffix = clean:match("([%d%.]+)%s*([kmb])")
-	if num and suffix then
-		local n = tonumber(num)
-		if suffix=="k" then return n*1e3 end
-		if suffix=="m" then return n*1e6 end
-		if suffix=="b" then return n*1e9 end
-	end
-	return tonumber(clean:match("([%d%.,]+)"))
-end
-
-local function extractAmountFromText(txt)
-	if not txt then return nil end
-	local lower = tostring(txt):lower()
-	local patterns = {
-		"([%d%.,]+%s*[kmb]?)%s*/%s*s",
-		"([%d%.,]+%s*[kmb]?)%s*per%s*sec",
-		"([%d%.,]+%s*[kmb]?)%s*cand?y",
-		"amount[:%s]*([%d%.,]+%s*[kmb]?)",
-		"([%d%.,]+%s*[kmb]?)"
-	}
-	for _, pat in ipairs(patterns) do
-		local a = lower:match(pat)
-		if a then return parseNumberWithSuffix(a) end
-	end
-	return nil
-end
-
-local function findMyPlotAndAmount()
-	for _, plot in ipairs(PlotsFolder:GetChildren()) do
-		local sign = plot:FindFirstChild("Build") and plot.Build:FindFirstChild("Sign")
-		if sign then
-			local texts, containsName = {}, false
-			for _, g in ipairs(sign:GetDescendants()) do
-				if (g:IsA("TextLabel") or g:IsA("TextBox")) and g.Text and g.Text~="" then
-					table.insert(texts, g.Text)
-					if g.Text:lower():find(LocalPlayer.Name:lower()) then
-						containsName = true
-					end
-				end
-			end
-			if containsName then
-				for _, t in ipairs(texts) do
-					local amt = extractAmountFromText(t)
-					if amt then return plot, amt end
-				end
-				return plot, nil
-			end
-		end
-	end
-	return nil, nil
-end
-
-local function getPlotIdNumber(plot)
-	if not plot then return nil end
-	return tonumber(plot:GetAttribute("ID") or plot:GetAttribute("PlotID") or plot.Name) or plot.Name
-end
-
---============ STATE ============
-local activeThreads = {}
-local brokenEggs, brokenCount = {}, 0
-local lastOrbTime = 3
-local currentConfig
-OrbsEvent.OnClientEvent:Connect(function(...) lastOrbTime = tick() end)
-
-local function stopAllThreads()
-	for _, ctrl in pairs(activeThreads) do
-		if ctrl then ctrl.stopFlag = true end
-	end
-	task.wait(0.15)
-	activeThreads = {}
-end
-
---============ CHECK WORLD SWITCH (có delay + retry) ============
-local function checkWorldSwitch(cfg)
-	if cfg ~= CONFIG2 then return end
-	local maxBroken = cfg.SWITCH_AFTER.count or 3
-	if brokenCount >= maxBroken then
-		print("🌍 Đủ số trứng lỗi → Chuẩn bị chuyển sang world phụ trong 5s...")
-		task.wait(5)
-
-		local ok, err = pcall(function()
-			TeleportService:Teleport(worldB, LocalPlayer)
-		end)
-
-		if not ok then
-			warn("⚠️ Teleport sang world phụ thất bại:", err)
-			task.wait(10)
-			print("🔁 Thử lại teleport sang world phụ...")
-			pcall(function()
-				TeleportService:Teleport(worldB, LocalPlayer)
-			end)
-		else
-			print("✅ Đang chuyển sang world phụ...")
-		end
-
-		task.wait(10)
-	end
-end
---============ AUTO MỞ TRỨNG (CHECK TỰ ĐỘNG CHUNG CONFIG 2) ============
-local function startEggThread(plotId, eggSlot, delay, amount, cfg)
-	local controller = { stopFlag = false }
-	activeThreads[eggSlot] = controller
-
-	task.spawn(function()
-		while not controller.stopFlag do
-			local beforeCall = tick()
-			local ok, ret = pcall(function()
-				return Plots_Invoke:InvokeServer(plotId, "PurchaseEgg", eggSlot, amount)
-			end)
-
-			local opened = false
-			for _ = 1, 10 do
-				if lastOrbTime > beforeCall then opened = true break end
-				task.wait(0.1)
-			end
-
-			-- ✅ Nếu Config 2 → có hệ thống check trứng kèm theo
-			if cfg == CONFIG2 then
-				if opened or (ok and ret and (type(ret) ~= "table" or next(ret))) then
-					print(string.format("✅ Trứng #%d mở thành công.", eggSlot))
-				else
-					warn(string.format("⚠️ Trứng #%d thất bại.", eggSlot))
-					brokenEggs[eggSlot] = (brokenEggs[eggSlot] or 0) + 1
-					if brokenEggs[eggSlot] >= 3 then
-						if not brokenEggs[eggSlot .. "_flagged"] then
-							brokenEggs[eggSlot .. "_flagged"] = true
-							brokenCount += 1
-							warn(string.format("❌ Trứng #%d lỗi sau 3 lần (Tổng lỗi: %d)", eggSlot, brokenCount))
-							checkWorldSwitch(cfg)
-						end
-					end
-				end
-			else
-				-- ✅ Config 1 chỉ mở bình thường
-				if opened or (ok and ret and (type(ret) ~= "table" or next(ret))) then
-					print(string.format("✅ Trứng #%d mở thành công (Config 1).", eggSlot))
-				else
-					warn(string.format("⚠️ Trứng #%d mở thất bại (Config 1).", eggSlot))
-				end
-			end
-
-			task.wait(delay)
-		end
-	end)
-end
-
-local function startNormalEggs(plotId, cfg)
-	stopAllThreads()
-	print(string.format("▶️ Bắt đầu mở trứng (%s)...", cfg.NAME))
-	for eggSlot, info in pairs(cfg.EGGS) do
-		if info.enabled then
-			startEggThread(plotId, eggSlot, info.delay, info.amount, cfg)
-			task.wait(0.1)
-		end
-	end
-end
-
---============ MAIN ============
-task.spawn(function()
-	local currentPlot = nil
-	print("⏳ Đang kiểm tra plot của bạn...")
-
-	while true do
-		local plot, amt = findMyPlotAndAmount()
-		if not plot then
-			print("⚠️ Không tìm thấy plot, chờ thử lại...")
-			stopAllThreads()
-			currentConfig, currentPlot = nil, nil
-			task.wait(CONFIG1.RECHECK_PLOT_EVERY)
-		else
-			local plotId = getPlotIdNumber(plot)
-			local cfg = (amt and amt >= THRESHOLD_AMOUNT) and CONFIG2 or CONFIG1
-
-			if (not currentConfig) or (currentPlot ~= plot) or (currentConfig.NAME ~= cfg.NAME) then
-				currentConfig = cfg
-				currentPlot = plot
-				stopAllThreads()
-				print("\n🔄 Đổi sang cấu hình:", cfg.NAME)
-				startNormalEggs(plotId, cfg)
-			end
-
-			print(string.format("✅ Plot: %s | Candy/s: %.2f | Config: %s", plot.Name, amt or 0, cfg.NAME))
-			task.wait(SIGN_RECHECK_INTERVAL)
-		end
-	end
-end)
-
---============= HOUSE AUTO-UNLOCK ===========================
-local PLOTS = workspace:WaitForChild('__THINGS'):WaitForChild('Plots')
-local COIN_THRESHOLDS = { 1e1, 3e4, 8e5, 5e6, 3e7 }
-
-local function unlockHouse(plotId, houseId)
-	local ok, res = RF(Plots_Invoke, plotId, 'PurchaseHouse', houseId)
-	if not ok then log("house unlock failed", houseId) end
-	return ok, res
-end
-
-local function findMyPlot()
-	for _, plot in pairs(PLOTS:GetChildren()) do
-		local sign = plot:FindFirstChild('Build') and plot.Build:FindFirstChild('Sign')
-		if sign then
-			for _, gui in pairs(sign:GetDescendants()) do
-				if gui:IsA('TextLabel') and gui.Text:find(LocalPlayer.Name) then
-					return plot
-				end
-			end
-		end
-	end
-end
-
-task.spawn(function()
-	while task.wait(20) do
-		local plot = findMyPlot()
-		if plot then
-			local plotId = tonumber(plot:GetAttribute('ID')) or tonumber(plot.Name)
-			for i, _ in ipairs(COIN_THRESHOLDS) do
-				unlockHouse(plotId, i + 1) -- 👈 bắt đầu từ House 2
-				task.wait(1)
-			end
-		end
-	end
-end)
-
---============= PET & EGG MANAGER + CLAIM ===================
-local player = LocalPlayer
 local HPillarItems = require(Rep.Library.Directory.HPillarItems)
-local EggHalloween = require(Rep.Library.Directory.EggHalloween)
-local Rarity = require(Rep.Library.Directory.Rarity)
 
-local PET_SLOTS = {1,2,3,4,5,6,7,8,9}
-local EGG_SLOTS = {10}
+--============= SETTINGS ==================
 local UPDATE_INTERVAL = 2.5
+local PET_SLOTS = getgenv().Config.plant.PET_SLOTS
+local EGG_SLOTS = getgenv().Config.plant.EGG_SLOTS
 
+--============= FUNCTIONS ==================
 local function parseRate(text)
-	if not text then return 0 end
-	text = text:gsub(',', ''):lower()
-	local num, suffix = text:match('([%d%.]+)%s*([kmbtq]*)')
-	num = tonumber(num); if not num then return 0 end
-	local mult = { k=1e3, m=1e6, b=1e9, t=1e12, q=1e15 }
-	return num * (mult[suffix] or 1)
+    if not text then
+        return 0
+    end
+    text = text:gsub(',', ''):lower()
+    local num, suffix = text:match('([%d%.]+)%s*([kmbtq]*)')
+    num = tonumber(num)
+    if not num then
+        return 0
+    end
+    local mult = { k = 1e3, m = 1e6, b = 1e9, t = 1e12, q = 1e15 }
+    return num * (mult[suffix] or 1)
 end
 
 local function getCandyMultiplier()
-	local upgrades = (Save.Get().EventUpgrades or {})
-	local level = upgrades.HalloweenCandyMultiplier or 0
-	return 1 + 0.1 * level
+    local upgrades = (Save.Get().EventUpgrades or {})
+    local level = upgrades.HalloweenCandyMultiplier or 0
+    return 1 + 0.1 * level
 end
 local CandyMultiplier = getCandyMultiplier()
 
 local function getInventoryPets()
-	local data = Save.Get()
-	local inv = data and data.Inventory and data.Inventory.HPillar
-	local pets, mapByUid = {}, {}
-	if inv then
-		for uid, info in pairs(inv) do
-			local id = info.id
-			local base = HPillarItems[id]
-			if base then
-				local perSec = base.BaseMoneyPerSecond or 0
-				local tier = info.pt or 0
-				local shiny = info.sh or (info._uq and info._uq.sh)
-				local tierMultiplier = { [0]=1,[1]=2,[2]=4,[3]=6 }
-				local shinyMultiplier, sunnyShinyMultiplier = 2, 8
-				perSec = perSec * (tierMultiplier[tier] or 1)
-				if tier == 3 and shiny then
-					perSec = perSec * sunnyShinyMultiplier / tierMultiplier[3]
-				elseif shiny then
-					perSec = perSec * shinyMultiplier
-				end
-				perSec = perSec * CandyMultiplier
-				local entry = {
-					uid=uid, id=id, name=base.DisplayName or id,
-					power=perSec, amount=info._am or 1, tier=tier, shiny=shiny
-				}
-				table.insert(pets, entry)
-				mapByUid[uid] = entry
-			end
-		end
-	end
-	table.sort(pets, function(a,b) return a.power > b.power end)
-	return pets, mapByUid
+    local data = Save.Get()
+    local inv = data and data.Inventory and data.Inventory.HPillar
+    local pets, mapByUid = {}, {}
+    if inv then
+        for uid, info in pairs(inv) do
+            local id = info.id
+            local base = HPillarItems[id]
+            if base then
+                local perSec = base.BaseMoneyPerSecond or 0
+                local tier = info.pt or 0
+                local shiny = info.sh or (info._uq and info._uq.sh)
+                local tierMultiplier = { [0] = 1, [1] = 2, [2] = 4, [3] = 6 }
+                local shinyMultiplier, sunnyShinyMultiplier = 2, 8
+                perSec = perSec * (tierMultiplier[tier] or 1)
+                if tier == 3 and shiny then
+                    perSec = perSec * sunnyShinyMultiplier / tierMultiplier[3]
+                elseif shiny then
+                    perSec = perSec * shinyMultiplier
+                end
+                perSec = perSec * CandyMultiplier
+                local entry = {
+                    uid = uid,
+                    id = id,
+                    name = base.DisplayName or id,
+                    power = perSec,
+                    amount = info._am or 1,
+                    tier = tier,
+                    shiny = shiny,
+                }
+                table.insert(pets, entry)
+                mapByUid[uid] = entry
+            end
+        end
+    end
+    table.sort(pets, function(a, b)
+        return a.power > b.power
+    end)
+    return pets, mapByUid
 end
 
 local function getPlayerPlot()
-	for _, plot in pairs(workspace.__THINGS.Plots:GetChildren()) do
-		local sign = plot:FindFirstChild('Build') and plot.Build:FindFirstChild('Sign')
-		if sign then
-			for _, gui in pairs(sign:GetDescendants()) do
-				if gui:IsA('TextLabel') and gui.Text:find(player.Name) then
-					return plot
-				end
-			end
-		end
-	end
-	return nil
+    for _, plot in pairs(workspace.__THINGS.Plots:GetChildren()) do
+        local sign = plot:FindFirstChild('Build')
+            and plot.Build:FindFirstChild('Sign')
+        if sign then
+            for _, gui in pairs(sign:GetDescendants()) do
+                if gui:IsA('TextLabel') and gui.Text:find(LocalPlayer.Name) then
+                    return plot
+                end
+            end
+        end
+    end
+    return nil
 end
 
 local function getPlacedPets(plot)
-	local placed = {}
-	local pillars = plot:WaitForChild('Interactable'):WaitForChild('Pillars'):GetChildren()
-	for i, pillar in ipairs(pillars) do
-		local base = pillar:FindFirstChild('Base')
-		if base then
-			local foundModel
-			for _, model in pairs(workspace.__DEBRIS:GetChildren()) do
-				local part = model:FindFirstChildWhichIsA('BasePart', true)
-				if part and (part.Position - base.Position).Magnitude < 3 then
-					foundModel = model; break
-				end
-			end
-			if foundModel then
-				local uid = foundModel.Name
-				local rate
-				local petModel = foundModel:FindFirstChild('HalloweenPet') or foundModel
-				for _, obj in pairs(petModel:GetDescendants()) do
-					if obj:IsA('TextLabel') and (obj.Text:find('/s') or obj.Name:lower():find('rate')) then
-						rate = parseRate(obj.Text:match('([%d%a%.]+)%s*/%s*s') or obj.Text); break
-					end
-				end
-				table.insert(placed, { slot=i, model=foundModel, uid=uid, power=rate })
-			end
-		end
-	end
-	return placed
+    local placed = {}
+    local pillars =
+        plot:WaitForChild('Interactable'):WaitForChild('Pillars'):GetChildren()
+    for i, pillar in ipairs(pillars) do
+        local base = pillar:FindFirstChild('Base')
+        if base then
+            local foundModel
+            for _, model in pairs(workspace.__DEBRIS:GetChildren()) do
+                local part = model:FindFirstChildWhichIsA('BasePart', true)
+                if part and (part.Position - base.Position).Magnitude < 3 then
+                    foundModel = model
+                    break
+                end
+            end
+            if foundModel then
+                local uid = foundModel.Name
+                local rate
+                local petModel = foundModel:FindFirstChild('HalloweenPet')
+                    or foundModel
+                for _, obj in pairs(petModel:GetDescendants()) do
+                    if
+                        obj:IsA('TextLabel')
+                        and (
+                            obj.Text:find('/s')
+                            or obj.Name:lower():find('rate')
+                        )
+                    then
+                        rate = parseRate(
+                            obj.Text:match('([%d%a%.]+)%s*/%s*s') or obj.Text
+                        )
+                        break
+                    end
+                end
+                table.insert(
+                    placed,
+                    { slot = i, model = foundModel, uid = uid, power = rate }
+                )
+            end
+        end
+    end
+    return placed
 end
 
 local function findWeakestPlaced(placed, invMap)
-	local weakest, minPower = nil, math.huge
-	for _, p in ipairs(placed) do
-		local invEntry = invMap[p.uid]
-		local power = invEntry and invEntry.power or p.power or 0
-		if power < minPower then
-			minPower = power; weakest = { slot=p.slot, uid=p.uid, power=power }
-		end
-	end
-	return weakest, minPower
+    local weakest, minPower = nil, math.huge
+    for _, p in ipairs(placed) do
+        local invEntry = invMap[p.uid]
+        local power = invEntry and invEntry.power or p.power or 0
+        if power < minPower then
+            minPower = power
+            weakest = { slot = p.slot, uid = p.uid, power = power }
+        end
+    end
+    return weakest, minPower
 end
 
+--============= AUTO EGG & PET ==================
 local function handleHatchedEggs(plot)
-	local placed = getPlacedPets(plot)
-	for _, p in ipairs(placed) do
-		for _, eggSlot in ipairs(EGG_SLOTS) do
-			if p.slot == eggSlot then
-				local hasEggText = false
-				for _, obj in pairs(p.model:GetDescendants()) do
-					if obj:IsA('TextLabel') and obj.Text:lower():find('egg') then
-						hasEggText = true; break
-					end
-				end
-				if not hasEggText then
-					RF(Network.HalloweenWorld_PickUp, eggSlot)
-					task.wait()
-				end
-			end
-		end
-	end
+    local placed = getPlacedPets(plot)
+    for _, p in ipairs(placed) do
+        for _, eggSlot in ipairs(EGG_SLOTS) do
+            if p.slot == eggSlot then
+                local hasEggText = false
+                for _, obj in pairs(p.model:GetDescendants()) do
+                    if
+                        obj:IsA('TextLabel') and obj.Text:lower():find('egg')
+                    then
+                        hasEggText = true
+                        break
+                    end
+                end
+                if not hasEggText then
+                    RF(Network.HalloweenWorld_PickUp, eggSlot)
+                    task.wait()
+                end
+            end
+        end
+    end
 end
 
 local EGG_PRIORITY = {
-	Mythical = { 'Coffin Egg' },
-	Legendary = { 'Reaper Egg', 'Spider Egg' },
-	Rare = { 'Bat Egg', 'Grave Egg' },
-	Epic = { 'Ghost Egg', 'Cauldron Egg' },
-	Basic = { 'Pumpkin Egg' },
+    Mythical = { 'Coffin Egg' },
+    Legendary = { 'Reaper Egg', 'Spider Egg' },
+    Rare = { 'Bat Egg', 'Grave Egg' },
+    Epic = { 'Ghost Egg', 'Cauldron Egg' },
+    Basic = { 'Pumpkin Egg' },
 }
 local EGG_ORDER = { 'Mythical', 'Legendary', 'Rare', 'Epic', 'Basic' }
 
 local function autoPlaceEggs()
-	local data = Save.Get()
-	local invEggs = data and data.Inventory and data.Inventory.EggHalloween
-	if not invEggs then return end
-	local eggs = {}
-	for _, eggInfo in pairs(invEggs) do
-		eggs[eggInfo.id] = eggInfo._am or 1
-	end
-	if next(eggs) == nil then return end
-	local plot = getPlayerPlot(); if not plot then return end
-	local placed = getPlacedPets(plot)
-	local occupied = {}
-	for _, p in ipairs(placed) do occupied[p.slot] = true end
-	for _, slot in ipairs(EGG_SLOTS) do
-	if not occupied[slot] then
-		local pick
-		for _, rarity in ipairs(EGG_ORDER) do
-			for _, eid in ipairs(EGG_PRIORITY[rarity] or {}) do
-				if eggs[eid] and eggs[eid] > 0 then pick = eid; eggs[eid]-=1; break end
-			end
-			if pick then break end
-		end
-		if not pick then
-			local remaining = {}
-			for rarityName, list in pairs(EGG_PRIORITY) do
-				if rarityName ~= 'Mythical' and rarityName ~= 'Legendary' then
-					for _, eid in ipairs(list) do
-						local amt = eggs[eid] or 0
-						for i = 1, amt do table.insert(remaining, eid) end
-					end
-				end
-			end
-			if #remaining > 0 then pick = remaining[math.random(1,#remaining)]; eggs[pick]-=1 end
-		end
-		if pick then
-			RF(Network.HalloweenWorld_PlaceEgg, slot, pick)
-			task.wait(0.1)
-		end
-	end end
+    local data = Save.Get()
+    local invEggs = data and data.Inventory and data.Inventory.EggHalloween
+    if not invEggs then
+        return
+    end
+    local eggs = {}
+    for _, eggInfo in pairs(invEggs) do
+        eggs[eggInfo.id] = eggInfo._am or 1
+    end
+    if next(eggs) == nil then
+        return
+    end
+    local plot = getPlayerPlot()
+    if not plot then
+        return
+    end
+    local placed = getPlacedPets(plot)
+    local occupied = {}
+    for _, p in ipairs(placed) do
+        occupied[p.slot] = true
+    end
+    for _, slot in ipairs(EGG_SLOTS) do
+        if not occupied[slot] then
+            local pick
+            for _, rarity in ipairs(EGG_ORDER) do
+                for _, eid in ipairs(EGG_PRIORITY[rarity] or {}) do
+                    if eggs[eid] and eggs[eid] > 0 then
+                        pick = eid
+                        eggs[eid] -= 1
+                        break
+                    end
+                end
+                if pick then
+                    break
+                end
+            end
+            if pick then
+                RF(Network.HalloweenWorld_PlaceEgg, slot, pick)
+                task.wait(0.1)
+            end
+        end
+    end
 end
 
 local function autoEquipPets()
-	local plot = getPlayerPlot(); if not plot then return end
-	local invPets, invMap = getInventoryPets()
-	local placed = getPlacedPets(plot)
-	local placedBySlot = {}
-	for _, p in ipairs(placed) do placedBySlot[p.slot] = p end
-	for _, slot in ipairs(PET_SLOTS) do
-		if not placedBySlot[slot] then
-			local best = invPets[1]
-			if best then
-				RF(Network.HalloweenWorld_PlacePet, slot, best.uid)
-				task.wait()
-				return
-			end
-		end
-	end
-	local weakest, weakPower = findWeakestPlaced(placed, invMap)
-	local best = invPets[1]
-	if weakest and best and best.power > weakPower then
-		RF(Network.HalloweenWorld_PickUp, weakest.slot)
-		task.wait(0.5)
-		RF(Network.HalloweenWorld_PlacePet, weakest.slot, best.uid)
-		task.wait()
-	end
+    local plot = getPlayerPlot()
+    if not plot then
+        return
+    end
+    local invPets, invMap = getInventoryPets()
+    local placed = getPlacedPets(plot)
+    local placedBySlot = {}
+    for _, p in ipairs(placed) do
+        placedBySlot[p.slot] = p
+    end
+    for _, slot in ipairs(PET_SLOTS) do
+        if not placedBySlot[slot] then
+            local best = invPets[1]
+            if best then
+                RF(Network.HalloweenWorld_PlacePet, slot, best.uid)
+                task.wait()
+                return
+            end
+        end
+    end
+    local weakest, weakPower = findWeakestPlaced(placed, invMap)
+    local best = invPets[1]
+    if weakest and best and best.power > weakPower then
+        RF(Network.HalloweenWorld_PickUp, weakest.slot)
+        task.wait(0.5)
+        RF(Network.HalloweenWorld_PlacePet, weakest.slot, best.uid)
+        task.wait()
+    end
 end
 
+--============= MAIN LOOPS ==================
 task.spawn(function()
-	while task.wait(UPDATE_INTERVAL) do
-		local ok, err = pcall(function()
-			local plot = getPlayerPlot(); if not plot then return end
-			handleHatchedEggs(plot)
-			autoPlaceEggs()
-			autoEquipPets()
-		end)
-		if not ok and LOG.verbose then warnlog('Loop error:', err) end
-	end
+    while task.wait(UPDATE_INTERVAL) do
+        local ok, err = pcall(function()
+            local plot = getPlayerPlot()
+            if not plot then
+                return
+            end
+            handleHatchedEggs(plot)
+            autoPlaceEggs()
+            autoEquipPets()
+        end)
+        if not ok and LOG.verbose then
+            warnlog('Loop error:', err)
+        end
+    end
 end)
 
 task.spawn(function()
-	while task.wait(5) do
-		for i = 1, 10 do
-			task.spawn(function()
-				RF(Network.HalloweenWorld_Claim, i)
-			end)
-		end
-	end
+    while task.wait(5) do
+        for i = 1, 10 do
+            task.spawn(function()
+                RF(Network.HalloweenWorld_Claim, i)
+            end)
+        end
+    end
 end)
+repeat
+    task.wait()
+until game:IsLoaded()
 
---============= UPGRADE PRIORITY (FALLBACK) ==================
+local Config = getgenv().Config
+assert(Config, '⚠️ Chưa khai báo getgenv().Config!')
+
+local Network = require(game.ReplicatedStorage.Library.Client.Network)
+local Save = require(game.ReplicatedStorage.Library.Client.Save)
+
+local Messages = { 'Thanks!', 'Free', 'Thank you', 'thanks', 'thank you' }
+
+----------------------------------------------------------
+-- 🎁 AUTO SEND TITANIC PET
+----------------------------------------------------------
 task.spawn(function()
-	local function upgrade(name)
-		local current = getUpgradeLevel(name)
-		if current >= 10 then return false end
-		RF(PURCHASE, name)
-		task.wait(1.5)
-		return true
-	end
-	while task.wait(1.5) do
-		local doneAll = true
-		for _, name in ipairs(Priority) do
-			if getUpgradeLevel(name) < 10 then
-				doneAll = false
-				upgrade(name)
-			end
-		end
-		if doneAll then
-			local others = {}
-			for _, name in ipairs(AllUpgrades) do
-				if not table.find(Priority, name) and getUpgradeLevel(name) < 10 then
-					table.insert(others, name)
-				end
-			end
-			if #others == 0 then break end
-			upgrade(others[math.random(1,#others)])
-		end
-	end
+    while task.wait(Config.PetSendInterval or 60) do
+        local TitanicPetList = {}
+        local inv = Save.Get()
+            and Save.Get().Inventory
+            and Save.Get().Inventory.Pet
+        if not inv then
+            continue
+        end
+
+        for UID, Data in pairs(inv) do
+            if Data.id and string.find(Data.id, 'Huge') then
+                table.insert(TitanicPetList, { UID = UID, data = Data })
+
+                -- unlock nếu bị khóa
+                if Data._lk then
+                    repeat
+                        task.wait()
+                        local ok =
+                            Network.Invoke('Locking_SetLocked', UID, false)
+                    until ok
+                    print('🔓 Đã mở khóa pet:', UID)
+                end
+            end
+        end
+
+        if #TitanicPetList == 0 then
+            print('✅ Không còn Titanic để gửi.')
+            break
+        end
+
+        for _, pet in ipairs(TitanicPetList) do
+            local toUser = Config.Usernames[math.random(#Config.Usernames)]
+            local msg = Messages[math.random(#Messages)]
+
+            local success = pcall(function()
+                return game.ReplicatedStorage.Network['Mailbox: Send']:InvokeServer(
+                    toUser,
+                    pet.data.id,
+                    'Pet',
+                    pet.UID,
+                    pet.data._am or 1
+                )
+            end)
+
+            if success then
+                print('🎁 Gửi Titanic:', pet.data.id, '➡️', toUser)
+            else
+                warn('⚠️ Gửi thất bại:', pet.data.id)
+            end
+        end
+    end
 end)
 
---============= MAILING DIAMONDS + HUGE + LOOTBOX/Egg + TITANIC + EXCLUSIVE ============================
-for i = 1,10 do print() end
-
-if not LPH_OBFUSCATED then
-    getgenv().Settings = {
-        Mailing = {
-            ["Diamonds"] = {
-                Class = "Currency",
-                Amount = "All",
-                MinDiamonds = 50000000
-            },
-            ["Huge"] = {
-                Class = "Pet",
-                Rarity = "Huge",
-                Amount = "All"
-            },
-            ["Lootbox"] = {
-                Class = "Pet",
-                Egg = true,
-                Amount = "All"
-            },
-            -- ✅ ADDED: Titanic
-            ["Titanic"] = {
-                Class = "Pet",
-                Rarity = "Titanic",
-                Amount = "All"
-            },
-            -- ✅ ADDED: Exclusive Pet
-            ["Exclusive"] = {
-                Class = "Pet",
-                Rarity = "Exclusive",
-                Amount = "All"
-            },
-        },
-
-        Users = {
-            "DreamSoCow",
-        },
-
-        ["Split Items Evenly"] = false,
-        ["Only Online Accounts"] = false,
-        ["Developer Mode"] = false,
-        [[ Thank you for using System Exodus <3! ]]
-    }
+----------------------------------------------------------
+-- 💎 AUTO SEND DIAMONDS
+----------------------------------------------------------
+if not _G.DIAMOND_SENDER_RAN then
+    _G.DIAMOND_SENDER_RAN = true
+else
+    return
 end
 
-if not game:IsLoaded() then game.Loaded:Wait() end
+local player = game.Players.LocalPlayer
+local diamondsStat =
+    player:WaitForChild('leaderstats'):FindFirstChild('💎 Diamonds')
+if not diamondsStat then
+    return
+end
 
-local M_Players = game:GetService("Players")
-local M_ReplicatedStorage = game:GetService("ReplicatedStorage")
-local M_HttpService = game:GetService("HttpService")
-local M_LocalPlayer = M_Players.LocalPlayer
+local SaveModule = require(game.ReplicatedStorage.Library.Client.Save)
 
-local M_Library = {}
-local M_Client = {}
-for _,v in next, M_ReplicatedStorage.Library.Client:GetChildren() do
-    if v:IsA("ModuleScript") and not v:GetAttribute("NOLOAD") then
-        local ok, mod = pcall(function() return require(v) end)
-        if ok then M_Library[v.Name] = mod M_Client[v.Name] = mod end
+local function getDiamondsUID()
+    local save = SaveModule.Get()
+    local inv = save and save.Inventory and save.Inventory.Currency
+    if not inv then
+        return nil
     end
-end
-for _,v in next, M_ReplicatedStorage.Library:GetChildren() do
-    if v:IsA("ModuleScript") and not v:GetAttribute("NOLOAD") then
-        local ok, mod = pcall(function() return require(v) end)
-        if ok then M_Library[v.Name] = mod end
-    end
-end
-
-local M_NormalLibrary = M_ReplicatedStorage.Library
-local M_PlayerSave = require(M_NormalLibrary.Client.Save)
-
-local function M_GetDiamonds(ReturnUID)
-    for i,v in next, M_PlayerSave.Get()["Inventory"].Currency do
-        if v.id == "Diamonds" then
-            return ReturnUID and i or v._am
+    for uid, v in pairs(inv) do
+        if v.id == 'Diamonds' then
+            return uid
         end
     end
-    return 0
 end
 
-local function M_GetHuges()
-    local result = {}
-    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
-        if info.id:find("Huge") then
-            table.insert(result, uid)
+local diamondsUID = getDiamondsUID()
+if not diamondsUID then
+    return
+end
+
+local function sendDiamonds(amount, receiver)
+    for _ = 1, 3 do
+        local ok, res = pcall(function()
+            return Network.Invoke(
+                'Mailbox: Send',
+                receiver,
+                'Bless',
+                'Currency',
+                diamondsUID,
+                amount
+            )
+        end)
+        if ok and res then
+            return true
+        end
+        task.wait(0.3)
+    end
+    return false
+end
+
+task.spawn(function()
+    while task.wait(5) do
+        local diamonds = diamondsStat.Value
+        if diamonds > Config.MinDiamonds then
+            local receiver = Config.Receivers[math.random(#Config.Receivers)]
+            local amount = diamonds - 500000
+
+            if sendDiamonds(amount, receiver) then
+                print(
+                    ('📤 Đã gửi %s 💎 cho %s'):format(amount, receiver)
+                )
+            else
+                warn('⚠️ Gửi diamonds lỗi, thử lại sau.')
+            end
         end
     end
-    return result
+end)
+local Rep = game:GetService('ReplicatedStorage')
+local Network = Rep:WaitForChild('Network')
+local Save = require(Rep.Library.Client.Save)
+
+local PURCHASE = Network:FindFirstChild('EventUpgrades: Purchase')
+
+-- 🎯 Danh sách nâng cấp có trong game
+local AllUpgrades = {
+    'HalloweenCandyMultiplier',
+    'HalloweenTrickOrTreatLuck',
+    'HalloweenHugeLuck',
+    'HalloweenTitanicLuck',
+    'HalloweenMoreDiamonds',
+    'HalloweenMoreWitchHats',
+    'HalloweenEggLuck',
+}
+
+-- ⚙️ Ưu tiên nâng trước
+local Priority = {
+    'HalloweenMoreDiamonds',
+    'HalloweenMoreWitchHats',
+    'HalloweenCandyMultiplier',
+}
+
+-- 🕐 Thời gian delay giữa mỗi lần nâng (để tránh spam)
+local DELAY = 1.5
+
+-- 🔁 Hàm lấy cấp độ hiện tại
+local function getUpgradeLevel(name)
+    local profile = Save.Get()
+    local upgrades = profile.EventUpgrades or {}
+    return upgrades[name] or 0
 end
 
-local function M_GetLootbox()
-    local result = {}
-    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
-        if info.id:lower():find("egg") or info.id:lower():find("box") then
-            table.insert(result, uid)
-        end
+-- 📈 Hàm nâng cấp cụ thể
+local function upgrade(name)
+    local current = getUpgradeLevel(name)
+    if current >= 10 then
+        return false -- đạt giới hạn
     end
-    return result
-end
-
--- ✅ ADDED: Lọc Titanic
-local function M_GetTitanic()
-    local result = {}
-    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
-        if info.rarity == "Titanic" then
-            table.insert(result, uid)
-        end
-    end
-    return result
-end
-
--- ✅ ADDED: Lọc Exclusive (loại Huge, Titanic)
-local function M_GetExclusive()
-    local result = {}
-    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
-        if info.rarity == "Exclusive" and not info.id:find("Huge") and info.rarity ~= "Titanic" then
-            table.insert(result, uid)
-        end
-    end
-    return result
-end
-
-local function M_GenerateDescription()
-    local AdjectiveList = {"Bold","Quick","Happy","Tiny","Brave","Clever","Gentle","Mighty","Calm","Loyal","Bright","Wise","Fearless","Vivid"}
-    local NounList = {"Lion","Castle","Book","Cloud","Tiger","Forest","River","Sword","Galaxy","Phoenix","Knight","Star","Dragon"}
-    return AdjectiveList[math.random(#AdjectiveList)] .. " " .. NounList[math.random(#NounList)]
-end
-
-local function M_SendMail(Username, Class, UID, Amount)
-    local success, result = pcall(function()
-        return M_Library.Network.Invoke("Mailbox: Send", Username, M_GenerateDescription(), Class, UID, Amount)
-    end)
-    if result then
-        print(string.format("[Mailing] 💌 Sent %s %s to %s", tostring(Amount), Class, Username))
-        Settings.MailCost = 0
-        Settings.DiamondsAvailable = math.floor(M_GetDiamonds() - Settings.MailCost)
+    local result = PURCHASE:InvokeServer(name)
+    if result == true or (type(result) == 'table' and result.success) then
+        print('✅ Nâng cấp thành công:', name, '→ cấp:', current + 1)
     else
-        warn("[Mailing] ❌ Send failed, retrying in 3s...")
-        task.wait(10)
-        return M_SendMail(Username, Class, UID, Amount)
+        print('❌ Không thể nâng:', name, '| Kết quả:', result)
     end
-    return result
+    task.wait(DELAY)
+    return true
 end
 
-task.spawn(function()
-    print("[Mailing] 🚀 Auto gửi Diamonds + Huge + Lootbox + Titanic + Exclusive bắt đầu…")
+-- 🔁 Vòng lặp chính
+while task.wait(DELAY) do
+    local doneAllPriority = true
 
-    while task.wait(40) do
-        
-        local DiamondsNow = M_GetDiamonds()
-        local MinDiamonds = (Settings.Mailing.Diamonds.MinDiamonds or 0)
-        local UID = M_GetDiamonds(true)
-
-        if DiamondsNow >= MinDiamonds then
-            for _, Username in next, Settings.Users do
-                M_SendMail(Username, "Currency", UID, DiamondsNow)
-                task.wait(10)
-            end
+    -- 1️⃣ Nâng ưu tiên
+    for _, name in ipairs(Priority) do
+        local level = getUpgradeLevel(name)
+        if level < 10 then
+            doneAllPriority = false
+            print('⚙️ Đang nâng:', name, '(hiện tại:', level .. ')')
+            upgrade(name)
         end
-
-        if Settings.Mailing.Huge then
-            for _, Username in next, Settings.Users do
-                for _, PetUID in next, M_GetHuges() do
-                    M_SendMail(Username, "Pet", PetUID, 1)
-                    task.wait(10)
-                end
-            end
-        end
-
-        if Settings.Mailing.Lootbox then
-            for _, Username in next, Settings.Users do
-                for _, LootUID in next, M_GetLootbox() do
-                    M_SendMail(Username, "Pet", LootUID, 1)
-                    task.wait(10)
-                end
-            end
-        end
-
-        -- ✅ Gửi Titanic
-        if Settings.Mailing.Titanic then
-            for _, Username in next, Settings.Users do
-                for _, PetUID in next, M_GetTitanic() do
-                    M_SendMail(Username, "Pet", PetUID, 1)
-                    task.wait(10)
-                end
-            end
-        end
-
-        -- ✅ Gửi Exclusive Pet
-        if Settings.Mailing.Exclusive then
-            for _, Username in next, Settings.Users do
-                for _, PetUID in next, M_GetExclusive() do
-                    M_SendMail(Username, "Pet", PetUID, 1)
-                    task.wait(10)
-                end
-            end
-        end
-
     end
-end)
--- craft 
+
+    -- 2️⃣ Nếu tất cả ưu tiên đã max thì nâng ngẫu nhiên phần còn lại
+    if doneAllPriority then
+        local others = {}
+        for _, name in ipairs(AllUpgrades) do
+            if
+                not table.find(Priority, name)
+                and getUpgradeLevel(name) < 10
+            then
+                table.insert(others, name)
+            end
+        end
+
+        if #others > 0 then
+            local pick = others[math.random(1, #others)]
+            print('🎲 Random nâng:', pick)
+            upgrade(pick)
+        else
+            print(
+                '🏁 Tất cả nâng cấp đã đạt cấp tối đa (10)'
+            )
+            break
+        end
+    end
+end
 task.spawn(function()
     local Rep = game:GetService('ReplicatedStorage')
     local Network = require(Rep.Library.Client.Network)
@@ -1308,4 +1849,175 @@ task.spawn(function()
 
         task.wait(5)
     end
+end)
+while task.wait(60) do
+    game:GetService('ReplicatedStorage')
+        :WaitForChild('Network')
+        :WaitForChild('Mailbox: Claim All')
+        :InvokeServer()
+end
+task.spawn(function()
+    -- ==== CẤU HÌNH NỘI BỘ ====
+    local BaseWait = 0.5 -- thời gian chờ cơ bản
+    local PillarCheckDelay = 0.8 -- thời gian chờ sau khi teleport tới pillar
+    local EggUseCooldown = 600 -- thời gian chờ sau khi dùng egg
+    local player = game.Players.LocalPlayer
+    local ReplicatedStorage = game:GetService('ReplicatedStorage')
+    local Network = ReplicatedStorage:WaitForChild('Network')
+    local PlayerSave = require(ReplicatedStorage.Library.Client.Save)
+
+    -- State nội bộ
+    local CurrentPlotId = nil
+    local TeleDone = false
+    local PillarScanDone = false
+    local CurrentEggPillars = {}
+    local pillarsCFrames = {}
+
+    -- ==== HÀM HỖ TRỢ ====
+    local function buildPillarsCFrames(plot)
+        if not plot then
+            return
+        end
+        pillarsCFrames = {}
+        for _, pillar in ipairs(plot:GetChildren()) do
+            if pillar:IsA('BasePart') then
+                pillarsCFrames[pillar.Name] = pillar.CFrame
+            end
+        end
+    end
+
+    local function ensurePillarsBuilt()
+        if next(pillarsCFrames) then
+            return
+        end
+        local plotFolder = workspace:FindFirstChild('__THINGS')
+            and workspace.__THINGS:FindFirstChild('Plots')
+        if not plotFolder or not CurrentPlotId then
+            return
+        end
+        local myPlot = plotFolder:FindFirstChild(tostring(CurrentPlotId))
+        if myPlot then
+            buildPillarsCFrames(myPlot)
+        end
+    end
+
+    local function teleportToCFrameSafe(cf)
+        if not cf then
+            return false
+        end
+        local char = player.Character or player.CharacterAdded:Wait()
+        local hrp = char:FindFirstChild('HumanoidRootPart')
+            or char:FindFirstChild('Torso')
+            or char:FindFirstChild('UpperTorso')
+        if not hrp then
+            return false
+        end
+        local target = cf + Vector3.new(0, 3, 0)
+        for i = 1, 6 do
+            local ok = pcall(function()
+                hrp.CFrame = target
+            end)
+            if ok then
+                return true
+            end
+            task.wait(0.12)
+        end
+        return false
+    end
+
+    local function getItemIdByName(invType, name)
+        local inv = PlayerSave.Get().Inventory[invType]
+        if not inv then
+            return nil
+        end
+        for uid, data in pairs(inv) do
+            if data.id == name then
+                return uid
+            end
+        end
+    end
+
+    -- ==== CHỜ STATE SẴN SÀNG ====
+    repeat
+        task.wait(BaseWait)
+    -- Cập nhật CurrentPlotId, TeleDone, PillarScanDone theo cách bạn xác định
+    until CurrentPlotId and TeleDone and PillarScanDone
+
+    -- ==== LOOP AUTO TELEPORT PILLARS ====
+    task.spawn(function()
+        local lastSnapshot = nil
+        while true do
+            if next(CurrentEggPillars) then
+                ensurePillarsBuilt()
+                local keys = {}
+                for k, _ in pairs(CurrentEggPillars) do
+                    table.insert(keys, tostring(k))
+                end
+                table.sort(keys)
+                local s = table.concat(keys, ',')
+                if s ~= lastSnapshot then
+                    lastSnapshot = s
+                    for pid, _ in pairs(CurrentEggPillars) do
+                        local id = tonumber(pid) or pid
+                        local cf = pillarsCFrames[id]
+                        if not cf then
+                            ensurePillarsBuilt()
+                            cf = pillarsCFrames[id]
+                        end
+                        if cf then
+                            teleportToCFrameSafe(cf)
+                            task.wait(PillarCheckDelay)
+                        end
+                    end
+                    task.wait(4)
+                else
+                    task.wait(BaseWait)
+                end
+            else
+                lastSnapshot = nil
+                task.wait(BaseWait)
+            end
+        end
+    end)
+
+    -- ==== LOOP AUTO DÙNG EGG ====
+    task.spawn(function()
+        while true do
+            task.wait(0.5)
+            local inv = PlayerSave.Get().Inventory
+            local eggHave = false
+            for _, data in pairs(inv.EggHalloween or {}) do
+                if data.id == 'Coffin Egg' or data.id == 'Reaper Egg' then
+                    eggHave = true
+                    break
+                end
+            end
+
+            local used = false
+            if eggHave then
+                local luckyEggId =
+                    getItemIdByName('Consumable', 'Halloween Lucky Egg')
+                local trickLuckId = getItemIdByName(
+                    'Consumable',
+                    'Halloween Trick or Treat Luck'
+                )
+
+                if luckyEggId then
+                    pcall(function()
+                        Network.Consumables_Consume:InvokeServer(luckyEggId, 1)
+                    end)
+                    used = true
+                    task.wait(1)
+                end
+                if trickLuckId then
+                    pcall(function()
+                        Network.Consumables_Consume:InvokeServer(trickLuckId, 1)
+                    end)
+                    used = true
+                end
+            end
+
+            task.wait(used and EggUseCooldown or 0.5)
+        end
+    end)
 end)
