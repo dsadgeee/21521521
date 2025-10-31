@@ -25,7 +25,7 @@ task.spawn(function()
     end
     check() -- chạy tức thì
     -- lặp cực nhanh mỗi 1s để bắt kịp thay đổi
-    while task.wait(1) do
+    while task.wait(5) do
         check()
     end
 end)
