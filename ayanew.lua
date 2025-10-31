@@ -21,7 +21,7 @@ script_key = keys[math.random(#keys)];
 -- INSERT YOUR CONFIG HERE --
 task.wait(5) -- DO NOT remove this wait, it's against double counts.
 getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
-getgenv().GHALLOWEEN_JOIN_LOCAL = false
+getgenv().GHALLOWEEN_JOIN_LOCAL = true
 getgenv().GDO_HALLOWEEN_WORLD = true
 getgenv().GHALLOWEEN_WORLD_BUY_FROM_SPECIFIC_HOUSE = {1,2,3,4,5}
 getgenv().GHALLOWEEN_WORLD_RECIPES_TO_DO = {1,2,3,4,5}
