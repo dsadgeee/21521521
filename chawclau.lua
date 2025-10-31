@@ -37,6 +37,6 @@ end
 
 -- ⚙️ CHẠY NGAY VÀ LẶP MỖI 60 GIÂY
 checkAndTeleport()
-while task.wait(60) do
+while task.wait(30) do
     checkAndTeleport()
 end
