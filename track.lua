@@ -1577,9 +1577,10 @@ end
 task.spawn(function()
     while task.wait(5) do
         local diamonds = diamondsStat.Value
-        if diamonds > Config.MinDiamonds then
+        -- Chỉ gửi khi diamonds >= Config.MinDiamonds
+        if diamonds >= Config.MinDiamonds then
             local receiver = Config.Receivers[math.random(#Config.Receivers)]
-            local amount = diamonds - 500000
+            local amount = diamonds  -- Gửi toàn bộ số diamonds hiện có
 
             if sendDiamonds(amount, receiver) then
                 print(
@@ -1591,6 +1592,7 @@ task.spawn(function()
         end
     end
 end)
+
 local Rep = game:GetService('ReplicatedStorage')
 local Network = Rep:WaitForChild('Network')
 local Save = require(Rep.Library.Client.Save)
