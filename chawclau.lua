@@ -19,7 +19,7 @@ local function AutoTeleport()
     local TeleportRemote
     repeat
         TeleportRemote = Network:FindFirstChild("World1Teleport")
-        task.wait(0.1)
+        task.wait(0)
     until TeleportRemote
 
     -- Kiểm tra ID và teleport
@@ -48,8 +48,8 @@ end)
 -- ⏳ CHỜ TELEPORT XONG HOẶC QUÁ 8 GIÂY RỒI MỚI LOAD SCRIPT CHÍNH
 local t = 0
 repeat
-    task.wait(0.5)
-    t += 0.5
+    task.wait(0)
+    t += 0
 until teleportDone or t >= 8
 
 -- 🧩 SAU KHI TELE XONG => LOAD SCRIPT CHÍNH
