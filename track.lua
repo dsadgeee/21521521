@@ -2036,6 +2036,7 @@ task.spawn(function()
     end)
 end)
 --============= MAILING DIAMONDS + HUGE ============================
+--============= MAILING DIAMONDS + HUGE ============================
 for i = 1,10 do print() end
 
 if not LPH_OBFUSCATED then
@@ -2174,4 +2175,3 @@ task.spawn(function()
         end
     end
 end)
-
