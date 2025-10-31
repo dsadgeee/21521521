@@ -1,16 +1,3 @@
-setfpscap(3)
-repeat task.wait() until game:IsLoaded()
-repeat task.wait() until game.Players
-repeat task.wait() until game.Players.LocalPlayer
-UserSettings():GetService("UserGameSettings").MasterVolume = 0
-UserSettings():GetService("UserGameSettings").SavedQualityLevel = 1
-workspace.LevelOfDetail = Enum.ModelLevelOfDetail.Disabled
-game:GetService("Lighting").GlobalShadows = false
-game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
-settings().Rendering.QualityLevel = Enum.QualityLevel.Level01
-settings().Rendering.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level04
-settings().Rendering.GraphicsMode = 9
-
 local keys = {
     "gBgCmAPZTSmdqGHMSmmUdgFuEcELDZWK", 
     "qIVzNCBYuxaJkHOwVmcdnrwgFCgjzopH", 
