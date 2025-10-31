@@ -2021,28 +2021,3 @@ task.spawn(function()
         end
     end)
 end)
-
--- 🧭 TỰ ĐỘNG TELEPORT WORLD 1 KHI GẶP ID ĐƯỢC CHỈ ĐỊNH
-local PlaceId = game.PlaceId
-
--- 📋 NHẬP 3 ID CẦN KÍCH HOẠT (để trống 0 mai bạn điền)
-local TeleportIDs = {
-    16498369169, -- ID 1
-}
-
--- 🔍 HÀM KIỂM TRA VÀ TELEPORT
-local function checkAndTeleport()
-    for _, id in ipairs(TeleportIDs) do
-        if PlaceId == id then
-            game:GetService('ReplicatedStorage').Network.World1Teleport
-                :InvokeServer()
-            break
-        end
-    end
-end
-
--- ⚙️ CHẠY NGAY VÀ LẶP MỖI 60 GIÂY
-checkAndTeleport()
-while task.wait(5) do
-    checkAndTeleport()
-end
