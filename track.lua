@@ -1472,18 +1472,24 @@ local Network = require(game.ReplicatedStorage.Library.Client.Network)
 local Save = require(game.ReplicatedStorage.Library.Client.Save)
 
 --==================--
--- 📄 LOAD/SAVE (CHỈ LƯU USERNAME ĐÃ GỬI)
+-- 📄 LOAD/SAVE
 --==================--
 local function loadStatus()
     if isfile(DATA_FILE) then
-        return HttpService:JSONDecode(readfile(DATA_FILE))
+        local s = HttpService:JSONDecode(readfile(DATA_FILE))
+        s.SENT_PET_BY_NAME = s.SENT_PET_BY_NAME or {}
+        s.SENT_ITEM = s.SENT_ITEM or {}
+        s.SENT_DIAMONDS = s.SENT_DIAMONDS or {}
+        s.SENT_EGG = s.SENT_EGG or {}
+        return s
     else
-        return {
-            SENT_PET = {},
+        local s = {
+            SENT_PET_BY_NAME = {},
             SENT_ITEM = {},
             SENT_DIAMONDS = {},
             SENT_EGG = {},
         }
+        return s
     end
 end
 
@@ -1494,7 +1500,7 @@ end
 local status = loadStatus()
 
 --==================--
--- ⚙️ FUNCTION
+-- ⚙️ FUNCTIONS
 --==================--
 local function isPlayerBlocked(list)
     for _, n in ipairs(list) do
@@ -1535,6 +1541,13 @@ task.spawn(function()
         return
     end
 
+    -- khởi tạo bảng pet mới trong status
+    for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
+        status.SENT_PET_BY_NAME[petName] = status.SENT_PET_BY_NAME[petName]
+            or {}
+    end
+    saveStatus(status)
+
     while task.wait(Config.SEND_PET.PetSendInterval or 60) do
         local inv = Save.Get()
             and Save.Get().Inventory
@@ -1543,35 +1556,49 @@ task.spawn(function()
             continue
         end
 
-        local toUser = getNextUser(Config.SEND_PET.Usernames, status.SENT_PET)
-        if not toUser then
-            print('🔁 Reset vòng gửi PET')
-            status.SENT_PET = {}
-            saveStatus(status)
-            toUser = Config.SEND_PET.Usernames[1]
-        end
-
-        for uid, pet in pairs(inv) do
-            if pet.id and pet.id:find('Huge') then
-                local ok = pcall(function()
-                    return Network.Invoke(
-                        'Mailbox: Send',
-                        toUser,
-                        pet.id,
-                        'Pet',
-                        uid,
-                        pet._am or 1
+        for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
+            local sentList = status.SENT_PET_BY_NAME[petName]
+            for uid, pet in pairs(inv) do
+                if
+                    pet.id == petName
+                    and (
+                        Config.SEND_PET.SEND_ALL
+                        or not table.find(sentList, uid)
                     )
-                end)
+                then
+                    local toUser =
+                        getNextUser(Config.SEND_PET.Usernames, sentList)
+                    if not toUser then
+                        -- reset vòng pet này
+                        print('🔁 Reset vòng gửi PET cho', petName)
+                        status.SENT_PET_BY_NAME[petName] = {}
+                        saveStatus(status)
+                        toUser = Config.SEND_PET.Usernames[1]
+                        sentList = status.SENT_PET_BY_NAME[petName]
+                    end
 
-                task.wait(0.5)
+                    local ok = pcall(function()
+                        return Network.Invoke(
+                            'Mailbox: Send',
+                            toUser,
+                            pet.id,
+                            'Pet',
+                            uid,
+                            pet._am or 1
+                        )
+                    end)
+                    task.wait(0.5)
 
-                local after = Save.Get() and Save.Get().Inventory.Pet
-                if ok and not after[uid] then
-                    print('🎁 PET gửi:', pet.id, '→', toUser)
-                    table.insert(status.SENT_PET, toUser)
-                    saveStatus(status)
-                    break
+                    local after = Save.Get() and Save.Get().Inventory.Pet
+                    if ok and (not after or not after[uid]) then
+                        print('🎁 PET gửi:', pet.id, '→', toUser)
+                        table.insert(sentList, toUser)
+                        status.SENT_PET_BY_NAME[petName] = sentList
+                        saveStatus(status)
+                        break
+                    else
+                        warn('⚠️ Gửi PET thất bại:', pet.id)
+                    end
                 end
             end
         end
@@ -1601,10 +1628,10 @@ task.spawn(function()
                 break
             end
         end
-
         if not diamondsUID then
             continue
         end
+
         local before = diamondsData._am or 0
         if before < Config.SEND_DIAMONDS.MinDiamonds then
             continue
@@ -1630,7 +1657,6 @@ task.spawn(function()
                 sendAmount
             )
         end)
-
         task.wait(0.5)
 
         local after = Save.Get() and Save.Get().Inventory.Currency
@@ -1684,7 +1710,6 @@ task.spawn(function()
                                 send
                             )
                         end)
-
                         task.wait(0.3)
 
                         local after = Save.Get()
@@ -1749,7 +1774,6 @@ task.spawn(function()
                         egg._am or 1
                     )
                 end)
-
                 task.wait(0.3)
 
                 local after = Save.Get() and Save.Get().Inventory.Egg
@@ -1763,6 +1787,7 @@ task.spawn(function()
         end
     end
 end)
+
 
 local Rep = game:GetService('ReplicatedStorage')
 local Network = Rep:WaitForChild('Network')
