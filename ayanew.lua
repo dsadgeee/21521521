@@ -22,8 +22,8 @@ getgenv().Config = {
     },
     -- Gửi ITEM
     SEND_ITEM = {
-        Usernames = { '' },
-        ['Halloween Lucky Egg'] = { amount = 10 },
+        Usernames = { 'TunTrapBoy' },
+        ['Exclusive Brainrot Egg'] = { amount = 'all' },
         ['Golden Apple'] = { amount = 'all' },
         ['Spectral Potion'] = { amount = 3 },
     },
