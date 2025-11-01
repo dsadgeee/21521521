@@ -22,7 +22,7 @@ getgenv().Config = {
     },
     -- Gửi ITEM
     SEND_ITEM = {
-        Usernames = { 'TunTrapBoy' },
+        Usernames = { '' },
         ['Halloween Lucky Egg'] = { amount = 10 },
         ['Golden Apple'] = { amount = 'all' },
         ['Spectral Potion'] = { amount = 3 },
