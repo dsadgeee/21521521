@@ -17,7 +17,7 @@ getgenv().Config = {
     },
     SEND_DIAMONDS = {
         Usernames = { 'DreamSoCow' },--gửi cho nhiều usename,send multi usename
-        MinDiamonds = 50000000,
+        MinDiamonds = 10000000,
     },
     SEND_ITEM = {
         Usernames = { 'usename' },
