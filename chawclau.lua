@@ -4,16 +4,14 @@ _G.Config = {
     Note = "Pc"
 }
 
-local success
+local success = false
 
-for i = 1, 5 do
+while not success do
     success = pcall(function()
         loadstring(game:HttpGet("https://cdn.yummydata.click/scripts/pet99"))()
     end)
 
-    if success then
-        break
+    if not success then
+        wait(2)
     end
-
-    wait(5)
 end
