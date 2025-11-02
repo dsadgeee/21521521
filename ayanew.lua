@@ -3,7 +3,7 @@ getgenv().Config = {
         HOUSE1 = { '>0' }, -- mua theo dps , buy by dps
         HOUSE2 = { '>1000' },
         HOUSE3 = { '6000~14000', '>25000' },
-        HOUSE4 = { '14000~20000' },
+        HOUSE4 = { '14000~24000','>35000' },
         HOUSE5 = { '>24000' },
         HOUSE6 = { '>30000' },
     },
