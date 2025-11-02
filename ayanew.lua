@@ -2,10 +2,10 @@ getgenv().Config = {
     DPS_THRESHOLDS = {
         HOUSE1 = { '>0' }, -- mua theo dps , buy by dps
         HOUSE2 = { '>1000' },
-        HOUSE3 = { '6000~14000', '>25000' },
-        HOUSE4 = { '14000~24000','>35000' },
-        HOUSE5 = { '>24000' },
-        HOUSE6 = { '>30000' },
+        HOUSE3 = { '6000~14000', '>14000' },
+        HOUSE4 = { '14000~20000','>23000' },
+        HOUSE5 = { '>23000' },
+        HOUSE6 = { '>26000' },
     },
     plant = {
         PET_SLOTS = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, -- slot đặt pet, put pet
