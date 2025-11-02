@@ -810,7 +810,7 @@ camera:GetPropertyChangedSignal('ViewportSize'):Connect(function()
 end)
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.2, [2] = 0.2, [3] = 1, [4] = 5, [5] = 60, [6] = 120 }
+    { [1] = 0.2, [2] = 0.2, [3] = 1, [4] = 4, [5] = 120, [6] = 300 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
@@ -963,7 +963,7 @@ local function decideHousesByDPS(amountPerSec)
         local thresholds = getgenv().Config.DPS_THRESHOLDS[key]
         if thresholds and checkThreshold(thresholds, amountPerSec) then
             housesToUnlock[h] = true
-            eggQtyPerSlot[h] = h <= 4 and 3 or 2
+            eggQtyPerSlot[h] = h <= 4 and 3 or 1
         end
     end
     local finalHouses, finalEggQty = {}, {}
