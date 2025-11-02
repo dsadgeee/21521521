@@ -810,7 +810,7 @@ camera:GetPropertyChangedSignal('ViewportSize'):Connect(function()
 end)
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.2, [2] = 0.2, [3] = 1, [4] = 60, [5] = 120, [6] = 180 }
+    { [1] = 0.2, [2] = 0.2, [3] = 1, [4] = 5, [5] = 60, [6] = 120 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
@@ -963,7 +963,7 @@ local function decideHousesByDPS(amountPerSec)
         local thresholds = getgenv().Config.DPS_THRESHOLDS[key]
         if thresholds and checkThreshold(thresholds, amountPerSec) then
             housesToUnlock[h] = true
-            eggQtyPerSlot[h] = h <= 2 and 3 or 1
+            eggQtyPerSlot[h] = h <= 4 and 3 or 2
         end
     end
     local finalHouses, finalEggQty = {}, {}
@@ -1344,13 +1344,14 @@ local function handleHatchedEggs(plot)
 end
 
 local EGG_PRIORITY = {
+    Divine = { 'Clown Egg' }, 
     Mythical = { 'Coffin Egg' },
     Legendary = { 'Reaper Egg', 'Spider Egg' },
     Rare = { 'Bat Egg', 'Grave Egg' },
     Epic = { 'Ghost Egg', 'Cauldron Egg' },
     Basic = { 'Pumpkin Egg' },
 }
-local EGG_ORDER = { 'Mythical', 'Legendary', 'Rare', 'Epic', 'Basic' }
+local EGG_ORDER = { 'Divine','Mythical', 'Legendary', 'Rare', 'Epic', 'Basic' }
 
 local function autoPlaceEggs()
     local data = Save.Get()
