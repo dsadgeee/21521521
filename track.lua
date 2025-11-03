@@ -810,7 +810,7 @@ camera:GetPropertyChangedSignal('ViewportSize'):Connect(function()
 end)
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.2, [2] = 0.2, [3] = 1, [4] = 4, [5] = 120, [6] = 300 }
+    { [1] = 0.3, [2] = 0.5, [3] = 0.7, [4] = 30, [5] = 200, [6] = 600 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
