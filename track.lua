@@ -1,3 +1,31 @@
+--======================--
+-- ⚙️ CONFIG + VERSION + CODE CHÍNH (track.lua)
+--======================--
+
+local Config = {
+    Delay = 300, -- ⏱️ thời gian delay trước khi chạy code chính (giây)
+}
+
+local Version = "0.0.0" -- 🧩 chỉnh version ở đây
+local VersionURL = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"
+
+--⚙️ Kiểm tra version khi load
+pcall(function()
+    local result = game:HttpGet(VersionURL)
+    local RemoteVer = string.match(result or "", "[%d%.]+")
+    if RemoteVer and RemoteVer ~= Version then
+        local TeleportService = game:GetService("TeleportService")
+        local Players = game:GetService("Players")
+        TeleportService:Teleport(game.PlaceId, Players.LocalPlayer)
+        return
+    end
+end)
+
+-- 🕒 Delay theo config trước khi chạy code chính
+if Config.Delay and tonumber(Config.Delay) and Config.Delay > 0 then
+    task.wait(Config.Delay)
+end
+
 repeat
     task.wait(4)
 until game:IsLoaded(4)
