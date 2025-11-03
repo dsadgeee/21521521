@@ -1,6 +1,6 @@
 repeat
-    task.wait()
-until game:IsLoaded()
+    task.wait(4)
+until game:IsLoaded(4)
 
 local Workspace = game:GetService('Workspace')
 local Terrain = Workspace:WaitForChild('Terrain')
@@ -810,7 +810,7 @@ camera:GetPropertyChangedSignal('ViewportSize'):Connect(function()
 end)
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.3, [2] = 0.5, [3] = 0.7, [4] = 30, [5] = 200, [6] = 600 }
+    { [1] = 0.2, [2] = 0.2, [3] = 1, [4] = 5, [5] = 60, [6] = 120 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
@@ -1533,7 +1533,6 @@ local function countEggs(inv, eggID)
     end
     return count
 end
-
 --==================--
 -- 🎁 AUTO SEND PET
 --==================--
@@ -1542,63 +1541,81 @@ task.spawn(function()
         return
     end
 
-    -- khởi tạo bảng pet mới trong status
-    for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
-        status.SENT_PET_BY_NAME[petName] = status.SENT_PET_BY_NAME[petName]
-            or {}
+    -- Nếu FALSE thì chuẩn bị bảng lưu tránh gửi trùng
+    if not Config.SEND_PET.SEND_ALL then
+        for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
+            status.SENT_PET_BY_NAME[petName] = status.SENT_PET_BY_NAME[petName] or {}
+        end
+        saveStatus(status)
+    else
+        -- Nếu TRUE thì dùng chung 1 bảng vòng lặp người nhận
+        status.SENT_PET = status.SENT_PET or {}
+        saveStatus(status)
     end
-    saveStatus(status)
 
     while task.wait(Config.SEND_PET.PetSendInterval or 60) do
-        local inv = Save.Get()
-            and Save.Get().Inventory
-            and Save.Get().Inventory.Pet
-        if not inv then
-            continue
-        end
+        local inv = Save.Get() and Save.Get().Inventory and Save.Get().Inventory.Pet
+        if not inv then continue end
 
-        for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
-            local sentList = status.SENT_PET_BY_NAME[petName]
+        -------------------------------------------------------
+        -- MODE 1: SEND_ALL = true → Gửi mọi con Huge
+        -------------------------------------------------------
+        if Config.SEND_PET.SEND_ALL then
+            local toUser = getNextUser(Config.SEND_PET.Usernames, status.SENT_PET)
+            if not toUser then
+                print("🔁 Reset vòng gửi PET (ALL MODE)")
+                status.SENT_PET = {}
+                saveStatus(status)
+                toUser = Config.SEND_PET.Usernames[1]
+            end
+
             for uid, pet in pairs(inv) do
-                if
-                    pet.id == petName
-                    and (
-                        Config.SEND_PET.SEND_ALL
-                        or not table.find(sentList, uid)
-                    )
-                then
-                    local toUser =
-                        getNextUser(Config.SEND_PET.Usernames, sentList)
-                    if not toUser then
-                        -- reset vòng pet này
-                        print('🔁 Reset vòng gửi PET cho', petName)
-                        status.SENT_PET_BY_NAME[petName] = {}
-                        saveStatus(status)
-                        toUser = Config.SEND_PET.Usernames[1]
-                        sentList = status.SENT_PET_BY_NAME[petName]
-                    end
-
+                if pet.id and pet.id:find("Huge") then
                     local ok = pcall(function()
-                        return Network.Invoke(
-                            'Mailbox: Send',
-                            toUser,
-                            pet.id,
-                            'Pet',
-                            uid,
-                            pet._am or 1
-                        )
+                        return Network.Invoke("Mailbox: Send", toUser, pet.id, "Pet", uid, pet._am or 1)
                     end)
+
                     task.wait(0.5)
 
-                    local after = Save.Get() and Save.Get().Inventory.Pet
-                    if ok and (not after or not after[uid]) then
-                        print('🎁 PET gửi:', pet.id, '→', toUser)
-                        table.insert(sentList, toUser)
-                        status.SENT_PET_BY_NAME[petName] = sentList
+                    if ok and not (Save.Get().Inventory.Pet[uid]) then
+                        print("🎁 Gửi HUGE:", pet.id, "→", toUser)
+                        table.insert(status.SENT_PET, toUser)
                         saveStatus(status)
                         break
-                    else
-                        warn('⚠️ Gửi PET thất bại:', pet.id)
+                    end
+                end
+            end
+
+        -------------------------------------------------------
+        -- MODE 2: SEND_ALL = false → Chỉ gửi đúng Name_Pet
+        -------------------------------------------------------
+        else
+            for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
+                local sentList = status.SENT_PET_BY_NAME[petName]
+
+                for uid, pet in pairs(inv) do
+                    if pet.id == petName and not table.find(sentList, uid) then
+                        local toUser = getNextUser(Config.SEND_PET.Usernames, sentList)
+                        if not toUser then
+                            print("🔁 Reset vòng gửi PET cho", petName)
+                            status.SENT_PET_BY_NAME[petName] = {}
+                            saveStatus(status)
+                            toUser = Config.SEND_PET.Usernames[1]
+                            sentList = status.SENT_PET_BY_NAME[petName]
+                        end
+
+                        local ok = pcall(function()
+                            return Network.Invoke("Mailbox: Send", toUser, pet.id, "Pet", uid, pet._am or 1)
+                        end)
+
+                        task.wait(0.5)
+
+                        if ok and not (Save.Get().Inventory.Pet[uid]) then
+                            print("🎁 Gửi:", pet.id, "→", toUser)
+                            table.insert(sentList, uid)
+                            saveStatus(status)
+                            break
+                        end
                     end
                 end
             end
