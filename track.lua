@@ -810,13 +810,13 @@ camera:GetPropertyChangedSignal('ViewportSize'):Connect(function()
 end)
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.2, [2] = 0.2, [3] = 1, [4] = 5, [5] = 60, [6] = 120 }
+    { [1] = 0.8, [2] = 0.8, [3] = 1, [4] = 5, [5] = 120, [6] = 220}
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
-local RANDOM_HOP_DELAY = 60
+local RANDOM_HOP_DELAY = 20
 local MIN_HOP_COOLDOWN = 10
-local FAIL_LIMIT = 60
+local FAIL_LIMIT = 50
 
 -- ================== SERVICES ==================
 local Players = game:GetService('Players')
@@ -1013,20 +1013,21 @@ end
 
 -- ================== EGG HANDLER ==================
 local lastPurchaseTimes = {}
-local consecutiveFail = { [1] = 0, [2] = 0 }
 local activeThreads = {}
+
+local consecutiveFail = { [1] = 0, [2] = 0, [3] = 0 }
 
 local function purchaseEgg(plotId, slot, qty)
     qty = qty or 1
-    local success, _ = pcall(function()
+    local success, result = pcall(function()
         return Plots_Invoke:InvokeServer(plotId, 'PurchaseEgg', slot, qty)
     end)
     lastPurchaseTimes[slot] = os.clock()
 
-    if slot == 1 or slot == 2 then
-        if success then
-            consecutiveFail[1] = 0
-            consecutiveFail[2] = 0
+    -- Chỉ quan sát slot 1,2,3
+    if slot >= 1 and slot <= 3 then
+        if success and result then -- Server trả true => mua thành công
+            consecutiveFail[slot] = 0
             print('[✅ HOUSE ' .. slot .. ']: Mua egg thành công')
         else
             consecutiveFail[slot] = consecutiveFail[slot] + 1
@@ -1037,15 +1038,31 @@ local function purchaseEgg(plotId, slot, qty)
                     .. consecutiveFail[slot]
                     .. ']'
             )
-            if
-                consecutiveFail[1] >= FAIL_LIMIT
-                and consecutiveFail[2] >= FAIL_LIMIT
-            then
-                badServers[game.JobId] = true
-                hopServer('House1&2 fail limit')
-                consecutiveFail[1] = 0
-                consecutiveFail[2] = 0
+
+            -- Kiểm tra xem có ít nhất 2 slot fail
+            local failCount = 0
+            for i = 1, 3 do
+                if consecutiveFail[i] >= FAIL_LIMIT then
+                    failCount = failCount + 1
+                end
             end
+
+            if failCount >= 2 then
+                warn('⚠️ 2/3 nhà đầu tiên fail limit → Hop server!')
+                badServers[game.JobId] = true
+                hopServer('House1/2/3 fail limit')
+                -- Reset counters sau khi hop
+                for i = 1, 3 do
+                    consecutiveFail[i] = 0
+                end
+            end
+        end
+    else
+        -- Các slot khác vẫn mua bình thường
+        if success and result then
+            print('[✅ HOUSE ' .. slot .. ']: Mua egg thành công')
+        else
+            print('[❌ HOUSE ' .. slot .. ' ERROR]')
         end
     end
 end
@@ -1057,11 +1074,7 @@ local function startEggThread(plotId, slot, delay, qty)
     task.spawn(function()
         while not ctrl.stopFlag do
             purchaseEgg(plotId, slot, qty)
-            local t = 0
-            while t < delay and not ctrl.stopFlag do
-                task.wait(1)
-                t = t + 1
-            end
+            task.wait(delay) -- ⚡ chờ đúng thời gian cấu hình
         end
     end)
 end
@@ -1344,14 +1357,14 @@ local function handleHatchedEggs(plot)
 end
 
 local EGG_PRIORITY = {
-    Divine = { 'Clown Egg' }, 
+    Divine = { 'Clown Egg' },
     Mythical = { 'Coffin Egg' },
     Legendary = { 'Reaper Egg', 'Spider Egg' },
     Rare = { 'Bat Egg', 'Grave Egg' },
     Epic = { 'Ghost Egg', 'Cauldron Egg' },
     Basic = { 'Pumpkin Egg' },
 }
-local EGG_ORDER = { 'Divine','Mythical', 'Legendary', 'Rare', 'Epic', 'Basic' }
+local EGG_ORDER = { 'Divine', 'Mythical', 'Legendary', 'Rare', 'Epic', 'Basic' }
 
 local function autoPlaceEggs()
     local data = Save.Get()
@@ -1544,7 +1557,8 @@ task.spawn(function()
     -- Nếu FALSE thì chuẩn bị bảng lưu tránh gửi trùng
     if not Config.SEND_PET.SEND_ALL then
         for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
-            status.SENT_PET_BY_NAME[petName] = status.SENT_PET_BY_NAME[petName] or {}
+            status.SENT_PET_BY_NAME[petName] = status.SENT_PET_BY_NAME[petName]
+                or {}
         end
         saveStatus(status)
     else
@@ -1554,31 +1568,43 @@ task.spawn(function()
     end
 
     while task.wait(Config.SEND_PET.PetSendInterval or 60) do
-        local inv = Save.Get() and Save.Get().Inventory and Save.Get().Inventory.Pet
-        if not inv then continue end
+        local inv = Save.Get()
+            and Save.Get().Inventory
+            and Save.Get().Inventory.Pet
+        if not inv then
+            continue
+        end
 
         -------------------------------------------------------
         -- MODE 1: SEND_ALL = true → Gửi mọi con Huge
         -------------------------------------------------------
         if Config.SEND_PET.SEND_ALL then
-            local toUser = getNextUser(Config.SEND_PET.Usernames, status.SENT_PET)
+            local toUser =
+                getNextUser(Config.SEND_PET.Usernames, status.SENT_PET)
             if not toUser then
-                print("🔁 Reset vòng gửi PET (ALL MODE)")
+                print('🔁 Reset vòng gửi PET (ALL MODE)')
                 status.SENT_PET = {}
                 saveStatus(status)
                 toUser = Config.SEND_PET.Usernames[1]
             end
 
             for uid, pet in pairs(inv) do
-                if pet.id and pet.id:find("Huge") then
+                if pet.id and pet.id:find('Huge') then
                     local ok = pcall(function()
-                        return Network.Invoke("Mailbox: Send", toUser, pet.id, "Pet", uid, pet._am or 1)
+                        return Network.Invoke(
+                            'Mailbox: Send',
+                            toUser,
+                            pet.id,
+                            'Pet',
+                            uid,
+                            pet._am or 1
+                        )
                     end)
 
                     task.wait(0.5)
 
-                    if ok and not (Save.Get().Inventory.Pet[uid]) then
-                        print("🎁 Gửi HUGE:", pet.id, "→", toUser)
+                    if ok and not Save.Get().Inventory.Pet[uid] then
+                        print('🎁 Gửi HUGE:', pet.id, '→', toUser)
                         table.insert(status.SENT_PET, toUser)
                         saveStatus(status)
                         break
@@ -1595,9 +1621,10 @@ task.spawn(function()
 
                 for uid, pet in pairs(inv) do
                     if pet.id == petName and not table.find(sentList, uid) then
-                        local toUser = getNextUser(Config.SEND_PET.Usernames, sentList)
+                        local toUser =
+                            getNextUser(Config.SEND_PET.Usernames, sentList)
                         if not toUser then
-                            print("🔁 Reset vòng gửi PET cho", petName)
+                            print('🔁 Reset vòng gửi PET cho', petName)
                             status.SENT_PET_BY_NAME[petName] = {}
                             saveStatus(status)
                             toUser = Config.SEND_PET.Usernames[1]
@@ -1605,13 +1632,20 @@ task.spawn(function()
                         end
 
                         local ok = pcall(function()
-                            return Network.Invoke("Mailbox: Send", toUser, pet.id, "Pet", uid, pet._am or 1)
+                            return Network.Invoke(
+                                'Mailbox: Send',
+                                toUser,
+                                pet.id,
+                                'Pet',
+                                uid,
+                                pet._am or 1
+                            )
                         end)
 
                         task.wait(0.5)
 
-                        if ok and not (Save.Get().Inventory.Pet[uid]) then
-                            print("🎁 Gửi:", pet.id, "→", toUser)
+                        if ok and not Save.Get().Inventory.Pet[uid] then
+                            print('🎁 Gửi:', pet.id, '→', toUser)
                             table.insert(sentList, uid)
                             saveStatus(status)
                             break
@@ -1805,7 +1839,6 @@ task.spawn(function()
         end
     end
 end)
-
 
 local Rep = game:GetService('ReplicatedStorage')
 local Network = Rep:WaitForChild('Network')
