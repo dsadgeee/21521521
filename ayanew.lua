@@ -1,5 +1,11 @@
-setfpscap(3)
-script_key = "auzzdBRFaVDxAUzDxhCCTxhqRaycDzLL";
+local keys = {
+    "AGHqCyJgWIWIaPVGeeANyjtxcFfRfIlz", 
+    "puBjVgqslbmFYyOXRHMXMQZaeZNfBOXx", 
+    "kEZDYmKXZQqeZudDbqKUZOUzATMqXcnL",
+    "auzzdBRFaVDxAUzDxhCCTxhqRaycDzLL",
+}
+math.randomseed(os.time())
+script_key = keys[math.random(#keys)];
 task.wait(10) -- DO NOT remove this wait, it's against double counts.
 -- INSERT YOUR CONFIG HERE --
 getgenv().GGFX_MODE = 1 --1 = REMOVE_TEXTURES : more stable! but no visuals
