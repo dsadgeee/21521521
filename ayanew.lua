@@ -7,27 +7,37 @@ getgenv().Config = {
         HOUSE5 = { '>23000' },
         HOUSE6 = { '>26000' },
     },
+
     plant = {
-        PET_SLOTS = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, -- slot đặt pet, put pet
-        EGG_SLOTS = { 10 }, -- slot đặt trứng , put egg
+        PET_SLOTS = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, -- slot đặt pet
+        EGG_SLOTS = { 10 }, -- slot đặt trứng
     },
+
     SEND_PET = {
-        Usernames = {'TunTrapBoy'}, --- name1 , name2 , name3 ---
-        PetSendInterval = 20, -- delay send
-        SEND_ALL = true, -- true: SEND ALL, false: SEND PET CONFIG ----
-        Name_Pet = {}, --HUGE NAME 1 , HUGE NAME 2 , HUGE NAME 3 ---
+        Usernames = { 'TunTrapBoy' },
+        PetSendInterval = 20,
+        SEND_ALL = true,
+        Name_Pet = {},
     },
+
     SEND_DIAMONDS = {
-        Usernames = {'DreamSoCow'}, --- name1 , name2 , name3 ---
+        Usernames = { 'DreamSoCow' },
         MinDiamonds = 100000000,
     },
+
     SEND_ITEM = {
-        Usernames = {''}, --- name1 , name2 , name3 ---
+        Usernames = { '' },
         ['Spectral Potion'] = { amount = 3 },
     },
+
     SEND_EGGS = {
-        Usernames = {'TunTrapBoy'}, --- name1 , name2 , name3 ---
+        Usernames = { 'TunTrapBoy' },
         ['Exclusive Egg 56'] = true,
+    },
+    sellpet = {
+        AutoSell = true, -- Tự động bán (true / false)
+        ShowEggs = false, -- Hiển thị danh sách trứng
+        Delay = 999, -- Thời gian lặp lại (giây)
     },
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
