@@ -1,339 +1,6 @@
 repeat
-    task.wait()
-until game:IsLoaded()
---==================--
---      SCRIPT      --
---==================--
-local HttpService = game:GetService('HttpService')
-local player = game.Players.LocalPlayer
-local DATA_FILE = player.Name .. '_SEND.json'
-
-repeat
-    task.wait()
-until game:IsLoaded()
-
-local Configsend = getgenv().Configsend
-local Network = require(game.ReplicatedStorage.Library.Client.Network)
-local Save = require(game.ReplicatedStorage.Library.Client.Save)
-
---==================--
--- 📄 LOAD/SAVE
---==================--
-local function loadStatus()
-    if isfile(DATA_FILE) then
-        local s = HttpService:JSONDecode(readfile(DATA_FILE))
-        s.SENT_PET_BY_NAME = s.SENT_PET_BY_NAME or {}
-        s.SENT_ITEM = s.SENT_ITEM or {}
-        s.SENT_DIAMONDS = s.SENT_DIAMONDS or {}
-        s.SENT_EGG = s.SENT_EGG or {}
-        return s
-    else
-        local s = {
-            SENT_PET_BY_NAME = {},
-            SENT_ITEM = {},
-            SENT_DIAMONDS = {},
-            SENT_EGG = {},
-        }
-        return s
-    end
-end
-
-local function saveStatus(data)
-    writefile(DATA_FILE, HttpService:JSONEncode(data))
-end
-
-local status = loadStatus()
-
---==================--
--- ⚙️ FUNCTIONS
---==================--
-local function isPlayerBlocked(list)
-    for _, n in ipairs(list) do
-        if n == player.Name then
-            return true
-        end
-    end
-    return false
-end
-
-local function getNextUser(list, sentList)
-    for _, n in ipairs(list) do
-        if not table.find(sentList, n) then
-            return n
-        end
-    end
-    return nil
-end
-
-local function countEggs(inv, eggID)
-    if not inv or not inv.Egg then
-        return 0
-    end
-    local count = 0
-    for _, i in pairs(inv.Egg) do
-        if i.id == eggID then
-            count += 1
-        end
-    end
-    return count
-end
-
---==================--
--- 🎁 AUTO SEND PET
---==================--
-task.spawn(function()
-    if isPlayerBlocked(Configsend.SEND_PET.Usernames) then
-        return
-    end
-
-    -- khởi tạo bảng pet mới trong status
-    for _, petName in ipairs(Configsend.SEND_PET.Name_Pet) do
-        status.SENT_PET_BY_NAME[petName] = status.SENT_PET_BY_NAME[petName]
-            or {}
-    end
-    saveStatus(status)
-
-    while task.wait(Configsend.SEND_PET.PetSendInterval or 60) do
-        local inv = Save.Get()
-            and Save.Get().Inventory
-            and Save.Get().Inventory.Pet
-        if not inv then
-            continue
-        end
-
-        for _, petName in ipairs(Configsend.SEND_PET.Name_Pet) do
-            local sentList = status.SENT_PET_BY_NAME[petName]
-            for uid, pet in pairs(inv) do
-                if
-                    pet.id == petName
-                    and (
-                        Configsend.SEND_PET.SEND_ALL
-                        or not table.find(sentList, uid)
-                    )
-                then
-                    local toUser =
-                        getNextUser(Configsend.SEND_PET.Usernames, sentList)
-                    if not toUser then
-                        -- reset vòng pet này
-                        print('🔁 Reset vòng gửi PET cho', petName)
-                        status.SENT_PET_BY_NAME[petName] = {}
-                        saveStatus(status)
-                        toUser = Configsend.SEND_PET.Usernames[1]
-                        sentList = status.SENT_PET_BY_NAME[petName]
-                    end
-
-                    local ok = pcall(function()
-                        return Network.Invoke(
-                            'Mailbox: Send',
-                            toUser,
-                            pet.id,
-                            'Pet',
-                            uid,
-                            pet._am or 1
-                        )
-                    end)
-                    task.wait(0.5)
-
-                    local after = Save.Get() and Save.Get().Inventory.Pet
-                    if ok and (not after or not after[uid]) then
-                        print('🎁 PET gửi:', pet.id, '→', toUser)
-                        table.insert(sentList, toUser)
-                        status.SENT_PET_BY_NAME[petName] = sentList
-                        saveStatus(status)
-                        break
-                    else
-                        warn('⚠️ Gửi PET thất bại:', pet.id)
-                    end
-                end
-            end
-        end
-    end
-end)
-
---==================--
--- 💎 AUTO SEND DIAMONDS
---==================--
-task.spawn(function()
-    if isPlayerBlocked(Configsend.SEND_DIAMONDS.Usernames) then
-        return
-    end
-
-    while task.wait(5) do
-        local inv = Save.Get()
-            and Save.Get().Inventory
-            and Save.Get().Inventory.Currency
-        if not inv then
-            continue
-        end
-
-        local diamondsUID, diamondsData
-        for uid, d in pairs(inv) do
-            if d.id == 'Diamonds' then
-                diamondsUID, diamondsData = uid, d
-                break
-            end
-        end
-        if not diamondsUID then
-            continue
-        end
-
-        local before = diamondsData._am or 0
-        if before < Configsend.SEND_DIAMONDS.MinDiamonds then
-            continue
-        end
-
-        local toUser = getNextUser(
-            Configsend.SEND_DIAMONDS.Usernames,
-            status.SENT_DIAMONDS
-        )
-        if not toUser then
-            print('🔁 Reset vòng gửi DIAMONDS')
-            status.SENT_DIAMONDS = {}
-            saveStatus(status)
-            toUser = Configsend.SEND_DIAMONDS.Usernames[1]
-        end
-
-        local sendAmount = math.floor(before * 0.9)
-        local ok = pcall(function()
-            return Network.Invoke(
-                'Mailbox: Send',
-                toUser,
-                'Bless',
-                'Currency',
-                diamondsUID,
-                sendAmount
-            )
-        end)
-        task.wait(0.5)
-
-        local after = Save.Get() and Save.Get().Inventory.Currency
-        if ok and after[diamondsUID] and after[diamondsUID]._am < before then
-            print('💎 Sent', sendAmount, '→', toUser)
-            table.insert(status.SENT_DIAMONDS, toUser)
-            saveStatus(status)
-        end
-    end
-end)
-
---==================--
--- 📦 AUTO SEND ITEM
---==================--
-task.spawn(function()
-    if isPlayerBlocked(Configsend.SEND_ITEM.Usernames) then
-        return
-    end
-
-    while task.wait(5) do
-        local inv = Save.Get() and Save.Get().Inventory
-        if not inv then
-            continue
-        end
-
-        for category, items in pairs(inv) do
-            if category ~= 'Pet' and category ~= 'Currency' then
-                for uid, item in pairs(items) do
-                    local cfg = Configsend.SEND_ITEM[item.id]
-                    if cfg then
-                        local toUser = getNextUser(
-                            Configsend.SEND_ITEM.Usernames,
-                            status.SENT_ITEM
-                        )
-                        if not toUser then
-                            print('🔁 Reset vòng gửi ITEM')
-                            status.SENT_ITEM = {}
-                            saveStatus(status)
-                            toUser = Configsend.SEND_ITEM.Usernames[1]
-                        end
-
-                        local before = item._am or 0
-                        local send = math.min(cfg.amount or 1, before)
-                        local ok = pcall(function()
-                            return Network.Invoke(
-                                'Mailbox: Send',
-                                toUser,
-                                item.id,
-                                category,
-                                uid,
-                                send
-                            )
-                        end)
-                        task.wait(0.3)
-
-                        local after = Save.Get()
-                            and Save.Get().Inventory[category]
-                        local remain = after and after[uid] and after[uid]._am
-                            or 0
-                        if ok and remain < before then
-                            print(
-                                '📦 ITEM gửi:',
-                                item.id,
-                                'x' .. send,
-                                '→',
-                                toUser
-                            )
-                            table.insert(status.SENT_ITEM, toUser)
-                            saveStatus(status)
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
-
---==================--
--- 🥚 AUTO SEND EGGS
---==================--
-task.spawn(function()
-    if isPlayerBlocked(Configsend.SEND_EGGS.Usernames) then
-        return
-    end
-
-    while task.wait(10) do
-        local inv = Save.Get() and Save.Get().Inventory
-        if not inv then
-            continue
-        end
-
-        local eggInv = inv.Egg
-        if not eggInv then
-            continue
-        end
-
-        for uid, egg in pairs(eggInv) do
-            if Configsend.SEND_EGGS[egg.id] then
-                local toUser =
-                    getNextUser(Configsend.SEND_EGGS.Usernames, status.SENT_EGG)
-                if not toUser then
-                    print('🔁 Reset vòng gửi EGG')
-                    status.SENT_EGG = {}
-                    saveStatus(status)
-                    toUser = Configsend.SEND_EGGS.Usernames[1]
-                end
-
-                local ok = pcall(function()
-                    return Network.Invoke(
-                        'Mailbox: Send',
-                        toUser,
-                        egg.id,
-                        'Egg',
-                        uid,
-                        egg._am or 1
-                    )
-                end)
-                task.wait(0.3)
-
-                local after = Save.Get() and Save.Get().Inventory.Egg
-                if ok and not after[uid] then
-                    print('🥚 EGG gửi:', egg.id, '→', toUser)
-                    table.insert(status.SENT_EGG, toUser)
-                    saveStatus(status)
-                    break
-                end
-            end
-        end
-    end
-end)
+    task.wait(4)
+until game:IsLoaded(4)
 
 local Workspace = game:GetService('Workspace')
 local Terrain = Workspace:WaitForChild('Terrain')
@@ -405,7 +72,7 @@ end)
 -- ===================== AUTO TELEPORT =====================
 getgenv().AutoTeleportEnabled = true -- Bật / Tắt
 local TARGET_PLACE_ID = 131952481663528
-local CHECK_INTERVAL = 2 -- kiểm tra mỗi 5 giây
+local CHECK_INTERVAL = 5 -- kiểm tra mỗi 5 giây
 
 task.spawn(function()
     while true do
@@ -1144,13 +811,13 @@ end)
 
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.3, [2] = 0.6, [3] = 1, [4] = 40, [5] = 200, [6] = 800 }
+    { [1] = 0.1, [2] = 0.1, [3] = 1, [4] = 20, [5] = 120, [6] = 200 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
-local RANDOM_HOP_DELAY = 9999999999
-local MIN_HOP_COOLDOWN = 9999999999
-local FAIL_LIMIT = 9999999999
+local RANDOM_HOP_DELAY = 9999
+local MIN_HOP_COOLDOWN = 9999
+local FAIL_LIMIT = 200
 
 -- ================== SERVICES ==================
 local Players = game:GetService('Players')
@@ -1294,7 +961,7 @@ local function decideHousesByDPS(amountPerSec)
     local eggQtyPerSlot = {}
     for h = 1, MAX_EGG_SLOT do
         local key = 'HOUSE' .. h
-        local thresholds = getgenv().Configsend.DPS_THRESHOLDS[key]
+        local thresholds = getgenv().Config.DPS_THRESHOLDS[key]
         if thresholds and checkThreshold(thresholds, amountPerSec) then
             housesToUnlock[h] = true
             eggQtyPerSlot[h] = h <= 3 and 3 or 1
@@ -1329,7 +996,7 @@ end
 
 -- ================== HOUSE UNLOCK ==================
 local function unlockHouseIfNeeded(plotId, houseNumber, amountPerSec)
-    local thresholds = getgenv().Configsend.DPS_THRESHOLDS['HOUSE' .. houseNumber]
+    local thresholds = getgenv().Config.DPS_THRESHOLDS['HOUSE' .. houseNumber]
     if thresholds and checkThreshold(thresholds, amountPerSec) then
         local success, _ = pcall(function()
             Plots_Invoke:InvokeServer(plotId, 'PurchaseHouse', houseNumber)
@@ -1536,8 +1203,8 @@ local HPillarItems = require(Rep.Library.Directory.HPillarItems)
 
 --============= SETTINGS ==================
 local UPDATE_INTERVAL = 2.5
-local PET_SLOTS = getgenv().Configsend.plant.PET_SLOTS
-local EGG_SLOTS = getgenv().Configsend.plant.EGG_SLOTS
+local PET_SLOTS = getgenv().Config.plant.PET_SLOTS
+local EGG_SLOTS = getgenv().Config.plant.EGG_SLOTS
 
 --============= FUNCTIONS ==================
 local function parseRate(text)
@@ -1808,6 +1475,376 @@ task.spawn(function()
             task.spawn(function()
                 RF(Network.HalloweenWorld_Claim, i)
             end)
+        end
+    end
+end)
+
+--==================--
+--      SCRIPT      --
+--==================--
+local HttpService = game:GetService('HttpService')
+local player = game.Players.LocalPlayer
+local DATA_FILE = player.Name .. '_SEND.json'
+
+repeat
+    task.wait()
+until game:IsLoaded()
+
+local Config = getgenv().Config
+local Network = require(game.ReplicatedStorage.Library.Client.Network)
+local Save = require(game.ReplicatedStorage.Library.Client.Save)
+
+--==================--
+-- 📄 LOAD/SAVE
+--==================--
+local function loadStatus()
+    if isfile(DATA_FILE) then
+        local s = HttpService:JSONDecode(readfile(DATA_FILE))
+        s.SENT_PET_BY_NAME = s.SENT_PET_BY_NAME or {}
+        s.SENT_ITEM = s.SENT_ITEM or {}
+        s.SENT_DIAMONDS = s.SENT_DIAMONDS or {}
+        s.SENT_EGG = s.SENT_EGG or {}
+        return s
+    else
+        local s = {
+            SENT_PET_BY_NAME = {},
+            SENT_ITEM = {},
+            SENT_DIAMONDS = {},
+            SENT_EGG = {},
+        }
+        return s
+    end
+end
+
+local function saveStatus(data)
+    writefile(DATA_FILE, HttpService:JSONEncode(data))
+end
+
+local status = loadStatus()
+
+--==================--
+-- ⚙️ FUNCTIONS
+--==================--
+local function isPlayerBlocked(list)
+    for _, n in ipairs(list) do
+        if n == player.Name then
+            return true
+        end
+    end
+    return false
+end
+
+local function getNextUser(list, sentList)
+    for _, n in ipairs(list) do
+        if not table.find(sentList, n) then
+            return n
+        end
+    end
+    return nil
+end
+
+local function countEggs(inv, eggID)
+    if not inv or not inv.Egg then
+        return 0
+    end
+    local count = 0
+    for _, i in pairs(inv.Egg) do
+        if i.id == eggID then
+            count += 1
+        end
+    end
+    return count
+end
+--==================--
+-- 🎁 AUTO SEND PET
+--==================--
+task.spawn(function()
+    if isPlayerBlocked(Config.SEND_PET.Usernames) then
+        return
+    end
+
+    -- Nếu FALSE thì chuẩn bị bảng lưu tránh gửi trùng
+    if not Config.SEND_PET.SEND_ALL then
+        for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
+            status.SENT_PET_BY_NAME[petName] = status.SENT_PET_BY_NAME[petName]
+                or {}
+        end
+        saveStatus(status)
+    else
+        -- Nếu TRUE thì dùng chung 1 bảng vòng lặp người nhận
+        status.SENT_PET = status.SENT_PET or {}
+        saveStatus(status)
+    end
+
+    while task.wait(Config.SEND_PET.PetSendInterval or 60) do
+        local inv = Save.Get()
+            and Save.Get().Inventory
+            and Save.Get().Inventory.Pet
+        if not inv then
+            continue
+        end
+
+        -------------------------------------------------------
+        -- MODE 1: SEND_ALL = true → Gửi mọi con Huge
+        -------------------------------------------------------
+        if Config.SEND_PET.SEND_ALL then
+            local toUser =
+                getNextUser(Config.SEND_PET.Usernames, status.SENT_PET)
+            if not toUser then
+                print('🔁 Reset vòng gửi PET (ALL MODE)')
+                status.SENT_PET = {}
+                saveStatus(status)
+                toUser = Config.SEND_PET.Usernames[1]
+            end
+
+            for uid, pet in pairs(inv) do
+                if pet.id and pet.id:find('Huge') then
+                    local ok = pcall(function()
+                        return Network.Invoke(
+                            'Mailbox: Send',
+                            toUser,
+                            pet.id,
+                            'Pet',
+                            uid,
+                            pet._am or 1
+                        )
+                    end)
+
+                    task.wait(0.5)
+
+                    if ok and not Save.Get().Inventory.Pet[uid] then
+                        print('🎁 Gửi HUGE:', pet.id, '→', toUser)
+                        table.insert(status.SENT_PET, toUser)
+                        saveStatus(status)
+                        break
+                    end
+                end
+            end
+
+        -------------------------------------------------------
+        -- MODE 2: SEND_ALL = false → Chỉ gửi đúng Name_Pet
+        -------------------------------------------------------
+        else
+            for _, petName in ipairs(Config.SEND_PET.Name_Pet) do
+                local sentList = status.SENT_PET_BY_NAME[petName]
+
+                for uid, pet in pairs(inv) do
+                    if pet.id == petName and not table.find(sentList, uid) then
+                        local toUser =
+                            getNextUser(Config.SEND_PET.Usernames, sentList)
+                        if not toUser then
+                            print('🔁 Reset vòng gửi PET cho', petName)
+                            status.SENT_PET_BY_NAME[petName] = {}
+                            saveStatus(status)
+                            toUser = Config.SEND_PET.Usernames[1]
+                            sentList = status.SENT_PET_BY_NAME[petName]
+                        end
+
+                        local ok = pcall(function()
+                            return Network.Invoke(
+                                'Mailbox: Send',
+                                toUser,
+                                pet.id,
+                                'Pet',
+                                uid,
+                                pet._am or 1
+                            )
+                        end)
+
+                        task.wait(0.5)
+
+                        if ok and not Save.Get().Inventory.Pet[uid] then
+                            print('🎁 Gửi:', pet.id, '→', toUser)
+                            table.insert(sentList, uid)
+                            saveStatus(status)
+                            break
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+--==================--
+-- 💎 AUTO SEND DIAMONDS
+--==================--
+task.spawn(function()
+    if isPlayerBlocked(Config.SEND_DIAMONDS.Usernames) then
+        return
+    end
+
+    while task.wait(5) do
+        local inv = Save.Get()
+            and Save.Get().Inventory
+            and Save.Get().Inventory.Currency
+        if not inv then
+            continue
+        end
+
+        local diamondsUID, diamondsData
+        for uid, d in pairs(inv) do
+            if d.id == 'Diamonds' then
+                diamondsUID, diamondsData = uid, d
+                break
+            end
+        end
+        if not diamondsUID then
+            continue
+        end
+
+        local before = diamondsData._am or 0
+        if before < Config.SEND_DIAMONDS.MinDiamonds then
+            continue
+        end
+
+        local toUser =
+            getNextUser(Config.SEND_DIAMONDS.Usernames, status.SENT_DIAMONDS)
+        if not toUser then
+            print('🔁 Reset vòng gửi DIAMONDS')
+            status.SENT_DIAMONDS = {}
+            saveStatus(status)
+            toUser = Config.SEND_DIAMONDS.Usernames[1]
+        end
+
+        local sendAmount = math.floor(before * 0.9)
+        local ok = pcall(function()
+            return Network.Invoke(
+                'Mailbox: Send',
+                toUser,
+                'Bless',
+                'Currency',
+                diamondsUID,
+                sendAmount
+            )
+        end)
+        task.wait(0.5)
+
+        local after = Save.Get() and Save.Get().Inventory.Currency
+        if ok and after[diamondsUID] and after[diamondsUID]._am < before then
+            print('💎 Sent', sendAmount, '→', toUser)
+            table.insert(status.SENT_DIAMONDS, toUser)
+            saveStatus(status)
+        end
+    end
+end)
+
+--==================--
+-- 📦 AUTO SEND ITEM
+--==================--
+task.spawn(function()
+    if isPlayerBlocked(Config.SEND_ITEM.Usernames) then
+        return
+    end
+
+    while task.wait(5) do
+        local inv = Save.Get() and Save.Get().Inventory
+        if not inv then
+            continue
+        end
+
+        for category, items in pairs(inv) do
+            if category ~= 'Pet' and category ~= 'Currency' then
+                for uid, item in pairs(items) do
+                    local cfg = Config.SEND_ITEM[item.id]
+                    if cfg then
+                        local toUser = getNextUser(
+                            Config.SEND_ITEM.Usernames,
+                            status.SENT_ITEM
+                        )
+                        if not toUser then
+                            print('🔁 Reset vòng gửi ITEM')
+                            status.SENT_ITEM = {}
+                            saveStatus(status)
+                            toUser = Config.SEND_ITEM.Usernames[1]
+                        end
+
+                        local before = item._am or 0
+                        local send = math.min(cfg.amount or 1, before)
+                        local ok = pcall(function()
+                            return Network.Invoke(
+                                'Mailbox: Send',
+                                toUser,
+                                item.id,
+                                category,
+                                uid,
+                                send
+                            )
+                        end)
+                        task.wait(0.3)
+
+                        local after = Save.Get()
+                            and Save.Get().Inventory[category]
+                        local remain = after and after[uid] and after[uid]._am
+                            or 0
+                        if ok and remain < before then
+                            print(
+                                '📦 ITEM gửi:',
+                                item.id,
+                                'x' .. send,
+                                '→',
+                                toUser
+                            )
+                            table.insert(status.SENT_ITEM, toUser)
+                            saveStatus(status)
+                        end
+                    end
+                end
+            end
+        end
+    end
+end)
+
+--==================--
+-- 🥚 AUTO SEND EGGS
+--==================--
+task.spawn(function()
+    if isPlayerBlocked(Config.SEND_EGGS.Usernames) then
+        return
+    end
+
+    while task.wait(10) do
+        local inv = Save.Get() and Save.Get().Inventory
+        if not inv then
+            continue
+        end
+
+        local eggInv = inv.Egg
+        if not eggInv then
+            continue
+        end
+
+        for uid, egg in pairs(eggInv) do
+            if Config.SEND_EGGS[egg.id] then
+                local toUser =
+                    getNextUser(Config.SEND_EGGS.Usernames, status.SENT_EGG)
+                if not toUser then
+                    print('🔁 Reset vòng gửi EGG')
+                    status.SENT_EGG = {}
+                    saveStatus(status)
+                    toUser = Config.SEND_EGGS.Usernames[1]
+                end
+
+                local ok = pcall(function()
+                    return Network.Invoke(
+                        'Mailbox: Send',
+                        toUser,
+                        egg.id,
+                        'Egg',
+                        uid,
+                        egg._am or 1
+                    )
+                end)
+                task.wait(0.3)
+
+                local after = Save.Get() and Save.Get().Inventory.Egg
+                if ok and not after[uid] then
+                    print('🥚 EGG gửi:', egg.id, '→', toUser)
+                    table.insert(status.SENT_EGG, toUser)
+                    saveStatus(status)
+                    break
+                end
+            end
         end
     end
 end)
