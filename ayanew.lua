@@ -35,7 +35,7 @@ getgenv().GEVENT_UPGRADES = {
     'HalloweenTitanicLuck',
 } --you can put the comment symbols (these 2 dashes): -- in front of the ones you don't want to upgrade
 getgenv().GWEBHOOK_USERID = ""
-getgenv().GWEBHOOK_LINK = ""
+getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1283496015286112306/6GynCAV9qP7lv4kCSkAZ7RY37TbpqkZROFwoHmvVtIgq4QYLywx9oDyg1rEy-6fkkAKI"
 getgenv().GMAIL_RECEIVERS = {"DreamSoCow"} -- for Huges and mailrules.
 getgenv().GMAIL_ITEMS = {
 ["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
