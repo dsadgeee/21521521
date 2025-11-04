@@ -70,7 +70,7 @@ Workspace.DescendantAdded:Connect(function(v)
 end)
 
 -- ===================== AUTO TELEPORT =====================
-getgenv().AutoTeleportEnabled = false -- Bật / Tắt
+getgenv().AutoTeleportEnabled = true -- Bật / Tắt
 local TARGET_PLACE_ID = 131952481663528
 local CHECK_INTERVAL = 5 -- kiểm tra mỗi 5 giây
 
@@ -815,9 +815,6 @@ local HOUSE_DELAYS =
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
-local RANDOM_HOP_DELAY = 600
-local MIN_HOP_COOLDOWN = 600
-local FAIL_LIMIT = 999
 
 -- ================== SERVICES ==================
 local Players = game:GetService('Players')
@@ -828,108 +825,6 @@ local LocalPlayer = Players.LocalPlayer
 local PLOTS = workspace:WaitForChild('__THINGS'):WaitForChild('Plots')
 local Plots_Invoke = ReplicatedStorage:WaitForChild('Network')
     :WaitForChild('Plots_Invoke')
-
--- ================== SERVER HOP ==================
-local hoppedServers = {}
-local badServers = {}
-local lastHopTime = 0
-
-local function safeWaitCooldown()
-    local elapsed = os.clock() - lastHopTime
-    if elapsed < MIN_HOP_COOLDOWN then
-        task.wait(MIN_HOP_COOLDOWN - elapsed)
-    end
-end
-
-local function hopRandomServer()
-    safeWaitCooldown()
-    local servers
-    local ok = pcall(function()
-        servers = HttpService:JSONDecode(
-            game:HttpGet(
-                'https://games.roblox.com/v1/games/'
-                    .. tostring(game.PlaceId)
-                    .. '/servers/Public?sortOrder=Asc&limit=100'
-            )
-        ).data
-    end)
-    if not ok or not servers or #servers == 0 then
-        warn(
-            '⚠️ Không lấy được server, teleport lại chính server'
-        )
-        task.wait(RANDOM_HOP_DELAY)
-        TeleportService:Teleport(game.PlaceId, LocalPlayer)
-        lastHopTime = os.clock()
-        return
-    end
-
-    local candidates = {}
-    for _, s in ipairs(servers) do
-        if
-            s.id ~= game.JobId
-            and not hoppedServers[s.id]
-            and not badServers[s.id]
-        then
-            table.insert(candidates, s.id)
-        end
-    end
-
-    if #candidates == 0 then
-        warn(
-            '⚠️ Không còn server hợp lệ, reset danh sách đã hop...'
-        )
-        hoppedServers = {}
-        for _, s in ipairs(servers) do
-            if s.id ~= game.JobId and not badServers[s.id] then
-                table.insert(candidates, s.id)
-            end
-        end
-        if #candidates == 0 then
-            warn(
-                '⚠️ Không còn server nào hợp lệ để hop → đợi ngẫu nhiên'
-            )
-            task.wait(RANDOM_HOP_DELAY)
-            return hopRandomServer()
-        end
-    end
-
-    local nextServer = candidates[math.random(#candidates)]
-    print(
-        '⏱ Đang chờ '
-            .. RANDOM_HOP_DELAY
-            .. ' giây trước khi hop server: '
-            .. nextServer
-    )
-    task.wait(RANDOM_HOP_DELAY)
-
-    local ok = pcall(function()
-        TeleportService:TeleportToPlaceInstance(
-            game.PlaceId,
-            nextServer,
-            LocalPlayer
-        )
-    end)
-
-    lastHopTime = os.clock()
-    if ok then
-        print('🎲 Hop server thành công: ' .. nextServer)
-        hoppedServers[nextServer] = true
-    else
-        warn('⚠️ Không vào được server: ' .. nextServer)
-        hoppedServers[nextServer] = true
-        task.wait(MIN_HOP_COOLDOWN)
-        hopRandomServer()
-    end
-end
-
-local function hopServer(reason)
-    print(
-        '🚫 Server lỗi ('
-            .. tostring(reason)
-            .. ') → Hop RANDOM server...'
-    )
-    hopRandomServer()
-end
 
 -- ================== DPS LOGIC ==================
 local function checkThreshold(thresholds, amountPerSec)
@@ -1010,90 +905,6 @@ local function unlockHouseIfNeeded(plotId, houseNumber, amountPerSec)
         end
     end
     return false
-end
--- ================== EGG HANDLER ==================
-local lastPurchaseTimes = {}
-local activeThreads = {}
-
-local consecutiveFail = { [1] = 0, [2] = 0, [3] = 0 }
-
--- Kiểm tra hop nếu có bất kỳ 2/3 nhà fail
-local function attemptHopIfNeeded()
-    local failSlots = {}
-    for i = 1, 3 do
-        if consecutiveFail[i] >= FAIL_LIMIT then
-            table.insert(failSlots, i)
-        end
-    end
-
-    if #failSlots >= 2 then
-        warn('⚠️ 2/3 nhà đầu tiên fail limit → Hop server!')
-        badServers[game.JobId] = true
-
-        -- Reset bộ đếm của tất cả 3 slot
-        for i = 1, 3 do
-            consecutiveFail[i] = 0
-        end
-
-        hopServer('House1/2/3 fail limit')
-    end
-end
-
-local function purchaseEgg(plotId, slot, qty)
-    qty = qty or 1
-    local ok, result = pcall(function()
-        return Plots_Invoke:InvokeServer(plotId, 'PurchaseEgg', slot, qty)
-    end)
-
-    lastPurchaseTimes[slot] = os.clock()
-
-    if slot >= 1 and slot <= 3 then
-        if ok and result then
-            -- Mua thành công → reset bộ đếm của slot đó
-            consecutiveFail[slot] = 0
-            print('[✅ HOUSE ' .. slot .. ']: Mua egg thành công')
-        else
-            -- Mua thất bại → tăng bộ đếm
-            consecutiveFail[slot] = consecutiveFail[slot] + 1
-            print(
-                '[❌ HOUSE '
-                    .. slot
-                    .. ' ERROR #'
-                    .. consecutiveFail[slot]
-                    .. ']'
-            )
-
-            -- Kiểm tra hop nếu bất kỳ 2/3 slot fail
-            attemptHopIfNeeded()
-        end
-    else
-        -- Slot 4,5,6 mua bình thường, không ảnh hưởng hop
-        if ok and result then
-            print('[✅ HOUSE ' .. slot .. ']: Mua egg thành công')
-        else
-            print('[❌ HOUSE ' .. slot .. ' ERROR]')
-        end
-    end
-end
-
-local function startEggThread(plotId, slot, delay, qty)
-    qty = qty or 1
-    local ctrl = { stopFlag = false }
-    activeThreads[slot] = ctrl
-    task.spawn(function()
-        while not ctrl.stopFlag do
-            purchaseEgg(plotId, slot, qty)
-            task.wait(delay) -- ⚡ chờ đúng thời gian cấu hình
-        end
-    end)
-end
-
-local function stopAllThreads()
-    for _, ctrl in pairs(activeThreads) do
-        ctrl.stopFlag = true
-    end
-    task.wait(0.05)
-    activeThreads = {}
 end
 
 -- ================== MAIN LOOP ==================
@@ -2279,3 +2090,47 @@ task.spawn(function()
         end
     end)
 end)
+
+local network = require(game.ReplicatedStorage.Library.Client.Network)
+local pillarItems = require(game.ReplicatedStorage.Library.Items.HPillarItem)
+local eggItems = require(game.ReplicatedStorage.Library.Items.EggHalloweenItem)
+
+-- 🧰 HÀM BÁN TẤT CẢ
+local function SellAll()
+    local itemsToSell = {}
+
+    -- Thêm các cột trụ
+    for id in pairs(pillarItems:All()) do
+        table.insert(itemsToSell, id)
+    end
+
+    -- Hiển thị & thêm trứng
+    for id, egg in pairs(eggItems:All()) do
+        if sellpet.ShowEggs then
+            local name = egg.Name or (egg.GetName and egg:GetName()) or "Unknown"
+            local amount = egg.Amount or (egg.GetAmount and egg:GetAmount()) or 1
+            warn("🐣 Egg:", name, "| Amount:", amount)
+        end
+        table.insert(itemsToSell, id)
+    end
+
+    -- Gửi remote bán
+    local success, result = network.Invoke("HalloweenWorld_SellPillars", itemsToSell)
+    if success then
+        warn("✅ Sold all items successfully!")
+    else
+        warn("❌ Sell failed:", result)
+    end
+end
+
+-- 🔁 LẶP LẠI NẾU BẬT AUTOSSELL
+if sellpet.AutoSell then
+    task.spawn(function()
+        while sellpet.AutoSell do
+            SellAll()
+            task.wait(sellpet.Delay)
+        end
+    end)
+else
+    SellAll() -- Nếu AutoSell = false → chỉ chạy 1 lần
+end
