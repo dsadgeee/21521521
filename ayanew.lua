@@ -34,10 +34,5 @@ getgenv().Config = {
         Usernames = { 'TunTrapBoy' },
         ['Exclusive Egg 56'] = true,
     },
-    sellpet = {
-        AutoSell = true, -- Tự động bán (true / false)
-        ShowEggs = false, -- Hiển thị danh sách trứng
-        Delay = 999, -- Thời gian lặp lại (giây)
-    },
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
