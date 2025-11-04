@@ -815,9 +815,9 @@ local HOUSE_DELAYS =
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
-local RANDOM_HOP_DELAY = 300
-local MIN_HOP_COOLDOWN = 300
-local FAIL_LIMIT = 150
+local RANDOM_HOP_DELAY = 600
+local MIN_HOP_COOLDOWN = 600
+local FAIL_LIMIT = 999
 
 -- ================== SERVICES ==================
 local Players = game:GetService('Players')
