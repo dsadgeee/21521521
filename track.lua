@@ -1,4 +1,3 @@
-
 repeat
     task.wait(4)
 until game:IsLoaded(4)
@@ -809,15 +808,16 @@ camera:GetPropertyChangedSignal('ViewportSize'):Connect(function()
         UDim2.new(0, math.floor(width * 0.90), 0, math.floor(height * 0.90))
     toggleButton.Size = CalcToggleSize()
 end)
+
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.8, [2] = 0.8, [3] = 1, [4] = 5, [5] = 120, [6] = 220}
+    { [1] = 0.1, [2] = 0.1, [3] = 1, [4] = 20, [5] = 120, [6] = 200 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
-local RANDOM_HOP_DELAY = 20
-local MIN_HOP_COOLDOWN = 10
-local FAIL_LIMIT = 50
+local RANDOM_HOP_DELAY = 60
+local MIN_HOP_COOLDOWN = 50
+local FAIL_LIMIT = 80
 
 -- ================== SERVICES ==================
 local Players = game:GetService('Players')
@@ -964,7 +964,7 @@ local function decideHousesByDPS(amountPerSec)
         local thresholds = getgenv().Config.DPS_THRESHOLDS[key]
         if thresholds and checkThreshold(thresholds, amountPerSec) then
             housesToUnlock[h] = true
-            eggQtyPerSlot[h] = h <= 4 and 3 or 1
+            eggQtyPerSlot[h] = h <= 3 and 3 or 1
         end
     end
     local finalHouses, finalEggQty = {}, {}
@@ -1011,26 +1011,49 @@ local function unlockHouseIfNeeded(plotId, houseNumber, amountPerSec)
     end
     return false
 end
-
 -- ================== EGG HANDLER ==================
 local lastPurchaseTimes = {}
 local activeThreads = {}
 
 local consecutiveFail = { [1] = 0, [2] = 0, [3] = 0 }
 
+-- Kiểm tra hop nếu có bất kỳ 2/3 nhà fail
+local function attemptHopIfNeeded()
+    local failSlots = {}
+    for i = 1, 3 do
+        if consecutiveFail[i] >= FAIL_LIMIT then
+            table.insert(failSlots, i)
+        end
+    end
+
+    if #failSlots >= 2 then
+        warn('⚠️ 2/3 nhà đầu tiên fail limit → Hop server!')
+        badServers[game.JobId] = true
+
+        -- Reset bộ đếm của tất cả 3 slot
+        for i = 1, 3 do
+            consecutiveFail[i] = 0
+        end
+
+        hopServer('House1/2/3 fail limit')
+    end
+end
+
 local function purchaseEgg(plotId, slot, qty)
     qty = qty or 1
-    local success, result = pcall(function()
+    local ok, result = pcall(function()
         return Plots_Invoke:InvokeServer(plotId, 'PurchaseEgg', slot, qty)
     end)
+
     lastPurchaseTimes[slot] = os.clock()
 
-    -- Chỉ quan sát slot 1,2,3
     if slot >= 1 and slot <= 3 then
-        if success and result then -- Server trả true => mua thành công
+        if ok and result then
+            -- Mua thành công → reset bộ đếm của slot đó
             consecutiveFail[slot] = 0
             print('[✅ HOUSE ' .. slot .. ']: Mua egg thành công')
         else
+            -- Mua thất bại → tăng bộ đếm
             consecutiveFail[slot] = consecutiveFail[slot] + 1
             print(
                 '[❌ HOUSE '
@@ -1040,27 +1063,12 @@ local function purchaseEgg(plotId, slot, qty)
                     .. ']'
             )
 
-            -- Kiểm tra xem có ít nhất 2 slot fail
-            local failCount = 0
-            for i = 1, 3 do
-                if consecutiveFail[i] >= FAIL_LIMIT then
-                    failCount = failCount + 1
-                end
-            end
-
-            if failCount >= 2 then
-                warn('⚠️ 2/3 nhà đầu tiên fail limit → Hop server!')
-                badServers[game.JobId] = true
-                hopServer('House1/2/3 fail limit')
-                -- Reset counters sau khi hop
-                for i = 1, 3 do
-                    consecutiveFail[i] = 0
-                end
-            end
+            -- Kiểm tra hop nếu bất kỳ 2/3 slot fail
+            attemptHopIfNeeded()
         end
     else
-        -- Các slot khác vẫn mua bình thường
-        if success and result then
+        -- Slot 4,5,6 mua bình thường, không ảnh hưởng hop
+        if ok and result then
             print('[✅ HOUSE ' .. slot .. ']: Mua egg thành công')
         else
             print('[❌ HOUSE ' .. slot .. ' ERROR]')
