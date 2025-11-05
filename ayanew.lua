@@ -1,11 +1,11 @@
 getgenv().Config = {
     SERVER_HOP = false, -- true: bật hop server, false: tắt hop server
     DPS_THRESHOLDS = {
-        HOUSE1 = { '>0' },
-        HOUSE2 = { '>1000' },
-        HOUSE3 = { '6000~14000', '>25000' },
-        HOUSE4 = { '14000~24000', '>35000' },
-        HOUSE5 = { '>24000' },
+        HOUSE1 = {'>0'),
+        HOUSE2 = {'1000~4000', '>10000' },
+        HOUSE3 = {'3500~6500', '>23500' },
+        HOUSE4 = {'46000~10000', '>25000'),
+        HOUSES = {'8000~24000' },
         HOUSE6 = { '>100000' },
     },
 
