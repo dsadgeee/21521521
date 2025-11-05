@@ -23,7 +23,7 @@ getgenv().Config = {
 
     SEND_DIAMONDS = {
         Usernames = { 'DreamSoCow' },
-        MinDiamonds = 100000000,
+        MinDiamonds = 50000000,
     },
 
     SEND_ITEM = {
