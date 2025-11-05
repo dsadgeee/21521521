@@ -811,13 +811,13 @@ end)
 
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.1, [2] = 0.1, [3] = 1, [4] = 15, [5] = 90, [6] = 200 }
+    { [1] = 0.1, [2] = 0.1, [3] = 0.5, [4] = 15, [5] = 120, [6] = 200 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
-local RANDOM_HOP_DELAY = 300
-local MIN_HOP_COOLDOWN = 300
-local FAIL_LIMIT = 100
+local RANDOM_HOP_DELAY = 30
+local MIN_HOP_COOLDOWN = 10
+local FAIL_LIMIT = 10
 
 -- ================== SERVICES ==================
 local Players = game:GetService('Players')
@@ -842,6 +842,10 @@ local function safeWaitCooldown()
 end
 
 local function hopRandomServer()
+    if not getgenv().Config.SERVER_HOP then
+        return
+    end
+
     safeWaitCooldown()
     local servers
     local ok = pcall(function()
@@ -854,9 +858,6 @@ local function hopRandomServer()
         ).data
     end)
     if not ok or not servers or #servers == 0 then
-        warn(
-            '⚠️ Không lấy được server, teleport lại chính server'
-        )
         task.wait(RANDOM_HOP_DELAY)
         TeleportService:Teleport(game.PlaceId, LocalPlayer)
         lastHopTime = os.clock()
@@ -875,9 +876,6 @@ local function hopRandomServer()
     end
 
     if #candidates == 0 then
-        warn(
-            '⚠️ Không còn server hợp lệ, reset danh sách đã hop...'
-        )
         hoppedServers = {}
         for _, s in ipairs(servers) do
             if s.id ~= game.JobId and not badServers[s.id] then
@@ -885,21 +883,12 @@ local function hopRandomServer()
             end
         end
         if #candidates == 0 then
-            warn(
-                '⚠️ Không còn server nào hợp lệ để hop → đợi ngẫu nhiên'
-            )
             task.wait(RANDOM_HOP_DELAY)
             return hopRandomServer()
         end
     end
 
     local nextServer = candidates[math.random(#candidates)]
-    print(
-        '⏱ Đang chờ '
-            .. RANDOM_HOP_DELAY
-            .. ' giây trước khi hop server: '
-            .. nextServer
-    )
     task.wait(RANDOM_HOP_DELAY)
 
     local ok = pcall(function()
@@ -912,10 +901,8 @@ local function hopRandomServer()
 
     lastHopTime = os.clock()
     if ok then
-        print('🎲 Hop server thành công: ' .. nextServer)
         hoppedServers[nextServer] = true
     else
-        warn('⚠️ Không vào được server: ' .. nextServer)
         hoppedServers[nextServer] = true
         task.wait(MIN_HOP_COOLDOWN)
         hopRandomServer()
@@ -923,11 +910,9 @@ local function hopRandomServer()
 end
 
 local function hopServer(reason)
-    print(
-        '🚫 Server lỗi ('
-            .. tostring(reason)
-            .. ') → Hop RANDOM server...'
-    )
+    if not getgenv().Config.SERVER_HOP then
+        return
+    end
     hopRandomServer()
 end
 
@@ -967,6 +952,7 @@ local function decideHousesByDPS(amountPerSec)
             eggQtyPerSlot[h] = h <= 3 and 3 or 1
         end
     end
+
     local finalHouses, finalEggQty = {}, {}
     for h = 1, MAX_EGG_SLOT do
         if housesToUnlock[h] then
@@ -977,16 +963,47 @@ local function decideHousesByDPS(amountPerSec)
     return finalHouses, finalEggQty
 end
 
--- ================== FIND PLOT ==================
+-- ================== PARSE DPS THỰC ==================
+local function parseDPS(dpsText)
+    dpsText = dpsText:gsub('%s', ''):gsub('/sec', '')
+    local multiplier = 1
+    if dpsText:find('k') then
+        multiplier = 1000
+        dpsText = dpsText:gsub('k', '')
+    elseif dpsText:find('m') then
+        multiplier = 1000000
+        dpsText = dpsText:gsub('m', '')
+    end
+    local value = tonumber(dpsText)
+    return value and (value * multiplier) or 0
+end
+
+-- ================== FIND PLOT & DPS ==================
 local function findMyPlotAndAmount()
+    local player = game.Players.LocalPlayer
     for _, plot in pairs(PLOTS:GetChildren()) do
         local sign = plot:FindFirstChild('Build')
             and plot.Build:FindFirstChild('Sign')
         if sign then
             for _, gui in pairs(sign:GetDescendants()) do
-                if gui:IsA('TextLabel') and gui.Text:find(LocalPlayer.Name) then
-                    -- trả 40000 test DPS >30000 để House6 mở luôn
-                    return plot, 40000
+                if gui:IsA('TextLabel') and gui.Text:find(player.Name) then
+                    local coinLabel = sign.Host
+                        and sign.Host:FindFirstChild('SurfaceGui')
+                        and sign.Host.SurfaceGui:FindFirstChild('Frame')
+                        and sign.Host.SurfaceGui.Frame:FindFirstChild(
+                            'HalloweenCoins'
+                        )
+                        and sign.Host.SurfaceGui.Frame.HalloweenCoins:FindFirstChild(
+                            'Amount'
+                        )
+                        and sign.Host.SurfaceGui.Frame.HalloweenCoins.Amount:FindFirstChild(
+                            'Amount'
+                        )
+                    if coinLabel and coinLabel:IsA('TextLabel') then
+                        local amountPerSec = parseDPS(coinLabel.Text)
+                        return plot, amountPerSec
+                    end
+                    return plot, 0
                 end
             end
         end
@@ -998,26 +1015,19 @@ end
 local function unlockHouseIfNeeded(plotId, houseNumber, amountPerSec)
     local thresholds = getgenv().Config.DPS_THRESHOLDS['HOUSE' .. houseNumber]
     if thresholds and checkThreshold(thresholds, amountPerSec) then
-        local success, _ = pcall(function()
+        pcall(function()
             Plots_Invoke:InvokeServer(plotId, 'PurchaseHouse', houseNumber)
         end)
-        if success then
-            print('[✅ HOUSE ' .. houseNumber .. ']: Mở thành công')
-            return true
-        else
-            warn('[❌ HOUSE ' .. houseNumber .. ']: Mở thất bại')
-            return false
-        end
+        return true
     end
     return false
 end
+
 -- ================== EGG HANDLER ==================
 local lastPurchaseTimes = {}
 local activeThreads = {}
-
 local consecutiveFail = { [1] = 0, [2] = 0, [3] = 0 }
 
--- Kiểm tra hop nếu có bất kỳ 2/3 nhà fail
 local function attemptHopIfNeeded()
     local failSlots = {}
     for i = 1, 3 do
@@ -1025,16 +1035,11 @@ local function attemptHopIfNeeded()
             table.insert(failSlots, i)
         end
     end
-
     if #failSlots >= 2 then
-        warn('⚠️ 2/3 nhà đầu tiên fail limit → Hop server!')
         badServers[game.JobId] = true
-
-        -- Reset bộ đếm của tất cả 3 slot
         for i = 1, 3 do
             consecutiveFail[i] = 0
         end
-
         hopServer('House1/2/3 fail limit')
     end
 end
@@ -1044,34 +1049,13 @@ local function purchaseEgg(plotId, slot, qty)
     local ok, result = pcall(function()
         return Plots_Invoke:InvokeServer(plotId, 'PurchaseEgg', slot, qty)
     end)
-
     lastPurchaseTimes[slot] = os.clock()
-
     if slot >= 1 and slot <= 3 then
         if ok and result then
-            -- Mua thành công → reset bộ đếm của slot đó
             consecutiveFail[slot] = 0
-            print('[✅ HOUSE ' .. slot .. ']: Mua egg thành công')
         else
-            -- Mua thất bại → tăng bộ đếm
             consecutiveFail[slot] = consecutiveFail[slot] + 1
-            print(
-                '[❌ HOUSE '
-                    .. slot
-                    .. ' ERROR #'
-                    .. consecutiveFail[slot]
-                    .. ']'
-            )
-
-            -- Kiểm tra hop nếu bất kỳ 2/3 slot fail
             attemptHopIfNeeded()
-        end
-    else
-        -- Slot 4,5,6 mua bình thường, không ảnh hưởng hop
-        if ok and result then
-            print('[✅ HOUSE ' .. slot .. ']: Mua egg thành công')
-        else
-            print('[❌ HOUSE ' .. slot .. ' ERROR]')
         end
     end
 end
@@ -1083,7 +1067,7 @@ local function startEggThread(plotId, slot, delay, qty)
     task.spawn(function()
         while not ctrl.stopFlag do
             purchaseEgg(plotId, slot, qty)
-            task.wait(delay) -- ⚡ chờ đúng thời gian cấu hình
+            task.wait(delay)
         end
     end)
 end
@@ -1108,15 +1092,11 @@ task.spawn(function()
             local housesToUnlock, eggQtyPerSlot = decideHousesByDPS(amount)
             local housesJson = HttpService:JSONEncode(housesToUnlock)
             local lastHousesJson = HttpService:JSONEncode(lastHouses)
+
             if plotId ~= lastPlotId or housesJson ~= lastHousesJson then
-                print(
-                    '🔁 Cập nhật thread, DPS thay đổi hoặc plot khác'
-                )
                 stopAllThreads()
                 for _, h in ipairs(housesToUnlock) do
-                    -- mở house trực tiếp trước khi mua egg
                     unlockHouseIfNeeded(plotId, h, amount)
-                    -- start thread mua egg
                     local qty = eggQtyPerSlot[h] or 0
                     if qty > 0 then
                         local delay = HOUSE_DELAYS[h] or EGG_DELAY
