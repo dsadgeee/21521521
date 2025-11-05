@@ -811,13 +811,13 @@ end)
 
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.1, [2] = 0.1, [3] = 0.5, [4] = 15, [5] = 120, [6] = 200 }
+    { [1] = 0.1, [2] = 0.1, [3] = 0.5, [4] = 15, [5] = 100, [6] = 200 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
 local RANDOM_HOP_DELAY = 300
 local MIN_HOP_COOLDOWN = 100
-local FAIL_LIMIT = 20
+local FAIL_LIMIT = 200
 
 -- ================== SERVICES ==================
 local Players = game:GetService('Players')
