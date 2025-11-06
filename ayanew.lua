@@ -2,11 +2,11 @@ getgenv().Config = {
     SERVER_HOP = false, -- true: bật hop server, false: tắt hop server
     DPS_THRESHOLDS = {
         HOUSE1 = { '>0' },
-        HOUSE2 = { '>1000' },
-        HOUSE3 = { '6000~14000', '>25000' },
-        HOUSE4 = { '14000~24000', '>35000' },
-        HOUSE5 = { '>24000' },
-        HOUSE6 = { '>100000' },
+        HOUSE2 = { '1000~3000', '>10000' },
+        HOUSE3 = { '3000~6500', '>20000' },
+        HOUSE4 = { '6000~9000', '>23000' },
+        HOUSE5 = { '8300~22000' },
+        HOUSE6 = { '>25000'},
     },
     plant = {
         PET_SLOTS = { 1, 2, 3, 4, 5, 6, 7, 8, 9 }, -- slot đặt pet, put pet
