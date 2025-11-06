@@ -1,5 +1,5 @@
 getgenv().Config = {
-    SERVER_HOP = false, -- true: bật hop server, false: tắt hop server
+    SERVER_HOP = true, -- true: bật hop server, false: tắt hop server
     DPS_THRESHOLDS = {
         HOUSE1 = { '>0' },
         HOUSE2 = { '>1000' },
