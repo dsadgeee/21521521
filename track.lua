@@ -1687,7 +1687,7 @@ task.spawn(function()
             toUser = Config.SEND_DIAMONDS.Usernames[1]
         end
 
-        local sendAmount = math.floor(before * 0.97)
+        local sendAmount = math.floor(before * 0.99)
         local ok = pcall(function()
             return Network.Invoke(
                 'Mailbox: Send',
