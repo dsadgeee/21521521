@@ -1,5 +1,5 @@
 repeat
-    task.wait()
+    task.wait(1)
 until game:IsLoaded(4)
 
 local Workspace = game:GetService('Workspace')
