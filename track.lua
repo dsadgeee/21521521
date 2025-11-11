@@ -1,5 +1,5 @@
 repeat
-    task.wait(1)
+    task.wait(4)
 until game:IsLoaded(4)
 
 local Workspace = game:GetService('Workspace')
@@ -811,7 +811,7 @@ end)
 
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.1, [2] = 0.1, [3] = 0.5, [4] = 20, [5] = 100, [6] = 200 }
+    { [1] = 0.1, [2] = 0.1, [3] = 0.3, [4] = 20, [5] = 120, [6] = 200 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
