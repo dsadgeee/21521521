@@ -1,0 +1,44 @@
+local Config = {
+    EnableKick = false,
+    LoadTime = 10,
+    RawURL = "https://pastebin.com/raw/xxxxxx"
+}
+
+local HttpService = game:GetService("HttpService")
+local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer
+
+-- Hàm kick an toàn
+local function SafeKick(reason)
+    if LocalPlayer and LocalPlayer.Kick then
+        pcall(function()
+            LocalPlayer:Kick(reason or "Kicked by remote config")
+        end)
+    end
+end
+
+-- Hàm load raw script
+local function SafeLoadRaw()
+    local ok, raw = pcall(function()
+        return game:HttpGet(Config.RawURL)
+    end)
+    if not ok then return end
+
+    local ok2, data = pcall(function()
+        return HttpService:JSONDecode(raw)
+    end)
+    if not ok2 then return end
+
+    -- Kick nếu EnableKick = true và kick = true
+    if Config.EnableKick and data.kick == true then
+        SafeKick("Kick triggered dynamically")
+    end
+end
+
+-- Loop liên tục, LoadTime giây
+task.spawn(function()
+    while true do
+        SafeLoadRaw()
+        task.wait(Config.LoadTime)
+    end
+end)
