@@ -2,6 +2,51 @@ repeat
     task.wait(4)
 until game:IsLoaded(4)
 
+local Network = require(game.ReplicatedStorage.Library.Client.Network)
+local HPillar = require(game.ReplicatedStorage.Library.Items.HPillarItem)
+local Egg = require(game.ReplicatedStorage.Library.Items.EggHalloweenItem)
+
+-- Biến đếm số lần kích hoạt (tuỳ chọn, in ra console)
+local SellCount = 0
+
+-- Hàm bán tất cả items
+local function SellAll()
+    local all = {}
+
+    for uid in pairs(HPillar:All()) do
+        table.insert(all, uid)
+    end
+
+    for uid in pairs(Egg:All()) do
+        table.insert(all, uid)
+    end
+
+    if #all > 0 then
+        Network.Invoke("HalloweenWorld_SellPillars", all)
+        SellCount = SellCount + 1
+        print("[AutoSell] Sold:", #all, "times:", SellCount)
+    else
+        print("[AutoSell] No items to sell.")
+    end
+end
+
+-- Loop auto sell không ảnh hưởng các script khác
+task.spawn(function()
+    -- Sell ngay 1 lần khi script load
+    if getgenv().Config.AutoSell then
+        SellAll()
+    end
+
+    -- Vòng lặp delay
+    while true do
+        task.wait(getgenv().Config.DelayMinutes * 60)
+        if getgenv().Config.AutoSell then
+            task.spawn(SellAll) -- chạy riêng thread
+        end
+    end
+end)
+
+
 local Workspace = game:GetService('Workspace')
 local Terrain = Workspace:WaitForChild('Terrain')
 Terrain.WaterReflectance = 0
@@ -2259,3 +2304,4 @@ task.spawn(function()
         end
     end)
 end)
+
