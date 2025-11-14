@@ -30,5 +30,7 @@ getgenv().Config = {
         Usernames = {'TunTrapBoy'}, --- name1 , name2 , name3 ---
         ['Exclusive Egg 56'] = true,
     },
+        AutoSell = true,       -- Bật/tắt auto sell
+        DelayMinutes = 1     
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
