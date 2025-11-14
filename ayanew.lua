@@ -31,6 +31,6 @@ getgenv().Config = {
         ['Exclusive Egg 56'] = true,
     },
         AutoSell = true,       -- Bật/tắt auto sell
-        DelayMinutes = 1     
+        DelayMinutes = 600
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
