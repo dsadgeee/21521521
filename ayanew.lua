@@ -29,7 +29,7 @@ getgenv().Config = {
     },
     SEND_EGGS = {
         Usernames = {'TunTrapBoy'}, --- name1 , name2 , name3 ---
-        ['Exclusive Egg 56'] = true,
+        ['Exclusive Egg 57'] = true,
     },
         AutoSell = true,       -- Bật/tắt auto sell
         DelayMinutes = 600
