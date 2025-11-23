@@ -1,6 +1,6 @@
 -- CONFIG
 local C = {
-    Kick = false,                                      -- bật/tắt kick
+    Kick = true,                                      -- bật/tắt kick
     Time = 5,                                         -- phút
     URL = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/k%20i%20c%20k%20.%20lua"
 }
