@@ -30,7 +30,7 @@ getgenv().Config = {
     SEND_EGGS = {
         Usernames = { 'TunTrapBoy' },
         ALL = true, -- gửi tất cả egg có chữ Exclusive Egg
-    }
+    },
         AutoSell = true,       -- Bật/tắt auto sell
         DelayMinutes = 100
 }
