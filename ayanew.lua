@@ -32,6 +32,6 @@ getgenv().Config = {
         ALL = true, -- gửi tất cả egg có chữ Exclusive Egg
     },
         AutoSell = true,       -- Bật/tắt auto sell
-        DelayMinutes = 100
+        DelayMinutes = 60
 }
 loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/track.lua"))()
