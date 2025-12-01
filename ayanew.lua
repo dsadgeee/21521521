@@ -28,9 +28,9 @@ getgenv().Config = {
         ['Spectral Potion'] = { amount = 3 }, --- number and 'all' ----
     },
     SEND_EGGS = {
-        Usernames = {'TunTrapBoy'}, --- name1 , name2 , name3 ---
-        ['Exclusive Egg 57'] = true,
-    },
+        Usernames = { 'TunTrapBoy' },
+        ALL = true, -- gửi tất cả egg có chữ Exclusive Egg
+    }
         AutoSell = true,       -- Bật/tắt auto sell
         DelayMinutes = 100
 }
