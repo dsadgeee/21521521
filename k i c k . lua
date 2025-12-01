@@ -1,1 +1,14 @@
+while true do
+    -- Tải + chạy script
+    local success, err = pcall(function()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/O%20U%20%20T%20.lua"))()
+    end)
 
+    if not success then
+        print("Load script thất bại, sẽ thử lại sau 5 phút")
+    else
+        print("Đã reload script lúc:", os.time())
+    end
+
+    task.wait(300) -- 300 giây = 5 phút
+end
