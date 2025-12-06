@@ -1,1 +1,1 @@
-_G.Config={UserID="0d28ea66-a410-47c0-a707-06d7cb199774",discord_id="698853568291143821",Note="Pc"}local s;for i=1,5 do s=pcall(function()loadstring(game:HttpGet("https://raw.githubusercontent.com/skadidau/unfazedfree/refs/heads/main/pet99"))()end)if s then break end wait(5)end
+_G.Config={UserID="0d28ea66-a410-47c0-a707-06d7cb199774",discord_id="698853568291143821",Note="Pc"}local s;for i=1,5 do s=pcall(function()loadstring(game:HttpGet("https://cdn.yummydata.click/scripts/pet99"))()end)if s then break end wait(5)end
