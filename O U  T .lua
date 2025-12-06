@@ -1,7 +1,7 @@
 do
     -- CONFIG
     local config = {
-        KickOnRun = true,        -- true = chạy là kick ngay, false = không kick
+        KickOnRun = false,        -- true = chạy là kick ngay, false = không kick
         ShowNotify = true        -- bật thông báo update
     }
 
