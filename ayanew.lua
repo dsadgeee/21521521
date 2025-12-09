@@ -1,4 +1,3 @@
-setfpscap(2)
 getgenv().Config = {
     SERVER_HOP = false, -- true: bật hop server, false: tắt hop server
     DPS_THRESHOLDS = {
