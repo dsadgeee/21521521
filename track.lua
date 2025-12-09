@@ -856,7 +856,7 @@ end)
 
 -- ================== SETTINGS ==================
 local HOUSE_DELAYS =
-    { [1] = 0.1, [2] = 0.2, [3] = 0.3, [4] = 60, [5] = 120, [6] = 300 }
+    { [1] = 0.1, [2] = 0.2, [3] = 0.3, [4] = 30, [5] = 120, [6] = 300 }
 local SIGN_RECHECK_INTERVAL = 10
 local EGG_DELAY = 0.5
 local MAX_EGG_SLOT = 6
