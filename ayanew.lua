@@ -24,8 +24,8 @@ getgenv().Config = {
     },
     SEND_ITEM = {
         Usernames = {'DreamSoCow'}, --- name1 , name2 , name3 ---
-        ['Santa Gift'] = { amount = 60 }, --- number and 'all' ----
         ['Candycane Gift'] = { amount = 60 }, --- number and 'all' ----
+        ['Santa Gift'] = { amount = 20 },
     },
     SEND_EGGS = {
         Usernames = { 'TunTrapBoy' },
