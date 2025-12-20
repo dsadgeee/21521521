@@ -23,7 +23,7 @@ getgenv().Config = {
         MinDiamonds = 50000000,
     },
     SEND_ITEM = {
-        Usernames = {''}, --- name1 , name2 , name3 ---
+        Usernames = {'DreamSoCow'}, --- name1 , name2 , name3 ---
         ['Santa Gift'] = { amount = 'all' }, --- number and 'all' ----
         ['Candycane Gift'] = { amount = 'all' }, --- number and 'all' ----
     },
