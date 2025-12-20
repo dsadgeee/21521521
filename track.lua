@@ -1,4 +1,3 @@
-
 repeat
     task.wait(4)
 until game:IsLoaded(4)
