@@ -12,9 +12,9 @@ settings().Rendering.MeshPartDetailLevel = Enum.MeshPartDetailLevel.Level04
 settings().Rendering.GraphicsMode = 9
 
 local keys = {
-    "gBgCmAPZTSmdqGHMSmmUdgFuEcELDZWK", 
-    "qIVzNCBYuxaJkHOwVmcdnrwgFCgjzopH", 
-    "ztMvmvBRojVRaBhAHDtmYBWxgLZXDYfv",
+    "", 
+    "", 
+    "",
 }
 math.randomseed(os.time())
 script_key = keys[math.random(#keys)];
