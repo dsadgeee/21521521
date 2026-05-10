@@ -35,7 +35,7 @@ getgenv().Config = {
         ["Switch At Rebirth"] = 10,
     },
     ["Webhook"] = {
-        ["Url"] = "",                                -- your Discord webhook URL
+        ["Url"] = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",                                -- your Discord webhook URL
         ["Discord ID"] = "",                         -- your Discord user ID (for pings, right-click → Copy User ID)
         ["Min Rarity"] = 10000000,                    -- only notify for slimes rarer than 1/X
     },
