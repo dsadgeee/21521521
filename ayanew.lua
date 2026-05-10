@@ -1,44 +1,79 @@
-getgenv().Config = {
-    ["Performance"] = {
-        ["Optimization"] = true,                  
-        ["FPS Cap"] = 5,                           
-    },
-    ["Auto Roll"] = {
-        ["Enabled"] = true,                          -- master switch for auto-rolling
-        ["Hide Roll"] = true,                        -- hide roll animation
-        ["Equip Best"] = true,                       -- auto-equip best slimes
-    },
-    ["Auto Use Dice"] = {                            -- dice to auto-use when available
-        "jackpotSpin",
-        "bigDice",
-        "hugeDice",
-        "shinyDice",
-        "invertedDice",
-    },
-    ["Auto Use Boost"] = {                           -- boosts to auto-activate
-        "luck",
-        "ultraLuck",
-        "currency",
-        "rollSpeed",
-    },
-    ["Auto Use Food"] = {                            -- food to auto-feed slimes
-        "apple", "carrot", "cherries", "grapes",
-        "banana", "watermelon", "pizza", "chicken", "drumstick",
-    },
-    ["Auto Upgrade"] = {
-        ["Enabled"] = true,                          -- auto-buy upgrades in priority order
-    },
-    ["Rebirth"] = {
+repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
+getgenv().Key = ""
+getgenv().SettingFarm ={
+    ["Hide UI"] = true,
+    ["Reset Teleport"] = {
         ["Enabled"] = true,
-        ["Max Rebirths"] = 100,
-        ["Switch Account"] = true,
-        ["Switch At Rebirth"] = 10,
+        ["Delay Reset"] = 3,
+        ["Item Dont Reset"] = {
+            ["Fruit"] = {
+                ["Enabled"] = true,
+                ["All Fruit"] = true, 
+                ["Select Fruit"] = {
+                    ["Enabled"] = false,
+                    ["Fruit"] = {},
+                },
+            },
+        },
     },
+    ["White Screen"] = true,
+    ["Lock Fps"] = {
+        ["Enabled"] = false,
+        ["FPS"] = 5,
+    },
+    ["Get Items"] = {
+        ["Saber"] = true,
+        ["Godhuman"] =  true,
+        ["Skull Guitar"] = false,
+        ["Mirror Fractal"] = false,
+        ["Cursed Dual Katana"] = false,
+        ["Upgrade Race V2-V3"] = false,
+        ["Auto Pull Lever"] = false,
+        ["Shark Anchor"] = false, --- if have cdk,sg,godhuman
+    },
+    ["Get Rare Items"] = {
+        ["Rengoku"] = false,
+        ["Dragon Trident"] = false, 
+        ["Pole (1st Form)"] = false,
+        ["Gravity Blade"]  = false,
+    },
+    ["Farm Fragments"] = {
+        ["Enabled"]  = false,
+        ["Fragment"] = 50000,
+    },
+    ["Auto Chat"] = {
+        ["Enabled"] = false,
+        ["Text"] = "",
+    },
+    ["Auto Summon Rip Indra"] = true, --- auto buy haki and craft haki legendary 
+    ["Select Hop"] = { -- 70% will have it
+        ["Hop Server If Have Player Near"] = false, 
+        ["Hop Find Rip Indra Get Valkyrie Helm or Get Tushita"] = false, 
+        ["Hop Find Dough King Get Mirror Fractal"] = false,
+        ["Hop Find Raids Castle [CDK]"] = false,
+        ["Hop Find Cake Queen [CDK]"] = false,
+        ["Hop Find Soul Reaper [CDK]"] = false,
+        ["Hop Find Darkbeard [SG]"] = false,
+        ["Hop Find Mirage [ Pull Lever ]"] = false,
+    },
+    ["Farm Mastery"] = {
+        ["Melee"] = true,
+        ["Sword"] = false,
+    },
+    ["Buy Haki"] = {
+        ["Enhancement"] = true,
+        ["Skyjump"] = true,
+        ["Flash Step"] = true,
+        ["Observation"] = true,
+    },
+    ["Sniper Fruit Shop"] = {
+        ["Enabled"] = true, -- Auto Buy Fruit in Shop Mirage and Normal
+        ["Fruit"] = {"Leopard-Leopard","Kitsune-Kitsune","Dragon-Dragon","Yeti-Yeti","Gas-Gas"},
+    },
+    ["Lock Fruit"] = {},
     ["Webhook"] = {
-        ["Url"] = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF",                                -- your Discord webhook URL
-        ["Discord ID"] = "",                         -- your Discord user ID (for pings, right-click → Copy User ID)
-        ["Min Rarity"] = 10000000,                    -- only notify for slimes rarer than 1/X
-    },
+        ["Enabled"] = false,
+        ["WebhookUrl"] = "",
+    }
 }
-
-loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/d0ab46b287e5c0ebc658e9f5dc7a8dcb.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaCat-kaitunBF.lua"))()
