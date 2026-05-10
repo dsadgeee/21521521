@@ -1,79 +1,24 @@
-repeat wait() until game:IsLoaded() and game.Players.LocalPlayer
-getgenv().Key = "665cddd2f4a1ca432f0d7e5b"
-getgenv().SettingFarm ={
-    ["Hide UI"] = true,
-    ["Reset Teleport"] = {
-        ["Enabled"] = true,
-        ["Delay Reset"] = 3,
-        ["Item Dont Reset"] = {
-            ["Fruit"] = {
-                ["Enabled"] = true,
-                ["All Fruit"] = true, 
-                ["Select Fruit"] = {
-                    ["Enabled"] = false,
-                    ["Fruit"] = {},
-                },
-            },
-        },
-    },
-    ["White Screen"] = true,
-    ["Lock Fps"] = {
-        ["Enabled"] = false,
-        ["FPS"] = 5,
-    },
-    ["Get Items"] = {
-        ["Saber"] = true,
-        ["Godhuman"] =  true,
-        ["Skull Guitar"] = false,
-        ["Mirror Fractal"] = false,
-        ["Cursed Dual Katana"] = false,
-        ["Upgrade Race V2-V3"] = false,
-        ["Auto Pull Lever"] = false,
-        ["Shark Anchor"] = false, --- if have cdk,sg,godhuman
-    },
-    ["Get Rare Items"] = {
-        ["Rengoku"] = false,
-        ["Dragon Trident"] = false, 
-        ["Pole (1st Form)"] = false,
-        ["Gravity Blade"]  = false,
-    },
-    ["Farm Fragments"] = {
-        ["Enabled"]  = false,
-        ["Fragment"] = 50000,
-    },
-    ["Auto Chat"] = {
-        ["Enabled"] = false,
-        ["Text"] = "",
-    },
-    ["Auto Summon Rip Indra"] = true, --- auto buy haki and craft haki legendary 
-    ["Select Hop"] = { -- 70% will have it
-        ["Hop Server If Have Player Near"] = false, 
-        ["Hop Find Rip Indra Get Valkyrie Helm or Get Tushita"] = false, 
-        ["Hop Find Dough King Get Mirror Fractal"] = false,
-        ["Hop Find Raids Castle [CDK]"] = false,
-        ["Hop Find Cake Queen [CDK]"] = false,
-        ["Hop Find Soul Reaper [CDK]"] = false,
-        ["Hop Find Darkbeard [SG]"] = false,
-        ["Hop Find Mirage [ Pull Lever ]"] = false,
-    },
-    ["Farm Mastery"] = {
-        ["Melee"] = true,
-        ["Sword"] = false,
-    },
-    ["Buy Haki"] = {
-        ["Enhancement"] = true,
-        ["Skyjump"] = true,
-        ["Flash Step"] = true,
-        ["Observation"] = true,
-    },
-    ["Sniper Fruit Shop"] = {
-        ["Enabled"] = true, -- Auto Buy Fruit in Shop Mirage and Normal
-        ["Fruit"] = {"Leopard-Leopard","Kitsune-Kitsune","Dragon-Dragon","Yeti-Yeti","Gas-Gas"},
-    },
-    ["Lock Fruit"] = {},
-    ["Webhook"] = {
-        ["Enabled"] = false,
-        ["WebhookUrl"] = "",
-    }
+script_key = "CjCYYPWbEBbtHUDxxoMcfBEIKpGjslTI";
+getgenv().GGFX_MODE = 1
+getgenv().GZONE_TO = 1 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
+getgenv().GDO_RNG_INSTANCE = true
+getgenv().GUSE_BOOSTS = true
+getgenv().GRNG_SELL_PETS = true
+getgenv().GRNG_CRAFT_DICE = true
+getgenv().GRNG_USE_MEGA1 = false
+getgenv().GEVENT_UPGRADES = {
+    { Id = "RNGEggLuck",   MaxTier = 15  },
+    { Id = "RNGHatchSpeed", MaxTier = 15  },
+    { Id = "RNGBonusLuck",  MaxTier = 8  },
+    { Id = "RNGHugeLuck",   MaxTier = 13  },
 }
-loadstring(game:HttpGet("https://raw.githubusercontent.com/obiiyeuem/vthangsitink/main/BananaCat-kaitunBF.lua"))()
+getgenv().GWEBHOOK_USERID = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF"
+getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF"
+getgenv().GHUGE_COUNT = 0 -- amount of huges to keep/not mail
+getgenv().GMAIL_RECEIVERS = {"your-receiver-mule"}
+getgenv().GMAIL_ITEMS = {
+["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
+["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "5m", MinAmount = "9999b"}, -- mail diamonds, to enable lower MinAmount..
+}
+getgenv().GMAX_MAIL_COST = "2m"
+loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/34915da4ad87a5028e1fd64efbe3543f.lua"))()
