@@ -1,4 +1,4 @@
-setfpscap(5)
+setfpscap(3)
 script_key = "kgeosiEkeGGlNyPcCwWryYnIgpVlTcDj";
 getgenv().GGFX_MODE = 1
 getgenv().GZONE_TO = 1 -- to enter event from W1 put 1, from W2 put 100, from W3 200, from W4 240
