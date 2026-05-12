@@ -13,7 +13,7 @@ getgenv().GEVENT_UPGRADES = {
     { Id = "RNGBonusLuck",  MaxTier = 99 },
     { Id = "RNGHugeLuck",   MaxTier = 99  },
 }
-getgenv().GWEBHOOK_USERID = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF"
+getgenv().GWEBHOOK_USERID = "698853568291143821"
 getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF"
 getgenv().GHUGE_COUNT = 0 -- amount of huges to keep/not mail
 getgenv().GMAIL_RECEIVERS = {"DreamSoCow"}
