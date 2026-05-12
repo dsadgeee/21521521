@@ -7,9 +7,6 @@ getgenv().GUSE_BOOSTS = true
 getgenv().GRNG_SELL_PETS = true
 getgenv().GRNG_CRAFT_DICE = true
 getgenv().GRNG_USE_MEGA1 = true
-getgenv().GEGGS = {"Exclusive Egg 60"}
-getgenv().GEGGS = {"Exclusive Egg 59", "Exclusive Egg 60"}
-getgenv().GEGGS = {"All"}
 getgenv().GEVENT_UPGRADES = {
     { Id = "RNGEggLuck",   MaxTier = 99  },
     { Id = "RNGHatchSpeed", MaxTier = 99  },
