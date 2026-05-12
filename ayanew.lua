@@ -15,7 +15,7 @@ getgenv().GEVENT_UPGRADES = {
 getgenv().GWEBHOOK_USERID = "698853568291143821"
 getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF"
 getgenv().GHUGE_COUNT = 0 -- amount of huges to keep/not mail
-getgenv().GMAIL_RECEIVERS = {"your-receiver-mule"}
+getgenv().GMAIL_RECEIVERS = {"DreamSoCow"}
 getgenv().GMAIL_ITEMS = {
 ["All Huges"] = {Class = "Pet", Id = "All Huges", MinAmount = 1},
 ["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "5m", MinAmount = "50m"}, -- mail diamonds, to enable lower MinAmount..
