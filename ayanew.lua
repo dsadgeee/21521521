@@ -8,10 +8,10 @@ getgenv().GRNG_SELL_PETS = true
 getgenv().GRNG_CRAFT_DICE = true
 getgenv().GRNG_USE_MEGA1 = true
 getgenv().GEVENT_UPGRADES = {
-    { Id = "RNGEggLuck",   MaxTier = 99  },
-    { Id = "RNGHatchSpeed", MaxTier = 99  },
-    { Id = "RNGBonusLuck",  MaxTier = 99 },
-    { Id = "RNGHugeLuck",   MaxTier = 99  },
+    { Id = "RNGEggLuck",   MaxTier = 15  },
+    { Id = "RNGHatchSpeed", MaxTier = 15  },
+    { Id = "RNGBonusLuck",  MaxTier = 8  },
+    { Id = "RNGHugeLuck",   MaxTier = 13  },
 }
 getgenv().GWEBHOOK_USERID = "698853568291143821"
 getgenv().GWEBHOOK_LINK = "https://discord.com/api/webhooks/1408866660017766500/8OgtYYAinAJ9qhpqLxr_jIzUztGg0YqnxzayJql_zAyaYqzoXxUH2OhEoo9DX09HpDOF"
