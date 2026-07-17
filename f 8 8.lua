@@ -1,4 +1,3 @@
--- ⚙️ Configuration
 getgenv().AutoSellConfig = {
     -- 1. Cấu hình tự động treo bán vật phẩm (Auto Sell)
     Enabled = true,             -- AUTO SELL
@@ -26,7 +25,7 @@ getgenv().AutoSellConfig = {
     ClaimMail = true,           -- Bật true để tự động nhận quà từ hòm thư mỗi 2 phút
 
     -- 3. Cấu hình FPS (Khóa FPS thấp giúp giảm tải CPU tối đa)
-    LockFPS = 15              -- Khóa FPS để giảm tải CPU (ví dụ 15, 30 hoặc 60)
+    LockFPS = 20                -- Khóa FPS để giảm tải CPU (ví dụ 15, 30 hoặc 60)
 }
 
 local config = getgenv().AutoSellConfig
