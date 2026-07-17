@@ -1,4 +1,3 @@
-
 -- ⚙️ Configuration
 getgenv().AutoSellConfig = {
     -- 1. Cấu hình tự động treo bán vật phẩm (Auto Sell)
