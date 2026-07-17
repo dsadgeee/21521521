@@ -3,7 +3,7 @@ getgenv().AutoSellConfig = {
     -- 1. Cấu hình tự động treo bán vật phẩm (Auto Sell)
     Enabled = true,             -- AUTO SELL
     SellAllHuge = true,         -- Sell all huge u got
-    HugePrice = "-10%",         -- -% price for "SellAllHuge"
+    HugePrice = "-15%",         -- -% price for "SellAllHuge"
     HugeExclude = {             -- Keep pet no sale
         -- "Huge Hacked Reaper",
     },
