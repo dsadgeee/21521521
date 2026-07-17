@@ -1,11 +1,9 @@
--- Auto Claim Booths & Auto Sell Script for Pet Simulator 99
--- Designed by Claude for OKkMma_b
 
 -- ⚙️ Configuration
 getgenv().AutoSellConfig = {
     -- 1. Cấu hình tự động treo bán vật phẩm (Auto Sell)
     Enabled = true,             -- AUTO SELL
-    SellAllHuge = false,         -- Sell all huge u got
+    SellAllHuge = true,         -- Sell all huge u got
     HugePrice = "-10%",         -- -% price for "SellAllHuge"
     HugeExclude = {             -- Keep pet no sale
         -- "Huge Hacked Reaper",
@@ -29,7 +27,7 @@ getgenv().AutoSellConfig = {
     ClaimMail = true,           -- Bật true để tự động nhận quà từ hòm thư mỗi 2 phút
 
     -- 3. Cấu hình FPS (Khóa FPS thấp giúp giảm tải CPU tối đa)
-    LockFPS = 20                -- Khóa FPS để giảm tải CPU (ví dụ 15, 30 hoặc 60)
+    LockFPS = 5               -- Khóa FPS để giảm tải CPU (ví dụ 15, 30 hoặc 60)
 }
 
 local config = getgenv().AutoSellConfig
