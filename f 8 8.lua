@@ -2,22 +2,13 @@ getgenv().AutoSellConfig = {
     -- 1. Cấu hình tự động treo bán vật phẩm (Auto Sell)
     Enabled = true,             -- AUTO SELL
     SellAllHuge = true,         -- Sell all huge u got
-    HugePrice = "-15%",         -- -% price for "SellAllHuge"
+    HugePrice = "-10%",         -- -% price for "SellAllHuge"
     HugeExclude = {             -- Keep pet no sale
         -- "Huge Hacked Reaper",
     },
     ItemsToSell = {
         -- -% price on RAP, if not have the RAP, fallback to fallback price
-        { name = "Huge Triumphant Eagle", category = "Pet", type = "normal", price = -11 },
-        { name = "Huge Triumphant Eagle", category = "Pet", type = "Golden", price = -11 },
-        { name = "Huge Triumphant Eagle", category = "Pet", type = "Rainbow", price = -11 },
-        { name = "Huge Steppe Wolf", category = "Pet", type = "normal", price = -11 },
-        { name = "Huge Steppe Wolf", category = "Pet", type = "Golden", price = -11 },
-        { name = "Huge Steppe Wolf", category = "Pet", type = "Rainbow", price = -11 },
-        { name = "Huge Mammoth Elephant", category = "Pet", type = "normal", price = -11 },
-        { name = "Huge Mammoth Elephant", category = "Pet", type = "Golden", price = -11 },
-        { name = "Huge Mammoth Elephant", category = "Pet", type = "Rainbow", price = -11 },
-        { name = "Marble Gift", category = "Lootbox", type = "normal", price = -22 },
+        { name = "Marble Gift", category = "Lootbox", type = "normal", price = -15 },
     },
     ServerHopTime = 20,         -- min hop sever if no sales in X minutes (default 20)
 
