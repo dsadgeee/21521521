@@ -8,11 +8,28 @@ getgenv().AutoSellConfig = {
     },
     ItemsToSell = {
         -- -% price on RAP, if not have the RAP, fallback to fallback price
-        { name = "Marble Gift", category = "Lootbox", type = "normal", price = -15 },
+        { name = "Huge Triumphant Eagle", category = "Pet", type = "normal", price = -11 },
+        { name = "Huge Triumphant Eagle", category = "Pet", type = "Golden", price = -11 },
+        { name = "Huge Triumphant Eagle", category = "Pet", type = "Rainbow", price = -11 },
+        { name = "Huge Steppe Wolf", category = "Pet", type = "normal", price = -11 },
+        { name = "Huge Steppe Wolf", category = "Pet", type = "Golden", price = -11 },
+        { name = "Huge Steppe Wolf", category = "Pet", type = "Rainbow", price = -11 },
+        { name = "Huge Mammoth Elephant", category = "Pet", type = "normal", price = -11 },
+        { name = "Huge Mammoth Elephant", category = "Pet", type = "Golden", price = -11 },
+        { name = "Huge Mammoth Elephant", category = "Pet", type = "Rainbow", price = -11 },
+        { name = "Huge Temple Toucan", category = "Pet", type = "normal", price = -11 },
+        { name = "Huge Temple Toucan", category = "Pet", type = "Golden", price = -11 },
+        { name = "Huge Temple Toucan", category = "Pet", type = "Rainbow", price = -11 },
+        { name = "Huge War Elephant", category = "Pet", type = "normal", price = -11 },
+        { name = "Huge War Elephant", category = "Pet", type = "Golden", price = -11 },
+        { name = "Huge War Elephant", category = "Pet", type = "Rainbow", price = -11 },
+        { name = "Normal Huge Jewel Peacock", category = "Pet", type = "normal", price = -11 },
+        { name = "Normal Huge Jewel Peacock", category = "Pet", type = "Golden", price = -11 },
+        { name = "Normal Huge Jewel Peacock", category = "Pet", type = "Rainbow", price = -11 },
         { name = "Obsidian Gift", category = "Lootbox", type = "normal", price = -15 },
+        
     },
-    ServerHop = false,           -- Bật/Tắt tự động chuyển server (true = bật, false = tắt)
-    ServerHopTime = 20,         -- min hop sever if no sales in X minutes (default 20)
+    ServerHopTime = 60,         -- min hop sever if no sales in X minutes (default 20)
 
     -- 2. Cấu hình tự động nhận Mail (Auto Claim Mail)
     ClaimMail = true,           -- Bật true để tự động nhận quà từ hòm thư mỗi 2 phút
@@ -48,7 +65,7 @@ local targetPlaceId = 15502339080 -- Trading Plaza Place ID
 local scriptId = tostring(os.clock() + math.random())
 getgenv().AutoSellScriptId = scriptId
 
--- Bộ nhớ đệm lâu dài (Khóa thời gian) cho các UID đăng bán để tránh bị spam/nghẽn
+-- Bộ nhớ đệm lâu dài (Khóa thời gian) cho các UID đăng bán đ�� tránh bị spam/nghẽn
 local sessionListedUids = {}
 
 -- Dọn dẹp tất cả các kết nối cũ của script trước đó để tránh trùng lặp và gây crash Delta
@@ -675,9 +692,6 @@ local function isUidLocked(uid)
     return false
 end
 
--- Thêm biến lastPriceCheck để theo dõi thời gian kiểm tra giá cuối cùng
-local lastPriceCheck = 0
-
 local function runAutoSell(myBooth, forcePriceCheck)
     if not config.Enabled then
         return
@@ -1066,26 +1080,24 @@ local lastSellCheck = 0
 local lastMailCheck = 0
 local lastHopCheck = 0
 
--- Lắng nghe các sự kiện bán hàng để cập nhật LastSaleTime cho Server Hop (chỉ khi bật ServerHop)
-if config.ServerHop then
-    pcall(function()
-        local con = ReplicatedStorage.Network["Booths: Add History"].OnClientEvent:Connect(function()
-            getgenv().PS99_LastSaleTime = os.time()
-            print("💰 [Server Hop] Đã bán được hàng! Đặt lại đồng hồ đếm ngược server hop.")
-        end)
-        consTable["HistoryHop"] = con
+-- Lắng nghe các sự kiện bán hàng để cập nhật LastSaleTime cho Server Hop
+pcall(function()
+    local con = ReplicatedStorage.Network["Booths: Add History"].OnClientEvent:Connect(function()
+        getgenv().PS99_LastSaleTime = os.time()
+        print("💰 [Server Hop] Đã bán được hàng! Đặt lại đồng hồ đếm ngược server hop.")
     end)
+    consTable["HistoryHop"] = con
+end)
 
-    pcall(function()
-        local con = ReplicatedStorage.Network["Booths_AnimatePurchase"].OnClientEvent:Connect(function(p1, p2, sellerId)
-            if sellerId == localPlayer.UserId then
-                getgenv().PS99_LastSaleTime = os.time()
-                print("💰 [Server Hop] Đã bán được hàng (Animate)! Đặt lại đồng hồ đếm ngược server hop.")
-            end
-        end)
-        consTable["AnimateHop"] = con
+pcall(function()
+    local con = ReplicatedStorage.Network["Booths_AnimatePurchase"].OnClientEvent:Connect(function(p1, p2, sellerId)
+        if sellerId == localPlayer.UserId then
+            getgenv().PS99_LastSaleTime = os.time()
+            print("💰 [Server Hop] Đã bán được hàng (Animate)! Đặt lại đồng hồ đếm ngược server hop.")
+        end
     end)
-end
+    consTable["AnimateHop"] = con
+end)
 
 local hbCon = RunService.Heartbeat:Connect(function()
     if getgenv().AutoSellScriptId ~= scriptId then return end
@@ -1156,8 +1168,8 @@ local hbCon = RunService.Heartbeat:Connect(function()
         end
     end
 
-    -- 4. Server Hop check (Mỗi 30 giây) - Chỉ chạy khi bật ServerHop
-    if config.ServerHop and now - lastHopCheck >= 30 then
+    -- 4. Server Hop check (Mỗi 30 giây)
+    if now - lastHopCheck >= 30 then
         lastHopCheck = now
         task.spawn(function()
             local owned = hasBooth()
