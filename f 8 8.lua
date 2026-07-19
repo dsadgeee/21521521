@@ -65,8 +65,12 @@ local targetPlaceId = 15502339080 -- Trading Plaza Place ID
 local scriptId = tostring(os.clock() + math.random())
 getgenv().AutoSellScriptId = scriptId
 
--- Bộ nhớ đệm lâu dài (Khóa thời gian) cho các UID đăng bán đ�� tránh bị spam/nghẽn
+-- Bộ nhớ đệm lâu dài (Khóa thời gian) cho các UID đăng bán để tránh bị spam/nghẽn
 local sessionListedUids = {}
+
+-- Thêm biến lastPriceCheck global và cờ isProcessing để tránh overlap
+getgenv().PS99_lastPriceCheck = getgenv().PS99_lastPriceCheck or 0
+getgenv().PS99_isProcessing = getgenv().PS99_isProcessing or false
 
 -- Dọn dẹp tất cả các kết nối cũ của script trước đó để tránh trùng lặp và gây crash Delta
 if getgenv().PS99_AutoSell_Connections then
@@ -116,11 +120,6 @@ if optEnabled then
                 v.Color = Color3.fromRGB(100, 100, 100) -- Xóa màu bản đồ, chuyển thành màu xám đồng bộ
             elseif v:IsA("Decal") or v:IsA("Texture") then
                 v.Transparency = 1
-            elseif v:IsA("MeshPart") then
-                v.Material = Enum.Material.Plastic
-                v.Reflectance = 0
-                v.TextureID = ""
-                v.Color = Color3.fromRGB(100, 100, 100) -- Xóa màu và vân bề mặt của MeshPart
             elseif v:IsA("MeshPart") then
                 v.Material = Enum.Material.Plastic
                 v.Reflectance = 0
@@ -657,27 +656,39 @@ local function isUidLocked(uid)
     return false
 end
 
+-- ================== FIX: Hàm runAutoSell đã được tối ưu ==================
 local function runAutoSell(myBooth, forcePriceCheck)
     if not config.Enabled then
         return
     end
+    
+    -- THÊM: Kiểm tra nếu đang xử lý thì bỏ qua để tránh overlap
+    if getgenv().PS99_isProcessing then
+        return
+    end
+    
+    -- THÊM: Đặt cờ đang xử lý
+    getgenv().PS99_isProcessing = true
 
     local Save = require(ReplicatedStorage:WaitForChild("Library"):WaitForChild("Client"):WaitForChild("Save"))
     local Items = require(ReplicatedStorage:WaitForChild("Library"):WaitForChild("Items"))
     local save = Save.Get()
 
-    if not save or not save.Inventory then return end
+    if not save or not save.Inventory then 
+        getgenv().PS99_isProcessing = false
+        return 
+    end
 
     -- Check current listings to prevent posting already listed items and to check for price updates
     local myListings, boothData = getMyBoothListings()
     local currentListingCount = 0
     local listedUids = {}
 
-    -- Chỉ chạy kiểm tra giá và số lượng sau mỗi 300 giây (5 phút) để tránh spam gỡ/đăng liên tục gây lỗi (ngáo)
+    -- SỬA: Giảm thời gian kiểm tra giá từ 300s xuống 60s
     local now = os.clock()
-    local shouldUpdatePrice = forcePriceCheck or (now - lastPriceCheck >= 300)
+    local shouldUpdatePrice = forcePriceCheck or (now - getgenv().PS99_lastPriceCheck >= 60)
     if shouldUpdatePrice then
-        lastPriceCheck = now
+        getgenv().PS99_lastPriceCheck = now
     end
 
     -- Dọn dẹp session cache quá hạn
@@ -717,7 +728,7 @@ local function runAutoSell(myBooth, forcePriceCheck)
                 end
             end
 
-            -- 1b. If it is a Huge but NOT explicitly configured, apply SellAllHuge update logic (Chỉ quét giá mỗi 5 phút và khi không bị khóa)
+            -- 1b. If it is a Huge but NOT explicitly configured, apply SellAllHuge update logic
             local locked = isUidLocked(uid)
             if not locked and shouldUpdatePrice and config.SellAllHuge and isHuge and not isTitanic and not explicitlyConfigured then
                 local pt = itemObj._data and (itemObj._data.pt or (itemObj._data._uq and itemObj._data._uq.pt)) or 0
@@ -739,19 +750,19 @@ local function runAutoSell(myBooth, forcePriceCheck)
                     if targetPrice > 0 and targetPrice ~= currentPrice then
                         local removeRemote = ReplicatedStorage.Network:FindFirstChild("Booths_RemoveListing")
                         if removeRemote and removeRemote:InvokeServer(listingId) then
-                            task.wait(0.2)
+                            task.wait(0.1) -- GIẢM từ 0.2 xuống 0.1
                             local createRemote = ReplicatedStorage.Network:FindFirstChild("Booths_CreateListing")
                             if createRemote then
                                 pcall(function() return createRemote:InvokeServer(uid, targetPrice, 1) end)
                             end
                         end
-                        task.wait(0.2)
+                        task.wait(0.1) -- GIẢM từ 0.2 xuống 0.1
                         updated = true
                     end
                 end
             end
 
-            -- 1c. Check against ItemsToSell config (Cập nhật số lượng & giá chỉ chạy mỗi 5 phút - Chỉ chạy khi không bị khóa)
+            -- 1c. Check against ItemsToSell config
             if not locked and not updated and shouldUpdatePrice and config.ItemsToSell then
                 for _, configItem in ipairs(config.ItemsToSell) do
                     local category = configItem.category
@@ -764,12 +775,11 @@ local function runAutoSell(myBooth, forcePriceCheck)
                         local amountAvailable = itemData._am or 0
                         local targetAmount = math.min(currentAmount + amountAvailable, 50000)
 
-                        -- Kiểm tra nâng số lượng hoặc cập nhật giá (chạy mỗi 5 phút)
+                        -- Kiểm tra nâng số lượng hoặc cập nhật giá
                         local needQuantityUpdate = targetAmount > currentAmount
                         local needPriceUpdate = targetPrice > 0 and targetPrice ~= currentPrice
 
                         if needPriceUpdate or needQuantityUpdate then
-                            -- Nếu chỉ nâng số lượng, giữ nguyên giá hiện tại
                             local finalPrice = currentPrice
                             if needPriceUpdate then
                                 finalPrice = targetPrice
@@ -777,13 +787,13 @@ local function runAutoSell(myBooth, forcePriceCheck)
 
                             local removeRemote = ReplicatedStorage.Network:FindFirstChild("Booths_RemoveListing")
                             if removeRemote and removeRemote:InvokeServer(listingId) then
-                                task.wait(0.2)
+                                task.wait(0.1) -- GIẢM từ 0.2 xuống 0.1
                                 local createRemote = ReplicatedStorage.Network:FindFirstChild("Booths_CreateListing")
                                 if createRemote then
                                     pcall(function() return createRemote:InvokeServer(uid, finalPrice, targetAmount) end)
                                 end
                             end
-                            task.wait(0.2)
+                            task.wait(0.1) -- GIẢM từ 0.2 xuống 0.1
                         end
                         break
                     end
@@ -794,12 +804,11 @@ local function runAutoSell(myBooth, forcePriceCheck)
 
     local maxSlots = save.BoothSlots or 20
 
-    -- Kiểm tra giải phóng slot cho từng loại quà tặng (Lootbox/gifts) cụ thể nếu quầy đầy và có quà cần bán
+    -- Kiểm tra giải phóng slot cho từng loại quà tặng (Lootbox/gifts)
     if config.ItemsToSell then
         for _, configItem in ipairs(config.ItemsToSell) do
             local category = configItem.category
             if category == "Lootbox" then
-                -- 1. Kiểm tra xem loại quà này đã được treo bán trên quầy chưa
                 local isThisGiftListed = false
                 for listingId, listing in pairs(myListings or {}) do
                     local itemObj = listing.Item
@@ -813,7 +822,6 @@ local function runAutoSell(myBooth, forcePriceCheck)
                     end
                 end
 
-                -- 2. Kiểm tra xem trong rương có loại quà này không
                 local hasThisGiftInInventory = false
                 local categoryItems = save.Inventory[category]
                 if categoryItems then
@@ -832,7 +840,6 @@ local function runAutoSell(myBooth, forcePriceCheck)
                     end
                 end
 
-                -- 3. Nếu có trong rương nhưng chưa treo bán, và quầy đầy -> Gỡ 1 món không phải quà để lấy slot
                 if hasThisGiftInInventory and not isThisGiftListed and currentListingCount >= maxSlots then
                     local nonGiftListingId = nil
                     for listingId, listing in pairs(myListings or {}) do
@@ -847,12 +854,12 @@ local function runAutoSell(myBooth, forcePriceCheck)
                     end
 
                     if nonGiftListingId then
-                        print(string.format("🔄 [Auto Sell] Phát hiện có quà '%s' trong rương nhưng chưa treo và quầy đầy. Đang giải phóng 1 slot...", configItem.name))
+                        print(string.format("🔄 [Auto Sell] Giải phóng slot cho quà '%s'...", configItem.name))
                         local removeRemote = ReplicatedStorage.Network:FindFirstChild("Booths_RemoveListing")
                         if removeRemote then
                             local success, removed = pcall(function() return removeRemote:InvokeServer(nonGiftListingId) end)
                             if success and removed then
-                                task.wait(0.2) -- Giảm trễ xuống 0.2s cho nhanh
+                                task.wait(0.1) -- GIẢM từ 0.2 xuống 0.1
                                 currentListingCount = currentListingCount - 1
                                 local removedListingObj = myListings[nonGiftListingId]
                                 if removedListingObj and removedListingObj.Item then
@@ -871,6 +878,7 @@ local function runAutoSell(myBooth, forcePriceCheck)
     end
 
     if currentListingCount >= maxSlots then
+        getgenv().PS99_isProcessing = false
         return
     end
 
@@ -886,7 +894,6 @@ local function runAutoSell(myBooth, forcePriceCheck)
             local isTitanic = id:lower():find("titanic", 1, true)
 
             if isHuge and not isTitanic and not listedUids[uid] and not isUidLocked(uid) and not attemptedThisCycle[uid] then
-                -- Check if this Huge is explicitly configured in ItemsToSell
                 local explicitlyConfigured = false
                 if config.ItemsToSell then
                     for _, configItem in ipairs(config.ItemsToSell) do
@@ -926,7 +933,6 @@ local function runAutoSell(myBooth, forcePriceCheck)
             end
 
             for _, candidate in ipairs(hugeCandidates) do
-                -- Luôn chừa ít nhất 1 slot trống cho các gói quà (Lootbox/gifts)
                 if currentListingCount >= (maxSlots - 1) then break end
 
                 local uid = candidate.uid
@@ -947,14 +953,15 @@ local function runAutoSell(myBooth, forcePriceCheck)
                     end)
 
                     if success and err == true then
-                        sessionListedUids[uid] = os.time() + 30 -- Thành công khóa 30s để đồng bộ
+                        sessionListedUids[uid] = os.time() + 10 -- GIẢM từ 30 xuống 10 giây
                         listedUids[uid] = true
                         currentListingCount = currentListingCount + 1
+                        print("✅ [Auto Sell Huge] Đã thêm: " .. id)
                     else
-                        sessionListedUids[uid] = os.time() + 3 -- Thất bại (rate limit) chỉ khóa 3s để thử con khác
-                        warn("❌ [Auto Sell Huge] Treo bán Huge thất bại cho UID: " .. tostring(uid) .. " (Error: " .. tostring(err) .. ")")
+                        sessionListedUids[uid] = os.time() + 3
+                        warn("❌ [Auto Sell Huge] Thất bại: " .. tostring(uid) .. " - " .. tostring(err))
                     end
-                    task.wait(0.2) -- Giảm trễ xuống 0.2s cho nhanh
+                    task.wait(0.05) -- GIẢM từ 0.2 xuống 0.05 để nhanh hơn
                 end
             end
         end
@@ -966,7 +973,6 @@ local function runAutoSell(myBooth, forcePriceCheck)
             local category = configItem.category
             if not category then continue end
 
-            -- Luôn chừa lại 1 slot trống cho quà tặng (Lootbox/gifts)
             local limit = (category == "Lootbox") and maxSlots or (maxSlots - 1)
             if currentListingCount >= limit then continue end
 
@@ -993,14 +999,15 @@ local function runAutoSell(myBooth, forcePriceCheck)
                                 end)
 
                                 if success and err == true then
-                                    sessionListedUids[uid] = os.time() + 30 -- Thành công khóa 30s để đồng bộ
+                                    sessionListedUids[uid] = os.time() + 10 -- GIẢM từ 30 xuống 10 giây
                                     listedUids[uid] = true
                                     currentListingCount = currentListingCount + 1
+                                    print("✅ [Auto Sell] Đã thêm: " .. displayName .. " x" .. amountToSell)
                                 else
-                                    sessionListedUids[uid] = os.time() + 3 -- Thất bại (rate limit) chỉ khóa 3s để thử con khác
-                                    warn("❌ [Auto Sell] Treo bán thất bại cho UID: " .. tostring(uid) .. " (Error: " .. tostring(err) .. ")")
+                                    sessionListedUids[uid] = os.time() + 3
+                                    warn("❌ [Auto Sell] Thất bại: " .. tostring(uid) .. " - " .. tostring(err))
                                 end
-                                task.wait(0.2) -- Giảm trễ xuống 0.2s cho nhanh
+                                task.wait(0.05) -- GIẢM từ 0.2 xuống 0.05
                             end
                         end
                     end
@@ -1008,6 +1015,9 @@ local function runAutoSell(myBooth, forcePriceCheck)
             end
         end
     end
+    
+    -- THÊM: Reset cờ đang xử lý
+    getgenv().PS99_isProcessing = false
 end
 
 -- ================== REAL-TIME EVENT CONNECTORS ==================
@@ -1064,6 +1074,37 @@ pcall(function()
     consTable["AnimateHop"] = con
 end)
 
+-- THÊM: Hàm serverHop nếu chưa có
+local function serverHop()
+    -- Tìm server mới
+    local HttpService = game:GetService("HttpService")
+    local success, response = pcall(function()
+        return game:HttpGet("https://games.roblox.com/v1/games/" .. targetPlaceId .. "/servers/Public?sortOrder=Asc&limit=100")
+    end)
+    
+    if success and response then
+        local data = HttpService:JSONDecode(response)
+        if data and data.data and #data.data > 0 then
+            -- Lọc server không đầy
+            local validServers = {}
+            for _, server in ipairs(data.data) do
+                if server.playing and server.maxPlayers and server.playing < server.maxPlayers then
+                    table.insert(validServers, server)
+                end
+            end
+            
+            if #validServers > 0 then
+                local randomServer = validServers[math.random(1, #validServers)]
+                TeleportService:TeleportToPlaceInstance(targetPlaceId, randomServer.id, localPlayer)
+            else
+                TeleportService:Teleport(targetPlaceId, localPlayer)
+            end
+        end
+    else
+        TeleportService:Teleport(targetPlaceId, localPlayer)
+    end
+end
+
 local hbCon = RunService.Heartbeat:Connect(function()
     if getgenv().AutoSellScriptId ~= scriptId then return end
 
@@ -1097,7 +1138,6 @@ local hbCon = RunService.Heartbeat:Connect(function()
                                         rootPart.CFrame = oldCFrame
                                     end
                                     task.spawn(function()
-                                        -- Force chạy full check giá/số lượng lập tức khi vừa claim quầy
                                         pcall(runAutoSell, nil, true)
                                     end)
                                 end
@@ -1109,7 +1149,7 @@ local hbCon = RunService.Heartbeat:Connect(function()
         end
     end
 
-    -- 2. Auto Sell & Price/Quantity Update (Mỗi 3 giây để đồng bộ rương và quầy siêu tốc)
+    -- 2. Auto Sell & Price/Quantity Update (GIỮ NGUYÊN 3 giây - đã có cờ isProcessing để tránh overlap)
     if now - lastSellCheck >= 3 then
         lastSellCheck = now
         task.spawn(function()
@@ -1177,3 +1217,5 @@ end)
 getgenv().runAutoSell = runAutoSell
 getgenv().getMyBoothListings = getMyBoothListings
 getgenv().hasBooth = hasBooth
+
+print("✅ Auto Sell Script đã tải thành công!")
