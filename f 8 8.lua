@@ -259,41 +259,6 @@ if optEnabled then
     end)
 end
 
--- ================== SERVER HOP MODULE ==================
-
-local function serverHop()
-    local HttpService = game:GetService("HttpService")
-
-    local success, response = pcall(function()
-        return game:HttpGet("https://games.roblox.com/v1/games/" .. tostring(targetPlaceId) .. "/servers/Public?sortOrder=Desc&limit=100")
-    end)
-
-    if success and response and response ~= "" then
-        local data = HttpService:JSONDecode(response)
-        if data and data.data then
-            local servers = {}
-            for _, s in ipairs(data.data) do
-                if type(s) == "table" and s.id and s.playing and s.maxPlayers and s.playing < s.maxPlayers - 2 and s.id ~= game.JobId then
-                    table.insert(servers, s.id)
-                end
-            end
-
-            if #servers > 0 then
-                local randomJobId = servers[math.random(1, #servers)]
-                pcall(function()
-                    TeleportService:TeleportToPlaceInstance(targetPlaceId, randomJobId, localPlayer)
-                end)
-                task.wait(10)
-                return
-            end
-        end
-    end
-
-    pcall(function()
-        TeleportService:Teleport(targetPlaceId, localPlayer)
-    end)
-end
-
 -- ================== ANTI-AFK MODULE ==================
 
 pcall(function()
