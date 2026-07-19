@@ -9,6 +9,7 @@ getgenv().AutoSellConfig = {
     ItemsToSell = {
         -- -% price on RAP, if not have the RAP, fallback to fallback price
         { name = "Marble Gift", category = "Lootbox", type = "normal", price = -15 },
+        { name = "Obsidian Gift", category = "Lootbox", type = "normal", price = -15 },
     },
     ServerHop = false,           -- Bật/Tắt tự động chuyển server (true = bật, false = tắt)
     ServerHopTime = 20,         -- min hop sever if no sales in X minutes (default 20)
