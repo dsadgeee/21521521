@@ -10,10 +10,10 @@ getgenv().Config = {
         ["TapHeroesPetDamage"] = 99,
         ["TapHeroesClickDamage"] = 99,
         ["TapHeroesCoinBonus"] = 99,
-        ["TapHeroesEggUpgrade") = 99,
+        ["TapHeroesEggUpgrade"] = 99,
         ["TapHeroesPermPetDamage"] = 99,
-        ["TapHeroesPermLuck") = 99,
-        ["TapHeroes FrenzyDamage"] = 99,
+        ["TapHeroesPermLuck"] = 99,
+        ["TapHeroesFrenzyDamage"] = 99,
     },
     ["Auto Enchant"] = {"Chest Breaker","Chest Breaker","Criticals","Tap Power","Tap Power","Tap Power"},
 
