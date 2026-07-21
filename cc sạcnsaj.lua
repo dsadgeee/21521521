@@ -32,7 +32,10 @@ getgenv().Config = {
                 Class = "Lootbox",
                 MinAmount = 100
             },
-
+            ["Marble Gift"] = {
+                Class = "Lootbox",
+                MinAmount = 100
+            },
             ["Chest Breaker"] = {
                 Class = "Enchant",
                 MinAmount = 1
