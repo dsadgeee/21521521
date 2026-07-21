@@ -17,12 +17,12 @@ getgenv().Config = {
     },
     ["Auto Enchant"] = {"Chest Breaker","Chest Breaker","Criticals","Tap Power","Tap Power","Tap Power"},
 
-    ["Max Rebirths"] = 10,
+    ["Max Rebirths"] = 5,
     ["Max Area"] = 180,
-    ["Max Transced"] = 10,
+    ["Max Transced"] = 5,
     ["MaxUpgradeCost"] = 1000,
     ["MaxPetSlots"] = 25,
-    ["FarmChests"] = {40,60,100,120,140,160,180},
+    ["FarmChests"] = {60,120,160,180},
     ["Rank Before"] = true,
 ["Mail Settings"] = {
 ["User"] = "TunTrapBoy",
