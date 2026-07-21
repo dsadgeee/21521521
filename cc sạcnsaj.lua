@@ -17,7 +17,7 @@ getgenv().Config = {
     },
     ["Auto Enchant"] = {"Chest Breaker","Chest Breaker","Criticals","Tap Power","Tap Power","Tap Power"},
 
-    ["Max Rebirths"] = 5,
+    ["Max Rebirths"] = 10,
     ["Max Area"] = 180,
     ["Max Transced"] = 5,
     ["MaxUpgradeCost"] = 1000,
