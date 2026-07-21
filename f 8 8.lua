@@ -28,7 +28,7 @@ local sellConfig = config
 local claimEnabled = true
 local prioritizeFloor1 = true
 local teleportToClaim = true
-local checkInterval = 2 -- Tần suất quét quầy trống được đặt thành 2 giây theo yêu cầu
+local checkInterval = 1 -- Tần suất quét quầy trống được đặt thành 2 giây theo yêu cầu
 
 -- Các thông số tối ưu hóa đồ họa chạy mặc định (Luôn bật để nhẹ game nhất, không cần cấu hình)
 local optEnabled = true
