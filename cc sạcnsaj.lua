@@ -11,40 +11,49 @@ getgenv().Config = {
         ["TapHeroesClickDamage"] = 99,
         ["TapHeroesCoinBonus"] = 99,
         ["TapHeroesEggUpgrade"] = 99,
-        ["TapHeroesPermPetDamage"] = 99,
         ["TapHeroesPermLuck"] = 99,
-        ["TapHeroesFrenzyDamage"] = 99,
     },
     ["Auto Enchant"] = {"Chest Breaker","Chest Breaker","Criticals","Tap Power","Tap Power","Tap Power"},
 
-    ["Max Rebirths"] = 10,
-    ["Max Area"] = 180,
-    ["Max Transced"] = 5,
-    ["MaxUpgradeCost"] = 1000,
-    ["MaxPetSlots"] = 25,
-    ["FarmChests"] = {60,120,160,180},
-    ["Rank Before"] = true,
-["Mail Settings"] = {
-["User"] = "TunTrapBoy",
-        ["Min_Gems"] = 10000000,
-         ["Mailing"] = {
-            ["Obsidian Gift"] = {
-                Class = "Lootbox",
-                MinAmount = 100
-            },
-            ["Marble Gift"] = {
-                Class = "Lootbox",
-                MinAmount = 100
-            },
-            ["Chest Breaker"] = {
-                Class = "Enchant",
-                MinAmount = 1
-            },
+    ["Mail Settings"] = {
+        ["User"] = "TunTrapBoy",
+        ["Min_Gems"] = 9999999,
+        ["MAX_MAIL_COST"] = 10000000,
+        ["Mailing"] = {
+            ["Send Diamonds"] = {Class = "Currency", Id = "Diamonds", KeepAmount = "25m", MinAmount = "50m"},
+            ["Hype Egg 2"] = {Class = "Lootbox", Id = "Hype Egg 2", MinAmount = 1},
+            ["Hype Egg 3"] = {Class = "Lootbox", Id = "Hype Egg 3", MinAmount = 1},
+            ["Chest Breaker"] = {Class = "Enchant", Id = "Chest Breaker",  MinAmount = 1},
+            ["Exclusive Raffle Ticket"] = {Class = "Misc", Id = "Exclusive Raffle Ticket", MinAmount = 1},
+            ["Exclusive Egg 60"] = {Class = "Egg", Id = "Exclusive Egg 60", MinAmount = 1},
+            ["Exclusive Egg 61"] = {Class = "Egg", Id = "Exclusive Egg 61", MinAmount = 1},
+            ["Exclusive Egg 62"] = {Class = "Egg", Id = "Exclusive Egg 62", MinAmount = 1},
+            ["MVP Key Upper Half"] = {Class = "Misc", Id = "MVP Key Upper Half", MinAmount = 50},
+            ["Royalty"] = {Class = "Charm", Id = "Royalty", MinAmount = 2},
+            ["Overload"] = {Class = "Charm", Id = "Overload", MinAmount = 2},
+            ["Obsidian Gift"] = {Class = "Lootbox", Id = "Obsidian Gift",  MinAmount = 150},
+            ["Marble Gift"] = {Class = "Lootbox", Id = "Marble Gift",  MinAmount = 150},
+            ["Secret pet1"] = {Class = "Pet", Id = "Rainbow Swirl", MinAmount = 1, AllVariants = true},
+            ["Secret pet2"] = {Class = "Pet", Id = "Banana", MinAmount = 1, AllVariants = true},
+            ["Secret pet3"] = {Class = "Pet", Id = "Coin", MinAmount = 1, AllVariants = true},
+            ["Secret pet4"] = {Class = "Pet", Id = "Yellow Lucky Block", MinAmount = 1, AllVariants = true},
+            ["Secret pet5"] = {Class = "Pet", Id = "Crown", MinAmount = 1, AllVariants = true},
+            ["Secret pet6"] = {Class = "Pet", Id = "Heart", MinAmount = 1, AllVariants = true},
+            ["Secret pet7"] = {Class = "Pet", Id = "Mystery", MinAmount = 1, AllVariants = true},
+            ["Secret pet8"] = {Class = "Pet", Id = "Rainbow", MinAmount = 1, AllVariants = true},
         },
         ["Send Old Huges"] = true,
     },
 
+    ["Max Rebirths"] = 10,
+    ["Max Transced"] = 10,
+    ["Max Area"] = 180,
+    ["FarmChests"] = {60,120,160,180},
+    ["MaxPetSlots"] = 35,
     ["AutoOpenGifts"] = false,
     ["AutoUseBoosts"] = true,
+    ["Rank Before"] = true,
+    ["MaxUpgradeCost"] = 1000,
 }
+
 loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/1cd3ec56748e11904f301e7820e4817d.lua"))()
